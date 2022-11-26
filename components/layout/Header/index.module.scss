@@ -1,0 +1,68 @@
+@import "styles/index";
+
+.root{
+  border-bottom: 1px solid $basic-gray-2;
+  display: flex;
+  min-height: $heightHeader;
+  background-color: $white;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+  @include container;
+}
+
+.left{
+  margin-right: 100px;
+}
+
+.logo{
+  display: block;
+  cursor: pointer;
+  svg{
+    max-height: 40px;
+    max-width: 300px;
+  }
+}
+
+.center{
+  position: relative;
+  flex-grow: 1;
+}
+
+.address{
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 5px 0 5px 10px;
+  width: 400px;
+  .icon{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 5px;
+    margin-right: 8px;
+    cursor: pointer;
+    img{
+      width: 14px;
+      height: 16px;
+    }
+  }
+  .text{
+    font-size: 16px;
+  }
+}
+
+.right{
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.search{
+  width: max-content;
+  margin-right: 30px;
+  flex-grow: 1;
+}

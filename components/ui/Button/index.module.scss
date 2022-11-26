@@ -1,0 +1,15 @@
+@import "styles/index";
+
+.link, .btn {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  &.fluid {
+    width: 100%;
+  }
+}

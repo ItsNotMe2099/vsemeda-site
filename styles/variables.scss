@@ -1,0 +1,55 @@
+// breakepoints
+$DesktopWidth: 1200px;
+$SmDesktopWidth: 992px;
+$TableWidth: 768px;
+$PhoneWidth: 576px;
+$MPhoneWidth: 375px;
+$SmPhoneWidth: 320px;
+
+// font-sizes
+$fontOldMainSize: 14px;
+$fontYoungMainSize: 18px;
+
+// header
+$heightHeader: 75px;
+$heightMenu: 65px;
+$heightHeaderFull: $heightHeader + $heightMenu;
+$heightMobileHeader: 60px;
+$heightMobileMenu: 50px;
+$heightMobileHeaderFull: $heightMobileHeader + $heightMobileMenu;
+
+// footer
+$heightFooter: 140px;
+$heightDesktopFooter: 290px;
+$heightMobileFooter: 190px;
+
+// paddings
+$DesktopContainerPadding: 80px;
+$SmDesktopContainerPadding: 30px;
+$MobileContainerPadding: 10px;
+
+
+// Colors
+$white: #FFFFFF;
+$black: #000000;
+$error: #f58220;
+$main: #bfbfbf;
+$basic-gray-1: #f3f3f3;
+$basic-gray-2: #bfbfbf;
+$basic-gray-3: #8c8c8c;
+$basic-gray-4: #595959;
+$basic-gray-5: #d9d9d9;
+$basic-gray-6: #f9f9f9;
+$black-text: #3E3E3E;
+$disabled: #f5f5f5;
+$disabled-text: #bfbfbf;
+$basic-text-gray: #272727;
+$basic-text-black: $black;
+$green-main-1: #9ccb3b;
+$purple-main-1: #6b4c9f;
+$red-main-1: #e31e36;
+
+/* Colors | Rating */
+$rating-height: #069852;
+$rating-middle: #9ccb3b;
+$rating-low: $basic-gray-6;

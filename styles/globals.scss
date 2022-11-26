@@ -1,0 +1,116 @@
+@import 'variables';
+
+html{
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  font-family: 'Lato', sans-serif;
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "SF Pro Display", sans-serif;
+  font-size: inherit;
+  font-weight: 400;
+  color: inherit;
+  letter-spacing: inherit;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+body{
+  font-family: 'SF Pro Display', sans-serif;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  letter-spacing: 0.01em;
+  color: $basic-text-gray;
+  &.modal-open{
+    overflow-y: hidden;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 500;
+}
+
+a,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+#__next{
+  position:relative;
+  min-height: 100%;
+  height: 100%;
+}
+
+button,
+input {
+  color: inherit;
+  border: none;
+  outline: none;
+  background-color: inherit;
+}
+
+ul,
+ol {
+  list-style-type: none;
+  margin-bottom: 0;
+}
+
+.slick-slider{
+
+}
+
+form{
+  display: block;
+}
+
+img {
+  pointer-events: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+// React Modal
+.ReactModal__Body--open{}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  font-size: inherit;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+  background: none;
+}
