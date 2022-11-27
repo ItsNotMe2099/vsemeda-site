@@ -6,6 +6,7 @@ import Search from './Search'
 import Auth from './Auth'
 import Basket from './Basket'
 import { forwardRef } from 'react'
+import Menu from './Menu'
 
 interface Props {
   isSticky?: boolean
@@ -37,6 +38,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & {style?: any}>((props, re
           <Basket onClick={null}/>
         </div>
       </div>
+      <Menu/>
     </div>
   )
 })

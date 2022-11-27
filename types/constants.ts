@@ -6,6 +6,18 @@ export const CONTACTS = {
 }
 
 export const LINKS = {
+  header: {
+    all: '/',
+    actions: '#',
+    sushi: '#',
+    pizza: '#',
+    burgers: '#',
+    fastfood: '#',
+    shashlik: '#',
+    deserts: '#',
+    healthyfood: '#'
+  },
+
   footer: {
     forRestaurants: '#',
     forCouriers: '#',

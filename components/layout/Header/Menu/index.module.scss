@@ -1,0 +1,54 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  background-color: $green-main-1;
+  z-index: 2;
+}
+
+.container {
+  @include container;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: $heightMenu;
+  overflow: initial;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.list {
+  position: static;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item {
+  flex-shrink: 0;
+  padding: 10px 45px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 8px;
+  max-width: max-content;
+  display: flex;
+  font-weight: normal;
+  color: $white;
+  font-size: 16px;
+  overflow-x: auto;
+  span{
+    align-self: center;
+  }
+
+  &:hover {
+    background: linear-gradient(0deg,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3));
+  }
+
+  &.active {
+    background: $white;
+    color: $basic-text-gray;
+  }
+}
