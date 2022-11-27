@@ -1,0 +1,143 @@
+@import "styles/index";
+
+.footer{
+  width: 100%;
+  padding: 16px 0px;
+  background-color: $basic-gray-1;
+  margin-top: auto;
+}
+
+.container{
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  @include container;
+}
+
+.left{
+  width: 25%;
+}
+
+.logo{
+  margin-bottom: 27px;
+  svg{
+    max-width: 300px;
+    max-height: 40px;
+  }
+}
+
+.about{
+  color: $basic-gray-4;
+  font-size: 10px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+}
+
+.copyright{
+  margin-top: 23px;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: $basic-gray-4;
+}
+
+.center{
+  width: calc(50% - 48px);
+  margin: 0 24px;
+}
+
+.menu{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 16px;
+  margin-bottom: 24px;
+  .item {
+    color: $basic-gray-4;
+    font-size: 14px;
+    line-height: 22px;
+
+    &:hover {
+      color: $green-main-1;
+    }
+  }
+}
+
+.cities{
+  display: flex;
+  justify-content: center;
+  min-height: 70px;
+  border: 1px solid $basic-gray-2;
+  border-top: none;
+  border-bottom: none;
+  padding: 0px 24px;
+}
+
+.list{
+  width: 80%;
+  @include clearfix;
+}
+
+.city{
+  height: 20px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  background-color: $basic-gray-3;
+  opacity: 0.5;
+  transition: 0.3s opacity linear;
+  &:hover {
+    opacity: 1;
+  }
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: $white;
+  padding: 1px 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  float: left;
+}
+
+.right{
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.social{
+  display: flex;
+  height: 40px;
+  margin-bottom: 24px;
+  align-items: center;
+  .item{
+    margin-right: 32px;
+    svg{
+      fill: $main;
+      &:hover{
+        fill: $basic-gray-3;
+      }
+    }
+  }
+  .item:last-child{
+    margin-right: 0;
+  }
+}
+
+.apps{
+  display: flex;
+  a:first-child{
+    margin-right: 20px;
+  }
+}
+
+.store{
+  fill: $main;
+  &:hover{
+    fill: $basic-gray-3;
+  }
+}

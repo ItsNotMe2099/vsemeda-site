@@ -113,3 +113,11 @@
       padding: 0px $MobileContainerPadding;
     }
 }
+
+@mixin clearfix {
+  &::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}

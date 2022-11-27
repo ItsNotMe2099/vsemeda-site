@@ -5,14 +5,16 @@ import LogoSvg from 'components/svg/LogoSvg'
 import Search from './Search'
 import Auth from './Auth'
 import Basket from './Basket'
+import { forwardRef } from 'react'
 
 interface Props {
-  
+  isSticky?: boolean
+  restProps?: any
 }
 
-const HeaderInner = () => {
+const HeaderInner = forwardRef<HTMLDivElement, Props & {style?: any}>((props, ref) => {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
       <div className={styles.container}>
         <div className={styles.left}>
           <Link href='/'>
@@ -37,11 +39,14 @@ const HeaderInner = () => {
       </div>
     </div>
   )
-}
+})
 
+HeaderInner.displayName = 'HeaderInner'
 export default function Header(props: Props) {
 
-  return (
-    <Sticky>{() => <HeaderInner/>}</Sticky>
-  )
+  if(props.isSticky){
+    return <Sticky>{({style, isSticky, ...rest}) => <HeaderInner {...props} restProps={rest} style={style}/>}</Sticky>
+  }else{
+    return <HeaderInner {...props}/>
+  }
 }
