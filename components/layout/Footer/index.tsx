@@ -3,11 +3,6 @@ import styles from './index.module.scss'
 import {format} from 'date-fns'
 import Link from 'next/link'
 import { APPS, CONTACTS, LINKS } from 'types/constants'
-import AppStoreSvg from 'components/svg/AppStoreSvg'
-import GooglePlaySvg from 'components/svg/GooglePlaySvg'
-import InstSvg from 'components/svg/InstSvg'
-import VKSvg from 'components/svg/VKSvg'
-import FBSvg from 'components/svg/FBSvg'
 
 interface Props {
   
@@ -69,21 +64,21 @@ export default function Footer(props: Props) {
         <div className={styles.right}>
           <div className={styles.social}>
             <Link className={styles.item} href={CONTACTS.instagram}>
-              <InstSvg/>
+              <img src='/images/footer/insta.svg' alt=''/>
             </Link>
             <Link className={styles.item} href={CONTACTS.vk}>
-              <VKSvg/>
+              <img src='/images/footer/vk.svg' alt=''/>
             </Link>
             <Link className={styles.item} href={CONTACTS.facebook}>
-              <FBSvg/>
+              <img src='/images/footer/facebook.svg' alt=''/>
             </Link>
           </div>
           <div className={styles.apps}>
             <Link href={APPS.googlePlay}>
-              <GooglePlaySvg className={styles.store}/>
+              <img src='/images/footer/google-play.svg' alt=''/>
             </Link>
             <Link href={APPS.appStore}>
-              <AppStoreSvg className={styles.store}/>
+              <img src='/images/footer/app-store.svg' alt=''/>
             </Link>
           </div>
         </div>
