@@ -7,9 +7,149 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid $basic-gray-5 !important;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 0 16px;
 
   border: none;
   &.fluid {
     width: 100%;
+  }
+}
+
+.dashed{
+  border: 1px dashed $basic-gray-5 !important;
+}
+
+.icon{
+  border-radius: 100%;
+  padding: 0;
+}
+
+.withIcon {
+
+  .children {
+    display: flex;
+    align-items: center;
+    grid-gap: 4px;
+  }
+}
+
+.iconBtnSmall{
+  width: 24px;
+}
+
+.iconBtnMedium{
+  width: 32px;
+}
+
+.iconBtnLarge{
+  width: 40px;
+}
+
+.btnSmall{
+  height: 24px;
+  font-size: 14px;
+}
+
+.btnMedium{
+  height: 32px;
+}
+
+.btnLarge{
+  height: 40px;
+}
+
+.primary{
+  color: #fff;
+  svg{
+    fill: #fff;
+  }
+}
+
+.green{
+  background-color: $green-main-1;
+  border-color: $green-main-1 !important;
+  &:hover{
+    background-color: $green-btn-hover;
+    border-color: $green-btn-hover !important;
+  }
+  &:active{
+    background-color: $green-main-1;
+    border-color: $green-main-1;
+  }
+}
+
+.red{
+  background-color: $red-btn-default;
+  border-color: $red-btn-default !important;
+  &:hover{
+    background-color: $red-btn-hover;
+    border-color: $red-btn-hover !important;
+  }
+  &:active{
+    background-color: $red-btn-pressed;
+    border-color: $red-btn-pressed;
+  }
+}
+
+.border-green{
+  &:hover{
+    border-color: $green-btn-hover !important;
+    span{
+      color: $green-btn-hover;
+    }
+    svg{
+      fill: $green-btn-hover;
+    }
+  }
+  &:active{
+    border-color: $green-main-1 !important;
+    span{
+      color: $green-main-1;
+    }
+    svg{
+      fill: $green-main-1;
+    }
+  }
+}
+
+.border-red{
+  &:hover{
+    border-color: $red-btn-hover !important;
+    span{
+      color: $red-btn-hover;
+    }
+    svg{
+      fill: $red-btn-hover;
+    }
+  }
+  &:active{
+    border-color: $red-btn-pressed !important;
+    span{
+      color: $red-btn-pressed;
+    }
+    svg{
+      fill: $red-btn-pressed;
+    }
+  }
+}
+
+.outline, .dashed{
+  span{
+    color: $basic-gray-4;
+  }
+  svg{
+    fill: $basic-gray-4;
+  }
+}
+
+.disabled {
+  background-color: $disabled;
+  border-color: $disabled;
+  color: $disabled-text;
+  svg{
+    fill: $disabled-text;
   }
 }

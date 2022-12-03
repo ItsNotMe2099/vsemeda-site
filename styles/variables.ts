@@ -26,8 +26,12 @@ export const colors = {
   greenMain1: '#9ccb3b',
   purpleMain1: '#6b4c9f',
   redMain1: '#e31e36',
+  redBtnDefault: '#FF4D4F',
+  redBtnHover: '#FF7875',
+  redBtnPressed: '#CF1322',
+  greenBtnHover: '#BAD803',
 
-/* Colors | Rating */
+  /* Colors | Rating */
   ratingHeight: '#069852',
   ratingMiddle: '#9ccb3b',
   ratingLow: '#f9f9f9'
