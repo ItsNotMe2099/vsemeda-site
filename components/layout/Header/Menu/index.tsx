@@ -3,6 +3,7 @@ import { LINKS } from 'types/constants'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
+import Filter from './Filter'
 
 interface Props {
   className?: string
@@ -29,6 +30,7 @@ export default function Menu(props: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
+        <Filter/>
         <div className={styles.list}>
           {items.map((i, index) => 
             <Link className={classNames(styles.item, {[styles.active]: router.asPath === i.link})} href={i.link} key={index}>
