@@ -13,10 +13,11 @@ interface Props extends IButton {
   target?: string
   icon?: ReactElement
   iconBtnSize?: 'small' | 'medium' | 'large'
-  btnSize: 'small' | 'medium' | 'large'
-  styleType: 'primary' | 'outline' | 'dashed' | 'icon'
+  btnSize?: 'small' | 'medium' | 'large'
+  styleType?: 'primary' | 'outline' | 'dashed' | 'icon'
   backColor?: 'green' | 'red' 
   borderColor?: 'border-green' | 'border-red' 
+  search?: boolean
 }
 
 export default function Button(props: Props) {
@@ -49,7 +50,7 @@ export default function Button(props: Props) {
         [styles.iconBtnSmall]: props.iconBtnSize === 'small',
         [styles.iconBtnMedium]: props.iconBtnSize === 'medium',
         [styles.iconBtnLarge]: props.iconBtnSize === 'large',
-        [styles.disabled]: props.disabled,
+        [styles.disabled]: props.disabled && !props.search,
       }, 
       getBackgroundColor(props.backColor),
       getBorderColor(props.borderColor),
@@ -87,5 +88,4 @@ export default function Button(props: Props) {
 
 Button.defaultProps = {
   type: 'button',
-  styleType: 'primary'
 }

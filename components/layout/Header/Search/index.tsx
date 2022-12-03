@@ -18,7 +18,7 @@ export default function Search(props: Props) {
       <form className={styles.search}>
         <div className={styles.wrapper}>
           <div className={classNames(styles.inputWrapper, {[styles.active]: isShow})}>
-            <Button className={styles.btn} disabled={!isShow} type='submit'>
+            <Button search className={styles.btn} disabled={!isShow} type='submit'>
               <img src='/images/header/search.svg'/>
             </Button>
             <p onClick={() => setIsShow(true)}>Поиск</p>
