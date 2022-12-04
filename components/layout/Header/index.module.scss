@@ -1,6 +1,6 @@
 @import "styles/index";
 
-.root{
+.root {
   border-bottom: 1px solid $basic-gray-2;
   display: flex;
   min-height: $heightHeader;
@@ -8,64 +8,89 @@
   flex-direction: column;
 }
 
-.container{
+.container {
   display: flex;
   align-items: center;
-  min-height: 100%;
   @include container;
-  padding-top: 24px;
-  padding-bottom: 24px;
+  min-height: $heightHeader;
 }
 
-.left{
+.left {
   margin-right: 100px;
+
+  @include mq($MdDesktopWidth, max) {
+    margin-right: 50px;
+  }
+
+  @include mq($SmDesktopWidth, max) {
+    margin-right: 0;
+  }
 }
 
-.logo{
+.logo {
   display: block;
   cursor: pointer;
-  svg{
+
+  svg {
     max-height: 40px;
     max-width: 300px;
   }
 }
 
-.center{
+.center {
   position: relative;
   flex-grow: 1;
 }
 
-.address{
+.address {
   height: 40px;
   display: flex;
   align-items: center;
   padding: 5px 0 5px 10px;
   width: 400px;
-  .icon{
+
+  .icon {
     display: flex;
     align-items: center;
     height: 100%;
     margin-left: 5px;
     margin-right: 8px;
     cursor: pointer;
-    img{
+
+    img {
       width: 14px;
       height: 16px;
     }
   }
-  .text{
-    font-size: 16px;
+
+  .text {
+    @include afs(16px, 16px, 14px, 16px);
+  }
+
+  @include mq($SmDesktopWidth, max) {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-.right{
+.right {
   display: flex;
   justify-content: flex-end;
   flex-grow: 1;
+
+  @include mq($SmDesktopWidth, max) {
+    flex-grow: 0;
+  }
 }
 
-.search{
+.search {
   width: max-content;
   margin-right: 30px;
   flex-grow: 1;
+}
+
+.menuOpen {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
 }

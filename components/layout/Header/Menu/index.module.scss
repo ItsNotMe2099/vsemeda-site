@@ -1,5 +1,29 @@
 @import "styles/index";
 
+@mixin list {
+  position: static;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  @include mq($DesktopWidth, max) {
+    div {
+      .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: 40px;
+        margin-right: 0;
+
+        &:hover {
+          background: none;
+        }
+      }
+    }
+  }
+}
+
 .root {
   position: relative;
   background-color: $green-main-1;
@@ -16,18 +40,76 @@
   overflow: initial;
   padding-top: 10px;
   padding-bottom: 10px;
+
+  @include mq($TabletWidth, max) {
+    min-height: $heightMobileMenu;
+  }
 }
 
 .list {
-  position: static;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+  @include list;
+
+  @include mq($DesktopWidth, max) {
+    display: none;
+  }
+
+  @include mq($PhoneWidth, max) {
+    display: flex;
+    overflow-x: auto;
+  }
+}
+
+.listMedium {
+  @include list;
+
+  @include mq($DesktopWidth, min) {
+    display: none;
+  }
+
+  @include mq($MdDesktopWidth, max) {
+    display: none;
+  }
+}
+
+.listSmall {
+  @include list;
+
+  @include mq($MdDesktopWidth, min) {
+    display: none;
+  }
+
+  @include mq($SmDesktopWidth, max) {
+    display: none;
+  }
+}
+
+.listExSmall {
+  @include list;
+
+  @include mq($SmDesktopWidth, min) {
+    display: none;
+  }
+
+  @include mq($TabletWidth, max) {
+    display: none;
+  }
+}
+
+.listTablet {
+  @include list;
+
+  @include mq($TabletWidth, min) {
+    display: none;
+  }
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
 }
 
 .item {
   flex-shrink: 0;
-  padding: 10px 45px;
+  padding: 10px 30px;
   border-radius: 3px;
   cursor: pointer;
   margin-right: 8px;
@@ -35,10 +117,12 @@
   display: flex;
   font-weight: normal;
   color: $white;
-  font-size: 16px;
+  @include afs(16px, 16px, 14px, 16px);
   overflow-x: auto;
-  span{
+
+  span {
     align-self: center;
+    width: 100%;
   }
 
   &:hover {
@@ -50,5 +134,31 @@
   &.active {
     background: $white;
     color: $basic-text-gray;
+  }
+
+  @include mq($SmDesktopWidth, max) {
+    padding: 10px 20px;
+  }
+
+  @include mq($TabletWidth, max) {
+    padding: 10px 15px;
+  }
+}
+
+.content {
+  display: flex;
+
+  span {
+    margin-right: 8px;
+  }
+}
+
+.img {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 13px;
+    height: 13px;
   }
 }

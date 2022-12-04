@@ -11,3 +11,12 @@ export interface IButton {
   href?: string | UrlObject
   isExternalHref?: boolean // add target blank and no referrer
 }
+
+export interface IRegion {
+  id: number
+  name: string
+  default_address: string
+  slug: string
+  latitude: string
+  longtitude: string
+}

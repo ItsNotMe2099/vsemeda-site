@@ -1,39 +1,69 @@
 @import "styles/index";
 
-.footer{
+.footer {
   width: 100%;
   padding: 16px 0px;
   background-color: $basic-gray-1;
   margin-top: auto;
 }
 
-.container{
+.container {
   display: flex;
   justify-content: space-between;
   height: 100%;
   @include container;
-}
 
-.left{
-  width: 25%;
-}
-
-.logo{
-  margin-bottom: 27px;
-  svg{
-    max-width: 300px;
-    max-height: 40px;
+  @include mq($TabletWidth, max) {
+    flex-direction: column;
   }
 }
 
-.about{
+.left {
+  width: 25%;
+
+  @include mq($TabletWidth, max) {
+    width: 100%;
+  }
+
+  .copyright {
+    @include mq($TabletWidth, max) {
+      display: none;
+    }
+  }
+}
+
+.logo {
+  margin-bottom: 27px;
+
+  svg {
+    max-width: 300px;
+    max-height: 40px;
+  }
+
+  .social {
+    @include mq($TabletWidth, min) {
+      display: none;
+    }
+  }
+
+  @include mq($TabletWidth, max) {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.about {
   color: $basic-gray-4;
   font-size: 10px;
   line-height: 16px;
   letter-spacing: 0.04em;
+
+  @include mq($TabletWidth, max) {
+    display: none;
+  }
 }
 
-.copyright{
+.copyright {
   margin-top: 23px;
   font-size: 12px;
   line-height: 16px;
@@ -41,12 +71,17 @@
   color: $basic-gray-4;
 }
 
-.center{
+.center {
   width: calc(50% - 48px);
   margin: 0 24px;
+
+  @include mq($TabletWidth, max) {
+    width: 100%;
+    margin: 0;
+  }
 }
 
-.menu{
+.menu {
   width: 100%;
   height: 40px;
   display: flex;
@@ -54,6 +89,7 @@
   align-items: center;
   padding: 0px 16px;
   margin-bottom: 24px;
+
   .item {
     color: $basic-gray-4;
     font-size: 14px;
@@ -63,9 +99,13 @@
       color: $green-main-1;
     }
   }
+
+  @include mq($SmDesktopWidth, max) {
+    display: none;
+  }
 }
 
-.cities{
+.cities {
   display: flex;
   justify-content: center;
   min-height: 70px;
@@ -73,14 +113,21 @@
   border-top: none;
   border-bottom: none;
   padding: 0px 24px;
+
+  @include mq($TabletWidth, max) {
+    border-top: 1px solid $basic-gray-2;
+    border-right: none;
+    border-left: none;
+    padding: 24px;
+  }
 }
 
-.list{
+.list {
   width: 80%;
   @include clearfix;
 }
 
-.city{
+.city {
   height: 20px;
   margin-right: 8px;
   margin-bottom: 8px;
@@ -88,9 +135,11 @@
   background-color: $basic-gray-3;
   opacity: 0.5;
   transition: 0.3s opacity linear;
+
   &:hover {
     opacity: 1;
   }
+
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.04em;
@@ -102,41 +151,77 @@
   float: left;
 }
 
-.right{
+.right {
   width: 25%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  .social {
+    @include mq($TabletWidth, max) {
+      display: none;
+    }
+  }
+
+  .copyright {
+    @include mq($TabletWidth, min) {
+      display: none;
+    }
+  }
+
+  @include mq($TabletWidth, max) {
+    width: 100%;
+    align-items: center;
+
+    .apps {
+      flex-direction: row;
+    }
+  }
 }
 
-.social{
+.social {
   display: flex;
   height: 40px;
   margin-bottom: 24px;
   align-items: center;
-  .item{
+
+  .item {
     margin-right: 32px;
     opacity: 0.5;
     transition: 0.3s opacity linear;
+
     &:hover {
       opacity: 1;
     }
+
+    @include mq($MPhoneWidth, max) {
+      margin-right: 8px;
+    }
   }
-  .item:last-child{
+
+  .item:last-child {
     margin-right: 0;
   }
+
 }
 
-.apps{
+.apps {
   display: flex;
-  a{
+
+  a {
     opacity: 0.5;
     transition: 0.3s opacity linear;
+
     &:hover {
       opacity: 1;
     }
   }
-  a:first-child{
+
+  a:first-child {
     margin-right: 20px;
+  }
+
+  @include mq($MdDesktopWidth, max) {
+    flex-direction: column-reverse;
   }
 }

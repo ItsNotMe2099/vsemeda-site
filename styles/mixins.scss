@@ -15,13 +15,13 @@
 }
 
 @mixin afs($First, $Second, $Third, $Zero: $First) {
-  @include mq($TableWidth, max) {
+  @include mq($TabletWidth, max) {
     font-size: $Second;
   }
   @include mq($PhoneWidth, max) {
     font-size: $Third;
   }
-  @include mq($TableWidth, min) {
+  @include mq($TabletWidth, min) {
     font-size: $First;
   }
   @include mq($SmDesktopWidth, min) {
@@ -63,7 +63,7 @@
   background-size: $size;
   background-repeat: $repeat;
 }
-@mixin dialog-wingow($width, $height: auto, $breakepoint: $TableWidth) {
+@mixin dialog-wingow($width, $height: auto, $breakepoint: $TabletWidth) {
   @include positionCenter(fixed);
   @include size($width, $height);
   @media screen and (max-width: $breakepoint) {
@@ -105,11 +105,12 @@
     max-width: 1500px;
     margin: 0 auto;
     padding: 0px $DesktopContainerPadding;
-  
-    @include mq($DesktopWidth, max) {
+
+    @include mq($MdDesktopWidth, max) {
       padding: 0px $SmDesktopContainerPadding;
     }
-    @include mq($TableWidth, max) {
+  
+    @include mq($TabletWidth, max) {
       padding: 0px $MobileContainerPadding;
     }
 }

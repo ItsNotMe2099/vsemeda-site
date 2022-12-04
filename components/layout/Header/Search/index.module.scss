@@ -1,20 +1,24 @@
 @import "styles/index";
 
-.root{
+.root {
   width: max-content;
   margin-right: 30px;
   flex-grow: 1;
   position: relative;
   width: 100%;
+
+  @include mq($SmDesktopWidth, max) {
+    display: none;
+  }
 }
 
-.wrapper{
+.wrapper {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.inputWrapper{
+.inputWrapper {
   max-width: 120px;
   width: 100%;
   min-width: max-content;
@@ -28,25 +32,42 @@
   padding: 5px 10px;
   padding-right: 0px;
   border: 1px solid transparent;
-  .input, .clear, .close{
+
+  .input,
+  .clear,
+  .close {
     display: none;
   }
 }
 
-.active{
+.active {
   border: 1px solid $basic-gray-5;
-  .input, .clear{
+
+  .input,
+  .clear {
     display: block;
   }
-  .close{
+
+  .close {
     display: flex;
   }
-  p{
+
+  p {
     display: none;
+  }
+
+  @include mq($SmDesktopWidth, max) {
+    display: none;
+  }
+
+  @include mq($MdDesktopWidth, max) {
+    width: 270px;
+    min-width: auto;
+    max-width: 100%;
   }
 }
 
-.input{
+.input {
   width: 100%;
   height: 40px;
   overflow: hidden;
@@ -54,14 +75,14 @@
   padding-right: 5px;
 }
 
-.clear{
+.clear {
   font-size: 14px;
   margin-right: 12px;
   color: $basic-gray-2;
   cursor: pointer;
 }
 
-.close{
+.close {
   min-width: 40px;
   min-height: 100%;
   cursor: pointer;
@@ -71,7 +92,7 @@
   align-items: center;
 }
 
-.btn{
+.btn {
   display: flex;
   align-items: center;
   height: 100%;
