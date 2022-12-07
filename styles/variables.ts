@@ -33,7 +33,7 @@ export const colors = {
   greenBtnHover: '#BAD803',
 
   /* Colors | Rating */
-  ratingHeight: '#069852',
+  ratingHigh: '#069852',
   ratingMiddle: '#9ccb3b',
   ratingLow: '#f9f9f9'
 }

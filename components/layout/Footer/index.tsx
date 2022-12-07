@@ -3,6 +3,7 @@ import styles from './index.module.scss'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { APPS, CONTACTS, LINKS } from 'types/constants'
+import { useAppContext } from 'context/state'
 
 interface Props {
 
@@ -19,7 +20,7 @@ export default function Footer(props: Props) {
   ]
 
   const cities = [
-    { city: 'Москва' },
+    { city: 'Москва', slug: 'moskva'},
     { city: 'Санкт-Петербург' },
     { city: 'Ростов' },
     { city: 'Рязань' },
@@ -28,6 +29,33 @@ export default function Footer(props: Props) {
     { city: 'Южно-сахалинск' },
     { city: 'Хабаровск' },
   ]
+
+  //temp
+  const regions = [
+    {
+      id: 2,
+      name: 'Санкт-Петербург',
+      default_address: 'Невский 18',
+      slug: 'sankt-peterburg',
+      is_default: true,
+      latitude: 59.936557,
+      longtitude: 30.318249
+    },
+    {
+      id: 1,
+      name: 'Москва',
+      default_address: 'Большая садовая улица, 94',
+      slug: 'moskva',
+      is_default: false,
+      latitude: 47.222066,
+      longtitude: 39.718112
+    }
+  ]
+  //temp
+
+  const appContext = useAppContext()
+
+  console.log(appContext.region.name)
 
   return (
     <div className={styles.footer}>
@@ -64,9 +92,9 @@ export default function Footer(props: Props) {
           </div>
           <div className={styles.cities}>
             <div className={styles.list}>
-              {cities.map((i, index) =>
-                <div className={styles.city} key={index}>
-                  {i.city}
+              {regions.map((i, index) =>
+                <div className={styles.city} key={index} onClick={() => appContext.updateRegion(i.slug)}>
+                  {i.name}
                 </div>
               )}
             </div>

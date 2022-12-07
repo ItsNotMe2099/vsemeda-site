@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { useRouter } from 'next/router'
 import Filter from './Filter'
 import ButtonOverflow from 'components/ui/Button/ButtonOverflow'
+import { useAppContext } from 'context/state'
 
 interface Props {
   className?: string
@@ -14,8 +15,10 @@ export default function Menu(props: Props) {
 
   const router = useRouter()
 
+  const appContext = useAppContext()
+
   const items = [
-    { label: 'Все', link: LINKS.header.all },
+    { label: 'Все', link: `/${appContext.region.slug}` },
     { label: 'Акции', link: LINKS.header.actions },
     { label: 'Суши', link: LINKS.header.sushi },
     { label: 'Пицца', link: LINKS.header.pizza },
@@ -26,7 +29,9 @@ export default function Menu(props: Props) {
     { label: 'Здоровая еда', link: LINKS.header.healthyfood },
   ]
 
+
   console.log(router)
+  
 
   const length = items.length
 

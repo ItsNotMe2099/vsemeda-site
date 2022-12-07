@@ -6,3 +6,12 @@
   position:relative;
   flex-direction: column;
 }
+
+.content{
+  background-color: $basic-gray-6;
+  min-height: calc(100vh - 280px);
+}
+
+.container{
+  @include container;
+}

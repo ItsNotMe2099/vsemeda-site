@@ -17,6 +17,7 @@ export interface IRegion {
   name: string
   default_address: string
   slug: string
-  latitude: string
-  longtitude: string
+  is_default: boolean
+  latitude: number
+  longtitude: number
 }
