@@ -2,6 +2,7 @@ import StarRatingSvg from 'components/svg/StarRatingSvg'
 import Link from 'next/link'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import Image from 'next/image'
 
 interface IItem {
   link: string
@@ -19,7 +20,9 @@ interface Props {
 export default function RestaurantCard({ item }: Props) {
 
   return (
-    <Link href={item.link} className={styles.root}  style={{ background: `url(${item.background ? item.background : '/images/home/wrap-item/bg.png'}) center -50% no-repeat;` }}>
+    <Link href={item.link} className={styles.root}>
+      <div className={styles.img}><Image src={item.background ? item.background : '/images/home/wrap-item/bg.svg'} alt=''
+       fill/></div>
       <div className={styles.body}>
         <div className={styles.desc}>
           <h3 className={styles.header}>{item.name}</h3>
