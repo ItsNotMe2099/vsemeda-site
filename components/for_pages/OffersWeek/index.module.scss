@@ -1,0 +1,50 @@
+@import "styles/index";
+
+.root {}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mq($TabletWidth, max) {
+        flex-direction: column;
+    }
+}
+
+.card {
+    width: 100%;
+    min-height: inherit !important;
+}
+
+.slide {
+    @include mq($MdDesktopWidth, max) {
+        min-width: 436px !important;
+    }
+
+    @include mq($SmDesktopWidth, max) {
+        min-width: inherit !important;
+    }
+
+    position: relative;
+    min-height: 270px;
+
+    @include mq($SmDesktopWidth, max) {
+        min-height: 250px;
+    }
+
+    @include mq($PhoneWidth, max) {
+        min-height: 200px;
+    }
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controls{
+    display: flex;
+}

@@ -15,12 +15,13 @@ interface IItem {
 
 interface Props {
   item: IItem
+  className?: string
 }
 
-export default function RestaurantCard({ item }: Props) {
+export default function RestaurantCard({ item, className }: Props) {
 
   return (
-    <Link href={item.link} className={styles.root}>
+    <Link href={item.link} className={classNames(styles.root, className)}>
       <div className={styles.img}><Image src={item.background ? item.background : '/images/home/wrap-item/bg.svg'} alt=''
        fill/></div>
       <div className={styles.body}>

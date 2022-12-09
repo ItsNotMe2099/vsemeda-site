@@ -5,6 +5,7 @@ import App, {AppContext} from 'next/app'
 import { useEffect } from 'react'
 import { AppWrapper } from 'context/state'
 import {getSelectorsByUserAgent} from 'react-device-detect'
+import 'swiper/css/bundle'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
