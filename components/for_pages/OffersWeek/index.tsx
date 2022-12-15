@@ -4,7 +4,6 @@ import SectionHeader from '../SectionHeader'
 import styles from './index.module.scss'
 import { Swiper as SwiperClass } from 'swiper/types'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper'
 import { useAppContext } from 'context/state'
 import SliderControl from 'components/ui/SliderControl'
 
@@ -17,10 +16,6 @@ export default function OffersWeek() {
   }
   const handleNextClick = async () => {
     swiperRef.current?.slideNext()
-  }
-  const pagination = {
-    clickable: true,
-
   }
 
   const items = [
@@ -72,9 +67,7 @@ export default function OffersWeek() {
           swiperRef.current = swiper
         }}
         spaceBetween={16}
-        pagination={pagination}
         slidesPerView={1}
-        modules={appContext.isMobile ? [Pagination] : []}
         breakpoints={{
           576: {
             slidesPerView: 2
