@@ -1,12 +1,12 @@
 import { useRef } from 'react'
-import RestaurantCard from '../RestaurantCard'
-import SectionHeader from '../SectionHeader'
 import styles from './index.module.scss'
 import { Swiper as SwiperClass } from 'swiper/types'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SliderControl from 'components/ui/SliderControl'
+import SectionHeaderLoader from '../SectionHeaderLoader'
+import RestaurantCardLoader from '../RestaurantCardLoader'
 
-export default function OffersWeek() {
+export default function OffersWeekLoader() {
 
   const swiperRef = useRef<SwiperClass>(null)
   const handlePrevClick = async () => {
@@ -16,45 +16,14 @@ export default function OffersWeek() {
     swiperRef.current?.slideNext()
   }
 
-  const items = [
-    {
-      link: '#',
-      background: '',
-      name: 'Kentucky Fried Chicken (KFC)',
-      rating: 5,
-      prices: 'high',
-      deliveryTime: '20-40 мин'
-    },
-    {
-      link: '#',
-      background: '/images/home/wrap-item/kfc.png',
-      name: 'Kentucky Fried Chicken (KFC)',
-      rating: 5,
-      prices: 'high',
-      deliveryTime: '20-40 мин'
-    },
-    {
-      link: '#',
-      background: '',
-      name: 'Kentucky Fried Chicken (KFC)',
-      rating: 3,
-      prices: 'low',
-      deliveryTime: '20-40 мин'
-    },
-    {
-      link: '#',
-      background: '',
-      name: 'Kentucky Fried Chicken (KFC)',
-      rating: 2,
-      prices: 'medium',
-      deliveryTime: '20-40 мин'
-    },
-  ]
+  const array = Array(4)
+
+  const items = array.fill(<RestaurantCardLoader/>)
 
   return (
     <div className={styles.root}>
       <div className={styles.header}>
-        <SectionHeader head='Предложения недели' />
+        <SectionHeaderLoader/>
         <div className={styles.controls}>
           <SliderControl direction='prev' onClick={handlePrevClick} />
           <SliderControl direction='next' onClick={handleNextClick} />
@@ -77,7 +46,7 @@ export default function OffersWeek() {
       >
         {items.map((i, index) =>
           <SwiperSlide className={styles.slide} key={index}>
-            <RestaurantCard className={styles.card} item={i} />
+            <RestaurantCardLoader className={styles.card}/>
           </SwiperSlide>
         )}
       </Swiper>

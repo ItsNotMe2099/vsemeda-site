@@ -1,0 +1,26 @@
+@import "styles/index";
+
+.root {}
+
+.swiper{
+    padding: 24px 0;
+}
+
+.card {
+    width: 100%;
+}
+
+.slide {
+    max-width: 400px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controls{
+    display: flex;
+    padding-top: 32px;
+}
