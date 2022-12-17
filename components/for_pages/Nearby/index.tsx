@@ -10,7 +10,7 @@ export default function Nearby() {
 
   const items = [
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 5,
@@ -18,7 +18,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/kfc.png',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 5,
@@ -26,7 +26,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 3,
@@ -34,7 +34,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -42,7 +42,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -50,7 +50,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -58,7 +58,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -66,7 +66,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -74,7 +74,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -82,7 +82,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -90,7 +90,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -98,7 +98,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -106,7 +106,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -114,7 +114,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -122,7 +122,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -130,7 +130,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -138,7 +138,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -146,7 +146,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -154,7 +154,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -162,7 +162,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,
@@ -170,7 +170,7 @@ export default function Nearby() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,

@@ -20,49 +20,49 @@ export default function Promotions() {
 
   const items = [
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/promo1.png',
       name: 'Мини-торт в подарок',
       desc: 'при заказе в День Рождения'

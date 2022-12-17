@@ -6,7 +6,7 @@ export default function BestOffers() {
 
   const items = [
     {
-      link: '#',
+      slug: 'kfc',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 5,
@@ -14,7 +14,7 @@ export default function BestOffers() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '/images/home/wrap-item/kfc.png',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 5,
@@ -22,7 +22,7 @@ export default function BestOffers() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 3,
@@ -30,7 +30,7 @@ export default function BestOffers() {
       deliveryTime: '20-40 мин'
     },
     {
-      link: '#',
+      slug: '#',
       background: '',
       name: 'Kentucky Fried Chicken (KFC)',
       rating: 2,

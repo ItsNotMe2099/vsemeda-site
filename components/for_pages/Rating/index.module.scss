@@ -1,0 +1,46 @@
+@import "styles/index";
+
+.rating {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-right: 8px;
+    border: 1px solid #f3f3f3;
+    display: flex;
+    align-items: center;
+
+    .text {
+        margin-left: 5px;
+    }
+
+    span {
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        line-height: 17px;
+        font-style: normal;
+        font-weight: 600;
+        opacity: 0.3;
+    }
+
+    .active {
+        opacity: 1;
+    }
+}
+
+.high {
+    path {
+        fill: $rating-high;
+    }
+}
+
+.low {
+    path {
+        fill: $rating-low;
+    }
+}
+
+.middle {
+    path {
+        fill: $rating-middle;
+    }
+}

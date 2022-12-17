@@ -9,6 +9,8 @@ import { forwardRef, useState } from 'react'
 import Menu from './Menu'
 import HiddenXs from 'components/ui/HiddenXS'
 import VisibleXs from 'components/ui/VisibleXS'
+import { useRouter } from 'next/router'
+import { useAppContext } from 'context/state'
 
 interface Props {
   isSticky?: boolean
@@ -19,9 +21,13 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
 
   const [isShow, setIsShow] = useState<boolean>(false)
 
+  const appContext = useAppContext()
+
   const handleOpenMobileMenu = () =>  {
 
   }
+
+  const router = useRouter()
 
   return (
     <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
@@ -57,7 +63,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           <Basket onClick={null} />
         </div>
       </div>
-      <Menu />
+      {router.asPath === `/${appContext.region.slug}` ? <Menu /> : null}
     </div>
   )
 })

@@ -2,9 +2,10 @@ import Link from 'next/link'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 import Image from 'next/image'
+import { useAppContext } from 'context/state'
 
 interface IItem {
-  link: string
+  slug: string
   background: string
   name: string
   desc: string
@@ -17,8 +18,10 @@ interface Props {
 
 export default function PromoCard({ item, className }: Props) {
 
+  const appContext = useAppContext()
+
   return (
-    <Link href={item.link} className={classNames(styles.root, className)}>
+    <Link href={`${appContext.region.slug}/${item.slug}`} className={classNames(styles.root, className)}>
       <div className={styles.img}><Image src={item.background} alt=''
         fill /></div>
       <div className={styles.front}>
