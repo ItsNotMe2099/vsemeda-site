@@ -14,7 +14,7 @@
     margin-top: 16px;
     background-color: #fff;
     padding: 24px 0;
-    padding-bottom: 0;
+    padding-bottom: 40px;
 
     .content {
         min-height: 150px;
@@ -73,4 +73,36 @@
     border-radius: 8px;
     border: 1px solid #f3f3f3;
     margin-right: 8px;
+}
+
+.category {
+    position: relative;
+}
+
+.head {
+    padding-top: 24px;
+    margin-bottom: 8px;
+    line-height: 28px;
+    font-size: 24px;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.card {
+    &:hover {
+        box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    &:nth-of-type(-n+4) {
+        margin-top: 0px;
+    }
+
+    &:nth-child(4n) {
+        margin-right: 0px;
+    }
 }

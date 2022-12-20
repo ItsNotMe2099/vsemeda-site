@@ -1,0 +1,54 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  max-width: 50%;
+  margin-top: 16px;
+  width: calc(25% - 12px);
+  margin-right: 16px;
+  box-shadow: 2px 3px 30px rgba(0, 0, 0, .08);
+  background-color: #fff;
+  transition: box-shadow .3s ease-in-out;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.img {
+  height: 150px;
+  img{
+    height: inherit !important;
+  }
+}
+
+.desc {
+  padding: 16px 16px 45px;
+}
+
+.header {
+  font-size: 16px;
+  margin-bottom: 2px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.text {
+  color: #8c8c8c;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.others {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+}
+
+.price{
+  font-size: 14px;
+}

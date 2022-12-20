@@ -4,7 +4,6 @@
   position: static;
   width: 100%;
   display: flex;
-  justify-content: space-between;
 
   @include mq($DesktopWidth, max) {
     div {
@@ -30,48 +29,24 @@
   z-index: 2;
 }
 
-.restaurant{
-  .container{
-    min-height: calc($heightMenu - 5px);
-    padding: 0 24px;
-    @include mq($TabletWidth, max) {
-      min-height: calc($heightMobileMenu - 5px);
-    }
-    .list{
-      justify-content: normal;
-    }
-  }
-  .item{
-    padding: 0 16px;
-  }
-}
-
 .container {
   @include container;
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: $heightMenu;
+  min-height: calc($heightMenu - 5px);
   overflow: initial;
+  padding: 0 24px;
 
 
   @include mq($TabletWidth, max) {
-    min-height: $heightMobileMenu;
+    min-height: calc($heightMobileMenu - 5px);
   }
 }
 
 .list {
   @include list;
-
-  @include mq($DesktopWidth, max) {
-    display: none;
-  }
-
-  @include mq($PhoneWidth, max) {
-    display: flex;
-    overflow-x: auto;
-  }
 }
 
 .listMedium {
@@ -124,7 +99,7 @@
 
 .item {
   flex-shrink: 0;
-  padding: 0 30px;
+  padding: 0 16px;
   border-radius: 3px;
   cursor: pointer;
   margin-right: 8px;

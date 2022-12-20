@@ -2,12 +2,10 @@ import Link from 'next/link'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
-import Filter from './Filter'
 import ButtonOverflow from 'components/ui/Button/ButtonOverflow'
-import { useAppContext } from 'context/state'
 
 interface IItem {
-  label: string
+  name: string
   link: string
 }
 
@@ -20,13 +18,12 @@ export default function Menu({className, items}: Props) {
 
   const router = useRouter()
 
-
   const length = items.length
 
   const Item = ({ item }) => {
     return (
       <Link className={classNames(styles.item, { [styles.active]: router.asPath === item.link })} href={item.link}>
-        <span>{item.label}</span>
+        <span>{item.name}</span>
       </Link>
     )
   }
@@ -34,7 +31,6 @@ export default function Menu({className, items}: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        <Filter />
         <div className={styles.list}>
           {items.map((i, index) =>
             <Item item={i} key={index} />

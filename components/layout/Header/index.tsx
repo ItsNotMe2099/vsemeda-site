@@ -6,11 +6,12 @@ import Search from './Search'
 import Auth from './Auth'
 import Basket from './Basket'
 import { forwardRef, useState } from 'react'
-import Menu from './Menu'
 import HiddenXs from 'components/ui/HiddenXS'
 import VisibleXs from 'components/ui/VisibleXS'
 import { useRouter } from 'next/router'
 import { useAppContext } from 'context/state'
+import { LINKS } from 'types/constants'
+import Menu from './Menu'
 
 interface Props {
   isSticky?: boolean
@@ -23,11 +24,23 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
 
   const appContext = useAppContext()
 
-  const handleOpenMobileMenu = () =>  {
+  const handleOpenMobileMenu = () => {
 
   }
 
   const router = useRouter()
+
+  const items = [
+    { label: 'Все', link: `/${appContext.region.slug}` },
+    { label: 'Акции', link: LINKS.header.actions },
+    { label: 'Суши', link: LINKS.header.sushi },
+    { label: 'Пицца', link: LINKS.header.pizza },
+    { label: 'Бургеры', link: LINKS.header.burgers },
+    { label: 'Фастфуд', link: LINKS.header.fastfood },
+    { label: 'Шашлыки', link: LINKS.header.shashlik },
+    { label: 'Десерты', link: LINKS.header.deserts },
+    { label: 'Здоровая еда', link: LINKS.header.healthyfood },
+  ]
 
   return (
     <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
@@ -63,7 +76,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           <Basket onClick={null} />
         </div>
       </div>
-      {router.asPath === `/${appContext.region.slug}` ? <Menu /> : null}
+      {router.asPath === `/${appContext.region.slug}` ? <Menu items={items}/> : null}
     </div>
   )
 })
