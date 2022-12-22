@@ -44,7 +44,4 @@ services:
         environment:
           API_HOST: http://vsemeda-api-nginx
           ADMIN_HOST: http://vsemeda-admin
-          VIRTUAL_HOST: vsemeda.dev.glob-com.ru
-          LETSENCRYPT_HOST: vsemeda.dev.glob-com.ru
-          LETSENCRYPT_EMAIL: sites.globcom@yandex.ru
           VIRTUAL_PORT: 80
