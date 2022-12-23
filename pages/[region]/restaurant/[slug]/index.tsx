@@ -6,6 +6,7 @@ import styles from './index.module.scss'
 import { useAppContext } from 'context/state'
 import Menu from 'components/for_pages/restaurant/Menu'
 import ProductCard from 'components/for_pages/restaurant/ProductCard'
+import Basket from 'components/for_pages/restaurant/Basket'
 
 interface Props {
   slug: string
@@ -28,7 +29,7 @@ export default function Restaurant({ slug }: Props) {
         products: [
           {
             name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
-            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+            price: 559, weight: '220 г', cover: ''
           },
           {
             name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
@@ -127,6 +128,11 @@ export default function Restaurant({ slug }: Props) {
               </div>
             </div>
           )}
+        </div>
+      </div>
+      <div className={styles.sidebar}>
+        <div className={styles.fixed}>
+          <Basket/>
         </div>
       </div>
     </Layout>

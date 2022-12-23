@@ -20,7 +20,7 @@ export default function ProductCard({ className, item }: Props) {
 
   return (
     <div className={classNames(styles.root, className)}>
-      <div className={styles.img}><Image src={item.cover ? item.cover : '/images/restaurant/bg.png'} alt=''
+      <div className={styles.img}><Image src={item.cover ? item.cover : '/images/restaurant/bg.svg'} alt=''
         fill /></div>
       <div className={styles.desc}>
         <h3 className={styles.header}>

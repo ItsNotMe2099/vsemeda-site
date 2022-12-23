@@ -11,11 +11,11 @@ interface Props {
 
 export default function Layout({ children, className }: Props) {
   return (
-    <div className={classNames(styles.root, className)}>
+    <div className={styles.root}>
       <StickyContainer>
         <Header isSticky />
         <div className={styles.content}>
-          <div className={styles.container}>
+          <div className={classNames(styles.container, className)}>
             {children}  
           </div>
         </div>
