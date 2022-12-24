@@ -2,8 +2,6 @@
 
 .root {
   max-height: calc(100vh - 150px);
-  position: relative;
-  min-width: 100%;
   height: 100%;
   overflow-y: auto;
   padding: 0 16px;
@@ -14,6 +12,10 @@
   box-shadow: 2px 3px 30px rgba(0, 0, 0, .08);
   scrollbar-color: #bfbfbf transparent;
   scrollbar-width: thin;
+  min-height: 400px;
+  min-width: 320px;
+  position: fixed;
+  top: 90px !important;
 }
 
 .empty {

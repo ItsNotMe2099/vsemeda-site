@@ -1,0 +1,32 @@
+@import "styles/index";
+
+.root{
+  cursor: pointer;
+}
+
+
+
+.dropDown{
+  font-size: 12px;
+  @include dropDown();
+  width: 300px;
+  padding: 16px;
+  white-space: pre-line;
+  @include mq($TabletWidth, max) {
+    width: calc(100vw - 36px);
+  }
+}
+
+.triangle{
+  
+}
+
+.inner{
+  display: flex;
+  svg{
+    fill: #bfbfbf;
+    &:hover{
+      fill: #272722;
+    }
+  }
+}

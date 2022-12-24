@@ -1,0 +1,33 @@
+@import "styles/index";
+
+.root {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  top: -5px;
+  z-index: 1;
+  @include mq($TabletWidth, max) {
+    top: -5px
+  }
+  &.bottom{
+    top: auto;
+    bottom: -6px;
+    @include mq($TabletWidth, max) {
+      top: auto;
+      bottom: -5px;
+    }
+  }
+}
+.triangle {
+
+  transform: rotate(-45deg);
+  width: 8.4px;
+  height: 8.4px;
+  background: #fff;
+
+  @include mq($TabletWidth, max) {
+    width: 14px;
+    height: 14px;
+    transform: rotate(-45deg);
+  }
+}

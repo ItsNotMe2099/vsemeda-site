@@ -4,6 +4,7 @@
   position: static;
   width: 100%;
   display: flex;
+  overflow: auto;
 
   @include mq($DesktopWidth, max) {
     div {
@@ -27,6 +28,9 @@
   position: relative;
   background-color: $green-main-1;
   z-index: 2;
+  @include mq($SmDesktopWidth, max) {
+    margin: 0 -30px;
+}
 }
 
 .container {
@@ -47,54 +51,6 @@
 
 .list {
   @include list;
-}
-
-.listMedium {
-  @include list;
-
-  @include mq($DesktopWidth, min) {
-    display: none;
-  }
-
-  @include mq($MdDesktopWidth, max) {
-    display: none;
-  }
-}
-
-.listSmall {
-  @include list;
-
-  @include mq($MdDesktopWidth, min) {
-    display: none;
-  }
-
-  @include mq($SmDesktopWidth, max) {
-    display: none;
-  }
-}
-
-.listExSmall {
-  @include list;
-
-  @include mq($SmDesktopWidth, min) {
-    display: none;
-  }
-
-  @include mq($TabletWidth, max) {
-    display: none;
-  }
-}
-
-.listTablet {
-  @include list;
-
-  @include mq($TabletWidth, min) {
-    display: none;
-  }
-
-  @include mq($PhoneWidth, max) {
-    display: none;
-  }
 }
 
 .item {

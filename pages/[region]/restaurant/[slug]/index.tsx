@@ -7,6 +7,8 @@ import { useAppContext } from 'context/state'
 import Menu from 'components/for_pages/restaurant/Menu'
 import ProductCard from 'components/for_pages/restaurant/ProductCard'
 import Basket from 'components/for_pages/restaurant/Basket'
+import QuestionPopover from 'components/ui/QuestionPopover'
+import { StickyContainer } from 'react-sticky'
 
 interface Props {
   slug: string
@@ -22,6 +24,10 @@ export default function Restaurant({ slug }: Props) {
   {
     logo: '/images/restaurant/burger.png', label: 'Burger Heroes', address: 'г. Санкт-Петербург, ул. Маршала Жукова 25',
     rating: 5, priceDelivery: 200, deliveryTime: '30-40', minPrice: 300,
+    legal: <>Юридическое лицо: ООО 2 Берега, ИНН 7816656470, КПП , ОГРН 1187847011307, ОКПО<br />
+      192242, ул. Будапештская, дом 11<br />
+      Режим работы: ПН-ВС, 00:00-23:49; ВТ, 01:00-23:49;
+    </>, info: 'Обеды, Десерты, Wok, Итальянская, Бургеры, Кофе, Суши, Пицца. ₽₽',
     categories: [
       {
         name: 'Новое',
@@ -94,7 +100,17 @@ export default function Restaurant({ slug }: Props) {
             </div>
             <div className={styles.desc}>
               <div className={styles.header}>
-                {data.label}
+                <div>{data.label}</div>
+                <QuestionPopover info={() =>
+                  <div>
+                    <p className={styles.title}>
+                      {data.label}
+                    </p>
+                    <p className={styles.text}>{data.address}</p>
+                    <p className={styles.text}>{data.legal}</p>
+                    <p className={styles.text}>{data.info}</p>
+                  </div>
+                } />
               </div>
               <div className={styles.address}>
                 {data.address}
@@ -130,11 +146,11 @@ export default function Restaurant({ slug }: Props) {
           )}
         </div>
       </div>
-      <div className={styles.sidebar}>
-        <div className={styles.fixed}>
-          <Basket/>
+      <StickyContainer>
+        <div className={styles.sidebar}>
+          <Basket isSticky />
         </div>
-      </div>
+      </StickyContainer>
     </Layout>
   )
 }
