@@ -12,12 +12,14 @@ interface Props {
 const BasketInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, ref) => {
 
   return (
-    <div id='basket' className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
-      <div className={styles.empty}>
-        <div className={styles.img}>
-          <Image src='/images/restaurant/basket.svg' alt='Пустая корзина' fill/>
+    <div className={styles.wrap} ref={ref} style={props.style} {...(props.restProps ?? {})}>
+      <div id='basket' className={styles.root}>
+        <div className={styles.empty}>
+          <div className={styles.img}>
+            <Image src='/images/restaurant/basket.svg' alt='Пустая корзина' fill />
+          </div>
+          <p className={styles.text}>В вашей корзине пусто</p>
         </div>
-        <p className={styles.text}>В вашей корзине пусто</p>
       </div>
     </div>
   )

@@ -101,7 +101,7 @@ export default function Restaurant({ slug }: Props) {
             <div className={styles.desc}>
               <div className={styles.header}>
                 <div>{data.label}</div>
-                <QuestionPopover info={() =>
+                <div className={styles.popover}><QuestionPopover info={() =>
                   <div>
                     <p className={styles.title}>
                       {data.label}
@@ -110,7 +110,7 @@ export default function Restaurant({ slug }: Props) {
                     <p className={styles.text}>{data.legal}</p>
                     <p className={styles.text}>{data.info}</p>
                   </div>
-                } />
+                } /></div>
               </div>
               <div className={styles.address}>
                 {data.address}
@@ -148,7 +148,7 @@ export default function Restaurant({ slug }: Props) {
       </div>
       <StickyContainer>
         <div className={styles.sidebar}>
-          <Basket isSticky />
+          <Basket isSticky/>
         </div>
       </StickyContainer>
     </Layout>
