@@ -46,6 +46,7 @@
 
   @include mq($TabletWidth, max) {
     min-height: calc($heightMobileMenu - 5px);
+    padding: 0 30px;
   }
 }
 
@@ -89,23 +90,5 @@
 
   @include mq($TabletWidth, max) {
     padding: 10px 15px;
-  }
-}
-
-.content {
-  display: flex;
-
-  span {
-    margin-right: 8px;
-  }
-}
-
-.img {
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 13px;
-    height: 13px;
   }
 }

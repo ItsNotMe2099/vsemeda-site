@@ -14,7 +14,7 @@ export default function Rating({ rating, className }: Props) {
       {classNames(styles.rating, {
         [styles.high]: rating === 5, [styles.middle]: rating >= 3 && rating !== 5,
         [styles.low]: rating < 3
-      })}>
+      }, className)}>
       <StarRatingSvg />
       <div className={styles.text}>{rating}</div>
     </div>

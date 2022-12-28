@@ -80,7 +80,203 @@ export default function Restaurant({ slug }: Props) {
             price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
           }
         ],
-      }
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
+      {
+        name: 'Бургеры',
+        link: '#burgers',
+        products: [
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          },
+          {
+            name: 'Креветки в азиатском соусе', desc: 'Креветки, Цукини, Тайский соус, Крахмал, масло растительное, Сахар',
+            price: 559, weight: '220 г', cover: '/images/restaurant/Photo_Burgers.png'
+          }
+        ],
+      },
     ]
   }
 
@@ -116,7 +312,7 @@ export default function Restaurant({ slug }: Props) {
                 {data.address}
               </div>
               <div className={styles.bottom}>
-                <Rating rating={data.rating} />
+                <Rating className={styles.priceDelivery} rating={data.rating} />
                 <div className={styles.priceDelivery}>
                   Доставка {data.priceDelivery}₽
                 </div>

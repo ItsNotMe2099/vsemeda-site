@@ -8,9 +8,10 @@
 
 .content {
     margin-right: 16px;
-
+    width: calc(100% - 320px);
     @include mq($SmDesktopWidth, max) {
         margin-right: 0;
+        width: 100%;
     }
 }
 
@@ -24,11 +25,13 @@
     @include mq($TabletWidth, max) {
         padding: 16px 0;
         margin-top: 0;
+        margin: 0 -10px;
     }
 
     .content {
         min-height: 150px;
         display: flex;
+        width: 100%;
 
         @include mq($TabletWidth, max) {
             min-height: 100px;
@@ -55,7 +58,7 @@
         max-width: 124px;
 
         img {
-            margin-left: 0;
+            margin-left: 10px;
             min-width: 100px;
             max-width: 100px;
             height: 100px !important;
@@ -113,6 +116,10 @@
     border-radius: 8px;
     border: 1px solid #f3f3f3;
     margin-right: 8px;
+    @include mq($PhoneWidth, max) {
+        margin-right: 3px;
+        margin-top: 3px;
+    }
 }
 
 .category {
@@ -184,6 +191,9 @@
 
 .popover {
     position: absolute;
-    right: 0;
+    right: 24px;
     top: 0;
+    @include mq($TabletWidth, max) {
+        right: 10px;
+    }
 }
