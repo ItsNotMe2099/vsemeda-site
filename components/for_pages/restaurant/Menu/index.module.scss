@@ -25,9 +25,9 @@
 }
 
 .root {
-  position: relative;
   background-color: $green-main-1;
   z-index: 2;
+  top: 75px !important;
   @include mq($SmDesktopWidth, max) {
     margin: 0 -30px;
 }
@@ -91,4 +91,9 @@
   @include mq($TabletWidth, max) {
     padding: 10px 15px;
   }
+}
+
+.wrap{
+  top: 75px !important;
+  z-index: 22;
 }

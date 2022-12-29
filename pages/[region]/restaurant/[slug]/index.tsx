@@ -326,8 +326,8 @@ export default function Restaurant({ slug }: Props) {
             </div>
           </div>
         </div>
-        <Menu items={data.categories} />
-        <div className={styles.catalog}>
+        <StickyContainer className={styles.catalog}>
+        <Menu items={data.categories} isSticky/>
           {data.categories.map((i, index) =>
             <div className={styles.category} key={index}>
               <h2 className={styles.head}>
@@ -340,12 +340,10 @@ export default function Restaurant({ slug }: Props) {
               </div>
             </div>
           )}
-        </div>
+        </StickyContainer>
       </div>
-      <StickyContainer>
-        <div className={styles.sidebar}>
-          <Basket isSticky/>
-        </div>
+      <StickyContainer className={styles.sidebar}>
+          <Basket isSticky />
       </StickyContainer>
     </Layout>
   )
