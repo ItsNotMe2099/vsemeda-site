@@ -9,6 +9,7 @@ import ProductCard from 'components/for_pages/restaurant/ProductCard'
 import Basket from 'components/for_pages/restaurant/Basket'
 import QuestionPopover from 'components/ui/QuestionPopover'
 import { StickyContainer } from 'react-sticky'
+import Promotions from 'components/for_pages/restaurant/Promotions'
 
 interface Props {
   slug: string
@@ -326,6 +327,7 @@ export default function Restaurant({ slug }: Props) {
             </div>
           </div>
         </div>
+        <Promotions/>
         <StickyContainer className={styles.catalog}>
         <Menu items={data.categories} isSticky/>
           {data.categories.map((i, index) =>

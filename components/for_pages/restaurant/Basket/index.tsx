@@ -28,7 +28,7 @@ BasketInner.displayName = 'BasketInner'
 export default function Basket(props: Props) {
 
   if (props.isSticky) {
-    return <Sticky bottomOffset={1000}>{({ style, isSticky, ...rest }) => <BasketInner {...props} restProps={rest} style={style} />}</Sticky>
+    return <Sticky>{({ style, isSticky, ...rest }) => <BasketInner {...props} restProps={rest} style={style} />}</Sticky>
   } else {
     return <BasketInner {...props} />
   }

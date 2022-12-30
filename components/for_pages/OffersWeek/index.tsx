@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import RestaurantCard from '../RestaurantCard'
 import SectionHeader from '../SectionHeader'
 import styles from './index.module.scss'
@@ -51,13 +51,25 @@ export default function OffersWeek() {
     },
   ]
 
+  const [isLast, setIsLast] = useState<boolean>(false)
+  const [isFirst, setIsFirst] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.on('slideChange', () => {
+        setIsFirst(swiperRef.current.isBeginning)
+        setIsLast(swiperRef.current.isEnd)
+      })
+    }
+  }, [swiperRef.current?.activeIndex])
+
   return (
     <div className={styles.root}>
       <div className={styles.header}>
         <SectionHeader head='Предложения недели' />
         <div className={styles.controls}>
-          <SliderControl direction='prev' onClick={handlePrevClick} />
-          <SliderControl direction='next' onClick={handleNextClick} />
+          <SliderControl disabled={isFirst} direction='prev' onClick={handlePrevClick} />
+          <SliderControl disabled={isLast} direction='next' onClick={handleNextClick} />
         </div>
       </div>
       <Swiper

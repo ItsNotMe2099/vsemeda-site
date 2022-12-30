@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
-import SectionHeader from '../SectionHeader'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.scss'
 import { Swiper as SwiperClass } from 'swiper/types'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useAppContext } from 'context/state'
 import SliderControl from 'components/ui/SliderControl'
-import PromoCard from '../Common/PromoCard'
+import PromoCard from 'components/for_pages/Common/PromoCard'
 
 export default function Promotions() {
 
@@ -17,6 +16,9 @@ export default function Promotions() {
   const handleNextClick = async () => {
     swiperRef.current?.slideNext()
   }
+
+  const [isLast, setIsLast] = useState<boolean>(false)
+  const [isFirst, setIsFirst] = useState<boolean>(true)
 
   const items = [
     {
@@ -69,9 +71,6 @@ export default function Promotions() {
     },
   ]
 
-  const [isLast, setIsLast] = useState<boolean>(false)
-  const [isFirst, setIsFirst] = useState<boolean>(true)
-
   useEffect(() => {
     if (swiperRef.current) {
       swiperRef.current.on('slideChange', () => {
@@ -83,13 +82,8 @@ export default function Promotions() {
 
   return (
     <div className={styles.root}>
-      <div className={styles.header}>
-        <SectionHeader head='Акции' />
-        <div className={styles.controls}>
-          <SliderControl disabled={isFirst} direction='prev' onClick={handlePrevClick} />
-          <SliderControl disabled={isLast} direction='next' onClick={handleNextClick} />
-        </div>
-      </div>
+      {!isFirst ? <SliderControl disabled={isFirst} direction='prev' onClick={handlePrevClick} className={styles.prev}/> : null}
+      {!isLast ? <SliderControl disabled={isLast} direction='next' onClick={handleNextClick} className={styles.next}/> : null}
       <Swiper
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper
