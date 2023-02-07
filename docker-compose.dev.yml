@@ -44,5 +44,5 @@ services:
         environment:
           API_HOST: http://vsemeda-api-nginx
           ADMIN_HOST: http://vsemeda-admin
-          VIRTUAL_HOST: dev.vsemeda.com
+          VIRTUAL_HOST: dev1Rtyjv29jw.vsemeda.com
           VIRTUAL_PORT: 80
