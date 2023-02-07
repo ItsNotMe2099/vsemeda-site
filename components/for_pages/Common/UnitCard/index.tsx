@@ -19,7 +19,7 @@ export default function UnitCard({unit}: Props) {
 
 
   return (
-    <Link href={`${appContext.region.slug}/restaurant/${unit.brand.slug}`} className={classNames(styles.root)}>
+    <Link href={`/restaurant/${unit.id}`} className={classNames(styles.root)}>
       <div className={styles.imgContainer}>
         <Image src={unit.brand?.image.link} alt={unit.brand.name} fill/>
         {unit?.cardLayout && unit?.cardLayout [UnitCardLayoutPosType.ImgTl] &&
