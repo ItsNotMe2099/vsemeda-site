@@ -1,0 +1,7 @@
+@import "styles/index";
+.root{
+  padding: 23px $space-modal 23px $space-modal;
+  @media screen and (max-width: $xs-max){
+    padding: 12px $space-modal-mobile
+  }
+}

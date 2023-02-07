@@ -1,0 +1,47 @@
+@import "styles/index";
+
+.root{
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: $space-modal $space-modal 16px $space-modal;
+
+}
+
+
+
+.left{
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.right{
+  display: flex;
+  align-items: center;
+}
+
+.back{
+  display: flex;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.arrow{
+  display: flex;
+  margin-right: 17px;
+}
+
+
+.title {
+  font-weight: 600;
+  font-size: 22px;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media screen and (max-width: $xs-max){
+    margin-top: 18px;
+  }
+}
+

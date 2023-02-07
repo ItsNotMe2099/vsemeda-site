@@ -1,0 +1,81 @@
+@import "styles/index";
+.root{
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  border-radius: 32px;
+  background: $purple;
+  padding: 16px;
+  z-index: 3;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+.title{
+  font-size: 14px;
+  font-weight: 400;
+  color: $white;
+  margin-left: 10px;
+}
+.line{
+  height: 1px;
+  width: 100%;
+  background-color: $purple4;
+  margin: 16px 0px;
+}
+.mainFields{
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  > * + * {
+    margin-top: 8px;
+  }
+}
+.row{
+  display: flex;
+  flex-direction: row;
+  .columns{
+    flex: 1;
+
+  }
+  > * + * {
+    margin-left: 8px;
+  }
+}
+.header{
+
+}
+.body{
+ flex: 1;
+  overflow-y: auto;
+}
+.footer{
+
+}
+.addressDetails{
+  margin-top: 16px;
+}
+.address{
+  .addressLabel{
+    color: #E0E0E0;
+    font-size: 12px;
+  }
+
+  .addressValue{
+    margin-top: 8px;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 150%;
+  }
+}
+.addressDetails{
+  > * + *{
+    margin-top: 16px;
+  }
+}

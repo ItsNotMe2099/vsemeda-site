@@ -1,0 +1,22 @@
+@import "styles/index";
+
+.root{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  padding: 0px 16px;
+  color: $dark2;
+  font-weight: 400;
+  font-size: 14px;
+  &.active{
+    background-color: $purple;
+    border-radius: 16px;
+    color: $white;
+  }
+}
+.name{
+  flex: 1;
+  padding-right: 8px;
+
+}

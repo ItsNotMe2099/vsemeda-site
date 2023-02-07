@@ -1,97 +1,75 @@
 @import "styles/index";
 
 .root {
-  border-bottom: 1px solid $basic-gray-2;
   display: flex;
   min-height: $heightHeader;
-  background-color: $white;
   flex-direction: column;
   z-index: 100;
+  @include container;
+
+  padding-top: 20px !important;
 }
 
 .container {
+  position: relative;
   display: flex;
   align-items: center;
-  @include container;
   min-height: $heightHeader;
+  border-radius: 24px;
+  background: $purple;
+  padding: 0px 8px 0px 16px;
+}
+
+.shadow{
+  border-radius: 24px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  &.shadow1{
+    box-shadow: 0px 100px 80px 0px #00000005;
+  }
+  &.shadow2{
+    box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #00000007;
+  }
+  &.shadow3{
+    box-shadow: 0px 22.3363094329834px 17.869047164916992px 0px #00000009;
+  }
+  &.shadow4{
+    box-shadow: 0px 12.521552085876465px 10.017241477966309px 0px #0000000B;
+  }
+  &.shadow5{
+    box-shadow: 0px 6.650102138519287px 5.32008171081543px 0px #0000000D;
+  }
+  &.shadow6{
+    box-shadow: 0px 2.767256498336792px 2.2138051986694336px 0px #00000012;
+  }
 }
 
 .left {
-  margin-right: 100px;
-
-  @include mq($MdDesktopWidth, max) {
-    margin-right: 50px;
-  }
-
-  @include mq($SmDesktopWidth, max) {
-    margin-right: 0;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 1;
+}
+.divider{
+  margin: 0px 24px;
 }
 
 .logo {
   display: block;
   cursor: pointer;
-
-  svg {
-    max-height: 40px;
-    max-width: 300px;
-  }
-}
-
-.center {
-  position: relative;
-  flex-grow: 1;
-}
-
-.address {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  padding: 5px 0 5px 10px;
-  width: 400px;
-
-  .icon {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-left: 5px;
-    margin-right: 8px;
-    cursor: pointer;
-
-    img {
-      width: 14px;
-      height: 16px;
-    }
-  }
-
-  .text {
-    @include afs(16px, 16px, 14px, 16px);
-  }
-
-  @include mq($SmDesktopWidth, max) {
-    width: 100%;
-    justify-content: center;
-  }
 }
 
 .right {
   display: flex;
   justify-content: flex-end;
   flex-grow: 1;
-
+  z-index: 1;
+  align-items: center;
   @include mq($SmDesktopWidth, max) {
     flex-grow: 0;
   }
-}
-
-.search {
-  width: max-content;
-  margin-right: 30px;
-  flex-grow: 1;
-}
-
-.menuOpen {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
 }

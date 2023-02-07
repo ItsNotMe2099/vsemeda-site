@@ -1,10 +1,10 @@
 import {useState, useEffect, MutableRefObject} from 'react'
 
-export const useDetectOutsideClick = (el, initialState) => {
+export const useDetectOutsideClick = (el: any, initialState: any) => {
   const [isActive, setIsActive] = useState(initialState)
 
   useEffect(() => {
-    const pageClickEvent = (e) => {
+    const pageClickEvent = (e: any) => {
       // If the active element exists and is clicked outside of
       if (el.current !== null && !el.current.contains(e.target)) {
         setIsActive(!isActive)
@@ -29,10 +29,10 @@ export const useDetectOutsideClick = (el, initialState) => {
   return [isActive, setIsActive]
 }
 
-export const useOnClickOutside = (ref, handler) =>  {
+export const useOnClickOutside = (ref: any, handler: any) =>  {
   useEffect(
     () => {
-      const listener = (event) => {
+      const listener = (event: any) => {
         // Do nothing if clicking ref's element or descendent elements
         if (!ref.current || ref.current.contains(event.target)) {
           return

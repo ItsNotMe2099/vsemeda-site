@@ -1,0 +1,51 @@
+@import "styles/index";
+
+$radius: 24px;
+.root {
+  position: relative;
+  flex: 0 0 auto;
+  width: 25%;
+  display: inline-block;
+  padding: 0px 12px;
+  margin-bottom: 64px;
+}
+
+.body {
+  background: $white;
+  padding: 12px 24px;
+  border-bottom-left-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+.bodyCenterWrap{
+  > * + * {
+    margin-top: 4px;
+  }
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  color: $dark1;
+}
+.price{
+  font-size: 16px;
+  font-weight: 500;
+  color: $dark2;
+  margin-top: 8px;
+}
+.imgContainer {
+  position: relative;
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+  padding-bottom: 58%;
+
+  > img {
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+  }
+}
+
+.btn{
+    margin-top: 16px;
+
+}

@@ -7,14 +7,14 @@ $PhoneWidth: 576px;
 $MPhoneWidth: 375px;
 $SmPhoneWidth: 320px;
 
+
 // font-sizes
 $fontOldMainSize: 14px;
 $fontYoungMainSize: 18px;
 
 // header
-$heightHeader: 75px;
+$heightHeader: 50px;
 $heightMenu: 65px;
-$heightHeaderFull: $heightHeader + $heightMenu;
 $heightMobileHeader: 60px;
 $heightMobileMenu: 50px;
 $heightMobileHeaderFull: $heightMobileHeader + $heightMobileMenu;
@@ -23,6 +23,7 @@ $heightMobileHeaderFull: $heightMobileHeader + $heightMobileMenu;
 $heightFooter: 140px;
 $heightDesktopFooter: 290px;
 $heightMobileFooter: 190px;
+
 
 // paddings
 $DesktopContainerPadding: 80px;
@@ -58,3 +59,25 @@ $green-btn-hover: #BAD803;
 $rating-high: #069852;
 $rating-middle: #9ccb3b;
 $rating-low: $basic-gray-6;
+
+
+//space
+$space-modal: 28px;
+$space-modal-mobile: 19px;
+
+
+$xs-max: 768px;
+$xs-max: 768px;
+$md-min: 769px;
+$md-medium: 1200px;
+$md-max: 1600px;
+$lg-min: 1601px;
+$lg-medium: 1700px;
+$lg-max: 2500px;
+$xl-min: 2501px;
+
+
+$borderRadiusModal: 32px;
+
+
+$zIndexDropDown: 200;

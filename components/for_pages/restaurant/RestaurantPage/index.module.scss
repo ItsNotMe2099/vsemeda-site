@@ -1,0 +1,15 @@
+@import "styles/index";
+
+.root{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.aside{
+  width: 282px;
+}
+.content{
+  margin-left: 282px;
+}

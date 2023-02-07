@@ -1,0 +1,22 @@
+@import "styles/index";
+.list{
+  display: flex;
+  flex-direction: row;
+
+}
+
+.small{
+  > * + *{
+    margin-left: 4px;
+  }
+}
+.normal{
+  > * + *{
+    margin-left: 8px;
+  }
+}
+.large{
+  > * + *{
+    margin-left: 10px;
+  }
+}

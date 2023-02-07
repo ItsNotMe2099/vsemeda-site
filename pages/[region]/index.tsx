@@ -1,34 +1,27 @@
-import BestOffers from 'components/for_pages/BestOffers'
-import Nearby from 'components/for_pages/Nearby'
-import OffersWeek from 'components/for_pages/OffersWeek'
-import Promotions from 'components/for_pages/Promotions'
+import BestOffers from 'components/for_pages/index/BestOffers'
 import Layout from 'components/layout/Layout'
-import styles from './index.module.scss'
 import { useEffect, useState } from 'react'
-import MainLoader from 'components/for_pages/Loaders/MainLoader'
-
+import {IUnitIndex} from 'data/interfaces/IUnitIndex'
+import styles from './index.module.scss'
+import UnitList from 'components/for_pages/Common/UnitList'
+import UnitRepository from 'data/repositories/UnitRepository'
 export default function Region() {
 
   const [loading, setIsLoading] = useState(true)
-
+  const [unitIndex, setUnitIndex] = useState<IUnitIndex | null>()
  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 5000)
+   UnitRepository.fetchUnitIndex({location: {lat: 55.85644835024383, lng: 37.00685434662651 }}).then(i => setUnitIndex(i))
   }, [])
 
   return (
     <Layout>
-      {loading ?
-        <MainLoader/>
-        :
-        <>
-          <BestOffers />
-          <OffersWeek />
-          <Promotions />
-          <Nearby />
-        </>
-      }
+      {unitIndex && <>
+        <BestOffers />
+        <div className={styles.body}>
+          <UnitList units={[...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,]}/>
+        </div>
+      </>}
+
     </Layout>
   )
 }

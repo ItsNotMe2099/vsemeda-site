@@ -5,37 +5,54 @@ export const breakpoints = {
   TabletWidth: 768,
   PhoneWidth: 576,
   MPhoneWidth: 375,
-  SmPhoneWidth: 320
+  SmPhoneWidth: 320,
+
+
+  xsMax: 768,
+  mdMin: 769,
+  mdMedium: 1200,
+  mdMax: 1600,
+  lgMin: 1601,
+  lgMedium: 1700,
+  lgMax: 2500,
+  xlMin: 2501,
+  xlMaxFake: 8000,
 }
 
 export const colors = {
   white: '#FFFFFF',
   black: '#000000',
-  error: '#f58220',
-  main: '#bfbfbf',
-  basicGray1: '#f3f3f3',
-  basicGray2: '#bfbfbf',
-  basicGray3: '#8c8c8c',
-  basicGray4: '#595959',
-  basicGray5: '#d9d9d9',
-  basicGray6: '#f9f9f9',
-  blackText: '#3E3E3E',
-  disabled: '#f5f5f5',
-  disabledText: '#bfbfbf',
-  basicTextGray: '#272727',
-  basicTextBlack: '#000',
-  greenMain1: '#9ccb3b',
-  purpleMain1: '#6b4c9f',
-  redMain1: '#e31e36',
-  redBtnDefault: '#FF4D4F',
-  redBtnHover: '#FF7875',
-  redBtnPressed: '#CF1322',
-  greenBtnHover: '#BAD803',
 
-  /* Colors | Rating */
-  ratingHigh: '#069852',
-  ratingMiddle: '#9ccb3b',
-  ratingLow: '#f9f9f9'
+// Text Colors
+  dark1: '#4C4958',
+  dark2: '#333333',
+  grey1: '#6C6C6C',
+  grey2: '#828282',
+  grey3: '#AEAEAE',
+  grey4: '#CACACA',
+
+// Base Purple
+  purple: '#812292',
+  purple2: '#781F88',
+  purple3: '#F0ECFB',
+
+// Base Green
+  green: '#61D56E',
+  green2: '#C6EFCB',
+  green3: '#B7D8BD',
+  green4: '#F4FFF6',
+// Orange
+  orange: '#F58220',
+  orange1: '#ED5F1C',
+
+// Red
+  red: '#EB5757',
+
+// Blue
+  blue: '#474EEB',
+  blue1: '#01C7F6',
+  blue3: '#98DCDB',
+
 }
 
 export const fontSizes = {

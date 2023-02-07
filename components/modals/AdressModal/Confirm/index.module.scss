@@ -1,0 +1,33 @@
+@import "styles/index";
+.root{
+  position: absolute;
+  bottom: 40px;
+  left: 0px;
+  right: 0px;
+  padding: 0px 32px;
+  z-index: 2;
+}
+.wrapper{
+  max-width: 792px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0px 16px;
+  background: $white;
+  border-radius: 32px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.address{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  padding-right: 20px;
+  > * + * {
+    margin-left: 8px;
+  }
+}

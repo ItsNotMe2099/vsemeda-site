@@ -1,0 +1,8 @@
+@import "styles/index";
+
+.label{
+  @include inputLabel;
+  &.withIcon{
+    @include inputLabelWithIcon;
+  }
+}

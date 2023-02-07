@@ -1,0 +1,58 @@
+@import "styles/index";
+
+.modal{
+  outline: none;
+}
+
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  padding: 10px;
+  z-index: 2;
+  &.menu, &.menuOwner{
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+  }
+  &.profile{
+    @media (min-width: $md-min) {
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding-top: 20px;
+      padding-right: 65px;
+    }
+  }
+  &.notifications{
+    @media (min-width: $md-min) {
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding-top: 20px;
+      padding-right: 65px;
+    }
+  }
+  &.article{
+    @media (max-width: $xs-max) {
+      align-items: stretch;
+    }
+  }
+  &.gallery{
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+    &>div{
+      flex: 1;
+    }
+  }
+}

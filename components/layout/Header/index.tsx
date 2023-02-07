@@ -1,17 +1,21 @@
 import styles from './index.module.scss'
 import { Sticky } from 'react-sticky'
 import Link from 'next/link'
-import LogoSvg from 'components/svg/LogoSvg'
-import Search from './Search'
-import Auth from './Auth'
-import Basket from './Basket'
 import { forwardRef, useState } from 'react'
-import HiddenXs from 'components/ui/HiddenXS'
-import VisibleXs from 'components/ui/VisibleXS'
+import HiddenXs from 'components/visibility/HiddenXs'
+import VisibleXs from 'components/visibility/VisibleXs'
 import { useRouter } from 'next/router'
 import { useAppContext } from 'context/state'
 import { LINKS } from 'types/constants'
-import Menu from './Menu'
+import LogoEdaSvg from 'components/svg/LogoEdaSvg'
+import HeaderAddress from 'components/layout/Header/HeaderAddress'
+import HeaderDelivery from 'components/layout/Header/HeaderDelivery'
+import LoginButton from 'components/layout/Header/LoginButton'
+import DividerDotsSvg from 'components/svg/DividerDotsSvg'
+import ShoppingCartSvg from 'components/svg/ShoppingCartSvg'
+import {colors} from 'styles/variables'
+import LoupeSvg from 'components/svg/LoupeSvg'
+import classNames from 'classnames'
 
 interface Props {
   isSticky?: boolean
@@ -47,11 +51,17 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
       <div className={styles.container}>
         <div className={styles.left}>
           <HiddenXs>
+            <>
             <Link href='/'>
               <div className={styles.logo}>
-                <LogoSvg />
+                <LogoEdaSvg />
               </div>
             </Link>
+            <DividerDotsSvg className={styles.divider}/>
+            <HeaderAddress/>
+            <DividerDotsSvg className={styles.divider}/>
+            <HeaderDelivery/>
+            </>
           </HiddenXs>
           <VisibleXs>
             <div
@@ -62,21 +72,21 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
             </div>
           </VisibleXs>
         </div>
-        <div className={styles.center}>
-          <div className={styles.address}>
-            <div className={styles.icon}>
-              <img src='/images/header/address.svg' alt='' />
-            </div>
-            <div className={styles.text}>Введите адрес доставки</div>
-          </div>
-        </div>
         <div className={styles.right}>
-          <Search onClick={() => setIsShow(isShow ? false : true)} className={styles.search} />
-          {!isShow ? <Auth onClick={null} /> : null}
-          <Basket onClick={null} />
+          <LoupeSvg color={colors.white}/>
+          <DividerDotsSvg className={styles.divider}/>
+          <ShoppingCartSvg color={colors.white}/>
+          <DividerDotsSvg className={styles.divider}/>
+          <LoginButton/>
         </div>
+        <div className={classNames(styles.shadow, styles.shadow1)}/>
+        <div className={classNames(styles.shadow, styles.shadow2)}/>
+        <div className={classNames(styles.shadow, styles.shadow3)}/>
+        <div className={classNames(styles.shadow, styles.shadow4)}/>
+        <div className={classNames(styles.shadow, styles.shadow5)}/>
+        <div className={classNames(styles.shadow, styles.shadow6)}/>
       </div>
-      {router.asPath === `/${appContext.region.slug}` ? <Menu items={items}/> : null}
+
     </div>
   )
 })

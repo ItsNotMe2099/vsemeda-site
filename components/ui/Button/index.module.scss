@@ -1,158 +1,205 @@
 @import "styles/index";
 
-.link, .btn {
-  position: relative;
+.root {
+  border: 2px solid #000;
+  border-radius: 30px;
+  padding: 17px 35px;
   cursor: pointer;
-  outline: none;
-  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-flex;
+  position: relative;
   justify-content: center;
   align-items: center;
-  border-radius: 2px;
-  font-size: 16px;
-  padding: 0 16px;
+  transition: background-color 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s;
 
-  border: none;
+  &.disabled {
+    color: $grey1;
+    background: $grey5;
+    border-color: transparent;
+  }
+
   &.fluid {
     width: 100%;
   }
 }
 
-.dashed{
-  border: 1px dashed $basic-gray-5 !important;
+// style type
+.outlinedPurple {
+  background: transparent;
+  border-color: $purple;
+  color: $purple;
+
+  &.hover {
+    background: $purple;
+    color: $white;
+    border-color: transparent;
+
+    &.press {
+      background: $purple;
+      @include boxShadowButtonInner;
+    }
+  }
 }
 
-.icon{
-  border-radius: 100%;
-  padding: 0;
+
+.outlinedWhite {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+
+  &.hover {
+    background: $white;
+    color: $black;
+    border-color: transparent;
+
+    &.press {
+      border-color: transparent !important;
+      @include boxShadowButtonInner;
+    }
+  }
+}
+
+.filledGrey {
+  color: $dark2;
+  background: $grey5;
+  border: none;
+}
+
+.filledGreen {
+  color: $black;
+  background: $green;
+  border: none;
+  &.hover {
+    background: $black;
+    color: $green;
+    border-color: transparent;
+    &.press {
+      border-color: transparent !important;
+      @include boxShadowButtonInner;
+    }
+  }
+}
+
+.filledWhite {
+  color: $black;
+  background: $white;
+  border: none;
+
+  &.press {
+    @include boxShadowButtonInner;
+  }
+}
+
+
+.textDark {
+  color: $black;
+  padding: 4px 8px;
+  background: transparent;
+  border-color: transparent;
+  text-transform: none;
+  text-decoration: none;
+  text-underline-offset: 2px;
+
 }
 
 .withIcon {
-
-  .children {
+  .text {
     display: flex;
     align-items: center;
-    grid-gap: 4px;
+    > * + *{
+      margin-left: 8px;
+    }
   }
 }
 
-.iconBtnSmall{
-  width: 24px;
+@mixin smallButton {
+  border: none;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  > * + * { margin-left: 4px}
+  padding: 0px 10px;
+  border-radius: 8px;
+  text-transform: none;
+
 }
 
-.iconBtnMedium{
-  width: 32px;
+// end style type
+
+// font style
+.normal12 {
+  font-size: 12px;
+
+  @media (max-width: $xs-max) {
+    font-size: 12px;
+  }
 }
 
-.iconBtnLarge{
-  width: 40px;
-}
-
-.btnSmall{
-  height: 24px;
+.normalBold {
   font-size: 14px;
-}
+  font-weight: bold;
 
-.btnMedium{
-  height: 32px;
-}
-
-.btnLarge{
-  height: 40px;
-}
-
-.primary{
-  color: #fff;
-  svg{
-    fill: #fff;
+  @media (max-width: $xs-max) {
+    font-size: 12px;
   }
 }
 
-.green{
-  background-color: $green-main-1;
-  border-color: $green-main-1 !important;
-  &:hover{
-    background-color: $green-btn-hover;
-    border-color: $green-btn-hover !important;
-  }
-  &:active{
-    background-color: $green-main-1;
-    border-color: $green-main-1;
+.semibold14 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.semibold16 {
+  font-size: 16px;
+  font-weight: 600;
+
+  @media (max-width: $xs-max) {
+    font-size: 14px;
   }
 }
 
-.red{
-  background-color: $red-btn-default;
-  border-color: $red-btn-default !important;
-  &:hover{
-    background-color: $red-btn-hover;
-    border-color: $red-btn-hover !important;
-  }
-  &:active{
-    background-color: $red-btn-pressed;
-    border-color: $red-btn-pressed;
+.semibold18 {
+  font-size: 18px;
+  font-weight: 600;
+
+  @media (max-width: $xs-max) {
+    font-size: 16px;
   }
 }
 
-.border-green{
-  &:hover{
-    border-color: $green-btn-hover !important;
-    span{
-      color: $green-btn-hover;
-    }
-    svg{
-      fill: $green-btn-hover;
-    }
-  }
-  &:active{
-    border-color: $green-main-1 !important;
-    span{
-      color: $green-main-1;
-    }
-    svg{
-      fill: $green-main-1;
-    }
-  }
+// end font style
+
+.text {
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
 
-.border-red{
-  &:hover{
-    border-color: $red-btn-hover !important;
-    span{
-      color: $red-btn-hover;
-    }
-    svg{
-      fill: $red-btn-hover;
-    }
-  }
-  &:active{
-    border-color: $red-btn-pressed !important;
-    span{
-      color: $red-btn-pressed;
-    }
-    svg{
-      fill: $red-btn-pressed;
-    }
-  }
+.textHidden {
+  visibility: hidden;
 }
 
-.outline, .primary{
-  border: 1px solid $basic-gray-5 !important;
+.spinner {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.outline, .dashed{
-  span{
-    color: $basic-gray-4;
-  }
-  svg{
-    fill: $basic-gray-4;
-  }
+.spinnerVisible {
+  visibility: visible;
 }
 
-.disabled {
-  background-color: $disabled;
-  border-color: $disabled;
-  color: $disabled-text;
-  svg{
-    fill: $disabled-text;
-  }
+.arrow {
+  margin-left: 15px;
 }

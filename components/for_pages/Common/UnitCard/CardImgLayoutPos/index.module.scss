@@ -1,0 +1,47 @@
+@import "styles/index";
+$space: 16px;
+
+.tl{
+  position: absolute;
+  top: $space;
+  left: $space;
+}
+.tr{
+  position: absolute;
+  top: $space;
+  right: $space;
+}
+.bl{
+  position: absolute;
+  bottom: $space;
+  left: $space;
+}
+.br{
+
+  position: absolute;
+  bottom: $space;
+  right: $space;
+}
+.list{
+
+  display: flex;
+  flex-direction: row;
+  padding: 6px 10px;
+  border-radius: 18px;
+}
+
+.small{
+  > * + *{
+    margin-left: 4px;
+  }
+}
+.normal{
+  > * + *{
+    margin-left: 8px;
+  }
+}
+.large{
+  > * + *{
+    margin-left: 10px;
+  }
+}

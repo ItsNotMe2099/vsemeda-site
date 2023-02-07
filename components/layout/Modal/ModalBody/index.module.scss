@@ -1,0 +1,26 @@
+@import "styles/index";
+.root{
+  padding: $space-modal;
+  @media screen and (max-width: $xs-max){
+    padding: $space-modal-mobile;
+    padding-top: 9px;
+  }
+  &.fixed{
+    flex: 1;
+  }
+}
+
+.scroll{
+  
+  
+}
+
+.wrapper{
+  display: block;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.verticalTrack{
+
+}

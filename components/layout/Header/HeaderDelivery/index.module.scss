@@ -1,0 +1,16 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  @include mq($SmDesktopWidth, max) {
+    display: none;
+  }
+}
+.value{
+  padding: 0px 12px;
+  color: $white;
+  font-size: 13px;
+}

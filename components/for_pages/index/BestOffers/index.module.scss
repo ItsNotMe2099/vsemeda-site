@@ -1,0 +1,15 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  height: #{486+50+20+34}px;
+  overflow: hidden;
+  top: #{-50 + -20}px;
+}
+
+.bg {
+  @include posAbsoluteAll();
+  top: #{-50 + -20 + -290}px;
+  bottom: -40px;
+  background: radial-gradient(circle at center, #B648D7, #882CB6, #4A078A);
+}

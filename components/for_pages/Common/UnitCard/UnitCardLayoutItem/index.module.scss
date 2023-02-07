@@ -1,0 +1,30 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-size: 14px;
+  > * + * {
+    margin-left: 4px;
+  }
+  overflow: hidden;
+}
+.txt{
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+.small{
+  font-weight: 600;
+}
+.normal{
+  font-weight: 400;
+}
+.large{
+    font-weight: 600;
+}

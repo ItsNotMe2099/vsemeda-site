@@ -1,0 +1,147 @@
+@import "styles/index";
+$fieldHeightDefault: 50px;
+$fieldHeightDefaultExSmall: 38px;
+.root{}
+
+.wrapper{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  &.default{
+    left: 17px;
+  }
+}
+
+.input{
+  order: 2;
+  color: $dark1;
+  width: 100%;
+  &.success{
+    border-color: $green;
+    color: $grey1;
+  }
+
+  &.default{
+    font-weight: 400;
+    height: $fieldHeightDefault;
+    border: 1px solid grey;
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 15px 0 15px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    &:focus{
+      font-size: 16px;
+    }
+    &::placeholder {
+      color: grey;
+    }
+
+    &:-webkit-autofill{
+      -webkit-text-fill-color: grey !important;
+      -webkit-background-clip: text;
+    }
+    &.success{
+      -webkit-text-fill-color: $green !important;
+    }
+  }
+  &.defaultSmall{
+
+    font-weight: 400;
+    height: 50px;
+    border: 1px solid $grey1;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0px 8px 0 8px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    &:focus{
+      font-size: 14px;
+    }
+    &::placeholder {
+      color: grey;
+    }
+    &.hover{
+      background: grey;
+    }
+  }
+
+  &.defaultExSmall{
+
+    font-weight: 400;
+    height: $fieldHeightDefaultExSmall;
+    border: 1px solid grey;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0px 8px 0 8px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    &:focus{
+      font-size: 14px;
+    }
+    &::placeholder {
+      color: grey;
+    }
+    &.hover{
+      background: grey;
+    }
+  }
+
+  &.error{
+    border-color: $red;
+    color: $red;
+    &::placeholder {
+      color: $red;
+    }
+  }
+  &.withIcon{
+    padding-left: 50px;
+  }
+  &.white{
+    background: $white;
+    color: $white;
+  }
+  &.purple{
+    border: none;
+    background: $purple4;
+    color: $white;
+  }
+}
+
+.label{
+  @include inputLabel;
+  &.withIcon{
+    @include inputLabelWithIcon;
+  }
+}
+
+.successIcon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+.failIcon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+.suffix{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

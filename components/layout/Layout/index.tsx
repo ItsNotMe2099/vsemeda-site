@@ -16,7 +16,7 @@ export default function Layout({ children, className }: Props) {
         <Header isSticky />
         <div className={styles.content}>
           <div className={classNames(styles.container, className)}>
-            {children}  
+            {children}
           </div>
         </div>
         <Footer />

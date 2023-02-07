@@ -1,0 +1,67 @@
+@import "styles/index";
+
+.root{
+  position: relative;
+}
+
+.label{
+  @include inputLabel;
+  &.withIcon{
+    @include inputLabelWithIcon;
+  }
+}
+.input{
+  display: block;
+  width: 100%;
+  color: $white;
+  transition: background-color 0.2s, min-height 0.2s;
+  resize: none;
+  border-radius: 10px;
+  padding: 22px 15px 0 15px;
+  &.default{
+    border: none;
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 15px 0 15px;
+    font-size: 16px;
+    min-height: 50px;
+    &:focus{
+      font-size: 16px;
+    }
+    &::placeholder {
+      color: black;
+    }
+    &.hover{
+      background: black;
+    }
+  }
+  &.error{
+    border-color: $red;
+    color: $red;
+    &::placeholder {
+      color: $red;
+    }
+  }
+  &.withIcon{
+    padding-left: 50px;
+  }
+  &.focused{
+    min-height: 120px;
+  }
+  &.purple{
+    border: none;
+    background: $purple4;
+    color: $white;
+  }
+}
+
+.icon{
+  position: absolute;
+  transform: translateY(-50%);
+  left: 10px;
+  &.default{
+    top: 50px * 0.5;
+    left: 17px;
+  }
+
+}

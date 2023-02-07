@@ -1,0 +1,24 @@
+@import "styles/index";
+
+.root{
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 100%;
+  &.normal{
+    width: 24px;
+    height: 24px;
+  }
+  &.large{
+    width: 36px;
+    height: 36px;
+  }
+}
+.white{
+  background: $white;
+}
+

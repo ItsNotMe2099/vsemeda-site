@@ -1,0 +1,27 @@
+@import "styles/index";
+.root{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: $white;
+  width: 796px;
+
+  background: white;
+  border-radius: $borderRadiusModal;
+
+  @media (max-width: $xs-max) {
+    width: 90vw;
+    border-radius: 30px;
+  }
+  &.fixed{
+    max-height: 96vh;
+    @media screen and (max-width: 900px){
+      min-height: 100vh;
+      height:100%;
+      max-height: unset;
+      min-height: -webkit-fill-available;
+    }
+
+  }
+
+}

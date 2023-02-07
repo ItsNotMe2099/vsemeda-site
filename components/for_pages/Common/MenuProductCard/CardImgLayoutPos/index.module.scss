@@ -1,0 +1,22 @@
+@import "styles/index";
+$space: 16px;
+
+.root{
+
+  display: flex;
+  flex-direction: row;
+  > * + * {
+    margin-left: 8px;
+  }
+}
+
+.item{
+  background: $white;
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

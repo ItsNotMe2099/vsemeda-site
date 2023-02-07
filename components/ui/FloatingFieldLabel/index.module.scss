@@ -1,0 +1,23 @@
+@import "styles/index";
+
+.root{
+  position: absolute;
+  left: 0px;
+  top: 8px;
+  @include inputLabel;
+  &.withIcon{
+    @include inputLabelWithIcon;
+  }
+  opacity: 0.75;
+  order: 1;
+  font-size: 15px;
+  color: #E0E0E0;
+  transform-origin: left top;
+  transform: scale(1) translate3d(16px, 8px, 0);
+  transition: 200ms ease all;
+  &.active{
+    color: $grey2;
+    opacity: 1;
+    transform: scale(0.8) translate3d(16px, 0px, 0);
+  }
+}

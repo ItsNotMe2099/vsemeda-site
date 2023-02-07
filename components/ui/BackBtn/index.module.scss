@@ -1,0 +1,15 @@
+@import "styles/index";
+
+.root{
+  &.defaultPosition{
+    position: absolute;
+    top: 39px;
+    right: 39px;
+    z-index: 1;
+    @media (max-width: $xs-max) {
+      top: 15px;
+      right: 15px;
+    }
+  }
+}
+

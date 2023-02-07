@@ -2,10 +2,14 @@ import 'normalize.css'
 import 'styles/globals.scss'
 import type {AppProps as NextAppProps } from 'next/app'
 import App, {AppContext} from 'next/app'
-import { useEffect } from 'react'
+import {useEffect, useState} from 'react'
 import { AppWrapper } from 'context/state'
 import {getSelectorsByUserAgent} from 'react-device-detect'
 import 'swiper/css/bundle'
+import ModalContainer from 'components/layout/ModalContainer'
+import BottomSheetContainer from 'components/layout/BottomSheetContainer'
+import Snackbar from 'components/layout/Snackbar'
+import Head from 'next/head'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
@@ -14,8 +18,10 @@ export interface AppProps extends NextAppProps {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [clientVisible, setClientVisible] = useState(false)
 
   useEffect(() => {
+      setClientVisible(true)
     if (pageProps.isMobile) {
       document.body.classList.add('mobile-ua')
       document.documentElement.className = 'mobile-ua'
@@ -25,7 +31,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <AppWrapper isMobile={pageProps.isMobile}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover"
+        />
+      </Head>
       <Component {...pageProps} />
+      {clientVisible && <ModalContainer/>}
+      {clientVisible && <BottomSheetContainer/>}
+      {clientVisible && <Snackbar/>}
     </AppWrapper>
   )
 }
