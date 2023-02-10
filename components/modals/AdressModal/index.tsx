@@ -70,7 +70,7 @@ const AddressFormModalInner = (props: Props) => {
         {addressStr && <div className={styles.address}>{addressStr}</div>}
         {addressSearchShown && <div  className={styles.addressField}>
           <Formik initialValues={{}} onSubmit={null}>
-            <AddressField  name={'address'} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
+            <AddressField  hasAddress={!!geoObject} name={'address'} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
           </Formik>
         </div>}
         <div className={styles.placemark}><MarkerSvg/></div>

@@ -1,6 +1,5 @@
 import request from 'utils/request'
 import { DeepPartial} from 'types/types'
-import {IUser} from 'data/interfaces/IUser'
 import {IUserAddress} from 'data/interfaces/IUserAddress'
 
 export default class UserAddressRepository {
@@ -13,7 +12,7 @@ export default class UserAddressRepository {
     return res
   }
 
-  static async update(id: number, data: DeepPartial<IUserAddress>): Promise<IUserAddress> {
+  static async update(id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> {
     const res = await request<IUserAddress>({
       method: 'patch',
       url: `/api/user-address/${id}`,
@@ -22,7 +21,7 @@ export default class UserAddressRepository {
     return res
   }
 
-  static async delete(id: number): Promise<IUser> {
-    return request({url: '/api/user-address'})
+  static async delete(id: string): Promise<any> {
+    return request({url: `/api/user-address/${id}`})
   }
 }

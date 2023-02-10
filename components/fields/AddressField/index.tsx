@@ -23,7 +23,7 @@ interface Props extends IField<string> {
   className?: string
   onNewAddress: (address: YandexResponseGeocoder) => void
   onEditClick: () => void
-
+  hasAddress?: boolean
 }
 
 export default function AddressField(props: Props) {
@@ -135,17 +135,25 @@ export default function AddressField(props: Props) {
     }
   }
   const setSuggestionOnExit = () => {
-    const suggestion = suggestions.length > 0 ? suggestions[0] : null
+    const suggestion = suggestions.length > 0 ? suggestions.find(i => i.tags.includes('house')) : null
 
-    if (suggestion) {
+    if(props.hasAddress){
+      setTimeout(() => {
+        setFieldTouched(props.name, true)
+      }, 200)
+      setIsEditMode(false)
+      setIsExpanded(false)
+      setIsActive(false)
+      return
+    }
+    if (!props.hasAddress && suggestion) {
       helpers.setValue(suggestion.title.text)
     }
+    if(!suggestion){
 
-    setTimeout(() => {
-      setFieldTouched(props.name, true)
-    }, 200)
+    }
 
-    setIsActive(false)
+
   }
   const handleBlur = () => {
     setSuggestionOnExit()

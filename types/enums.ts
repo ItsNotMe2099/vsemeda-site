@@ -16,6 +16,10 @@ export enum CookiesType {
   uuid = 'uuid'
 }
 
+export enum LocalStorageKey {
+ addresses = 'addresses'
+}
+
 export enum Preset {
   /** 250px */
   xsResize,
