@@ -20,7 +20,7 @@ export default function MenuProductCard(props: Props) {
   return (
     <div className={classNames(styles.root, {[styles.stop]: product.isAvailable})}>
       <div className={styles.imgContainer}>
-        {product.image && <img src={`${product.image?.link}?w=600`} className={styles.image} alt={product.name} fill/>}
+        {product.image && <img src={`${product.image?.link}?w=600`} className={styles.image} alt={product.name}/>}
         {product.layout && product.layout[ProductCardLayoutPosType.ImgT] &&
           <CardImgLayoutPos items={product.layout[ProductCardLayoutPosType.ImgT]}/>}
       </div>
