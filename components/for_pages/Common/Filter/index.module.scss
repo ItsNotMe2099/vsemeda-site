@@ -1,0 +1,95 @@
+@import "styles/index";
+
+.root {
+  padding: 19px;
+  padding-top: 15px;
+  background: #FFFFFF;
+  border-radius: 32px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 48px;
+  max-height: 75px;
+  @include mq($TabletWidth, max) {
+    overflow-x: auto;
+    background-color: transparent;
+    margin: 0;
+    gap: 16px;
+    @include scroll_hide;
+    border-radius: 0;
+  }
+}
+
+.item {
+  padding: 10px 19px;
+  background: #F3F3F3;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  letter-spacing: -0.24px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+
+  img {
+    position: relative !important;
+    height: auto !important;
+    width: auto !important;
+    margin-right: 5px;
+  }
+
+  span {
+    color: #828282;
+  }
+}
+
+.active {
+  color: #fff;
+  background: #812292;
+}
+
+.left,
+.right {
+  display: flex;
+  gap: 16px;
+}
+
+.full {
+  display: flex;
+  gap: 16px;
+
+  @include mq($MdDesktopWidth, max) {
+    display: none;
+  }
+}
+
+.medium {
+  display: flex;
+  gap: 16px;
+  @include mq($MdDesktopWidth, min) {
+    display: none;
+  }
+  @include mq($SmDesktopWidth, max) {
+    display: none;
+  }
+}
+
+.smDesk{
+  display: flex;
+  gap: 16px;
+  @include mq($SmDesktopWidth, min) {
+    display: none;
+  }
+  @include mq($TabletWidth, max){
+    display: none;
+  }
+}
+
+.tablet{
+  display: flex;
+  gap: 16px;
+  @include mq($TabletWidth, min){
+    display: none;
+  }
+}

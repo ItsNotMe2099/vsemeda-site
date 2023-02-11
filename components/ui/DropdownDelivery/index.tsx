@@ -2,24 +2,26 @@ import { useRef, useState } from 'react'
 import { useDetectOutsideClick } from 'components/hooks/useDetectOutsideClick'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { ICategory } from 'data/interfaces/ICategory'
+
+interface IOption{
+  name: string
+}
 
 interface Props {
-  options?: ICategory[]
+  options?: IOption[]
   onTriggerClick?: () => void
   activeTab?: string
   allOption?: boolean
   dots?: boolean
   className?: string
-  optionClick?: (option: ICategory) => void
-  style?: 'more'
+  optionClick?: () => void
 }
 
-export default function DropdownMenu(props: Props) {
+export default function DropdownDelivery(props: Props) {
   const dropdownRef = useRef(null)
   const { options, optionClick, onTriggerClick } = props
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
-  const [currentLabel, setCurrentLabel] = useState<string>(props.style === 'more' ? '' : options[0].name)
+  const [currentLabel, setCurrentLabel] = useState<string>(options[0].name)
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent> ) => {
     if (options.length === 0) {
@@ -31,19 +33,19 @@ export default function DropdownMenu(props: Props) {
 
   console.log(isActive)
 
-  const handleOptionClick = (item: ICategory) => {
+  const handleOptionClick = (item: IOption) => {
     setCurrentLabel(item.name)
     setIsActive(false)
-    optionClick ? optionClick(item) : null
+    optionClick ? optionClick() : null
   }
 
   const filtered = options.filter(i => i.name !== currentLabel)
 
   return (
-    <div className={classNames(styles.root, props.className, {[styles.more]: props.style === 'more'})}>
+    <div className={classNames(styles.root, props.className)}>
       <a href="#" onClick={handleClick} className={classNames(styles.dropDownTrigger)}>
         <div className={styles.label}>
-          <span>{props.style === 'more' ? <>Еще</> : currentLabel}</span>
+          <span className={styles.delivery}>Доставка:</span><span>{currentLabel}</span>
         </div>
         <div className={styles.arrow}>
           <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,8 +54,7 @@ export default function DropdownMenu(props: Props) {
         </div>
       </a>
       <nav ref={dropdownRef} className={classNames(styles.dropDown, { [styles.dropDownActive]: isActive })}>
-        {(props.style === 'more' ? options : filtered).map((item, index) => <div key={index} 
-        className={classNames(styles.option, {[styles.optionCurrent]: props.style === 'more' && item.name === currentLabel})}
+        {filtered.map((item, index) => <div key={index} className={styles.option}
           onClick={() => handleOptionClick(item)}>
           <a>{item.name}</a></div>)}
       </nav>

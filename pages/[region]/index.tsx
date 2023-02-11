@@ -5,6 +5,7 @@ import {IUnitIndex} from 'data/interfaces/IUnitIndex'
 import styles from './index.module.scss'
 import UnitList from 'components/for_pages/Common/UnitList'
 import UnitRepository from 'data/repositories/UnitRepository'
+import Filter from 'components/for_pages/Common/Filter'
 export default function Region() {
 
   const [loading, setIsLoading] = useState(true)
@@ -17,6 +18,7 @@ export default function Region() {
     <Layout>
       {unitIndex && <>
         <BestOffers />
+        <Filter/>
         <div className={styles.body}>
           <UnitList units={[...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,...unitIndex.units,]}/>
         </div>

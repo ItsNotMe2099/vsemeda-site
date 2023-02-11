@@ -42,7 +42,7 @@ export interface IField<T> extends FieldConfig<T> {
 }
 export interface IOption<T> {
   label: string
-  value: T
+  value?: T
   disabled?: boolean
   description?: string
 }

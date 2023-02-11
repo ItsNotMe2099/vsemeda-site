@@ -2,66 +2,7 @@
 
 .root {
   position: relative;
-  margin-bottom: 15px;
   width: 100%;
-}
-
-.more {
-  margin-bottom: 0;
-
-  .dropDownTrigger {
-    background: #F3F3F3;
-    border-radius: 16px;
-    height: 100%;
-    padding: 10px 19px;
-  }
-
-  .dropDown {
-    a {
-      &:hover {
-        background-color: #f3f3f3;
-      }
-    }
-
-    .optionCurrent {
-      a{
-        &:hover {
-          background-color: #812292;
-        }
-      }
-    }
-  }
-
-  .arrow {
-    margin-left: 22px;
-  }
-
-  .label {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: -0.24px;
-
-    span {
-      color: #333333;
-    }
-  }
-
-  .optionCurrent {
-    background: #812292;
-
-    &:hover {
-      background: #812292;
-    }
-
-    a {
-      color: #fff;
-
-      &:hover {
-        color: #fff;
-      }
-    }
-  }
 }
 
 .dropDown {
@@ -87,7 +28,7 @@
     color: #000;
 
     &:hover {
-      background-color: #61D56E;
+      background-color: #f3f3f3;
     }
   }
 }
@@ -102,10 +43,10 @@
 }
 
 .dropDownTrigger {
-  padding: 0 17px;
-  height: 50px;
-  background: #61D56E;
-  border-radius: 8px;
+  background: #F3F3F3;
+  border-radius: 16px;
+  height: 100%;
+  padding: 10px 19px;
   text-decoration: none;
   justify-content: space-between;
   display: flex;
@@ -115,10 +56,6 @@
   width: 100%;
   margin: 0px;
   font-size: 13px;
-
-  @media screen and (max-width: $xs-max) {
-    height: 35px;
-  }
 }
 
 
@@ -138,7 +75,7 @@
 .label {
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.24px;
@@ -146,9 +83,15 @@
   span {
     color: #000;
   }
+
+  .delivery {
+    color: #828282;
+    margin-right: 8px;
+  }
 }
 
 .arrow {
   display: flex;
   align-self: center;
+  margin-left: 12px;
 }
