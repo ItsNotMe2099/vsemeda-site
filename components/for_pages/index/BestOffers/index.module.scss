@@ -5,6 +5,9 @@
   height: #{486+50+20+34}px;
   overflow: hidden;
   top: #{-50 + -20}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bg {
@@ -12,4 +15,54 @@
   top: #{-50 + -20 + -290}px;
   bottom: -40px;
   background: radial-gradient(circle at center, #B648D7, #882CB6, #4A078A);
+}
+
+.circle {
+  position: absolute;
+  right: 15%;
+}
+
+.container {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  color: $white;
+}
+
+.choose {
+  margin-top: 24px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: $white;
+}
+
+.drop {
+  margin-top: 24px;
+}
+
+.sales_left {
+  height: 100%;
+  position: absolute;
+  bottom: -30%;
+  left: 0;
+  img{
+    width: auto !important;
+  }
+}
+
+.sales_right {
+  height: 100%;
+  position: absolute;
+  bottom: -30%;
+  right: 23%;
+  img{
+    width: auto !important;
+  }
 }

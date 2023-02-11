@@ -1,0 +1,96 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.dropDown {
+  position: absolute;
+  background: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+
+  a {
+    padding: 17px 21px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+    color: #000;
+
+    &:hover {
+      background-color: #61D56E;
+    }
+  }
+}
+
+.dropDownActive {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
+  background: #fff;
+  border-radius: 8px;
+}
+
+.dropDownTrigger {
+  padding: 0 17px;
+  height: 50px;
+  background: #61D56E;
+  border-radius: 8px;
+  text-decoration: none;
+  justify-content: space-between;
+  display: flex;
+  color: #000;
+  flex-shrink: 0;
+  position: relative;
+  width: 100%;
+  margin: 0px;
+  font-size: 13px;
+
+  @media screen and (max-width: $xs-max) {
+    height: 35px;
+  }
+}
+
+
+.dropdownTriggerActive {
+  position: relative;
+  font-size: 13px;
+  color: #000000;
+  padding-bottom: 6px;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.24px;
+
+  span {
+    color: #000;
+  }
+}
+
+.arrow {
+  display: flex;
+  align-self: center;
+}
