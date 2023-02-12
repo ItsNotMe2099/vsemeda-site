@@ -1,4 +1,5 @@
 import { FieldValidator } from 'formik/dist/types'
+import Formatter from './formatter'
 
 export default class Validator {
   static emailRe = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i
@@ -20,6 +21,12 @@ export default class Validator {
     const value = _value && typeof _value === 'string' ? _value.replace(/\s+/g, ' ').trim() : _value
     return (value || typeof value === 'number') ? undefined : 'Обязательное поле'
   }
+
+  static phone(value: string): string | undefined{
+    console.log('PhoneLen', Formatter.cleanPhone(value ?? '')?.length >= 12)
+    return Formatter.cleanPhone(value ?? '')?.length >= 12 ? undefined : 'Неверный формат'
+  }
+
   static weekScheduleRequired(value: any): string | undefined {
     const keys = value ? Object.keys(value) : []
     for(const key of keys){

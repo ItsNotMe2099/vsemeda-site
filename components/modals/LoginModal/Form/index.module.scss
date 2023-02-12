@@ -1,0 +1,87 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+
+  @include mq($SmDesktopWidth, max) {
+    width: auto;
+  }
+
+  @include mq($PhoneWidth, max) {
+    width: 100%;
+  }
+}
+
+.title {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 18px;
+
+  @include mq($PhoneWidth, max) {
+    color: #6B4C9F;
+  }
+}
+
+.btn {
+  margin-top: 18px;
+  border-radius: 16px;
+  text-transform: capitalize;
+  height: 60px;
+}
+
+.sms {
+  font-size: 24px;
+}
+
+.timer {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.again {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 16px;
+
+  @include mq($PhoneWidth, max) {
+    color: #adadad;
+  }
+}
+
+.loader {
+  top: 30% !important;
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}
+
+.loaderMobile {
+  z-index: 5;
+  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
+  position: absolute;
+  min-height: 100vh;
+  min-width: 100vw;
+  .logo{
+    top: 2% !important;
+  }
+  @include mq($PhoneWidth, min) {
+    display: none;
+  }
+}
+
+.circle {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+}

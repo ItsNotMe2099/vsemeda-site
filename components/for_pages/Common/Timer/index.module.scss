@@ -1,0 +1,27 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  align-items: center;
+  svg{
+    margin-right: 8px;
+    width: 20px !important;
+  }
+}
+
+.seconds {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  @include mq($PhoneWidth, max){
+    color: #000;
+  }
+}
+
+.timer{
+  fill: #fff;
+  @include mq($PhoneWidth, max){
+    fill: #000;
+  }
+}

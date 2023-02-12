@@ -3,6 +3,7 @@ export enum ModalType {
   AddressForm = 'addressForm',
   AddressList = 'addressList',
   Product = 'product',
+  Login = 'login'
 
 }
 export enum SnackbarType {
