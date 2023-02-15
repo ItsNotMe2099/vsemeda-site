@@ -61,8 +61,10 @@
   height: 100%;
   position: absolute;
   bottom: -30%;
-  right: 23%;
+  right: 0;
   img{
     width: auto !important;
+    inset: unset !important;
+    right: 0 !important;
   }
 }

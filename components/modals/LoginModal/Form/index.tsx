@@ -10,8 +10,6 @@ import { SnackbarType } from 'types/enums'
 import OtpCodeField from 'components/fields/OtpCodeField'
 import classNames from 'classnames'
 import Timer from 'components/for_pages/Common/Timer'
-import Image from 'next/image'
-import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 
 
 interface Props {
@@ -29,6 +27,10 @@ export default function LoginForm(props: Props) {
 
   const [seconds, setSeconds] = useState<number>(0)
 
+  const [otpSnackbar, setShowOtpSnackbar] = useState<boolean>(false)
+
+  const [error, setError] = useState<string | null>(null)
+
 
   const submit = async (data: { phone: string, code: string }) => {
     setLoading(true)
@@ -41,10 +43,14 @@ export default function LoginForm(props: Props) {
       if (error.response && error.response.data && error.response.data.message) {
         errorMessage = error.response.data.message
       }
-      appContext.showSnackbar(errorMessage, SnackbarType.error)
+      //appContext.showSnackbar(errorMessage, SnackbarType.error)
+      setShowOtpSnackbar(true)
+      setError(errorMessage)
     }
     setLoading(false)
   }
+
+  console.log('ERRRRRRRRRRR', otpSnackbar)
 
   const formik = useFormik({
     initialValues: {
@@ -53,6 +59,12 @@ export default function LoginForm(props: Props) {
     },
     onSubmit: submit
   })
+
+  useEffect(() => {
+    if (otpSnackbar && formik.values.code === '') {
+      setShowOtpSnackbar(false)
+    }
+  }, [formik.values.code])
 
   useEffect(() => {
     setStep(props.step)
@@ -86,7 +98,7 @@ export default function LoginForm(props: Props) {
 
   return (
     <>
-      {!loading ? <FormikProvider value={formik}>
+      {/*!loading ?*/} <FormikProvider value={formik}>
         <Form className={styles.root}>
           <div className={classNames(styles.title, { [styles.sms]: step === 2 })}>
             {step === 1 ? <>Вход</> : <>Введите код из смс</>}
@@ -99,7 +111,7 @@ export default function LoginForm(props: Props) {
                 icon
                 validate={Validator.combine([Validator.required, Validator.phone])}
               />
-              <Button className={styles.btn} onClick={() => handleSendCode(formik.values.phone, step)} styleType='filledGreen' font='semibold16'>
+              <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values.phone, step)} styleType='filledGreen' font='semibold16'>
                 Вход
               </Button>
             </>
@@ -110,6 +122,9 @@ export default function LoginForm(props: Props) {
                 length={4}
                 onComplete={() => formik.submitForm()}
                 validate={Validator.required}
+                snackbar={otpSnackbar}
+                disabled={loading}
+                errorMessage={error}
               />
               <div className={styles.timer}>
                 <Timer key={seconds} seconds={seconds} />
@@ -120,13 +135,13 @@ export default function LoginForm(props: Props) {
             </>}
         </Form>
       </FormikProvider>
-        : <Image className={styles.loader} src={'/images/icons/loading.svg'} alt='' fill />}
-      {loading ?
+      {/*: <Image className={styles.loader} src={'/images/icons/loading.svg'} alt='' fill />*/}
+      {/*loading ?
         <div className={styles.loaderMobile}>
           <CirclesBgSvg className={styles.circle} />
           <Image className={styles.logo} src={'/images/icons/loading.svg'} alt='' fill />
         </div>
-        : null}
+          : null*/}
     </>
   )
 }

@@ -43,7 +43,6 @@
   margin-top: 20px;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   gap: 8px;
 }
 
@@ -52,6 +51,7 @@
   text-decoration: underline;
   font-weight: 600;
   font-size: 16px;
+  cursor: pointer;
 
   @include mq($PhoneWidth, max) {
     color: #adadad;
