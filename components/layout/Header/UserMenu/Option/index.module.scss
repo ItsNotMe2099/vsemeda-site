@@ -1,0 +1,34 @@
+@import "styles/index";
+
+.option {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  display: flex;
+  gap: 16px;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #9E44CA;
+  }
+
+  .icon {
+    position: relative;
+
+    img {
+      position: relative !important;
+    }
+  }
+
+  .text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+  }
+}
+
+.active {
+  background: #9E44CA;
+}

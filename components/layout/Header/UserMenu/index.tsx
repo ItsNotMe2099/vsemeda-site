@@ -19,14 +19,14 @@ interface Props {
 export default function UserMenu(props: Props) {
 
   const items = [
-    { icon: '/images/UserMenu/profile.svg', text: 'Профиль' },
-    { icon: '/images/UserMenu/address.svg', text: 'Мои адреса' },
-    { icon: '/images/UserMenu/orders.svg', text: 'Заказы' },
-    { icon: '/images/UserMenu/about.svg', text: 'О нас' },
-    { icon: '/images/UserMenu/policy.svg', text: 'Политика' },
-    { icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка' },
-    { icon: '/images/UserMenu/settings.svg', text: 'Настройки' },
-    { icon: '/images/UserMenu/exit.svg', text: 'Выход' },
+    { icon: '/images/UserMenu/profile.svg', text: 'Профиль', value: 'profile' },
+    { icon: '/images/UserMenu/address.svg', text: 'Мои адреса', value: 'address' },
+    { icon: '/images/UserMenu/orders.svg', text: 'Заказы', value: 'orders' },
+    { icon: '/images/UserMenu/about.svg', text: 'О нас', value: 'about' },
+    { icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
+    { icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
+    { icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
+    { icon: '/images/UserMenu/exit.svg', text: 'Выход', value: 'exit' },
   ]
 
 
@@ -67,7 +67,7 @@ export default function UserMenu(props: Props) {
 
   return (
     <div className=
-      {classNames(styles.root, { [styles.opened]: showDropDown, [styles.hover]: hover && !showDropDown, [styles.press]: press })}
+      {classNames(styles.root, { [styles.opened]: showDropDown, [styles.hover]: hover && !showDropDown })}
       onClick={handleClick}
       ref={(ref) => {
         (refAction as any).current = ref

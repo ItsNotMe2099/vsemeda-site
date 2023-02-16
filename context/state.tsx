@@ -1,15 +1,15 @@
-import {createContext, useContext, useEffect, useState} from 'react'
-import {IRegion, SnackbarData} from 'types/types'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { IRegion, SnackbarData } from 'types/types'
 import { useRouter } from 'next/router'
-import {CookiesLifeTime} from 'types/constants'
-import {CookiesType, ModalType, SnackbarType} from 'types/enums'
-import {IUser} from 'data/interfaces/IUser'
-import {Subject} from 'rxjs'
+import { CookiesLifeTime } from 'types/constants'
+import { CookiesType, ModalType, SnackbarType } from 'types/enums'
+import { IUser } from 'data/interfaces/IUser'
+import { Subject } from 'rxjs'
 import UserRepository from 'data/repositories/UserRepository'
 import ReactModal from 'react-modal'
 import Cookies from 'js-cookie'
-import {IUserAddress} from 'data/interfaces/IUserAddress'
-import {ILocation} from 'data/interfaces/ILocation'
+import { IUserAddress } from 'data/interfaces/IUserAddress'
+import { ILocation } from 'data/interfaces/ILocation'
 
 interface IState {
   isMobile: boolean
@@ -98,10 +98,10 @@ export function AppWrapper(props: Props) {
   const [token, setToken] = useState<string | null>(props.token ?? null)
   const [user, setUser] = useState<IUser | null>(null)
   const [userLoaded, setUserLoaded] = useState<boolean>(false)
-  const [currentLocation, setCurrentLocation] = useState<ILocation | null>({lat: 55.85644835024383, lng: 37.00685434662651 })
+  const [currentLocation, setCurrentLocation] = useState<ILocation | null>({ lat: 55.85644835024383, lng: 37.00685434662651 })
   const [currentAddress, setCurrentAddress] = useState<IUserAddress>(null)
   const [modalNonSkippable, setModalNonSkippable] = useState<boolean>(false)
-  const[isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
+  const [isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
   const regions: IRegion[] = [
     {
       id: 2,
@@ -141,14 +141,14 @@ export function AppWrapper(props: Props) {
       setUserLoaded(true)
     }
 
-    Promise.all(promises).then((i) => setTimeout(() => {}, 1))
+    Promise.all(promises).then((i) => setTimeout(() => { }, 1))
 
     if (!auth) return
   }, [])
 
   const updateRegion = (slug: string) => {
     const region = regions.find(i => i.slug === slug)
-    if(region) {
+    if (region) {
       setRegion(region)
     }
     router.push(`/${region?.slug}`)
@@ -187,6 +187,7 @@ export function AppWrapper(props: Props) {
       return
     }
     setModal(null)
+    setModalArguments(null)
   }
 
   const showBottomSheet = (type: ModalType, props?: any) => {
@@ -216,7 +217,7 @@ export function AppWrapper(props: Props) {
     showModal,
     showBottomSheet,
     showSnackbar: (text, type: SnackbarType) => {
-      setSnackbar({text, type})
+      setSnackbar({ text, type })
       setTimeout(() => {
         setSnackbar(null)
       }, 2000)
@@ -224,7 +225,7 @@ export function AppWrapper(props: Props) {
     hideModal,
     hideBottomSheet,
     updateUser,
-     serCurrentAddress: (address: IUserAddress) => {
+    serCurrentAddress: (address: IUserAddress) => {
       setCurrentAddress(address)
     },
     setToken: (token: string) => {

@@ -10,7 +10,7 @@ import { LINKS } from 'types/constants'
 import LogoEdaSvg from 'components/svg/LogoEdaSvg'
 import HeaderAddress from 'components/layout/Header/HeaderAddress'
 import HeaderDelivery from 'components/layout/Header/HeaderDelivery'
-//import LoginButton from 'components/layout/Header/LoginButton'
+import LoginButton from 'components/layout/Header/LoginButton'
 import DividerDotsSvg from 'components/svg/DividerDotsSvg'
 import ShoppingCartSvg from 'components/svg/ShoppingCartSvg'
 import { colors } from 'styles/variables'
@@ -78,7 +78,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           <DividerDotsSvg className={styles.divider} />
           <ShoppingCartSvg color={colors.white} />
           <DividerDotsSvg className={styles.divider} />
-          {/*<LoginButton/>*/}
+          <LoginButton/>
           <UserMenu />
         </div>
         <div className={classNames(styles.shadow, styles.shadow1)} />

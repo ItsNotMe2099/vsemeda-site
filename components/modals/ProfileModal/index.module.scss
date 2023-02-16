@@ -1,0 +1,57 @@
+@import "styles/index";
+
+.modalLayout {
+  position: relative;
+  height: 600px;
+  min-height: 600px;
+  width: 96vw;
+  max-width: 1078px;
+  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
+  overflow: hidden;
+}
+
+.bodyWrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.menu{
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(50% 50% at 50% 50%, #812292 0%, #7722AA 100%);
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-top: 70px;
+}
+
+.close {
+  background: #FFFFFF;
+  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.0196802), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0282725), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.035), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.0417275), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0503198), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.07);
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  cursor: pointer;
+  top: 21px;
+  left: 19px;
+
+  img {
+    width: 25% !important;
+    position: relative !important;
+  }
+}
+
+.menu{
+  padding: 32px;
+}

@@ -27,12 +27,7 @@
     padding: 0;
   }
   &.profile{
-    @media (min-width: $md-min) {
-      justify-content: flex-start;
-      align-items: flex-end;
-      padding-top: 20px;
-      padding-right: 65px;
-    }
+    
   }
   &.notifications{
     @media (min-width: $md-min) {

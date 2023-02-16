@@ -5,8 +5,9 @@ import { ModalType } from 'types/enums'
 import classNames from 'classnames'
 import { RemoveScroll } from 'react-remove-scroll'
 import AddressFormModal from 'components/modals/AdressModal'
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import LoginFormModal from 'components/modals/LoginModal'
+import ProfileModal from 'components/modals/ProfileModal'
 
 interface Props { }
 
@@ -19,14 +20,16 @@ export default function ModalContainer(props: Props) {
   }
   useEffect(() => {
     console.log('ModalContainer')
-  },[])
+  }, [])
 
   const getModalType = (modal: ModalType) => {
-    switch(modal){
+    switch (modal) {
       case ModalType.AddressForm:
         return ModalType.AddressForm
       case ModalType.Login:
         return ModalType.Login
+      case ModalType.Profile:
+        return ModalType.Profile
     }
   }
 
@@ -35,7 +38,8 @@ export default function ModalContainer(props: Props) {
       <div aria-hidden="true">
         <Modal isOpen={appContext.modal === getModalType(appContext.modal)} {...commonSettings}>
           {appContext.modal === ModalType.AddressForm && <AddressFormModal />}
-          {appContext.modal === ModalType.Login && <LoginFormModal onRequestClose={commonSettings.onRequestClose}/>}
+          {appContext.modal === ModalType.Login && <LoginFormModal onRequestClose={commonSettings.onRequestClose} />}
+          {appContext.modal === ModalType.Profile && <ProfileModal onRequestClose={commonSettings.onRequestClose} />}
         </Modal>
       </div>
     </RemoveScroll>

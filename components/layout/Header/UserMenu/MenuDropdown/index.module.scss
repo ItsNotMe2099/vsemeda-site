@@ -23,12 +23,6 @@
   &.opened {
     transform: translateY(56px);
   }
-
-  @media screen and (max-width: 1050px) {}
-
-  @media screen and (max-width: $xs-max) {
-    display: none;
-  }
 }
 
 
