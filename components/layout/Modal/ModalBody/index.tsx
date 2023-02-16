@@ -4,11 +4,6 @@ import {ReactElement} from 'react'
 import {useAppContext} from 'context/state'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 
-interface IUser {
-  id: string
-  balance: string
-}
-
 interface Props {
   fixed?: boolean
   children?: ReactElement | ReactElement[]

@@ -10,12 +10,13 @@ import { LINKS } from 'types/constants'
 import LogoEdaSvg from 'components/svg/LogoEdaSvg'
 import HeaderAddress from 'components/layout/Header/HeaderAddress'
 import HeaderDelivery from 'components/layout/Header/HeaderDelivery'
-import LoginButton from 'components/layout/Header/LoginButton'
+//import LoginButton from 'components/layout/Header/LoginButton'
 import DividerDotsSvg from 'components/svg/DividerDotsSvg'
 import ShoppingCartSvg from 'components/svg/ShoppingCartSvg'
-import {colors} from 'styles/variables'
+import { colors } from 'styles/variables'
 import LoupeSvg from 'components/svg/LoupeSvg'
 import classNames from 'classnames'
+import UserMenu from './UserMenu'
 
 interface Props {
   isSticky?: boolean
@@ -52,15 +53,15 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
         <div className={styles.left}>
           <HiddenXs>
             <>
-            <Link href='/'>
-              <div className={styles.logo}>
-                <LogoEdaSvg />
-              </div>
-            </Link>
-            <DividerDotsSvg className={styles.divider}/>
-            <HeaderAddress/>
-            <DividerDotsSvg className={styles.divider}/>
-            <HeaderDelivery/>
+              <Link href='/'>
+                <div className={styles.logo}>
+                  <LogoEdaSvg />
+                </div>
+              </Link>
+              <DividerDotsSvg className={styles.divider} />
+              <HeaderAddress />
+              <DividerDotsSvg className={styles.divider} />
+              <HeaderDelivery />
             </>
           </HiddenXs>
           <VisibleXs>
@@ -73,18 +74,19 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           </VisibleXs>
         </div>
         <div className={styles.right}>
-          <LoupeSvg color={colors.white}/>
-          <DividerDotsSvg className={styles.divider}/>
-          <ShoppingCartSvg color={colors.white}/>
-          <DividerDotsSvg className={styles.divider}/>
-          <LoginButton/>
+          <LoupeSvg color={colors.white} />
+          <DividerDotsSvg className={styles.divider} />
+          <ShoppingCartSvg color={colors.white} />
+          <DividerDotsSvg className={styles.divider} />
+          {/*<LoginButton/>*/}
+          <UserMenu />
         </div>
-        <div className={classNames(styles.shadow, styles.shadow1)}/>
-        <div className={classNames(styles.shadow, styles.shadow2)}/>
-        <div className={classNames(styles.shadow, styles.shadow3)}/>
-        <div className={classNames(styles.shadow, styles.shadow4)}/>
-        <div className={classNames(styles.shadow, styles.shadow5)}/>
-        <div className={classNames(styles.shadow, styles.shadow6)}/>
+        <div className={classNames(styles.shadow, styles.shadow1)} />
+        <div className={classNames(styles.shadow, styles.shadow2)} />
+        <div className={classNames(styles.shadow, styles.shadow3)} />
+        <div className={classNames(styles.shadow, styles.shadow4)} />
+        <div className={classNames(styles.shadow, styles.shadow5)} />
+        <div className={classNames(styles.shadow, styles.shadow6)} />
       </div>
 
     </div>

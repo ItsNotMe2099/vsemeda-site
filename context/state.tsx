@@ -38,6 +38,9 @@ interface IState {
   updateUser: (newUser?: IUser) => void
   setToken: (token: string) => void
   logout: () => void
+  isOverlayShown?: boolean
+  showOverlay: () => void
+  hideOverlay: () => void
 }
 
 
@@ -73,6 +76,9 @@ const defaultValue: IState = {
   logout: () => null,
   updateTokenFromCookies: () => null,
   updateUser: () => null,
+  isOverlayShown: false,
+  showOverlay: () => null,
+  hideOverlay: () => null
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -95,6 +101,7 @@ export function AppWrapper(props: Props) {
   const [currentLocation, setCurrentLocation] = useState<ILocation | null>({lat: 55.85644835024383, lng: 37.00685434662651 })
   const [currentAddress, setCurrentAddress] = useState<IUserAddress>(null)
   const [modalNonSkippable, setModalNonSkippable] = useState<boolean>(false)
+  const[isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
   const regions: IRegion[] = [
     {
       id: 2,
@@ -246,6 +253,13 @@ export function AppWrapper(props: Props) {
         loginState$.next(false)
       }
     },
+    isOverlayShown,
+    showOverlay: () => {
+      setIsOverlayShown(true)
+    },
+    hideOverlay: () => {
+      setIsOverlayShown(false)
+    }
   }
 
 

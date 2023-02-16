@@ -4,7 +4,8 @@
   display: flex;
   min-height: $heightHeader;
   flex-direction: column;
-  z-index: 100;
+  z-index: 300;
+  position: relative;
   @include container;
 
   padding-top: 20px !important;
@@ -20,7 +21,7 @@
   padding: 0px 8px 0px 16px;
 }
 
-.shadow{
+.shadow {
   border-radius: 24px;
   position: absolute;
   left: 0;
@@ -28,22 +29,28 @@
   top: 0;
   bottom: 0;
   z-index: 0;
-  &.shadow1{
+
+  &.shadow1 {
     box-shadow: 0px 100px 80px 0px #00000005;
   }
-  &.shadow2{
+
+  &.shadow2 {
     box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #00000007;
   }
-  &.shadow3{
+
+  &.shadow3 {
     box-shadow: 0px 22.3363094329834px 17.869047164916992px 0px #00000009;
   }
-  &.shadow4{
+
+  &.shadow4 {
     box-shadow: 0px 12.521552085876465px 10.017241477966309px 0px #0000000B;
   }
-  &.shadow5{
+
+  &.shadow5 {
     box-shadow: 0px 6.650102138519287px 5.32008171081543px 0px #0000000D;
   }
-  &.shadow6{
+
+  &.shadow6 {
     box-shadow: 0px 2.767256498336792px 2.2138051986694336px 0px #00000012;
   }
 }
@@ -54,7 +61,8 @@
   align-items: center;
   z-index: 1;
 }
-.divider{
+
+.divider {
   margin: 0px 24px;
 }
 
@@ -69,6 +77,7 @@
   flex-grow: 1;
   z-index: 1;
   align-items: center;
+
   @include mq($SmDesktopWidth, max) {
     flex-grow: 0;
   }

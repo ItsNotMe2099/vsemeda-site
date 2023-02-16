@@ -1,0 +1,55 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  background: $purple2;
+  border-radius: 16px;
+  padding-left: 8px;
+  z-index: 302;
+  position: relative;
+
+  &.opened {
+    .label {
+      z-index: 302;
+    }
+
+    .arrow {
+      z-index: 302;
+    }
+  }
+
+  &.press {}
+
+  &.hover {}
+
+}
+
+.name {
+  font-size: 14px;
+  color: $white;
+  margin-right: 10px;
+}
+
+.chevron {
+  margin-right: 10px;
+}
+
+.icon {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: gray;
+
+  img {
+    width: auto !important;
+    height: auto !important;
+    position: relative !important;
+  }
+}
