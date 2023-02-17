@@ -2,12 +2,13 @@
 
 .modalLayout {
   position: relative;
-  height: 600px;
-  min-height: 600px;
+  height: 80vh;
+  max-height: 600px;
   width: 96vw;
   max-width: 1078px;
   background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
   overflow: hidden;
+  margin-top: 50px;
 }
 
 .bodyWrapper {
@@ -54,9 +55,17 @@
 
 .menu{
   padding: 32px;
+  width: 33%;
 }
 
 .content{
   padding: 30px;
   position: relative;
+  width: 77%;
+}
+
+.circle{
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

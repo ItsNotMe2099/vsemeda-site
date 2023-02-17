@@ -1,34 +1,37 @@
 @import "styles/index";
 $fieldHeightDefault: 50px;
 $fieldHeightDefaultExSmall: 38px;
-.root{}
 
-.wrapper{
+.root {}
+
+.wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
-.icon{
+.icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   left: 10px;
-  &.default{
+
+  &.default {
     left: 17px;
   }
 }
 
-.input{
+.input {
   order: 2;
   color: $dark1;
   width: 100%;
-  &.success{
+
+  &.success {
     border-color: $green;
     color: $grey1;
   }
 
-  &.default{
+  &.default {
     font-weight: 400;
     height: $fieldHeightDefault;
     border: 1px solid grey;
@@ -37,22 +40,26 @@ $fieldHeightDefaultExSmall: 38px;
     padding: 18px 15px 0 15px;
     font-size: 16px;
     transition: background-color 0.2s;
-    &:focus{
+
+    &:focus {
       font-size: 16px;
     }
+
     &::placeholder {
       color: grey;
     }
 
-    &:-webkit-autofill{
+    &:-webkit-autofill {
       -webkit-text-fill-color: grey !important;
       -webkit-background-clip: text;
     }
-    &.success{
+
+    &.success {
       -webkit-text-fill-color: $green !important;
     }
   }
-  &.defaultSmall{
+
+  &.defaultSmall {
 
     font-weight: 400;
     height: 50px;
@@ -62,18 +69,21 @@ $fieldHeightDefaultExSmall: 38px;
     padding: 0px 8px 0 8px;
     font-size: 14px;
     transition: background-color 0.2s;
-    &:focus{
+
+    &:focus {
       font-size: 14px;
     }
+
     &::placeholder {
       color: grey;
     }
-    &.hover{
+
+    &.hover {
       background: grey;
     }
   }
 
-  &.defaultExSmall{
+  &.defaultExSmall {
 
     font-weight: 400;
     height: $fieldHeightDefaultExSmall;
@@ -83,60 +93,75 @@ $fieldHeightDefaultExSmall: 38px;
     padding: 0px 8px 0 8px;
     font-size: 14px;
     transition: background-color 0.2s;
-    &:focus{
+
+    &:focus {
       font-size: 14px;
     }
+
     &::placeholder {
       color: grey;
     }
-    &.hover{
+
+    &.hover {
       background: grey;
     }
   }
 
-  &.error{
+  &.error {
     border-color: $red;
     color: $red;
+
     &::placeholder {
       color: $red;
     }
   }
-  &.withIcon{
+
+  &.withIcon {
     padding-left: 50px;
   }
-  &.white{
+
+  &.white {
     background: $white;
     color: $white;
   }
-  &.purple{
+
+  &.purple {
     border: none;
     background: $purple4;
     color: $white;
   }
+
+  &.profile {
+    border-radius: 23px;
+    height: 44px;
+    color: #333333;
+    padding: 0 12px;
+  }
 }
 
-.label{
+.label {
   @include inputLabel;
-  &.withIcon{
+
+  &.withIcon {
     @include inputLabelWithIcon;
   }
 }
 
-.successIcon{
+.successIcon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   right: 10px;
 }
 
-.failIcon{
+.failIcon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   right: 10px;
 }
 
-.suffix{
+.suffix {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -144,4 +169,14 @@ $fieldHeightDefaultExSmall: 38px;
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.24px;
+  color: #E0E0E0;
+  padding-left: 15px;
 }

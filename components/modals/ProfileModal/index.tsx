@@ -7,6 +7,8 @@ import BackBtn from 'components/ui/BackBtn'
 import Option from 'components/layout/Header/UserMenu/Option'
 import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
+import CirclesBgSvg from 'components/svg/CirclesBgSvg'
+import ProfileForm from './ProfileForm'
 
 
 interface Props {
@@ -24,12 +26,12 @@ const ProfileModalInner = (props: Props) => {
 
   const items = [
     { icon: '/images/UserMenu/profile.svg', text: 'Профиль', value: 'profile' },
-    { icon: '/images/UserMenu/address.svg', text: 'Мои адреса', value: 'address' },
+    //{ icon: '/images/UserMenu/address.svg', text: 'Мои адреса', value: 'address' },
     { icon: '/images/UserMenu/orders.svg', text: 'Заказы', value: 'orders' },
     //{ icon: '/images/UserMenu/about.svg', text: 'О нас', value: 'about' },
-    { icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
-    { icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
-    { icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
+    //{ icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
+    //{ icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
+    //{ icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
   ]
 
   const handleOptionClick = (value: string) => {
@@ -48,7 +50,8 @@ const ProfileModalInner = (props: Props) => {
         </div>
       </div>
       <div className={styles.content}>
-
+        <CirclesBgSvg className={styles.circle} />
+        {appContext.modalArguments === 'profile' ? <ProfileForm/> : null}
       </div>
     </div>
   )

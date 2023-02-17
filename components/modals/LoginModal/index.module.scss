@@ -2,21 +2,23 @@
 
 .modalLayout {
   position: relative;
-  height: 600px;
-  min-height: 600px;
+  height: 80vh;
+  max-height: 600px;
   width: 96vw;
   max-width: 1078px;
   background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
   overflow: hidden;
-  @include mq($PhoneWidth, max){
+  margin-top: 50px;
+
+  @include mq($PhoneWidth, max) {
     width: 100vw;
     border-radius: 0;
     background: url('../../../public/images/LoginModal/mobile_phone.png');
   }
 }
 
-.nextStep{
-  @include mq($PhoneWidth, max){
+.nextStep {
+  @include mq($PhoneWidth, max) {
     background: url('../../../public/images/LoginModal/mobile_code.png');
   }
 }
@@ -32,17 +34,20 @@
   justify-content: center;
   align-items: center;
   z-index: 3;
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     padding: 0 50px;
   }
-  @include mq($MPhoneWidth, max){
+
+  @include mq($MPhoneWidth, max) {
     padding: 0 20px;
   }
 }
 
 .circle {
   position: absolute;
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }
@@ -76,7 +81,8 @@
   img {
     width: auto !important;
   }
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }
@@ -88,7 +94,8 @@
   img {
     width: auto !important;
   }
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }
@@ -102,7 +109,8 @@
   img {
     width: auto !important;
   }
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }
@@ -116,7 +124,8 @@
   img {
     width: auto !important;
   }
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }
@@ -130,7 +139,8 @@
   img {
     width: auto !important;
   }
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }
@@ -143,7 +153,8 @@
   img {
     width: auto !important;
   }
-  @include mq($PhoneWidth, max){
+
+  @include mq($PhoneWidth, max) {
     display: none;
   }
 }

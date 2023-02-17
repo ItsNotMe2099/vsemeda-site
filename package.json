@@ -43,6 +43,7 @@
     "react": "18.2.0",
     "react-content-loader": "^6.2.0",
     "react-custom-scrollbars-2": "^4.5.0",
+    "react-datepicker": "^4.10.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "18.2.0",
     "react-imask": "^6.4.3",
@@ -69,6 +70,7 @@
   "devDependencies": {
     "@types/debounce": "^1.2.1",
     "@types/lodash": "^4.14.191",
+    "@types/react-datepicker": "^4.8.0",
     "@types/react-highlight-words": "^0.16.4",
     "@types/react-modal": "^3.13.1",
     "@types/react-scroll": "^1.8.6",

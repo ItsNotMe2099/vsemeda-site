@@ -20,13 +20,13 @@ export default function UserMenu(props: Props) {
 
   const items = [
     { icon: '/images/UserMenu/profile.svg', text: 'Профиль', value: 'profile' },
-    { icon: '/images/UserMenu/address.svg', text: 'Мои адреса', value: 'address' },
+    //{ icon: '/images/UserMenu/address.svg', text: 'Мои адреса', value: 'address' },
     { icon: '/images/UserMenu/orders.svg', text: 'Заказы', value: 'orders' },
-    { icon: '/images/UserMenu/about.svg', text: 'О нас', value: 'about' },
-    { icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
-    { icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
-    { icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
-    { icon: '/images/UserMenu/exit.svg', text: 'Выход', value: 'exit' },
+    //{ icon: '/images/UserMenu/about.svg', text: 'О нас', value: 'about' },
+    //{ icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
+    //{ icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
+    //{ icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
+    //{ icon: '/images/UserMenu/exit.svg', text: 'Выход', value: 'exit' },
   ]
 
 

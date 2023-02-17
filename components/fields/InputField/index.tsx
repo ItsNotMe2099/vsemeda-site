@@ -24,6 +24,7 @@ interface Props extends IField<string> {
   errorClassName?: string
   value?: any
   onClick?: MouseEventHandler<HTMLInputElement>
+  labelType?: 'floating' | 'top'
 }
 
 export default function InputField(props: Props) {
@@ -52,7 +53,8 @@ export default function InputField(props: Props) {
   return (
     <div className={classNames(styles.root, props.className)} data-field={props.name}>
       <div className={styles.wrapper} ref={wrapperRef}>
-        <FloatingFieldLabel active={focused || !!field.value}>{props.label}</FloatingFieldLabel>
+        {props.labelType === 'floating' ? <FloatingFieldLabel active={focused || !!field.value}>{props.label}</FloatingFieldLabel> : null}
+        <div className={styles.label}>{props.label}</div>
         <input
           {...field}
           {...(typeof props.value !== 'undefined' ? {value: props.value} : {})}

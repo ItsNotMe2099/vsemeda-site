@@ -1,0 +1,189 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+
+
+  :global {
+    .react-datepicker-popper {
+      z-index: 2;
+    }
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+
+  &.default {
+    left: 17px;
+  }
+}
+
+.input {
+  color: #454C68;
+  width: 100%;
+
+  &::placeholder {
+    color: #9498A6;
+  }
+
+  &.hover {
+    background: #F2F4F8;
+  }
+
+  &.success {
+    border-color: #2B9F1C;
+    color: #2B9F1C;
+  }
+
+  &.default {
+    font-weight: 400;
+    height: 66px;
+    border: 1px solid #9498A6;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 15px 0 15px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+
+    &:focus {
+      font-size: 16px;
+    }
+
+    &::placeholder {
+      color: #9498A6;
+    }
+
+    &.hover {
+      background: #F2F4F8;
+    }
+  }
+
+  &.defaultSmall {
+    font-weight: 600;
+    height: 40px;
+    border: 1px solid #9498A6;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0px 8px 0 8px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+
+    &:focus {
+      font-size: 14px;
+    }
+
+    &::placeholder {
+      color: #9498A6;
+    }
+
+    &.hover {
+      background: #F2F4F8;
+    }
+
+    &.withIcon {
+      padding-left: 34px;
+    }
+  }
+
+  &.defaultExSmall {
+
+    font-weight: 400;
+    height: 32px;
+    border: 1px solid #9498A6;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0px 8px 0 8px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+
+    &:focus {
+      font-size: 14px;
+    }
+
+    &::placeholder {
+      color: #9498A6;
+    }
+
+    &.hover {
+      background: #F2F4F8;
+    }
+
+    &.withIcon {
+      padding-left: 34px;
+    }
+  }
+
+  &.bottomBorder {
+    font-size: 14px;
+    font-weight: 600;
+    background: transparent;
+    height: 46px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #454C68;
+    padding: 0;
+
+    &:focus {
+      font-size: 14px;
+    }
+
+    &::placeholder {
+      color: #454C68;
+    }
+  }
+
+  &.withIcon {
+    padding-left: 50px;
+  }
+
+  &.error {
+    border-color: #FF3232;
+    color: #FF3232;
+
+    &::placeholder {
+      color: #FF3232;
+    }
+  }
+
+  &.profile {
+    border-radius: 23px;
+    height: 44px;
+    color: #333333;
+    padding: 0 12px;
+    background-color: #fff;
+  }
+}
+
+.failIcon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+}
+
+.label {
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454C68;
+  pointer-events: none;
+
+
+  &.withIcon {
+    position: absolute;
+    top: 15px;
+    left: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #454C68;
+    pointer-events: none;
+    left: 51px;
+  }
+}
