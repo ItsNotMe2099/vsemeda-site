@@ -42,9 +42,9 @@ const LoginFormModalInner = (props: Props) => {
   }
 
   return (
-    <ModalLayout fixed className={classNames(styles.modalLayout, {[styles.nextStep]: step === 2})}  >
+    <ModalLayout fixed className={classNames(styles.modalLayout, { [styles.nextStep]: step === 2 })}  >
       <div className={styles.close}>
-        <BackBtn bgColor='white' onClick={handleCloseClick}/>
+        <BackBtn bgColor='white' onClick={handleCloseClick} />
       </div>
       {body}
       <CirclesBgSvg className={styles.circle} />

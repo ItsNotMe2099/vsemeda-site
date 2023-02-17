@@ -26,7 +26,7 @@ const ProfileModalInner = (props: Props) => {
     { icon: '/images/UserMenu/profile.svg', text: 'Профиль', value: 'profile' },
     { icon: '/images/UserMenu/address.svg', text: 'Мои адреса', value: 'address' },
     { icon: '/images/UserMenu/orders.svg', text: 'Заказы', value: 'orders' },
-    { icon: '/images/UserMenu/about.svg', text: 'О нас', value: 'about' },
+    //{ icon: '/images/UserMenu/about.svg', text: 'О нас', value: 'about' },
     { icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
     { icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
     { icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
@@ -40,14 +40,15 @@ const ProfileModalInner = (props: Props) => {
   const body = (
     <div className={styles.bodyWrapper}>
       <div className={styles.menu}>
-        <div className={styles.close}>
-          <BackBtn bgColor='white' onClick={handleCloseClick} />
-        </div>
+        <BackBtn bgColor='white' onClick={handleCloseClick} />
         <div className={styles.options}>
-          {items.map((i, index) => 
-            <Option item={i} key={i.value} onClick={() => handleOptionClick(i.value)}/>
+          {items.map((i, index) =>
+            <Option item={i} key={i.value} onClick={() => handleOptionClick(i.value)} />
           )}
         </div>
+      </div>
+      <div className={styles.content}>
+
       </div>
     </div>
   )
