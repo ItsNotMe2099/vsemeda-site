@@ -26,7 +26,7 @@ export default function UserMenu(props: Props) {
     //{ icon: '/images/UserMenu/policy.svg', text: 'Политика', value: 'policy' },
     //{ icon: '/images/UserMenu/help.svg', text: 'Помощь/поддержка', value: 'help' },
     //{ icon: '/images/UserMenu/settings.svg', text: 'Настройки', value: 'settings' },
-    //{ icon: '/images/UserMenu/exit.svg', text: 'Выход', value: 'exit' },
+    { icon: '/images/UserMenu/exit.svg', text: 'Выход', value: 'exit' },
   ]
 
 

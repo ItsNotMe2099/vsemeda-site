@@ -9,6 +9,7 @@ import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
 import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 import ProfileForm from './ProfileForm'
+import Orders from './Orders'
 
 
 interface Props {
@@ -51,7 +52,8 @@ const ProfileModalInner = (props: Props) => {
       </div>
       <div className={styles.content}>
         <CirclesBgSvg className={styles.circle} />
-        {appContext.modalArguments === 'profile' ? <ProfileForm/> : null}
+        {appContext.modalArguments === 'profile' ? <ProfileForm /> : null}
+        {appContext.modalArguments === 'orders' ? <Orders /> : null}
       </div>
     </div>
   )
