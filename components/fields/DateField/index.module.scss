@@ -2,36 +2,30 @@
 
 .root {
   position: relative;
-
-
-  :global {
-    .react-datepicker-popper {
-      z-index: 2;
-    }
-  }
 }
 
 .icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 10px;
+  right: 8px;
 
   &.default {
     left: 17px;
   }
 }
 
+.withLabel{
+  top: 69%
+}
+
 .input {
   color: #454C68;
   width: 100%;
+  background: #F2F4F8;
 
   &::placeholder {
     color: #9498A6;
-  }
-
-  &.hover {
-    background: #F2F4F8;
   }
 
   &.success {
@@ -56,10 +50,6 @@
     &::placeholder {
       color: #9498A6;
     }
-
-    &.hover {
-      background: #F2F4F8;
-    }
   }
 
   &.defaultSmall {
@@ -78,10 +68,6 @@
 
     &::placeholder {
       color: #9498A6;
-    }
-
-    &.hover {
-      background: #F2F4F8;
     }
 
     &.withIcon {
@@ -106,10 +92,6 @@
 
     &::placeholder {
       color: #9498A6;
-    }
-
-    &.hover {
-      background: #F2F4F8;
     }
 
     &.withIcon {
@@ -154,7 +136,8 @@
     border-radius: 23px;
     height: 44px;
     color: #333333;
-    padding: 0 12px;
+    padding: 0 16px;
+    padding-right: 40px;
     background-color: #fff;
   }
 }

@@ -1,6 +1,11 @@
 @import "styles/index";
 
-.root {}
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
 
 .radio {
   margin-top: 22px;
@@ -8,5 +13,40 @@
 }
 
 .date {
-  width: 25%;
+  width: 170px;
+}
+
+.phone {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  @include inputLabel;
+}
+
+.field {
+  padding: 12px 16px;
+  background-color: #fff;
+  height: 44px;
+  border-radius: 23px;
+  margin-bottom: 22px;
+
+  .number {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+    color: #333333;
+  }
+}
+
+.btn {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
 }

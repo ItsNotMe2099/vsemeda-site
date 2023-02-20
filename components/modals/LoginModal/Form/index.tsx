@@ -108,7 +108,8 @@ export default function LoginForm(props: Props) {
               <PhoneField
                 name='phone'
                 placeholder='Введите номер телефона'
-                icon
+                iconName='field_phone'
+                styleType='default'
                 validate={Validator.combine([Validator.required, Validator.phone])}
               />
               <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values.phone, step)} styleType='filledGreen' font='semibold16'>

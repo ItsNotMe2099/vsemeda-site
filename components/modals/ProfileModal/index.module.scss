@@ -20,13 +20,13 @@
   z-index: 3;
 }
 
-.menu{
+.menu {
   display: flex;
   flex-direction: column;
   background: radial-gradient(50% 50% at 50% 50%, #812292 0%, #7722AA 100%);
 }
 
-.options{
+.options {
   display: flex;
   flex-direction: column;
   gap: 11px;
@@ -53,18 +53,18 @@
   }
 }
 
-.menu{
+.menu {
   padding: 32px;
   width: 33%;
 }
 
-.content{
+.content {
   padding: 30px;
   position: relative;
   width: 77%;
 }
 
-.circle{
+.circle {
   position: absolute;
   width: 100%;
   height: 100%;

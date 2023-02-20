@@ -1,7 +1,7 @@
 @import "variables";
 @import "colors";
 
-@mixin input{
+@mixin input {
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   appearance: none !important;
@@ -16,47 +16,51 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  @media screen and (max-width: $xs-max){
+
+  @media screen and (max-width: $xs-max) {
     height: 50px;
   }
-  &:-webkit-autofill{
+
+  &:-webkit-autofill {
     -webkit-text-fill-color: transparent !important;
   }
 
-  &::placeholder{
+  &::placeholder {
     font-size: 16px;
     color: $grey1;
   }
-  &.inputFocused{
+
+  &.inputFocused {
     color: $grey1;
     font-weight: 400;
   }
-  &.withSuffix{
+
+  &.withSuffix {
     padding-right: 40px;
   }
-  &.withPrefix{
+
+  &.withPrefix {
     padding-left: 49px;
   }
-  &.inputError{
+
+  &.inputError {
     color: $red;
     border: 1px solid $red;
-    &::placeholder{
-      color:  $red !important;
+
+    &::placeholder {
+      color: $red !important;
     }
   }
 }
 
-@mixin inputLabelText {
-  font-size: 14px;
-  font-weight: 600;
-  color: $dark2;
-  pointer-events: none;
-  &.hasError{
-    color: $red;
-  }
-}
 @mixin inputLabel {
-  @include inputLabelText
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.24px;
+  color: #E0E0E0;
+  padding-left: 15px;
 }
 
 @mixin inputLabelWithIcon {

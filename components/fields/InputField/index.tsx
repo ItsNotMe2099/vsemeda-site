@@ -5,9 +5,10 @@ import { useIMask } from 'react-imask'
 import FieldError from 'components/ui/FieldError'
 import classNames from 'classnames'
 import usePressAndHover from 'hooks/usePressAndHover'
-import {MouseEventHandler, ReactElement, useEffect, useState} from 'react'
+import { MouseEventHandler, ReactElement, useEffect, useState } from 'react'
 import CrossSvg from 'components/svg/CrossSvg'
 import FloatingFieldLabel from 'components/ui/FloatingFieldLabel'
+import FieldLabel from 'components/ui/FieldLabel'
 
 type FormatType = 'phone'
 
@@ -16,7 +17,7 @@ interface Props extends IField<string> {
   format?: FormatType
   success?: boolean
   styleType: InputStyleType
-  suffix?: 'clear'  | 'icon' | ReactElement
+  suffix?: 'clear' | 'icon' | ReactElement
   color: 'white' | 'purple'
   suffixIcon?: ReactElement
   onSuffixClick?: () => void
@@ -41,9 +42,9 @@ export default function InputField(props: Props) {
   }, [phoneRef.current])
 
   const getSuffix = () => {
-    switch (props.suffix){
+    switch (props.suffix) {
       case 'clear':
-        return <div className={styles.suffix} onClick={() =>  helpers.setValue('')}><CrossSvg color={'red'}/></div>
+        return <div className={styles.suffix} onClick={() => helpers.setValue('')}><CrossSvg color={'red'} /></div>
       case 'icon':
         return <div className={styles.suffix} onClick={props.onSuffixClick}>{props.suffixIcon}</div>
       default:
@@ -54,10 +55,10 @@ export default function InputField(props: Props) {
     <div className={classNames(styles.root, props.className)} data-field={props.name}>
       <div className={styles.wrapper} ref={wrapperRef}>
         {props.labelType === 'floating' ? <FloatingFieldLabel active={focused || !!field.value}>{props.label}</FloatingFieldLabel> : null}
-        <div className={styles.label}>{props.label}</div>
+        {props.labelType === 'top' ? <FieldLabel>{props.label}</FieldLabel> : null}
         <input
           {...field}
-          {...(typeof props.value !== 'undefined' ? {value: props.value} : {})}
+          {...(typeof props.value !== 'undefined' ? { value: props.value } : {})}
           ref={props.format === 'phone' ? phoneRef as any : null}
           type={props.type ?? 'text'}
           disabled={props.disabled}
@@ -80,7 +81,7 @@ export default function InputField(props: Props) {
           }, styles[props.styleType])}
           placeholder={props.placeholder}
         />
-        {props.success && <img src="/images/icons/field_success.svg" alt="" className={styles.successIcon}/>}
+        {props.success && <img src="/images/icons/field_success.svg" alt="" className={styles.successIcon} />}
         {props.suffix && getSuffix()}
         <FieldError className={props.errorClassName} showError={showError}>{meta.error}</FieldError>
       </div>

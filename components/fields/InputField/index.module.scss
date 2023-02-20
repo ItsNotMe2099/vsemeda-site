@@ -135,15 +135,7 @@ $fieldHeightDefaultExSmall: 38px;
     border-radius: 23px;
     height: 44px;
     color: #333333;
-    padding: 0 12px;
-  }
-}
-
-.label {
-  @include inputLabel;
-
-  &.withIcon {
-    @include inputLabelWithIcon;
+    padding: 0 15px;
   }
 }
 
@@ -169,14 +161,4 @@ $fieldHeightDefaultExSmall: 38px;
   cursor: pointer;
   display: flex;
   align-items: center;
-}
-
-.label {
-  margin-bottom: 8px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.24px;
-  color: #E0E0E0;
-  padding-left: 15px;
 }

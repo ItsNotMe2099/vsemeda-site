@@ -5,9 +5,9 @@ import classNames from 'classnames'
 import PhoneInputWithCountrySelect from 'react-phone-number-input'
 import { useState } from 'react'
 import { FieldValidator } from 'formik/dist/types'
-import { IField } from 'types/types'
+import { IField, InputStyleType } from 'types/types'
 import FieldError from 'components/ui/FieldError'
-import Image from 'next/image'
+import FieldIconSvg from 'components/svg/FieldIconSvg'
 
 interface Props extends IField<string> {
   blurValidate?: FieldValidator
@@ -17,7 +17,7 @@ interface Props extends IField<string> {
   errorClassName?: string
   defaultCountry?: string
   countrySelectClassName?: string
-  icon?: React.ReactNode
+  styleType: InputStyleType
 }
 
 export default function PhoneField(props: Props & FieldConfig) {
@@ -59,11 +59,14 @@ export default function PhoneField(props: Props & FieldConfig) {
 
           onChange={handleChange}
         />
-        {props.icon ?
-          <div className={styles.icon}>
-            <Image src={'/images/icons/phone_form.svg'} alt='' fill />
-          </div>
-          : null}
+        {props.iconName && (
+          <FieldIconSvg
+            iconName={props.iconName}
+            error={showError}
+            className={classNames([styles.icon, styles[props.styleType]])}
+            color={'#6B4C9F'}
+          />
+        )}
         <FieldError showError={showError} />
       </div>
     </div>

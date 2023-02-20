@@ -6,6 +6,7 @@ import { SnackbarType } from 'types/enums'
 import InputField from 'components/fields/InputField'
 import RadioListField from 'components/fields/RadioListField'
 import DateField from 'components/fields/DateField'
+import Button from 'components/ui/Button'
 
 
 interface Props {
@@ -45,27 +46,45 @@ export default function ProfileForm(props: Props) {
     onSubmit: submit
   })
 
+  console.log('VALUES!!!!!', formik.values)
+
   return (
     <FormikProvider value={formik}>
-
       <Form className={styles.root}>
-        <InputField
-          label='Ваше имя'
-          name='name'
-          styleType='profile'
-          color='white'
-        />
-        <RadioListField
-          rootClass={styles.radio}
-          name='gender'
-          label='Ваш пол'
-          options={[{ label: 'Мужчина', value: 'male' }, { label: 'Женщина', value: 'female' }]} flex />
-        <DateField
-          name='birthday'
-          label='Дата рождения'
-          styleType='profile'
-          className={styles.date}
-        />
+        <div className={styles.fields}>
+          <div className={styles.phone}>
+            <div className={styles.label}>
+              Ваш номер телефона
+            </div>
+            <div className={styles.field}>
+              <div className={styles.number}>
+                8-800-555-35-35
+              </div>
+            </div>
+          </div>
+          <InputField
+            label='Ваше имя'
+            name='name'
+            styleType='profile'
+            color='white'
+            labelType='top'
+          />
+          <RadioListField
+            rootClass={styles.radio}
+            name='gender'
+            label='Ваш пол'
+            options={[{ label: 'Мужчина', value: 'male' }, { label: 'Женщина', value: 'female' }]} flex />
+          <DateField
+            name='birthday'
+            label='Дата рождения'
+            styleType='profile'
+            iconName='field_date'
+            className={styles.date}
+          />
+        </div>
+        <Button type='submit' className={styles.btn} styleType='filledGreen' font='semibold16'>
+          Сохранить
+        </Button>
       </Form>
     </FormikProvider>
   )
