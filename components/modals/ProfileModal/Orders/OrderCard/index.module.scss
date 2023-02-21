@@ -4,4 +4,21 @@
   padding: 16px;
   background: #FFFFFF;
   border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+
+  .discount {
+    display: flex;
+    gap: 6px;
+    position: relative;
+
+    img {
+      position: relative !important;
+    }
+  }
 }
