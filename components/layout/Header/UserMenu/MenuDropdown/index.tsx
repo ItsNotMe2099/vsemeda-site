@@ -5,6 +5,7 @@ import * as React from 'react'
 import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
 import Option from '../Option'
+import { useAuthContext } from 'context/auth_state'
 
 interface MenuItem {
   icon: string
@@ -21,11 +22,17 @@ interface Props {
 
 export const MenuDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const appContext = useAppContext()
+  const authContext = useAuthContext()
 
   const handleClick = (value: string) => {
     console.log('handleClick')
     appContext.hideOverlay()
-    appContext.showModal(ModalType.Profile, value)
+    if(value !== 'exit'){
+      appContext.showModal(ModalType.Profile, value)
+    }
+    else{
+      authContext.logOut()
+    }
   }
 
   return (

@@ -36,6 +36,7 @@ interface IState {
   showSnackbar: (text: string, type: SnackbarType) => void
   updateTokenFromCookies: () => void
   updateUser: (newUser?: IUser) => void
+  token: string | null
   setToken: (token: string) => void
   logout: () => void
   isOverlayShown?: boolean
@@ -73,6 +74,7 @@ const defaultValue: IState = {
   hideBottomSheet: () => null,
   showSnackbar: (text, type) => null,
   setToken: (token) => null,
+  token: null,
   logout: () => null,
   updateTokenFromCookies: () => null,
   updateUser: () => null,
@@ -211,6 +213,7 @@ export function AppWrapper(props: Props) {
     bottomSheet,
     snackbar,
     user,
+    token,
     currentAddress,
     currentLocation: currentAddress?.location ?? currentLocation,
     initialLoaded: userLoaded,

@@ -4,7 +4,8 @@ import { IField } from 'types/types'
 //import FieldError from 'components/ui/FieldError'
 import PinInput from 'react-pin-input'
 import classNames from 'classnames'
-import Image from 'next/image'
+import OtpSnackbar from './OtpSnackbar'
+import { useAuthContext } from 'context/auth_state'
 
 interface Props extends IField<string> {
   label?: string,
@@ -19,6 +20,7 @@ export default function OtpCodeField(props: Props) {
   const [field, meta, helpers] = useField(props as any)
   const { value } = field
   const showError = meta.touched && !!meta.error
+  const authContext = useAuthContext()
   const handleComplete = (value: string) => {
     console.log('handleComplete', value)
     helpers.setValue(value)
@@ -47,16 +49,7 @@ export default function OtpCodeField(props: Props) {
         regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
       />
       {/*<FieldError showError={showError}>{meta.error}</FieldError>*/}
-      {props.snackbar || showError ?
-        <div className={styles.wrapper}>
-          <div className={styles.snackbar}>
-            <Image src={'/images/icons/warning.svg'} alt='' fill />
-            <span>{showError ? meta.error : props.errorMessage}</span>
-          </div>
-        </div>
-        :
-        null
-      }
+      {authContext.otpError?.show ? <OtpSnackbar /> : null}
     </div>
   )
 }

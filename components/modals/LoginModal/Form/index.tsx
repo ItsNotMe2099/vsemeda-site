@@ -3,13 +3,14 @@ import { Form, FormikProvider, useFormik } from 'formik'
 import { useState, useEffect } from 'react'
 import PhoneField from 'components/fields/PhoneField'
 import Button from 'components/ui/Button'
-import UserRepository from 'data/repositories/UserRepository'
 import Validator from 'utils/Validator'
-import { useAppContext } from 'context/state'
-import { SnackbarType } from 'types/enums'
 import OtpCodeField from 'components/fields/OtpCodeField'
 import classNames from 'classnames'
 import Timer from 'components/for_pages/Common/Timer'
+import { useAuthContext } from 'context/auth_state'
+import { LoginFormData } from 'types/form_data/LoginFormData'
+import Image from 'next/image'
+import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 
 
 interface Props {
@@ -21,36 +22,14 @@ export default function LoginForm(props: Props) {
 
   const [step, setStep] = useState<number>(props.step)
 
-  const appContext = useAppContext()
-
-  const [loading, setLoading] = useState<boolean>(false)
+  const authContext = useAuthContext()
 
   const [seconds, setSeconds] = useState<number>(0)
 
-  const [otpSnackbar, setShowOtpSnackbar] = useState<boolean>(false)
-
-  const [error, setError] = useState<string | null>(null)
-
 
   const submit = async (data: { phone: string, code: string }) => {
-    setLoading(true)
-    try {
-      await UserRepository.phoneConfirmation(data.phone, data.code)
-    }
-    catch (error: any) {
-      let errorMessage = error.toString()
-      // extract the error message from the error object
-      if (error.response && error.response.data && error.response.data.message) {
-        errorMessage = error.response.data.message
-      }
-      //appContext.showSnackbar(errorMessage, SnackbarType.error)
-      setShowOtpSnackbar(true)
-      setError(errorMessage)
-    }
-    setLoading(false)
+    await authContext.confirmCode(data.code)
   }
-
-  console.log('ERRRRRRRRRRR', otpSnackbar)
 
   const formik = useFormik({
     initialValues: {
@@ -61,30 +40,18 @@ export default function LoginForm(props: Props) {
   })
 
   useEffect(() => {
-    if (otpSnackbar && formik.values.code === '') {
-      setShowOtpSnackbar(false)
-    }
-  }, [formik.values.code])
-
-  useEffect(() => {
     setStep(props.step)
   }, [props.step, seconds])
 
-  const handleSendCode = async (phone: string, step: number) => {
-    step === 1 ? setLoading(true) : null
-    try {
-      await UserRepository.login(phone).then(i => setSeconds(i.codeCanRetryIn))
-      step === 1 ? props.onStepNext() : null
-    }
-    catch (error: any) {
-      let errorMessage = error.toString()
-      // extract the error message from the error object
-      if (error.response && error.response.data && error.response.data.message) {
-        errorMessage = error.response.data.message
-      }
-      appContext.showSnackbar(errorMessage, SnackbarType.error)
-    }
-    setLoading(false)
+  const handleSendCode = async (data: LoginFormData, step: number) => {
+    await authContext.signUp(data)
+    setSeconds(authContext.remainSec)
+    step === 1 ? props.onStepNext() : null
+  }
+
+  const handleSendCodeAgain = async () => {
+    await authContext.sendCodeAgain()
+    setSeconds(authContext.remainSec)
   }
 
   console.log('VALUES!!!!', formik.values)
@@ -96,9 +63,15 @@ export default function LoginForm(props: Props) {
     }
   }, [seconds])
 
+  useEffect(() => {
+    if (authContext.otpError?.show && formik.values.code === '') {
+      authContext.showOtpError(false)
+    }
+  }, [formik.values.code])
+
   return (
     <>
-      {/*!loading ?*/} <FormikProvider value={formik}>
+      {(!authContext.signUpSpinner || !authContext.againSpinner || !authContext.confirmSpinner) ? <FormikProvider value={formik}>
         <Form className={styles.root}>
           <div className={classNames(styles.title, { [styles.sms]: step === 2 })}>
             {step === 1 ? <>Вход</> : <>Введите код из смс</>}
@@ -112,7 +85,7 @@ export default function LoginForm(props: Props) {
                 styleType='default'
                 validate={Validator.combine([Validator.required, Validator.phone])}
               />
-              <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values.phone, step)} styleType='filledGreen' font='semibold16'>
+              <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values, step)} styleType='filledGreen' font='semibold16'>
                 Вход
               </Button>
             </>
@@ -123,26 +96,25 @@ export default function LoginForm(props: Props) {
                 length={4}
                 onComplete={() => formik.submitForm()}
                 validate={Validator.required}
-                snackbar={otpSnackbar}
-                disabled={loading}
-                errorMessage={error}
+                snackbar={authContext.otpError?.show}
+                disabled={authContext.confirmSpinner}
               />
               <div className={styles.timer}>
-                <Timer key={seconds} seconds={seconds} />
-                <div className={styles.again} onClick={() => handleSendCode(formik.values.phone, step)}>
+                <Timer key={authContext.remainSec} seconds={authContext.remainSec} />
+                <div className={styles.again} onClick={() => handleSendCodeAgain()}>
                   Отправить еще раз
                 </div>
               </div>
             </>}
         </Form>
       </FormikProvider>
-      {/*: <Image className={styles.loader} src={'/images/icons/loading.svg'} alt='' fill />*/}
-      {/*loading ?
+        : <Image className={styles.loader} src={'/images/icons/loading.svg'} alt='' fill />}
+      {(authContext.signUpSpinner || authContext.againSpinner || authContext.confirmSpinner) ?
         <div className={styles.loaderMobile}>
           <CirclesBgSvg className={styles.circle} />
           <Image className={styles.logo} src={'/images/icons/loading.svg'} alt='' fill />
         </div>
-          : null*/}
+        : null}
     </>
   )
 }

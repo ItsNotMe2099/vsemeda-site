@@ -58,7 +58,7 @@ export default function ProfileForm(props: Props) {
             </div>
             <div className={styles.field}>
               <div className={styles.number}>
-                8-800-555-35-35
+                {appContext.user.phone}
               </div>
             </div>
           </div>

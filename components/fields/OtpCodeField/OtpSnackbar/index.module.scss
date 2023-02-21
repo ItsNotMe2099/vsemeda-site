@@ -1,0 +1,44 @@
+@import "styles/index";
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.snackbar {
+  background: #EB5757;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-top: 18px;
+  max-width: 181px;
+
+  @include mq($PhoneWidth, max) {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  img {
+    position: relative !important;
+    margin-right: 10px;
+    width: 20px !important;
+    height: 20px !important;
+
+    @include mq($PhoneWidth, max) {
+      display: none;
+    }
+  }
+
+  span {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FFFFFF;
+    //white-space: nowrap;
+
+    @include mq($PhoneWidth, max) {
+      color: #EB5757;
+    }
+  }
+}

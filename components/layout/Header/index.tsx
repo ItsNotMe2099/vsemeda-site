@@ -47,6 +47,8 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
     { label: 'Здоровая еда', link: LINKS.header.healthyfood },
   ]
 
+  console.log('USERRRRR', appContext.user)
+
   return (
     <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
       <div className={styles.container}>
@@ -78,8 +80,8 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           <DividerDotsSvg className={styles.divider} />
           <ShoppingCartSvg color={colors.white} />
           <DividerDotsSvg className={styles.divider} />
-          <LoginButton/>
-          <UserMenu />
+          {!appContext.token ? <LoginButton /> :
+            <UserMenu />}
         </div>
         <div className={classNames(styles.shadow, styles.shadow1)} />
         <div className={classNames(styles.shadow, styles.shadow2)} />

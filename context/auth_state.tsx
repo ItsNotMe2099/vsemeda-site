@@ -1,13 +1,18 @@
 import { createContext, useContext, useState } from 'react'
 import { useAppContext } from 'context/state'
 import { CookiesType, SnackbarType } from 'types/enums'
-import { RequestError } from 'types/types'
+import { RequestError, SnackbarData } from 'types/types'
 import useInterval from 'use-interval'
 import Cookies from 'js-cookie'
 import UserRepository from 'data/repositories/UserRepository'
-import {useRouter} from 'next/router'
-import {ILoginResponse} from 'data/interfaces/ILoginResponse'
-import {LoginFormData} from 'types/form_data/LoginFormData'
+import { useRouter } from 'next/router'
+import { ILoginResponse } from 'data/interfaces/ILoginResponse'
+import { LoginFormData } from 'types/form_data/LoginFormData'
+
+interface IOtpError {
+  show: boolean
+  text?: string
+}
 
 interface IState {
   signUpSpinner: boolean
@@ -25,6 +30,8 @@ interface IState {
   logOut: () => void
   clear: () => void
   setRedirect: (val: string) => void
+  otpError: IOtpError
+  showOtpError: (show: boolean, text?: string) => void
 }
 
 const defaultValue: IState = {
@@ -42,7 +49,9 @@ const defaultValue: IState = {
   setSendingAgain: (value) => null,
   logOut: () => null,
   clear: () => null,
-  setRedirect: (val) => null
+  setRedirect: (val) => null,
+  otpError: null,
+  showOtpError: (show, text) => null
 }
 
 const AuthContext = createContext<IState>(defaultValue)
@@ -61,6 +70,8 @@ export function AuthWrapper(props: Props) {
   const [codeRes, setCodRes] = useState<ILoginResponse | null>(null)
   const [remainSec, setRemainSec] = useState(0)
   const [redirect, setRedirect] = useState<string>('')
+  const [otpError, setOtpError] = useState<IOtpError>(null)
+
 
   useInterval(() => {
     if (remainSec > 0) {
@@ -75,8 +86,12 @@ export function AuthWrapper(props: Props) {
     const isOk = await sendCodeToPhone(values.phone)
     setSignUpSpinner(false)
     if (isOk) {
-       // appContext.showModal(ModalType.signUpCode)
+      // appContext.showModal(ModalType.signUpCode)
     }
+  }
+
+  const showOtpError = (show: boolean, text: string) => {
+    setOtpError({ show, text })
   }
 
   // Sign up step 2
@@ -88,7 +103,7 @@ export function AuthWrapper(props: Props) {
       accessToken = await UserRepository.phoneConfirmation(LoginFormData!.phone, code)
     } catch (err) {
       if (err instanceof RequestError) {
-        appContext.showSnackbar(err.message, SnackbarType.error)
+        showOtpError(true, err.message)
       }
       setConfirmSpinner(false)
       return false
@@ -109,7 +124,7 @@ export function AuthWrapper(props: Props) {
     appContext.hideBottomSheet()
     appContext.updateTokenFromCookies()
     setConfirmSpinner(false)
-    if(redirect){
+    if (redirect) {
       await router.push(redirect)
     }
     return true
@@ -143,7 +158,7 @@ export function AuthWrapper(props: Props) {
   const logOut = () => {
     Cookies.remove(CookiesType.accessToken)
     appContext.updateTokenFromCookies()
-    if(router.pathname.includes('/lk')){
+    if (router.pathname.includes('/lk')) {
       router.push('/')
     }
   }
@@ -156,6 +171,8 @@ export function AuthWrapper(props: Props) {
   const value: IState = {
     ...defaultValue,
     confirmCode,
+    otpError,
+    showOtpError,
     signUpSpinner,
     codeRes,
     signUp,
