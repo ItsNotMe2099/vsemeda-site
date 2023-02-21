@@ -7,6 +7,8 @@ import InputField from 'components/fields/InputField'
 import RadioListField from 'components/fields/RadioListField'
 import DateField from 'components/fields/DateField'
 import Button from 'components/ui/Button'
+import UserRepository from 'data/repositories/UserRepository'
+import { Gender } from 'data/enum/Gender'
 
 
 interface Props {
@@ -21,10 +23,10 @@ export default function ProfileForm(props: Props) {
 
 
 
-  const submit = async () => {
+  const submit = async (data: { name: string, gender: Gender, birthday: Date }) => {
     setLoading(true)
     try {
-
+      await UserRepository.updateUserById(+appContext.user.id, data)
     }
     catch (error: any) {
       let errorMessage = error.toString()
@@ -39,9 +41,9 @@ export default function ProfileForm(props: Props) {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      gender: '',
-      birthday: ''
+      name: appContext.user.name ?? '',
+      gender: appContext.user.gender ?? null,
+      birthday: appContext.user.birthday ?? null
     },
     onSubmit: submit
   })

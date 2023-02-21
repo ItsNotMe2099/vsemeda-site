@@ -13,10 +13,12 @@ import Head from 'next/head'
 import { AddressWrapper } from 'context/address_state'
 import AppOverlay from 'components/for_pages/Common/AppOverlay'
 import { AuthWrapper } from 'context/auth_state'
+import { CookiesType } from 'types/enums'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
     isMobile: boolean
+    token: string
   }
 }
 
@@ -33,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     [])
 
   return (
-    <AppWrapper isMobile={pageProps.isMobile}>
+    <AppWrapper isMobile={pageProps.isMobile} token={pageProps.token}>
       <AddressWrapper>
         <AuthWrapper>
           <Head>
@@ -70,6 +72,11 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     props.pageProps.isMobile = false
   }
 
+  if (appContext.ctx.req) {
+    if ((appContext.ctx?.req as any).cookies) {
+      props.pageProps.token = (appContext.ctx as any).req.cookies[CookiesType.accessToken]
+    }
+  }
 
   return props
 }
