@@ -36,7 +36,7 @@ export default function DateField(props: Props) {
       <div className={styles.wrapper} ref={wrapperRef}>
         <DatePicker
           name={props.name}
-          selected={field.value ? parse(field.value, 'dd.MM.yyyy', new Date()) : null}
+          selected={field.value ? parse(field.value, 'yyyy-MM-dd', new Date()) : null}
           className={classNames({
             [styles.input]: true,
             [styles.error]: showError,

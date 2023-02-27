@@ -6,19 +6,107 @@
   border-radius: 16px;
   display: flex;
   justify-content: space-between;
+  position: relative;
+  flex-direction: column;
+
+  &:hover {
+    .hover {
+      visibility: visible;
+    }
+  }
 }
 
-.right {
+.hover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(97, 213, 110, 0.5);
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  .show {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    .text {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: -0.24px;
+      color: #000;
+    }
+  }
+}
+
+.top {
   display: flex;
   flex-direction: column;
+
+  .brand {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.02em;
+    color: #4F4F4F;
+  }
 
   .discount {
     display: flex;
     gap: 6px;
     position: relative;
+    margin-top: 8px;
+
+    .percent {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #4F4F4F;
+    }
 
     img {
       position: relative !important;
+    }
+  }
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  .created {
+    margin-top: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.02em;
+    color: #828282;
+  }
+
+  .payment {
+    display: flex;
+    align-items: center;
+
+    .method {
+      margin-right: 8px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      color: #828282;
+    }
+
+    .total {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 20px;
+      color: #333333;
     }
   }
 }

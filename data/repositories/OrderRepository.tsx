@@ -17,7 +17,7 @@ export default class OrderRepository {
   static async fetchHistory(data: IPaginationRequest): Promise<IPagination<IOrder>> {
     const res = await request<IPagination<IOrder>>({
       method: 'get',
-      url: '/api/order/history',
+      url: `/api/order/history`,
       data
     })
     return res
