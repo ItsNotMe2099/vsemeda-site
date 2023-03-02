@@ -46,7 +46,8 @@
   gap: 8px;
 }
 
-.again {
+.again,
+.code {
   color: #fff;
   text-decoration: underline;
   font-weight: 600;
@@ -56,6 +57,14 @@
   @include mq($PhoneWidth, max) {
     color: #adadad;
   }
+}
+
+.code {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  text-decoration: none;
+  cursor: default;
 }
 
 .loader {
@@ -72,9 +81,11 @@
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  .logo{
+
+  .logo {
     top: 2% !important;
   }
+
   @include mq($PhoneWidth, min) {
     display: none;
   }

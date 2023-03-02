@@ -67,7 +67,7 @@ export function AuthWrapper(props: Props) {
   const [confirmSpinner, setConfirmSpinner] = useState(false)
   const [againSpinner, setAgainSpinner] = useState(false)
   const [LoginFormData, setLoginFormData] = useState<LoginFormData | null>(null)
-  const [codeRes, setCodRes] = useState<ILoginResponse | null>(null)
+  const [codeRes, setCodeRes] = useState<ILoginResponse | null>(null)
   const [remainSec, setRemainSec] = useState(0)
   const [redirect, setRedirect] = useState<string>('')
   const [otpError, setOtpError] = useState<IOtpError>(null)
@@ -142,7 +142,7 @@ export function AuthWrapper(props: Props) {
       return false
     }
 
-    setCodRes(data)
+    setCodeRes(data)
     setRemainSec(data.codeCanRetryIn ?? 0)
     return true
   }
@@ -165,7 +165,7 @@ export function AuthWrapper(props: Props) {
 
   const clear = () => {
     setLoginFormData(null)
-    setCodRes(null)
+    setCodeRes(null)
   }
 
   const value: IState = {

@@ -105,6 +105,9 @@ export default function LoginForm(props: Props) {
                   Отправить еще раз
                 </div>
               </div>
+              <div className={styles.code}>
+                {authContext.codeRes.code}
+              </div>
             </>}
         </Form>
       </FormikProvider>
