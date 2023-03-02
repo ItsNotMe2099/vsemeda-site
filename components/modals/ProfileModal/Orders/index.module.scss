@@ -15,4 +15,7 @@
   flex-direction: column;
   gap: 9px;
   margin-top: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
 }

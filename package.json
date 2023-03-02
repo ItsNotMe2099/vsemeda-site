@@ -47,6 +47,7 @@
     "react-device-detect": "^2.2.2",
     "react-dom": "18.2.0",
     "react-imask": "^6.4.3",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-modal": "^3.16.1",
     "react-modal-sheet": "^1.5.2",
     "react-phone-number-input": "^3.2.18",
