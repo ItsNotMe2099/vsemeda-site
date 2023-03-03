@@ -25,6 +25,7 @@ interface IState {
   loginState$: Subject<boolean>
   loginUserState$: Subject<IUser | null>
   cartState$: Subject<ICart | null>
+  currentAddressState$: Subject<IUserAddress | null>
   region: IRegion | null
   updateRegion: (slug: string) => void
   bottomSheet: ModalType | null
@@ -58,6 +59,7 @@ const ModalsBottomSheet: ModalType[] = [
 const loginState$ = new Subject<boolean>()
 const loginUserState$ = new Subject<IUser | null>()
 const cartState$ = new Subject<ICart | null>()
+const currentAddressState$ = new Subject<IUserAddress | null>()
 const defaultValue: IState = {
   isLogged: false,
   isMobile: false,
@@ -78,6 +80,7 @@ const defaultValue: IState = {
   loginState$: loginState$,
   loginUserState$: loginUserState$,
   cartState$: cartState$,
+  currentAddressState$: currentAddressState$,
   setModalNonSkippable: (val) => null,
   showModal: (type) => null,
   showBottomSheet: (type) => null,
@@ -111,7 +114,7 @@ export function AppWrapper(props: Props) {
   const [token, setToken] = useState<string | null>(props.token ?? null)
   const [user, setUser] = useState<IUser | null>(null)
   const [userLoaded, setUserLoaded] = useState<boolean>(false)
-  const [currentLocation, setCurrentLocation] = useState<ILocation | null>({ lat: 55.85644835024383, lng: 37.00685434662651 })
+  const [currentLocation, setCurrentLocation] = useState<ILocation | null>( {lat: 55.85644835024383, lng: 37.00685434662651 })
   const [currentAddress, setCurrentAddress] = useState<IUserAddress>(null)
   const [modalNonSkippable, setModalNonSkippable] = useState<boolean>(false)
   const [isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
@@ -271,6 +274,7 @@ export function AppWrapper(props: Props) {
     setCurrentAddress: (address: IUserAddress) => {
       setCurrentAddress(address)
       writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
+      currentAddressState$.next(address)
     },
     updateTokenFromCookies: async () => {
       const oldToken = token
@@ -285,8 +289,10 @@ export function AppWrapper(props: Props) {
         if(newCurrentAddress) {
           const cart = await CartRepository.fetch(newCurrentAddress.location)
           cartState$.next(cart)
+          currentAddressState$.next(newCurrentAddress)
         }
         loginUserState$.next(user)
+
       }
       if (oldToken && !newToken) {
         loginState$.next(false)

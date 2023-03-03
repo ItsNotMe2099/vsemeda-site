@@ -50,7 +50,7 @@ export default class Converter {
           ?.name ??
         '',
 
-      location: {lat: this.convertStringCoordinatesToLatLng(point.pos)[0], lng: this.convertStringCoordinatesToLatLng(point.pos)[1]}
+      location: {lat: this.convertStringCoordinatesToLatLng(point.pos)[1], lng: this.convertStringCoordinatesToLatLng(point.pos)[0]}
     }
   }
 
