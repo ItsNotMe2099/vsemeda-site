@@ -3,6 +3,8 @@ import { IOrder } from 'data/interfaces/IOrder'
 import Image from 'next/image'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
+import { format } from 'date-fns'
+import DotSeparatorSvg from 'components/svg/DotSeparatorSvg copy'
 
 
 interface Props {
@@ -30,7 +32,7 @@ export default function OrderCard({ order }: Props) {
       </div>
       <div className={styles.bottom}>
         <div className={styles.created}>
-          {order.createdAt}
+          {format(new Date(order.createdAt), 'dd.MM.yy')}<DotSeparatorSvg color='#828282'/>{format(new Date(order.createdAt), 'HH:mm')}
         </div>
         <div className={styles.payment}>
           <div className={styles.method}>

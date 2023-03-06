@@ -19,7 +19,7 @@ export default function DropdownMenu(props: Props) {
   const dropdownRef = useRef(null)
   const { options, optionClick, onTriggerClick } = props
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
-  const [currentLabel, setCurrentLabel] = useState<string>(props.style === 'more' ? '' : options[0].name)
+  const [currentLabel, setCurrentLabel] = useState<string>(props.style === 'more' ? '' : options[0]?.name)
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent> ) => {
     if (options.length === 0) {

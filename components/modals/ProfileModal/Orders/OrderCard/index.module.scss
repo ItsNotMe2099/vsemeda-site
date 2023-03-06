@@ -89,6 +89,11 @@
     line-height: 150%;
     letter-spacing: 0.02em;
     color: #828282;
+    display: flex;
+    align-items: center;
+    svg{
+      margin: 0 8px;
+    }
   }
 
   .payment {
