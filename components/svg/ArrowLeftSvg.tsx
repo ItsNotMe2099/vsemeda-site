@@ -1,6 +1,7 @@
 interface Props {
   color: string
   className?: string
+  onClick?: () => void
 }
 
 export default function ArrowLeftSvg(props: Props) {

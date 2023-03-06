@@ -4,6 +4,8 @@ import { StickyContainer } from 'react-sticky'
 import Footer from '../Footer'
 import classNames from 'classnames'
 import { useAppContext } from 'context/state'
+import TabBar from '../Tabbar'
+import VisibleXs from 'components/visibility/VisibleXs'
 
 interface Props {
   children?: React.ReactNode
@@ -26,6 +28,9 @@ export default function Layout({ children, className }: Props) {
           </div>
         </div>
         <Footer />
+        <VisibleXs>
+          <TabBar isSticky />
+        </VisibleXs>
       </StickyContainer>
     </div>
   )

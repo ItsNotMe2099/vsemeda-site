@@ -4,7 +4,8 @@ export enum ModalType {
   AddressList = 'addressList',
   Product = 'product',
   Login = 'login',
-  Profile = 'profile'
+  Profile = 'profile',
+  ProfileMenu = 'profileMenu',
 }
 export enum SnackbarType {
   error,

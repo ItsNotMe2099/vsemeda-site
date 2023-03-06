@@ -8,6 +8,7 @@ import AddressFormModal from 'components/modals/AdressModal'
 import { useEffect } from 'react'
 import LoginFormModal from 'components/modals/LoginModal'
 import ProfileModal from 'components/modals/ProfileModal'
+import MobileProfileMenuModal from 'components/modals/MobileProfileMenuModal'
 
 interface Props { }
 
@@ -30,6 +31,8 @@ export default function ModalContainer(props: Props) {
         return ModalType.Login
       case ModalType.Profile:
         return ModalType.Profile
+      case ModalType.ProfileMenu:
+        return ModalType.ProfileMenu
     }
   }
 
@@ -40,6 +43,10 @@ export default function ModalContainer(props: Props) {
           {appContext.modal === ModalType.AddressForm && <AddressFormModal />}
           {appContext.modal === ModalType.Login && <LoginFormModal onRequestClose={commonSettings.onRequestClose} />}
           {appContext.modal === ModalType.Profile && <ProfileModal onRequestClose={commonSettings.onRequestClose} />}
+          {appContext.modal === ModalType.ProfileMenu &&
+            <MobileProfileMenuModal
+              onRequestClose={commonSettings.onRequestClose}
+              isOpen={appContext.modal === ModalType.ProfileMenu} />}
         </Modal>
       </div>
     </RemoveScroll>

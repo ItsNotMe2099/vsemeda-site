@@ -51,46 +51,47 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
 
   return (
     <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
-      <div className={styles.container}>
-        <div className={styles.left}>
-          <HiddenXs>
-            <>
-              <Link href='/'>
-                <div className={styles.logo}>
-                  <LogoEdaSvg />
-                </div>
-              </Link>
-              <DividerDotsSvg className={styles.divider} />
-              <HeaderAddress />
-              <DividerDotsSvg className={styles.divider} />
-              <HeaderDelivery />
-            </>
-          </HiddenXs>
-          <VisibleXs>
-            <div
-              className={styles.menuOpen}
-              onClick={handleOpenMobileMenu}
-            >
-              <img src="/images/header/menu.svg" alt="" />
-            </div>
-          </VisibleXs>
+      <HiddenXs>
+        <div className={styles.container}>
+          <div className={styles.left}>
+            <HiddenXs>
+              <>
+                <Link href='/'>
+                  <div className={styles.logo}>
+                    <LogoEdaSvg />
+                  </div>
+                </Link>
+                <DividerDotsSvg className={styles.divider} />
+                <HeaderAddress />
+                <DividerDotsSvg className={styles.divider} />
+                <HeaderDelivery />
+              </>
+            </HiddenXs>
+            <VisibleXs>
+              <div
+                className={styles.menuOpen}
+                onClick={handleOpenMobileMenu}
+              >
+                <img src="/images/header/menu.svg" alt="" />
+              </div>
+            </VisibleXs>
+          </div>
+          <div className={styles.right}>
+            <LoupeSvg color={colors.white} />
+            <DividerDotsSvg className={styles.divider} />
+            <ShoppingCartSvg color={colors.white} />
+            <DividerDotsSvg className={styles.divider} />
+            {!appContext.token ? <LoginButton /> :
+              <UserMenu />}
+          </div>
+          <div className={classNames(styles.shadow, styles.shadow1)} />
+          <div className={classNames(styles.shadow, styles.shadow2)} />
+          <div className={classNames(styles.shadow, styles.shadow3)} />
+          <div className={classNames(styles.shadow, styles.shadow4)} />
+          <div className={classNames(styles.shadow, styles.shadow5)} />
+          <div className={classNames(styles.shadow, styles.shadow6)} />
         </div>
-        <div className={styles.right}>
-          <LoupeSvg color={colors.white} />
-          <DividerDotsSvg className={styles.divider} />
-          <ShoppingCartSvg color={colors.white} />
-          <DividerDotsSvg className={styles.divider} />
-          {!appContext.token ? <LoginButton /> :
-            <UserMenu />}
-        </div>
-        <div className={classNames(styles.shadow, styles.shadow1)} />
-        <div className={classNames(styles.shadow, styles.shadow2)} />
-        <div className={classNames(styles.shadow, styles.shadow3)} />
-        <div className={classNames(styles.shadow, styles.shadow4)} />
-        <div className={classNames(styles.shadow, styles.shadow5)} />
-        <div className={classNames(styles.shadow, styles.shadow6)} />
-      </div>
-
+      </HiddenXs>
     </div>
   )
 })

@@ -1,0 +1,50 @@
+@import "styles/index";
+
+.dropdownMobile {
+  position: fixed;
+  bottom: 0px;
+  left: -100%;
+  top: 19%;
+  z-index: 20;
+  padding: 32px;
+  max-width: 338px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  overflow: hidden;
+
+  transition: all .5s ease-in-out;
+}
+
+.active {
+  left: 0;
+  right: 43px;
+  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
+}
+
+.circle {
+  position: absolute;
+  left: -110%;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.close {
+  cursor: pointer;
+}
+
+.options {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

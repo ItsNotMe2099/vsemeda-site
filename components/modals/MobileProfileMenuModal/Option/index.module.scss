@@ -1,0 +1,25 @@
+@import "styles/index";
+
+.root {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+  gap: 16px;
+  display: flex;
+  cursor: pointer;
+}
+
+.text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #FFFFFF;
+}
+
+.icon {
+  position: relative;
+  width: 7%;
+  img {
+    position: relative !important;
+  }
+}
