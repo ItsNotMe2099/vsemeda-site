@@ -16,8 +16,8 @@
   &.fixed{
     max-height: 96vh;
     @media screen and (max-width: 900px){
-      min-height: 100vh;
-      height:100%;
+      //min-height: 100vh;
+      //height:100%;
       max-height: unset;
       min-height: -webkit-fill-available;
     }

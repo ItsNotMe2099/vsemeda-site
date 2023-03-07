@@ -10,6 +10,9 @@ import { ModalType } from 'types/enums'
 import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 import ProfileForm from './ProfileForm'
 import Orders from './Orders'
+import VisibleXs from 'components/visibility/VisibleXs'
+import Image from 'next/image'
+import classNames from 'classnames'
 
 
 interface Props {
@@ -40,6 +43,10 @@ const ProfileModalInner = (props: Props) => {
     appContext.showModal(ModalType.Profile, value)
   }
 
+  console.log('argsssss', appContext.modalArguments)
+
+  const item = items.find(i => i.value === appContext.modalArguments)
+
 
   const body = (
     <div className={styles.bodyWrapper}>
@@ -53,8 +60,25 @@ const ProfileModalInner = (props: Props) => {
       </div>
       <div className={styles.content}>
         <CirclesBgSvg className={styles.circle} />
+        <VisibleXs>
+          <div className={styles.head}>
+            <BackBtn className={styles.back} bgColor='white' onClick={handleCloseClick} />
+            <div className={styles.title}>
+              <Option item={item} key={item.value} className={styles.option} />
+            </div>
+          </div>
+        </VisibleXs>
         {appContext.modalArguments === 'profile' ? <ProfileForm /> : null}
         {appContext.modalArguments === 'orders' ? <Orders /> : null}
+        <VisibleXs>
+          <div className={styles.footer}>
+            {appContext.modalArguments === 'profile' ?
+              <Image src={'/images/ProfileModal/bg1.png'} alt='' fill />
+              :
+              <Image src={'/images/ProfileModal/bg2.png'} alt='' fill />
+            }
+          </div>
+        </VisibleXs>
       </div>
     </div>
   )
@@ -68,7 +92,7 @@ const ProfileModalInner = (props: Props) => {
   }
 
   return (
-    <ModalLayout fixed className={styles.modalLayout}>
+    <ModalLayout fixed className={classNames(styles.modalLayout, styles[appContext.modalArguments])}>
       {body}
     </ModalLayout>
   )

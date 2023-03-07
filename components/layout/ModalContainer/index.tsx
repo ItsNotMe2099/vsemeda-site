@@ -1,9 +1,9 @@
 import styles from './index.module.scss'
-import {useAppContext} from 'context/state'
+import { useAppContext } from 'context/state'
 import Modal from 'react-modal'
-import {ModalType} from 'types/enums'
+import { ModalType } from 'types/enums'
 import classNames from 'classnames'
-import {RemoveScroll} from 'react-remove-scroll'
+import { RemoveScroll } from 'react-remove-scroll'
 import AddressFormModal from 'components/modals/AdressModal'
 import { useEffect } from 'react'
 import LoginFormModal from 'components/modals/LoginModal'
@@ -25,19 +25,6 @@ export default function ModalContainer(props: Props) {
     console.log('ModalContainer')
   }, [])
 
-  const getModalType = (modal: ModalType) => {
-    switch (modal) {
-      case ModalType.AddressForm:
-        return ModalType.AddressForm
-      case ModalType.Login:
-        return ModalType.Login
-      case ModalType.Profile:
-        return ModalType.Profile
-      case ModalType.ProfileMenu:
-        return ModalType.ProfileMenu
-    }
-  }
-
 
   console.log('ModalType', appContext.modal)
 
@@ -46,12 +33,14 @@ export default function ModalContainer(props: Props) {
       <div aria-hidden="true">
         <Modal isOpen={appContext.modal === ModalType.AddressForm} {...commonSettings}>
           {appContext.modal === ModalType.AddressForm && <AddressFormModal />}
-         </Modal>
+        </Modal>
         <Modal isOpen={appContext.modal === ModalType.Login} {...commonSettings}>
           {appContext.modal === ModalType.Login && <LoginFormModal onRequestClose={commonSettings.onRequestClose} />}
         </Modal>
         <Modal isOpen={appContext.modal === ModalType.Profile} {...commonSettings}>
           {appContext.modal === ModalType.Profile && <ProfileModal onRequestClose={commonSettings.onRequestClose} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.ProfileMenu} {...commonSettings}>
           {appContext.modal === ModalType.ProfileMenu &&
             <MobileProfileMenuModal
               onRequestClose={commonSettings.onRequestClose}
@@ -63,7 +52,7 @@ export default function ModalContainer(props: Props) {
         <Modal isOpen={appContext.modal === ModalType.Login} {...commonSettings}>
           {appContext.modal === ModalType.Login && <LoginFormModal onRequestClose={appContext.hideModal} />}
         </Modal>
-     </div>
+      </div>
     </RemoveScroll>
   )
 }

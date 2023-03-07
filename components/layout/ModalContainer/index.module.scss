@@ -1,16 +1,16 @@
 @import "styles/index";
 
-.modal{
+.modal {
   outline: none;
 }
 
-.overlay{
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(3px);
   display: flex;
   flex-direction: column;
@@ -21,15 +21,21 @@
   overscroll-behavior: none;
   padding: 10px;
   z-index: 2;
-  &.menu, &.menuOwner{
+
+  &.menu,
+  &.menuOwner {
     justify-content: flex-start;
     align-items: stretch;
     padding: 0;
   }
-  &.profile{
-    
+
+  &.profile, &.login {
+    @include mq($PhoneWidth, max) {
+      overflow: hidden;
+    }
   }
-  &.notifications{
+
+  &.notifications {
     @media (min-width: $md-min) {
       justify-content: flex-start;
       align-items: flex-end;
@@ -37,16 +43,19 @@
       padding-right: 65px;
     }
   }
-  &.article{
+
+  &.article {
     @media (max-width: $xs-max) {
       align-items: stretch;
     }
   }
-  &.gallery{
+
+  &.gallery {
     justify-content: flex-start;
     align-items: stretch;
     padding: 0;
-    &>div{
+
+    &>div {
       flex: 1;
     }
   }

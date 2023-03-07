@@ -12,15 +12,16 @@ interface MenuItem {
 
 interface Props {
   item: MenuItem
-  onClick: () => void
+  onClick?: () => void
+  className?: string
 }
 
-export default function Option({ item, onClick }: Props) {
+export default function Option({ item, onClick, className }: Props) {
 
   const appContext = useAppContext()
 
   return (
-    <div className={classNames(styles.option, {[styles.active]: appContext.modalArguments === item.value})} onClick={onClick}>
+    <div className={classNames(styles.option, className, {[styles.active]: appContext.modalArguments === item.value})} onClick={onClick}>
       <div className={styles.icon}>
         <Image src={item.icon} alt='' fill />
       </div>

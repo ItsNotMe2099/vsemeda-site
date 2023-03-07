@@ -7,6 +7,7 @@
   gap: 16px;
   display: flex;
   cursor: pointer;
+  align-self: flex-start;
 }
 
 .text {
@@ -18,8 +19,9 @@
 
 .icon {
   position: relative;
-  width: 7%;
   img {
     position: relative !important;
+    width: inherit !important;
+    margin-right: 16px;
   }
 }

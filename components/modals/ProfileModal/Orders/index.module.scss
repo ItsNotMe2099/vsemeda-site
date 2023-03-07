@@ -8,9 +8,13 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
+
+  @include mq($PhoneWidth, max) {
+    margin-top: 78px;
+  }
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -18,4 +22,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
+
+  @include mq($PhoneWidth, max) {
+    max-height: 510px;
+  }
 }

@@ -5,6 +5,11 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  @include mq($PhoneWidth, max) {
+    margin-top: 78px;
+    height: inherit;
+  }
 }
 
 .radio {
@@ -44,6 +49,12 @@
 .btn {
   width: 100%;
   border-radius: 16px;
+  position: relative;
+  z-index: 1;
+
+  @include mq($PhoneWidth, max) {
+    margin-top: 64px;
+  }
 }
 
 .fields {
