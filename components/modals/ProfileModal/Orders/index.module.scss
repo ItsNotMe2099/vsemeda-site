@@ -9,7 +9,7 @@
   font-size: 14px;
   line-height: 20px;
 
-  @include mq($PhoneWidth, max) {
+  @include mq($TabletWidth, max) {
     margin-top: 78px;
   }
 }

@@ -43,7 +43,7 @@
   flex-direction: column;
   background: radial-gradient(50% 50% at 50% 50%, #812292 0%, #7722AA 100%);
 
-  @include mq($PhoneWidth, max) {
+  @include mq($TabletWidth, max) {
     display: none;
   }
 }
@@ -85,7 +85,7 @@
   position: relative;
   width: 77%;
 
-  @include mq($PhoneWidth, max) {
+  @include mq($TabletWidth, max) {
     width: 100%;
     padding: 30px 23px;
   }
