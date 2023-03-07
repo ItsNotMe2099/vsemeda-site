@@ -1,0 +1,30 @@
+@import "styles/index";
+
+.modalLayout{
+  position: relative;
+  width: 444px;
+  max-height: 90vh;
+  background: $purple3;
+  min-height: 400px;
+  padding: 32px;
+}
+.modalBody{
+  position: relative;
+  flex: 1;
+  width: 100%;
+}
+.bodyWrapper{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  > * + * {
+    margin-top: 16px;
+  }
+}

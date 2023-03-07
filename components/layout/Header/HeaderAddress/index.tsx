@@ -5,6 +5,7 @@ import ChevronSvg from 'components/svg/ChevronSvg'
 import classNames from 'classnames'
 import {useAppContext} from 'context/state'
 import {ModalType} from 'types/enums'
+import {useAddressContext} from 'context/address_state'
 
 interface Props {
 }
@@ -12,9 +13,10 @@ interface Props {
 export default function HeaderAddress(props: Props) {
 
   const appContext = useAppContext()
+  const addressContext = useAddressContext()
 
   const handleClick = () => {
-    appContext.showModal(ModalType.AddressForm)
+    appContext.showModal(ModalType.AddressList)
   }
 
   const handleClose = () => {
@@ -24,7 +26,7 @@ export default function HeaderAddress(props: Props) {
   return (
     <div className={classNames(styles.root, {[styles.open]: false})} onClick={handleClick}>
       <PlaceCheckSvg className={styles.chevron} color={colors.white}/>
-      <div className={styles.value}>Салтыкова-Щедрина, 15/2</div>
+      <div className={styles.value}>{appContext.currentAddress?.address ?? 'Выберите адрес'}</div>
       <ChevronSvg className={styles.chevron} color={colors.white}/>
     </div>
   )

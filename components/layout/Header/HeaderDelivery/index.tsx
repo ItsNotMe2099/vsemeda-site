@@ -13,7 +13,7 @@ export default function HeaderDelivery(props: Props) {
   const appContext = useAppContext()
 
   const handleClick = () => {
-      appContext.showModal(ModalType.AddressForm)
+      appContext.showModal(ModalType.AddressList)
   }
 
   const handleClose = () => {

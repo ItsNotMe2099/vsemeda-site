@@ -23,6 +23,7 @@ const ProfileModalInner = (props: Props) => {
     props.onRequestClose()
   }
 
+
   const appContext = useAppContext()
 
   const items = [
@@ -74,7 +75,7 @@ const ProfileModalInner = (props: Props) => {
 }
 
 export default function ProfileModal(props: Props) {
-
+  console.log('showProfile1111')
   return (<>
     <ProfileModalInner {...props} />
   </>)

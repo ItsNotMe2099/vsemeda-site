@@ -6,30 +6,56 @@ import {Form, FormikProvider, useFormik} from 'formik'
 import {DeepPartial} from 'types/types'
 import BackBtn from 'components/ui/BackBtn'
 import Button from 'components/ui/Button'
-import {GeoObject} from 'data/interfaces/IYandexGeocoder'
-import Converter from 'utils/converter'
 import TextAreaField from 'components/fields/TextAreaField'
+import {useAddressContext} from 'context/address_state'
+import {useState} from 'react'
+import {ModalType, SnackbarType} from 'types/enums'
 
 export interface AddressFormModalArguments {
   address: IUserAddress
 }
 
 interface Props {
-  initialGeoObject?: GeoObject
+  initialAddress?: IUserAddress
 }
 
 export default function AddressForm(props: Props) {
   const appContext = useAppContext()
+  const addressContext = useAddressContext()
+  const [loading, setLoading] = useState(false)
   const args = appContext.modalArguments as AddressFormModalArguments
-  const submit = (data: DeepPartial<IUserAddress>) => {
+  const submit = async (data: DeepPartial<IUserAddress>) => {
+    console.log('Submit', data)
+    setLoading(true)
+    try {
+      const submitData: DeepPartial<IUserAddress> = {
+        ...props.initialAddress,
+        ...data,
+
+      }
+      if (props.initialAddress?.id) {
+        await addressContext.update(props.initialAddress.id, submitData)
+         appContext.showModal(ModalType.AddressList)
+      } else {
+        await addressContext.create(submitData)
+        appContext.showModal(ModalType.AddressList)
+      }
+    }catch (e) {
+      appContext.showSnackbar(e.toString(), SnackbarType.error)
+    }
+    setLoading(false)
 
   }
   const handleBack = () => {
-
+    if(args?.address){
+      appContext.showModal(ModalType.AddressList)
+    }else {
+      appContext.showModal(ModalType.AddressList)
+    }
   }
   const formik = useFormik<DeepPartial<IUserAddress>>({
     initialValues: {
-
+        ...props.initialAddress
     }, onSubmit: submit
   })
   const formatAddressDetails = () => {
@@ -41,7 +67,7 @@ export default function AddressForm(props: Props) {
     <FormikProvider value={formik}>
       <Form className={styles.root}>
         <div className={styles.header}>
-          <BackBtn onClick={handleBack} bgColor={'white'}  />
+          <BackBtn onClick={handleBack} bgColor={'white'} />
           <div className={styles.title}>Сохраните адрес доставки</div>
         </div>
         <div className={styles.body}>
@@ -69,9 +95,9 @@ export default function AddressForm(props: Props) {
           <div className={styles.line}/>
           <TextAreaField name={'comment'} label={'Коммментарий'} color={'purple'}/>
           <div className={styles.addressDetails}>
-          {props.initialGeoObject &&  <div className={styles.address}>
+          {props.initialAddress &&  <div className={styles.address}>
             <div className={styles.addressLabel}>Адрес Доставки:</div>
-            <div className={styles.addressValue}>{Converter.convertGeoObjectToString(props.initialGeoObject)}</div>
+            <div className={styles.addressValue}>{props.initialAddress?.address}</div>
           </div>}
           <div className={styles.address}>
             <div className={styles.addressLabel}>Уточнения:</div>
@@ -81,7 +107,7 @@ export default function AddressForm(props: Props) {
         </div>
 
         <div className={styles.footer}>
-          <Button styleType={'filledGreen'} fluid type={'submit'}>Сохранить</Button>
+          <Button styleType={'filledGreen'} fluid type={'submit'} spinner={loading}>Сохранить</Button>
         </div>
 
       </Form>

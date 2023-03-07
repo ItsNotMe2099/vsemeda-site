@@ -1,28 +1,31 @@
-import {createContext, ReactElement, useContext, useState} from 'react'
+import {createContext, ReactElement, useContext} from 'react'
 import {useAppContext} from 'context/state'
 import {ICart} from 'data/interfaces/ICart'
 import {IUserAddress} from 'data/interfaces/IUserAddress'
 import {DeepPartial} from 'types/types'
 import UserAddressRepository from 'data/repositories/UserAddressRepository'
-import {useLocalStorage} from '@rehooks/local-storage'
 import {LocalStorageKey} from 'types/enums'
 import { writeStorage } from '@rehooks/local-storage'
 import { v4 as uuidv4 } from 'uuid'
 interface IState {
+  currentAddress?: IUserAddress;
   addresses: IUserAddress[];
   initialLoaded: boolean;
   create: (data: DeepPartial<IUserAddress>) => void
   update: (id: string, data: DeepPartial<IUserAddress>)  => void
   delete: (id: string) => Promise<IUserAddress>
+  setCurrentAddress: (address: IUserAddress) => void,
 }
 
 
 const defaultValue: IState = {
+  currentAddress: null,
   addresses: [],
   initialLoaded: false,
   create: (data: DeepPartial<IUserAddress>) => null,
   update: (id: string, data: DeepPartial<IUserAddress>) => null,
   delete: (id: string)  => null,
+  setCurrentAddress: (address: IUserAddress) => null,
 }
 
 const AddressContext = createContext<IState>(defaultValue)
@@ -30,23 +33,9 @@ const AddressContext = createContext<IState>(defaultValue)
 interface Props {
   children: ReactElement | ReactElement[]
 }
-type QuantityMap = {[key: string]: number}
-type BoolMap = {[key: string]: boolean}
-type DebounceMap = {[key: string]: () => void}
 export function AddressWrapper(props: Props) {
   const appContext = useAppContext()
-  const [addressLocal] = useLocalStorage<IUserAddress[]>(LocalStorageKey.addresses, [])
-  const [addresses, setAddresses] = useState<IUserAddress[]>([])
-  const [initialLoaded, setInitialLoaded] = useState(true)
 
-  const fetch = async (): Promise<IUserAddress[]> => {
-    if(appContext.isLogged){
-
-    }else{
-
-    }
-    return []
-  }
   const createReq = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
     return UserAddressRepository.create(data)
   }
@@ -59,20 +48,20 @@ export function AddressWrapper(props: Props) {
 
   const createLoc = async (data: DeepPartial<IUserAddress>) => {
      data.id = uuidv4()
-     writeStorage<IUserAddress[]>(LocalStorageKey.addresses, [data as IUserAddress, ...addresses])
+     writeStorage<IUserAddress[]>(LocalStorageKey.addresses, [data as IUserAddress, ...appContext.addresses])
   }
   const updateLoc = async (id: string, data: DeepPartial<IUserAddress>): Promise<any> => {
-    writeStorage<IUserAddress[]>(LocalStorageKey.addresses, addresses.map(i => i.id === id ? {...i, data} : i))
+    writeStorage<IUserAddress[]>(LocalStorageKey.addresses, appContext.addresses.map(i => i.id === id ? {...i, ...data as IUserAddress} : i))
   }
   const deleteLoc = async (id: string): Promise<any> => {
-    writeStorage<IUserAddress[]>(LocalStorageKey.addresses, addresses.filter(i => i.id !== id))
+    writeStorage<IUserAddress[]>(LocalStorageKey.addresses, appContext.addresses.filter(i => i.id !== id))
 
   }
+
 
   const value: IState = {
     ...defaultValue,
-    initialLoaded,
-    addresses: appContext.user?.addresses ?? addressLocal,
+    addresses: appContext.addresses,
     create: (data: DeepPartial<IUserAddress>) => {
       if(appContext.isLogged){
         return createReq(data)
@@ -93,6 +82,9 @@ export function AddressWrapper(props: Props) {
       }else{
         return deleteLoc(id)
       }
+    },
+    setCurrentAddress: (address: IUserAddress) => {
+      appContext.setCurrentAddress(address)
     },
   }
 

@@ -1,4 +1,3 @@
-
 export enum ModalType {
   AddressForm = 'addressForm',
   AddressList = 'addressList',
@@ -7,6 +6,7 @@ export enum ModalType {
   Profile = 'profile',
   ProfileMenu = 'profileMenu',
 }
+
 export enum SnackbarType {
   error,
   success,
@@ -19,7 +19,8 @@ export enum CookiesType {
 }
 
 export enum LocalStorageKey {
-  addresses = 'addresses'
+  addresses = 'addresses',
+  currentAddressId = 'currentAddressId'
 }
 
 export enum Preset {

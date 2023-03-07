@@ -30,7 +30,6 @@ export default class Converter {
 
   static convertStringCoordinatesToLatLng(coordinates: string){
     return   coordinates.split(' ').map(i => parseFloat(i))
-
   }
 
   static convertGeoObjectToUserAddress(geoObject: GeoObject): IUserAddress {
@@ -56,17 +55,6 @@ export default class Converter {
   }
 
   static convertGeoObjectToString(geoObject: GeoObject): string | null {
-    const components = geoObject.metaDataProperty.GeocoderMetaData.Address.Components
-    const street = components.find((element) => element.kind == 'street')?.name ?? ''
-    const house = components?.find((element) => element.kind == 'house')?.name ?? ''
-
-    const province = components?.find((element) => element.kind == 'province')?.name ?? ''
-    const area = components?.find((element) => element.kind == 'province')?.name ?? ''
-
-
-    const address = [street, house].filter(i => !!i).join(', ')
-    const areaAddress = [area, street, house].filter(i => !!i).join(', ')
-
-    return address
+    return geoObject.name
   }
 }

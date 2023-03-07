@@ -24,4 +24,17 @@ export default class UserAddressRepository {
   static async delete(id: string): Promise<any> {
     return request({url: `/api/user-address/${id}`})
   }
+
+  static async sync(currentAddressId: string, addresses: IUserAddress[]): Promise<{newCurrentAddressId: string}> {
+    const res = await request<{newCurrentAddressId: string}>({
+      method: 'post',
+      url: '/api/user-address',
+      data: {
+        currentAddressId,
+        addresses: addresses.map(i => ({...i, localId: i.id}))
+      },
+    })
+    return res
+  }
+
 }

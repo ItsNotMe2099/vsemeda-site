@@ -11,7 +11,7 @@ import MarkerSvg from 'components/svg/MarkerSvg'
 import dynamic from 'next/dynamic'
 import AddressField from 'components/fields/AddressField'
 import {Formik} from 'formik'
-import { useState} from 'react'
+import {useEffect, useState} from 'react'
 import {GeoObject, YandexResponseGeocoder} from 'data/interfaces/IYandexGeocoder'
 import AddressForm from 'components/modals/AdressModal/Form'
 import classNames from 'classnames'
@@ -36,8 +36,17 @@ const AddressFormModalInner = (props: Props) => {
   const [confirmShown, setConfirmShown] = useState(false)
   const [addressStr, setAddressStr] = useState(null)
   const [location, setLocation] = useState<YMapLocationRequest | null>({center: [55.76, 37.64], zoom: 10})
-   const header = (<div/>)
+  const header = (<div/>)
   const [geoObject, setGeoObject] = useState<GeoObject>()
+  const args = appContext.modalArguments as AddressFormModalArguments
+  useEffect(() => {
+    if(args?.address){
+      setAddressFormShown(true)
+      setAddressSearchShown(false)
+      setAddressStr(args.address.address)
+      setLocation({center: [args.address.location.lat, args.address.location.lng], zoom: 10})
+    }
+  }, [args])
   const handleEditAddressClick = () => {
     setAddressFormShown(false)
   }
@@ -49,6 +58,7 @@ const AddressFormModalInner = (props: Props) => {
       geoObject.boundedBy.Envelope.upperCorner.split(' ').map(i => parseFloat(i)),
 
     ]
+
 
     const center = point.pos.split(' ').map(i => parseFloat(i)) as [lon: number, lat: number, alt?: number]
     setLocation({bounds: bounds as any, center})
@@ -64,7 +74,7 @@ const AddressFormModalInner = (props: Props) => {
 
   const body = (
     <div className={styles.bodyWrapper}>
-      {addressFormShown && <AddressForm initialGeoObject={geoObject} />}
+      {addressFormShown && <AddressForm initialAddress={args?.address ? args.address  : Converter.convertGeoObjectToUserAddress(geoObject)} />}
       <div className={styles.mapWrapper}>
         <YandexMap className={styles.map} center={location}/>
         {addressStr && <div className={styles.address}>{addressStr}</div>}

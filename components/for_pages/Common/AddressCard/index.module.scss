@@ -1,0 +1,58 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: background-color 0.2ms ease-in;
+  background-color: $white;
+  border-radius: 16px;
+  padding: 15px;
+  cursor: pointer;
+  > * + * {
+    margin-left: 10px;
+  }
+
+  &.selected {
+    background-color: $purple;
+
+    .icon {
+      background-color: #61D46E;
+    }
+    .subTitle {
+      color: $white;
+    }
+
+    .title {
+      color: $white;
+    }
+  }
+}
+
+.icon {
+  transition: background-color 0.2ms ease-in;
+  border-radius: 100%;
+  width: 48px;
+  height: 48px;
+  background-color: $grey5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info{
+  flex: 1;
+  padding-right: 20px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  color: $dark1;
+}
+
+.subTitle {
+  font-weight: 600;
+  font-size: 14px;
+  color: $grey1;
+}
