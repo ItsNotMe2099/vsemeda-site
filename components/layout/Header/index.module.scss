@@ -82,3 +82,19 @@
     flex-grow: 0;
   }
 }
+
+.desktop {
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}
+
+.phone {
+  @include mq($PhoneWidth, min) {
+    display: none;
+  }
+
+  .container {
+    background-color: transparent;
+  }
+}

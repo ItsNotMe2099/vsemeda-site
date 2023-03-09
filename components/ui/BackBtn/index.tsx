@@ -18,7 +18,7 @@ export default function BackBtn(props: Props) {
     <IconButton onClick={props.onClick} className={classNames({
       [styles.root]: true,
       [styles.defaultPosition]: props.defaultPosition,
-    }, props.className)} bgColor={props.bgColor} size={'large'}>
+    }, props.className)} bgColor={props.bgColor} size={'medium'}>
       <ArrowLeftSvg color={props.color ?? colors.purple} />
     </IconButton>
   )

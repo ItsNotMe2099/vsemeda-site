@@ -8,7 +8,7 @@ interface Props extends IButton{
   className?: string
   buttonRef?: RefObject<any>
   bgColor: 'transparent' | 'white'
-  size?: 'normal' | 'large'
+  size?: 'normal' | 'medium' | 'large'
 }
 
 export default function IconButton(props: Props) {
