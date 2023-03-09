@@ -5,7 +5,6 @@ import Sticky from 'react-stickynode'
 import RestaurantMenu from 'components/for_pages/restaurant/RestaurantMenu'
 export default function RestaurantPage() {
 
-
   return (
    <div className={styles.root}>
      <div className={styles.aside}>

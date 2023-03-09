@@ -23,6 +23,8 @@ interface IState {
   updateLineQuantity: (line: ICartLine, isAdd?: boolean) => void,
   updateProductQuantity: (product: IProduct, isAdd?: boolean) => void,
   deleteLine: (lineId: number) => ICart | null;
+  groupingIdQuantityMap: QuantityMap
+  productQuantityMap: QuantityMap
 }
 
 
@@ -37,7 +39,9 @@ const defaultValue: IState = {
   addProduct: () => null,
   updateLineQuantity: () => null,
   updateProductQuantity: () => null,
-  deleteLine: () => null
+  deleteLine: () => null,
+  groupingIdQuantityMap: {},
+  productQuantityMap: {}
 }
 
 const CartContext = createContext<IState>(defaultValue)
@@ -53,18 +57,20 @@ export function CartWrapper(props: Props) {
   const [cart, setCartState] = useState<ICart | null>(null)
   const [updating, setUpdating] = useState(true)
   const [initialLoaded, setInitialLoaded] = useState(true)
-  const [groupingIdQuantityMap, setGroupingIdQuantityMap] = useState<QuantityMap>({})
+  const [groupingIdQuantityMap, setGroupingIdQuantityMapState] = useState<QuantityMap>({})
   const [productQuantityMap, setProductQuantityMap] = useState<QuantityMap>({})
   const productIsSyncingMapRef = useRef<BoolMap>({})
 
   const quantityChangeDebounceRef = useRef<DebounceMap>({})
+  const groupingIdQuantityMapRef = useRef<QuantityMap>({})
 
   const cartRef = useRef<ICart | null>(null)
   const windowFocused = useWindowFocus()
   const windowFocusInit = useRef<boolean>(false)
 
   const clearQuantity = () => {
-    setGroupingIdQuantityMap({})
+    setGroupingIdQuantityMapState({})
+    groupingIdQuantityMapRef.current = {}
     setProductQuantityMap({})
     quantityChangeDebounceRef.current = {}
   }
@@ -78,6 +84,10 @@ export function CartWrapper(props: Props) {
   const setCart = (cart: ICart) => {
     cartRef.current = cart
     setCartState(cart)
+  }
+  const setGroupingIdQuantityMap = (key: string, value: number) => {
+   setGroupingIdQuantityMapState({...groupingIdQuantityMapRef.current, [key]: value} )
+    groupingIdQuantityMapRef.current[key] = value
   }
   const fetch = async (): Promise<ICart> => {
     const cart = await CartRepository.fetch(appContext.currentLocation)
@@ -126,31 +136,33 @@ export function CartWrapper(props: Props) {
       productQuantityMap[productId] = getProductQuantityMapValue(groupingIdQuantityMap, productId!)
     }
     setProductQuantityMap(productQuantityMap)
-    setGroupingIdQuantityMap(groupingIdQuantityMap)
+    setGroupingIdQuantityMapState(groupingIdQuantityMap)
+    groupingIdQuantityMapRef.current = groupingIdQuantityMap
     productIsSyncingMapRef.current = {}
 
   }
   const updateProductQuantityMap = (productId: string) => {
-    const quantity = Object.keys(groupingIdQuantityMap)
+    const quantity = Object.keys(groupingIdQuantityMapRef.current)
       .filter((e) => e.startsWith(`${productId}:`))
-      .reduce((t, e) => t + groupingIdQuantityMap[e]!, 0)
+      .reduce((t, e) => t + groupingIdQuantityMapRef.current[e]!, 0)
     setProductQuantityMap({...productQuantityMap, [productId]: quantity})
 
   }
   const syncOrderProductQuantity = async (groupingId: string) => {
-    const line = cart!.lines.find((i) => i.groupingId == groupingId)
-    const userQuantity = groupingIdQuantityMap[groupingId] ?? 0
+    const line = cartRef.current!.lines.find((i) => i.groupingId == groupingId)
+    const userQuantity = groupingIdQuantityMapRef.current[groupingId] ?? 0
     if (line != null && line.quantity != userQuantity) {
       productIsSyncingMapRef.current[groupingId] = true
       updateLoading()
       if (userQuantity > line.quantity || (userQuantity < line.quantity && userQuantity > 0)) {
         await updateCartLineReq(line.id!,
-          {quantity: groupingIdQuantityMap[line.groupingId]!})
+          {quantity: groupingIdQuantityMapRef.current[line.groupingId]!})
       } else if (userQuantity == 0) {
         await deleteCartLineReq(line.id)
       }
-      const updatedLine = cart!.lines.find((i) => i.id == line.id)
-      if (updatedLine?.quantity != groupingIdQuantityMap[line.groupingId]) {
+      const updatedLine = cartRef.current!.lines.find((i) => i.id == line.id)
+
+      if (updatedLine?.quantity != groupingIdQuantityMapRef.current[line.groupingId]) {
          await syncOrderProductQuantity(groupingId)
         return
       }
@@ -171,23 +183,25 @@ export function CartWrapper(props: Props) {
 
     const key = `cart-product-change-${line.groupingId}`
     if (isAdd) {
-      groupingIdQuantityMap[line.groupingId] = groupingIdQuantityMap[line.groupingId]! + 1
-    } else if (groupingIdQuantityMap[line.groupingId]! > 1) {
-      groupingIdQuantityMap[line.groupingId] = groupingIdQuantityMap[line.groupingId]! - 1
+      setGroupingIdQuantityMap(line.groupingId, groupingIdQuantityMapRef.current[line.groupingId]! + 1)
+    } else if (groupingIdQuantityMapRef.current[line.groupingId]! > 1) {
+      setGroupingIdQuantityMap(line.groupingId, groupingIdQuantityMapRef.current[line.groupingId]! - 1)
     } else {
-      groupingIdQuantityMap[line.groupingId] = 0
+      setGroupingIdQuantityMap(line.groupingId, 0)
     }
 
     updateProductQuantityMap(line.productId!)
     if (productIsSyncingMapRef.current[line.groupingId] == true) {
       return
     }
+
     if(quantityChangeDebounceRef.current[key]){
       quantityChangeDebounceRef.current[key]()
     }else{
       quantityChangeDebounceRef.current[key] = debounce(() => {
         syncOrderProductQuantity(line.groupingId)
       }, 300)
+      quantityChangeDebounceRef.current[key]()
     }
   }
 
@@ -199,15 +213,15 @@ export function CartWrapper(props: Props) {
       changeCartLineQuantity(findLine, true)
       return
     }
-    groupingIdQuantityMap[groupingId] = data.quantity ?? 1
+    setGroupingIdQuantityMap(groupingId, data.quantity ?? 1)
 
     productIsSyncingMapRef.current[groupingId] = true
     updateLoading()
     updateProductQuantityMap(data.productId)
     await createCartLineReq(data)
 
-    const  updatedLine = cart!.lines.find((i) => i.groupingId == groupingId)
-    if (updatedLine?.quantity != groupingIdQuantityMap[groupingId]) {
+    const  updatedLine = cartRef.current!.lines.find((i) => i.groupingId == groupingId)
+    if (updatedLine?.quantity != groupingIdQuantityMapRef.current[groupingId]) {
       return syncOrderProductQuantity(groupingId)
     }
    delete productIsSyncingMapRef.current[groupingId]
@@ -241,6 +255,8 @@ export function CartWrapper(props: Props) {
     cart,
     initialLoaded,
     updating,
+    groupingIdQuantityMap,
+    productQuantityMap,
     fetch,
     update: (data: ICartUpdateRequestData) => {
       return updateCartReq(data)

@@ -1,7 +1,9 @@
 @import "styles/index";
 
 .root{
-
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-flex: 1;
 }
 .stack{
   margin-top: 40px;

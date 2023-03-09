@@ -29,9 +29,13 @@ export default function MenuProductCard(props: Props) {
           <CardBodyLayoutPos items={product.layout[ProductCardLayoutPosType.CardT]}/>}
         <div className={styles.name}>{product.name}</div>
         <div className={styles.price}>{product.price}</div>
+      </div>
+      <div className={styles.spacer}/>
+      <div className={styles.btnContainer}>
         <ProductQuantityButton className={styles.btn} quantity={props.quantity} onAddClick={props.onAddClick}
                                onMinusClick={props.onMinusClick}/>
       </div>
+
     </div>
   )
 }

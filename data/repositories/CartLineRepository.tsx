@@ -10,7 +10,7 @@ import CartUtils from 'utils/CartUtils'
 export default class CartLineRepository {
   static async create(data: ICartLineCreateRequestData, location: ILocation): Promise<ICart> {
     const res = await request<ICart>({
-      method: 'patch',
+      method: 'post',
       url: `/api/cart/cart-line?${queryString.stringify(location)}`,
       data,
     })

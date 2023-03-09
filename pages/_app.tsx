@@ -14,6 +14,7 @@ import { AddressWrapper } from 'context/address_state'
 import AppOverlay from 'components/for_pages/Common/AppOverlay'
 import { AuthWrapper } from 'context/auth_state'
 import { CookiesType } from 'types/enums'
+import {CartWrapper} from 'context/cart_state'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
@@ -37,6 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AppWrapper isMobile={pageProps.isMobile} token={pageProps.token}>
       <AddressWrapper>
+        <CartWrapper>
         <AuthWrapper>
           <Head>
             <meta
@@ -50,6 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           {clientVisible && <Snackbar />}
           <AppOverlay />
         </AuthWrapper>
+        </CartWrapper>
       </AddressWrapper>
     </AppWrapper >
   )
