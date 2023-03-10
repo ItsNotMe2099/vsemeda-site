@@ -90,7 +90,11 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
       <div className={styles.phone}>
         <div className={styles.container}>
           <IconButton bgColor='white' size='large'>
-            <MenuSvg color='#812292'/>
+            <MenuSvg color='#812292' />
+          </IconButton>
+          <HeaderAddress isMobile/>
+          <IconButton bgColor='white' size='large'>
+            <LoupeSvg color='#812292' />
           </IconButton>
         </div>
       </div>

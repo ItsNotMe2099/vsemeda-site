@@ -8,6 +8,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include mq($PhoneWidth, max) {
+    align-items: baseline
+  }
 }
 
 .bg {
@@ -15,17 +19,29 @@
   top: #{-50 + -20 + -290}px;
   bottom: -40px;
   background: radial-gradient(circle at center, #B648D7, #882CB6, #4A078A);
+
+  @include mq($PhoneWidth, max) {
+    background: url('../../../../public/images/mobileBg/mobileBg.png');
+  }
 }
 
 .circle {
   position: absolute;
   right: 15%;
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
 }
 
 .container {
   display: flex;
   position: relative;
   z-index: 1;
+
+  @include mq($PhoneWidth, max) {
+    margin-top: 114px;
+  }
 }
 
 .title {
@@ -33,6 +49,10 @@
   font-size: 36px;
   line-height: 44px;
   color: $white;
+
+  @include mq($PhoneWidth, max) {
+    color: #4C4958;
+  }
 }
 
 .choose {
@@ -41,6 +61,10 @@
   font-size: 14px;
   line-height: 17px;
   color: $white;
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
 }
 
 .drop {
@@ -52,7 +76,12 @@
   position: absolute;
   bottom: -30%;
   left: 0;
-  img{
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+
+  img {
     width: auto !important;
   }
 }
@@ -62,9 +91,20 @@
   position: absolute;
   bottom: -30%;
   right: 0;
-  img{
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+
+  img {
     width: auto !important;
     inset: unset !important;
     right: 0 !important;
+  }
+}
+
+.left {
+  @include mq($PhoneWidth, max) {
+    display: none;
   }
 }

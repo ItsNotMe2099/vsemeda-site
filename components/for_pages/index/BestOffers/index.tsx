@@ -39,6 +39,11 @@ export default function BestOffers() {
             {items ? <DropdownMenu options={items} /> : null}
           </div>
         </div>
+        <div className={styles.mobile}>
+          <div className={styles.title}>
+            Лучшие<br/> предложения 😍
+          </div>
+        </div>
       </div>
       <CirclesBgSvg className={styles.circle} />
     </div>
