@@ -35,7 +35,7 @@ export default function HeaderAddress(props: Props) {
         </div>
       }
       {!props.isMobile ? <ChevronSvg className={styles.chevron} color={props.isMobile ? '#4F423C' : colors.white} /> : null}
-      <div className={styles.value}>{appContext.currentAddress?.address ?? null}</div>
+      {props.isMobile ? <div className={styles.value}>{appContext.currentAddress?.address ?? null}</div> : null}
     </div>
   )
 }

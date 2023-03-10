@@ -74,7 +74,7 @@ export default function UserMenu(props: Props) {
         dropdownRef.current = ref
         setReferenceElement(ref)
       }}>
-      <div className={styles.name}>{appContext.user ? appContext.user.name : <>Ivan</>}</div>
+      <div className={styles.name}>{appContext.user ? appContext.user.name : null}</div>
       <ChevronSvg className={styles.chevron} color={colors.white} />
       <div className={styles.icon}>
         <Image src='/images/UserMenu/profile.svg' alt='' fill />

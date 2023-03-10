@@ -1,11 +1,14 @@
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import DropdownMenu from 'components/ui/DropdownMenu'
 import MenuRepository from 'data/repositories/MenuRepository'
 import { ICategory } from 'data/interfaces/ICategory'
-import DropdownDelivery from 'components/ui/DropdownDelivery'
+import { DropdownDelivery } from 'components/ui/DropdownDelivery'
 import Image from 'next/image'
+import { usePopper } from 'react-popper'
+import { useDetectOutsideClick } from 'components/hooks/useDetectOutsideClick'
+import usePressAndHover from 'hooks/usePressAndHover'
 
 interface Props {
 
@@ -39,6 +42,25 @@ export default function Filter(props: Props) {
   }, [])
 
   const [active, setActive] = useState<string>('all')
+
+  const dropdownRef = useRef(null)
+  const [refAction, press, hover] = usePressAndHover()
+
+  const [showDropDown, setShowDropDown] = useDetectOutsideClick(dropdownRef, false)
+  const [referenceElement, setReferenceElement] = useState(null)
+  const [popperElement, setPopperElement] = useState(null)
+
+  const { styles: popperStyles, attributes, forceUpdate, update } = usePopper(referenceElement, popperElement, {
+    strategy: 'absolute',
+
+    placement: 'bottom',
+    modifiers: [
+      {
+        name: 'flip',
+        enabled: true,
+      },
+    ]
+  })
 
   const renderItems = (index: number) => {
     return (
@@ -88,7 +110,12 @@ export default function Filter(props: Props) {
         </div>
       </div>
       <div className={styles.right}>
-        <DropdownDelivery options={deliveryOptions} />
+        <DropdownDelivery options={deliveryOptions} isActive={showDropDown} ref={setReferenceElement}
+          attributes={attributes.popper}
+          style={popperStyles.popper}
+          onClick={() => setShowDropDown(!showDropDown)}
+          onOptionClick={() => setShowDropDown(false)}
+        />
         <div className={styles.item}>
           <Image src={'/images/icons/filter.svg'} alt='' fill />
           <span>Фильтр</span>

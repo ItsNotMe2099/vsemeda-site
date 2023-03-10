@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useDetectOutsideClick } from 'components/hooks/useDetectOutsideClick'
 import styles from './index.module.scss'
 import classNames from 'classnames'
+import { forwardRef, HTMLAttributes } from 'react'
 
 interface IOption{
   name: string
@@ -15,9 +16,14 @@ interface Props {
   dots?: boolean
   className?: string
   optionClick?: () => void
+  style?: React.CSSProperties,
+  attributes?: HTMLAttributes<HTMLDivElement>
+  isActive: boolean
+  onClick: () => void
+  onOptionClick: () => void
 }
 
-export default function DropdownDelivery(props: Props) {
+export const DropdownDelivery = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const dropdownRef = useRef(null)
   const { options, optionClick, onTriggerClick } = props
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
@@ -28,14 +34,14 @@ export default function DropdownDelivery(props: Props) {
       onTriggerClick()
     }
     e.preventDefault()
-    setIsActive(!isActive)
+    props.onClick()
   }
 
-  console.log(isActive)
+  console.log(props.isActive)
 
   const handleOptionClick = (item: IOption) => {
     setCurrentLabel(item.name)
-    setIsActive(false)
+    props.onOptionClick()
     optionClick ? optionClick() : null
   }
 
@@ -53,11 +59,13 @@ export default function DropdownDelivery(props: Props) {
           </svg>
         </div>
       </a>
-      <nav ref={dropdownRef} className={classNames(styles.dropDown, { [styles.dropDownActive]: isActive })}>
+      <nav ref={ref} style={props.style}  {...props.attributes} className={classNames(styles.dropDown, { [styles.dropDownActive]: props.isActive })}>
         {filtered.map((item, index) => <div key={index} className={styles.option}
           onClick={() => handleOptionClick(item)}>
           <a>{item.name}</a></div>)}
       </nav>
     </div>
   )
-}
+})
+
+DropdownDelivery.displayName = 'MenuDropdown'

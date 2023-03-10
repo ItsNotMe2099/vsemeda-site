@@ -31,4 +31,10 @@
   flex-direction: row;
   align-items: center;
   cursor: pointer;
+
+  .value {
+    @include mq($MPhoneWidth, max) {
+      font-size: 12px;
+    }
+  }
 }

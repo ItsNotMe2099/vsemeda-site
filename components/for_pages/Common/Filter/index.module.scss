@@ -7,15 +7,14 @@
   border-radius: 32px;
   display: flex;
   justify-content: space-between;
-  margin: 0 48px;
   max-height: 75px;
   @include mq($TabletWidth, max) {
     overflow-x: auto;
     background-color: transparent;
-    margin: 0;
     gap: 16px;
     @include scroll_hide;
     border-radius: 0;
+    padding: 0;
   }
 }
 

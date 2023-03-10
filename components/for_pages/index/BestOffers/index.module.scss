@@ -10,7 +10,8 @@
   justify-content: center;
 
   @include mq($PhoneWidth, max) {
-    align-items: baseline
+    align-items: baseline;
+    height: 100%;
   }
 }
 
@@ -52,6 +53,10 @@
 
   @include mq($PhoneWidth, max) {
     color: #4C4958;
+  }
+
+  @include mq($MPhoneWidth, max) {
+    font-size: 30px;
   }
 }
 
@@ -105,6 +110,12 @@
 
 .left {
   @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}
+
+.mobile{
+  @include mq($PhoneWidth, min) {
     display: none;
   }
 }
