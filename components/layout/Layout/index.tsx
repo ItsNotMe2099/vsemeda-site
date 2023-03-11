@@ -6,7 +6,6 @@ import classNames from 'classnames'
 import { useAppContext } from 'context/state'
 import TabBar from '../Tabbar'
 import VisibleXs from 'components/visibility/VisibleXs'
-import HiddenXs from 'components/visibility/HiddenXs'
 
 interface Props {
   children?: React.ReactNode
@@ -22,7 +21,7 @@ export default function Layout({ children, className }: Props) {
   return (
     <div className={styles.root}>
       <StickyContainer>
-        <HiddenXs><Header isSticky={!appContext.modal || !appContext.isOverlayShown} /></HiddenXs>
+        <Header isSticky={!appContext.modal || !appContext.isOverlayShown} />
         <div className={styles.content}>
           <div className={classNames(styles.container, className)}>
             {children}

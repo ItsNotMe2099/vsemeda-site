@@ -5,6 +5,10 @@
   padding: 16px 0px;
   background-color: $basic-gray-1;
   margin-top: auto;
+
+  @include mq($TabletWidth, max) {
+    display: none;
+  }
 }
 
 .container {
