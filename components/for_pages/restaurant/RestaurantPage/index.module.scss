@@ -1,15 +1,33 @@
 @import "styles/index";
 
-.root{
+.root {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   max-width: 1500px;
   margin: 0 auto;
+
+  @include mq($TabletWidth, max) {
+    display: block;
+  }
+
+  @include mq($PhoneWidth, max) {
+    margin-top: -85px;
+  }
 }
-.aside{
+
+.aside {
   width: 282px;
+
+  @include mq($TabletWidth, max) {
+    display: none;
+  }
 }
-.content{
+
+.content {
   margin-left: 282px;
+
+  @include mq($TabletWidth, max) {
+    margin-left: 0;
+  }
 }

@@ -17,6 +17,8 @@ import classNames from 'classnames'
 import UserMenu from './UserMenu'
 import IconButton from 'components/ui/IconButton'
 import MenuSvg from 'components/svg/MenuSvg'
+import BackBtn from 'components/ui/BackBtn'
+import BurgerSvg from 'components/svg/BurgerSvg'
 
 interface Props {
   isSticky?: boolean
@@ -89,12 +91,15 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
       </div>
       <div className={styles.phone}>
         <div className={styles.container}>
+          {router.asPath === `/${appContext.region.slug}` ?
+            <IconButton bgColor='white' size='large'>
+              <MenuSvg color='#812292' />
+            </IconButton>
+            :
+            <BackBtn size='large' bgColor='white' onClick={() => router.push('/')} />}
+          {router.asPath === `/${appContext.region.slug}` ? <HeaderAddress isMobile /> : null}
           <IconButton bgColor='white' size='large'>
-            <MenuSvg color='#812292' />
-          </IconButton>
-          <HeaderAddress isMobile/>
-          <IconButton bgColor='white' size='large'>
-            <LoupeSvg color='#812292' />
+            {router.asPath === `/${appContext.region.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292'/>}
           </IconButton>
         </div>
       </div>

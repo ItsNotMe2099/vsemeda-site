@@ -44,6 +44,10 @@
   top: 0;
   background-color: rgba(0,0,0, 0.6);
   border-radius: 24px;
+
+  @include mq($PhoneWidth, max) {
+    border-radius: 0;
+  }
 }
 .bgOverlay{
   border-radius: 24px;

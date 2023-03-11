@@ -11,6 +11,7 @@ interface Props {
   color?: string
   className?: string
   bgColor: 'transparent' | 'white'
+  size?: 'normal' | 'medium' | 'large'
 }
 
 export default function BackBtn(props: Props) {
@@ -18,9 +19,13 @@ export default function BackBtn(props: Props) {
     <IconButton onClick={props.onClick} className={classNames({
       [styles.root]: true,
       [styles.defaultPosition]: props.defaultPosition,
-    }, props.className)} bgColor={props.bgColor} size={'medium'}>
+    }, props.className)} bgColor={props.bgColor} size={props.size}>
       <ArrowLeftSvg color={props.color ?? colors.purple} />
     </IconButton>
   )
+}
+
+BackBtn.defaultProps = {
+  size: 'medium'
 }
 

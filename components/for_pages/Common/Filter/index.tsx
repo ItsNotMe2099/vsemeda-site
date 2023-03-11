@@ -11,7 +11,7 @@ import usePressAndHover from 'hooks/usePressAndHover'
 import FilterSvg from 'components/svg/FilterSvg'
 
 interface Props {
-
+  className?: string
 }
 
 export default function Filter(props: Props) {
@@ -25,16 +25,6 @@ export default function Filter(props: Props) {
   const deliveryOptions = [
     { name: 'Сейчас' },
     { name: 'Завтра' },
-  ]
-
-  const test = [
-    { name: 'Суши', id: 1, slug: '', sort: 0 },
-    { name: 'Бургеры', id: 2, slug: '', sort: 0 },
-    { name: 'Пицца', id: 3, slug: '', sort: 0 },
-    { name: 'Десерты', id: 4, slug: '', sort: 0 },
-    { name: 'Соки', id: 5, slug: '', sort: 0 },
-    { name: 'Рыба', id: 6, slug: '', sort: 0 },
-    { name: 'Колбаса', id: 7, slug: '', sort: 0 },
   ]
 
   useEffect(() => {
@@ -81,7 +71,7 @@ export default function Filter(props: Props) {
   }
 
   return (
-    <div className={styles.root}>
+    <div className={classNames(styles.root, props.className)}>
       <div className={styles.left}>
         <div
           onClick={() => setActive('all')}

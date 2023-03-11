@@ -1,20 +1,51 @@
 @import "styles/index";
 
-.root{
+.root {
   display: flex;
   flex-wrap: wrap;
   -webkit-box-flex: 1;
+
+  @include mq($TabletWidth, max) {
+    padding: 48px 24px 90px 24px;
+    background: $purple3;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    position: relative;
+    margin-top: -20px;
+  }
 }
-.stack{
+
+.stack {
   margin-top: 40px;
 }
-.category{
+
+.category {
   font-size: 20px;
   font-weight: 600;
   color: $dark1;
 }
-.products{
+
+.products {
   margin-top: 32px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 24px;
+
+  @include mq($DesktopWidth, max) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @include mq($SmDesktopWidth, max) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include mq($LPhoneWidth, max) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.filter {
+  @include mq($TabletWidth, min) {
+    display: none !important;
+  }
 }

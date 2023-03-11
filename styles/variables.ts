@@ -4,6 +4,7 @@ export const breakpoints = {
   SmDesktopWidth: 992,
   TabletWidth: 768,
   PhoneWidth: 576,
+  LPhoneWidth: 428,
   MPhoneWidth: 375,
   SmPhoneWidth: 320,
 
