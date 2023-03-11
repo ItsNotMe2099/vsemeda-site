@@ -5,10 +5,10 @@ import DropdownMenu from 'components/ui/DropdownMenu'
 import MenuRepository from 'data/repositories/MenuRepository'
 import { ICategory } from 'data/interfaces/ICategory'
 import { DropdownDelivery } from 'components/ui/DropdownDelivery'
-import Image from 'next/image'
 import { usePopper } from 'react-popper'
 import { useDetectOutsideClick } from 'components/hooks/useDetectOutsideClick'
 import usePressAndHover from 'hooks/usePressAndHover'
+import FilterSvg from 'components/svg/FilterSvg'
 
 interface Props {
 
@@ -117,7 +117,7 @@ export default function Filter(props: Props) {
           onOptionClick={() => setShowDropDown(false)}
         />
         <div className={styles.item}>
-          <Image src={'/images/icons/filter.svg'} alt='' fill />
+          <FilterSvg className={styles.filterSvg} color='#828282' />
           <span>Фильтр</span>
         </div>
       </div>

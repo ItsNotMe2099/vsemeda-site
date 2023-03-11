@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   max-height: 75px;
+
   @include mq($TabletWidth, max) {
     overflow-x: auto;
     background-color: transparent;
@@ -15,6 +16,7 @@
     @include scroll_hide;
     border-radius: 0;
     padding: 0;
+    margin-right: -24px;
   }
 }
 
@@ -30,6 +32,11 @@
   cursor: pointer;
   position: relative;
   display: flex;
+
+  @include mq($TabletWidth, max) {
+    padding: 6px 19px;
+    border-radius: 23px;
+  }
 
   img {
     position: relative !important;
@@ -54,6 +61,12 @@
   gap: 16px;
 }
 
+.right {
+  @include mq($TabletWidth, max) {
+    display: none;
+  }
+}
+
 .full {
   display: flex;
   gap: 16px;
@@ -66,29 +79,38 @@
 .medium {
   display: flex;
   gap: 16px;
+
   @include mq($MdDesktopWidth, min) {
     display: none;
   }
+
   @include mq($SmDesktopWidth, max) {
     display: none;
   }
 }
 
-.smDesk{
+.smDesk {
   display: flex;
   gap: 16px;
+
   @include mq($SmDesktopWidth, min) {
     display: none;
   }
-  @include mq($TabletWidth, max){
+
+  @include mq($TabletWidth, max) {
     display: none;
   }
 }
 
-.tablet{
+.tablet {
   display: flex;
   gap: 16px;
-  @include mq($TabletWidth, min){
+
+  @include mq($TabletWidth, min) {
     display: none;
   }
+}
+
+.filterSvg {
+  margin-right: 5px;
 }

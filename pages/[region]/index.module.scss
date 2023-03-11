@@ -8,7 +8,7 @@
   padding-top: 35px;
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
-
+  position: relative;
   @include mq($TabletWidth, max) {
     padding: 48px 24px 90px 24px;
   }

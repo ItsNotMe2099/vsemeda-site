@@ -7,5 +7,10 @@
   align-content: start;
   flex-direction: row;
   margin-top: 32px;
+
+  @include mq($TabletWidth, max) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 }
 

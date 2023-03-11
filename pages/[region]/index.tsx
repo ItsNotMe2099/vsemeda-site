@@ -7,6 +7,7 @@ import UnitList from 'components/for_pages/Common/UnitList'
 import UnitRepository from 'data/repositories/UnitRepository'
 import Filter from 'components/for_pages/Common/Filter'
 import { useAppContext } from 'context/state'
+import FilterBtn from 'components/for_pages/Common/FilterBtn'
 
 export default function Region() {
   const appContext = useAppContext()
@@ -28,6 +29,7 @@ export default function Region() {
       {unitIndex && <>
         <BestOffers />
         <div className={styles.body}>
+          <FilterBtn />
           <Filter />
           {loading && <div className={styles.loading}>Загружается</div>}
           {unitIndex.layout.items.map(item => <div className={styles.item}>
