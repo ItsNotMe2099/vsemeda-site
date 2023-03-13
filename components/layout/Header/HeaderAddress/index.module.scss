@@ -23,6 +23,10 @@
     font-size: 16px;
     line-height: 20px;
     color: #4C4958;
+
+    @include mq($MPhoneWidth, max) {
+      font-size: 12px;
+    }
   }
 }
 
@@ -37,4 +41,14 @@
       font-size: 12px;
     }
   }
+}
+
+.sticky {
+  .value {
+    color: #C8B5FF !important;
+  }
+}
+
+.stickyValue {
+  color: #FFF !important;
 }

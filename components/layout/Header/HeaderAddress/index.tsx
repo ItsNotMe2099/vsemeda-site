@@ -9,6 +9,7 @@ import { useAddressContext } from 'context/address_state'
 
 interface Props {
   isMobile?: boolean
+  isSticky?: boolean
 }
 
 export default function HeaderAddress(props: Props) {
@@ -29,13 +30,13 @@ export default function HeaderAddress(props: Props) {
       {!props.isMobile ? <><PlaceCheckSvg className={styles.chevron} color={colors.white} />
         <div className={styles.value}>{appContext.currentAddress?.address ?? 'Выберите адрес'}</div></>
         :
-        <div className={styles.top}>
+        <div className={classNames(styles.top, {[styles.sticky]: props.isSticky})}>
           <div className={styles.value} style={{ color: '#828282' }}>Ваш адрес доставки</div>
-          <ChevronSvg className={styles.chevron} color={props.isMobile ? '#4F423C' : colors.white} />
+          <ChevronSvg className={styles.chevron} color={props.isMobile && !props.isSticky ? '#4F423C' : props.isSticky ? '#C8B5FF' : colors.white} />
         </div>
       }
       {!props.isMobile ? <ChevronSvg className={styles.chevron} color={props.isMobile ? '#4F423C' : colors.white} /> : null}
-      {props.isMobile ? <div className={styles.value}>{appContext.currentAddress?.address ?? null}</div> : null}
+      {props.isMobile ? <div className={classNames(styles.value, {[styles.stickyValue]: props.isSticky})}>{appContext.currentAddress?.address ?? null}</div> : null}
     </div>
   )
 }

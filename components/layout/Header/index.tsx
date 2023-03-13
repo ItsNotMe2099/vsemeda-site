@@ -1,5 +1,5 @@
 import styles from './index.module.scss'
-import { Sticky } from 'react-sticky'
+import { Sticky, StickyChildArgs } from 'react-sticky'
 import Link from 'next/link'
 import { forwardRef, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -19,13 +19,15 @@ import IconButton from 'components/ui/IconButton'
 import MenuSvg from 'components/svg/MenuSvg'
 import BackBtn from 'components/ui/BackBtn'
 import BurgerSvg from 'components/svg/BurgerSvg'
+import { ModalType } from 'types/enums'
 
 interface Props {
   isSticky?: boolean
   restProps?: any
+  childArgs?: StickyChildArgs
 }
 
-const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, ref) => {
+const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number }>((props, ref) => {
 
   const [isShow, setIsShow] = useState<boolean>(false)
 
@@ -50,6 +52,8 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
   ]
 
   console.log('USERRRRR', appContext.user)
+
+  console.log('FROMTOP', props.distanceFromTop)
 
   return (
     <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
@@ -89,20 +93,23 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           <div className={classNames(styles.shadow, styles.shadow6)} />
         </div>
       </div>
-      <div className={styles.phone}>
-        <div className={styles.container}>
+      {appContext.modal !== ModalType.ProfileMenu ? <div className={styles.phone}>
+        <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
           {router.asPath === `/${appContext.region.slug}` ?
             <IconButton bgColor='white' size='large'>
               <MenuSvg color='#812292' />
             </IconButton>
             :
             <BackBtn size='large' bgColor='white' onClick={() => router.push('/')} />}
-          {router.asPath === `/${appContext.region.slug}` ? <HeaderAddress isMobile /> : null}
+          {router.asPath === `/${appContext.region.slug}` ?
+            <HeaderAddress
+              isSticky={props.distanceFromTop < 0 ? true : false}
+              isMobile /> : null}
           <IconButton bgColor='white' size='large'>
-            {router.asPath === `/${appContext.region.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292'/>}
+            {router.asPath === `/${appContext.region.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292' />}
           </IconButton>
         </div>
-      </div>
+      </div> : null}
     </div>
   )
 })
@@ -111,7 +118,7 @@ HeaderInner.displayName = 'HeaderInner'
 export default function Header(props: Props) {
 
   if (props.isSticky) {
-    return <Sticky>{({ style, isSticky, ...rest }) => <HeaderInner {...props} restProps={rest} style={style} />}</Sticky>
+    return <Sticky>{({ style, isSticky, distanceFromTop, ...rest }) => <HeaderInner distanceFromTop={distanceFromTop} {...props} restProps={rest} style={style} />}</Sticky>
   } else {
     return <HeaderInner {...props} />
   }
