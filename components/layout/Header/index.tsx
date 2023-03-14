@@ -1,7 +1,7 @@
 import styles from './index.module.scss'
 import { Sticky, StickyChildArgs } from 'react-sticky'
 import Link from 'next/link'
-import { forwardRef, useState } from 'react'
+import { forwardRef } from 'react'
 import { useRouter } from 'next/router'
 import { useAppContext } from 'context/state'
 import { LINKS } from 'types/constants'
@@ -10,7 +10,6 @@ import HeaderAddress from 'components/layout/Header/HeaderAddress'
 import HeaderDelivery from 'components/layout/Header/HeaderDelivery'
 import LoginButton from 'components/layout/Header/LoginButton'
 import DividerDotsSvg from 'components/svg/DividerDotsSvg'
-import ShoppingCartSvg from 'components/svg/ShoppingCartSvg'
 import { colors } from 'styles/variables'
 import LoupeSvg from 'components/svg/LoupeSvg'
 import classNames from 'classnames'
@@ -19,7 +18,7 @@ import IconButton from 'components/ui/IconButton'
 import MenuSvg from 'components/svg/MenuSvg'
 import BackBtn from 'components/ui/BackBtn'
 import BurgerSvg from 'components/svg/BurgerSvg'
-import { ModalType } from 'types/enums'
+import Basket from './Basket'
 
 interface Props {
   isSticky?: boolean
@@ -28,8 +27,6 @@ interface Props {
 }
 
 const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number }>((props, ref) => {
-
-  const [isShow, setIsShow] = useState<boolean>(false)
 
   const appContext = useAppContext()
 
@@ -51,12 +48,8 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
     { label: 'Здоровая еда', link: LINKS.header.healthyfood },
   ]
 
-  console.log('USERRRRR', appContext.user)
-
-  console.log('FROMTOP', props.distanceFromTop)
-
   return (
-    <div className={styles.root} ref={ref} style={props.style} {...(props.restProps ?? {})}>
+    <div className={classNames(styles.root, {[styles.none]: appContext.modal})} ref={ref} style={props.style} {...(props.restProps ?? {})}>
       <div className={styles.desktop}>
         <div className={styles.container}>
           <div className={styles.left}>
@@ -80,7 +73,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
           <div className={styles.right}>
             <LoupeSvg color={colors.white} />
             <DividerDotsSvg className={styles.divider} />
-            <ShoppingCartSvg color={colors.white} />
+            <Basket />
             <DividerDotsSvg className={styles.divider} />
             {!appContext.token ? <LoginButton /> :
               <UserMenu />}
@@ -93,7 +86,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
           <div className={classNames(styles.shadow, styles.shadow6)} />
         </div>
       </div>
-      {appContext.modal !== ModalType.ProfileMenu ? <div className={styles.phone}>
+      {!appContext.modal ? <div className={styles.phone}>
         <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
           {router.asPath === `/${appContext.region.slug}` ?
             <IconButton bgColor='white' size='large'>

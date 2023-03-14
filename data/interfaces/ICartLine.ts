@@ -1,4 +1,5 @@
 import {ICartModificationLine} from 'data/interfaces/ICartModificationLine'
+import { IProduct } from './IProduct';
 
 export interface ICartLine{
   id: string
@@ -11,4 +12,5 @@ export interface ICartLine{
   isWeighted: boolean
   modificationsPrice: number
   groupingId: string
+  product: IProduct
 }

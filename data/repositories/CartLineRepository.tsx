@@ -1,6 +1,6 @@
 import request from 'utils/request'
-import {ILocation} from 'data/interfaces/ILocation'
-import {ICart} from 'data/interfaces/ICart'
+import { ILocation } from 'data/interfaces/ILocation'
+import { ICart } from 'data/interfaces/ICart'
 import queryString from 'query-string'
 import {
   ICartLineCreateRequestData,
@@ -17,7 +17,7 @@ export default class CartLineRepository {
     return CartUtils.formatCart(res)
   }
 
-  static async update(id: string, data: ICartLineUpdateRequestData,  location: ILocation): Promise<ICart> {
+  static async update(id: string, data: ICartLineUpdateRequestData, location: ILocation): Promise<ICart> {
     const res = await request<ICart>({
       method: 'patch',
       url: `/api/cart/cart-line/${id}?${queryString.stringify(location)}`,

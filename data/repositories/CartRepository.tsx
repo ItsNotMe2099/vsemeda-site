@@ -1,15 +1,17 @@
 import request from 'utils/request'
-import {ILocation} from 'data/interfaces/ILocation'
-import {ICart} from 'data/interfaces/ICart'
-import {ICartUpdateRequestData} from 'data/interfaces/ICartUpdateRequestData'
+import { ILocation } from 'data/interfaces/ILocation'
+import { ICart } from 'data/interfaces/ICart'
+import { ICartUpdateRequestData } from 'data/interfaces/ICartUpdateRequestData'
 import CartUtils from 'utils/CartUtils'
 import queryString from 'query-string'
+
 export default class CartRepository {
+
   static async fetch(location: ILocation): Promise<ICart> {
     const res = await request<ICart>({
       method: 'get',
       url: '/api/cart/current',
-      data: {location}
+      data: { location }
     })
     return CartUtils.formatCart(res)
   }

@@ -110,3 +110,9 @@
     border-radius: 46px;
   }
 }
+
+.none {
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}

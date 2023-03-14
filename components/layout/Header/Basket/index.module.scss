@@ -1,9 +1,6 @@
 @import "styles/index";
 
-.root{
+.root {
   display: flex;
-  img{
-    min-width: 24px;
-    max-width: 24px;
-  }
+  cursor: pointer;
 }

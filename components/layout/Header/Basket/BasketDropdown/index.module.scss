@@ -1,0 +1,34 @@
+@import "styles/index";
+
+
+.root {
+  @include dropDown();
+  transform: translateY(100px);
+  background: transparent;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  z-index: 300;
+  right: 0px;
+  left: auto !important;
+  min-width: 357px;
+  max-height: 808px;
+
+  cursor: default;
+
+  &.fullWidth {
+    right: 0px;
+    left: auto !important;
+  }
+
+  &.opened {
+    transform: translateY(56px);
+  }
+}
+
+.list {
+  background: #FFFFFF;
+  border-radius: 16px;
+  width: 100%;
+  padding: 16px 24px;
+}
