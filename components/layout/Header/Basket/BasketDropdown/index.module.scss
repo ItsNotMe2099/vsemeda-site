@@ -31,4 +31,13 @@
   border-radius: 16px;
   width: 100%;
   padding: 16px 24px;
+  min-height: 200px;
+  position: relative;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
 }
