@@ -85,15 +85,29 @@
   transform: rotate(180deg);
 }
 
-.cash{
+.cash {
   transform: rotate(90deg);
 }
 
-.back{
+.back {
   display: flex;
   align-items: center;
   gap: 16px;
   cursor: pointer;
+
+  .text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #F2F2F2;
+    opacity: 0.76;
+  }
+}
+
+.change {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .text {
     font-weight: 500;

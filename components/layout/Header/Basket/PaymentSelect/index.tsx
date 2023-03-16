@@ -10,6 +10,7 @@ import PaymentMethodComponent from '../PaymentMethodComponent'
 import { useCartContext } from 'context/cart_state'
 import { ICartUpdateRequestData } from 'data/interfaces/ICartUpdateRequestData'
 import CashForm from '../CashForm'
+import Switch from 'components/ui/Switch'
 
 interface Props {
 }
@@ -47,6 +48,12 @@ export default function PaymentSelect({ }: Props) {
     }
   }
 
+  const handleSubmit = () => {
+    setChange(false)
+    setCashForm(false)
+    setOpened(false)
+  }
+
   return (
     <div className={styles.root}>
       {!cashForm ? opened ?
@@ -81,8 +88,13 @@ export default function PaymentSelect({ }: Props) {
           :
           <>
             <PaymentMethodComponent item={items.find(i => i.value === PaymentMethod.Cash)} />
-            
-            <CashForm />
+            <div className={styles.change}>
+              <div className={styles.text}>
+                {change ? <>Нужна сдача из:</> : <>Нужна сдача?</>}
+              </div>
+              <Switch checked={change} onChange={() => setChange(change ? false : true)} />
+            </div>
+            {change ? <CashForm onSubmit={handleSubmit}/> : null}
           </>
         }
       </div> : null}

@@ -5,7 +5,7 @@ import { useIMask } from 'react-imask'
 import FieldError from 'components/ui/FieldError'
 import classNames from 'classnames'
 import usePressAndHover from 'hooks/usePressAndHover'
-import { MouseEventHandler, ReactElement, useEffect, useState } from 'react'
+import { ChangeEvent, MouseEventHandler, ReactElement, useEffect, useState } from 'react'
 import CrossSvg from 'components/svg/CrossSvg'
 import FloatingFieldLabel from 'components/ui/FloatingFieldLabel'
 import FieldLabel from 'components/ui/FieldLabel'
@@ -18,7 +18,7 @@ interface Props extends IField<string> {
   success?: boolean
   styleType: InputStyleType
   suffix?: 'clear' | 'icon' | ReactElement
-  color: 'white' | 'purple'
+  color: 'white' | 'purple' | 'darkPurple'
   suffixIcon?: ReactElement
   onSuffixClick?: () => void
   className?: string
@@ -26,6 +26,7 @@ interface Props extends IField<string> {
   value?: any
   onClick?: MouseEventHandler<HTMLInputElement>
   labelType?: 'floating' | 'top'
+  isNumbersOnly?: boolean
 }
 
 export default function InputField(props: Props) {
@@ -62,6 +63,8 @@ export default function InputField(props: Props) {
           ref={props.format === 'phone' ? phoneRef as any : null}
           type={props.type ?? 'text'}
           disabled={props.disabled}
+          onInput=
+          {props.isNumbersOnly ? (e: ChangeEvent<HTMLInputElement>) => { e.target.value = e.target.value.replace(/[^0-9]/g, '') } : null}
           onFocus={() => {
             setFocused(true)
           }}
@@ -78,6 +81,7 @@ export default function InputField(props: Props) {
             [styles.press]: press,
             [styles.white]: props.color === 'white',
             [styles.purple]: props.color === 'purple',
+            [styles.darkPurple]: props.color === 'darkPurple',
           }, styles[props.styleType])}
           placeholder={props.placeholder}
         />

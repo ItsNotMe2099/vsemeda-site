@@ -131,11 +131,24 @@ $fieldHeightDefaultExSmall: 38px;
     color: $white;
   }
 
+  &.darkPurple {
+    border: none;
+    background: #5F096F;
+    color: $white;
+  }
+
   &.profile {
     border-radius: 23px;
     height: 44px;
     color: #333333;
     padding: 0 15px;
+  }
+
+  &.cashForm {
+    border-radius: 16px;
+    height: 46px;
+    color: #fff;
+    padding: 0 42px;
   }
 }
 
