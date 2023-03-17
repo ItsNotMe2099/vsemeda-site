@@ -35,6 +35,10 @@
     }
   }
 
+  &.basket{
+    padding: 0 10px;
+  }
+
   &.notifications {
     @media (min-width: $md-min) {
       justify-content: flex-start;

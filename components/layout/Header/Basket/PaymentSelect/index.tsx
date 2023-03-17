@@ -11,11 +11,17 @@ import { useCartContext } from 'context/cart_state'
 import { ICartUpdateRequestData } from 'data/interfaces/ICartUpdateRequestData'
 import CashForm from '../CashForm'
 import Switch from 'components/ui/Switch'
+import { forwardRef } from 'react'
+import { Sticky } from 'react-sticky'
+import classNames from 'classnames'
 
 interface Props {
+  isSticky?: boolean
+  restProps?: any
+  className?: string
 }
 
-export default function PaymentSelect({ }: Props) {
+const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number, className?: string }>((props, ref) => {
 
   const cartContext = useCartContext()
 
@@ -55,7 +61,7 @@ export default function PaymentSelect({ }: Props) {
   }
 
   return (
-    <div className={styles.root}>
+    <div className={classNames(styles.root, props.className)} ref={ref} style={props.style} {...(props.restProps ?? {})}>
       {!cashForm ? opened ?
         <div className={styles.choose} onClick={() => setOpened(false)}>
           <div className={styles.text}>Выберите способ оплаты:</div>
@@ -94,7 +100,7 @@ export default function PaymentSelect({ }: Props) {
               </div>
               <Switch checked={change} onChange={() => setChange(change ? false : true)} />
             </div>
-            {change ? <CashForm onSubmit={handleSubmit}/> : null}
+            {change ? <CashForm onSubmit={handleSubmit} /> : null}
           </>
         }
       </div> : null}
@@ -116,4 +122,15 @@ export default function PaymentSelect({ }: Props) {
       </div>
     </div>
   )
+})
+
+PaymentSelectInner.displayName = 'PaymentSelectInner'
+export default function PaymentSelect(props: Props) {
+
+  if (props.isSticky) {
+    return <Sticky>{({ style, isSticky, distanceFromTop, ...rest }) => <PaymentSelectInner className={props.className} distanceFromTop={distanceFromTop} {...props} restProps={rest} style={style} />}</Sticky>
+  } else {
+    return <PaymentSelectInner {...props} />
+  }
 }
+

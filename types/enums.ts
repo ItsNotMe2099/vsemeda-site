@@ -5,6 +5,7 @@ export enum ModalType {
   Login = 'login',
   Profile = 'profile',
   ProfileMenu = 'profileMenu',
+  Basket = 'basket'
 }
 
 export enum SnackbarType {

@@ -38,7 +38,7 @@ const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           История
         </div>
       </div>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region.slug}` })}>
+      <div onClick={() => appContext.showModal(ModalType.Basket)} className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region.slug}` })}>
         <CartSvg />
         <div className={styles.title}>
           Корзина

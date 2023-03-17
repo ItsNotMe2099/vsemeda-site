@@ -1,11 +1,9 @@
 import styles from './index.module.scss'
 import classNames from 'classnames'
 import { forwardRef, HTMLAttributes } from 'react'
-import * as React from 'react'
 import { ICartLine } from 'data/interfaces/ICartLine'
 import CartLine from '../CartLine'
 import PaymentSelect from '../PaymentSelect'
-import { useCartContext } from 'context/cart_state'
 
 interface Props {
   isActive?: boolean
@@ -17,8 +15,6 @@ interface Props {
 }
 
 export const BasketDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => {
-
-  const cartContext = useCartContext()
 
   return (
     <div onClick={props.onClick} className={classNames(styles.root, props.className, { [styles.opened]: props.isActive })} ref={ref}
@@ -33,4 +29,4 @@ export const BasketDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => 
     </div>
   )
 })
-BasketDropdown.displayName = 'MenuDropdown'
+BasketDropdown.displayName = 'BasketDropdown'

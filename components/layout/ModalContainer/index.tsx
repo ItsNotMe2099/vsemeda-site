@@ -10,6 +10,7 @@ import LoginFormModal from 'components/modals/LoginModal'
 import ProfileModal from 'components/modals/ProfileModal'
 import MobileProfileMenuModal from 'components/modals/MobileProfileMenuModal'
 import AddressListModal from 'components/modals/AddressListModal'
+import BasketModal from 'components/modals/BasketModal'
 
 
 interface Props { }
@@ -51,6 +52,9 @@ export default function ModalContainer(props: Props) {
         </Modal>
         <Modal isOpen={appContext.modal === ModalType.Login} {...commonSettings}>
           {appContext.modal === ModalType.Login && <LoginFormModal onRequestClose={appContext.hideModal} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.Basket} {...commonSettings}>
+          {appContext.modal === ModalType.Basket && <BasketModal onRequestClose={appContext.hideModal} />}
         </Modal>
       </div>
     </RemoveScroll>
