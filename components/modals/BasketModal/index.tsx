@@ -10,6 +10,7 @@ import { useAppContext } from 'context/state'
 import LocationSvg from 'components/svg/LocationSvg'
 import PaymentSelect from 'components/layout/Header/Basket/PaymentSelect'
 import { StickyContainer } from 'react-sticky'
+import PromoForm from 'components/layout/Header/Basket/PromoForm'
 
 
 interface Props {
@@ -47,14 +48,15 @@ const BasketModalInner = (props: Props) => {
               <div className={styles.time}>45-60 мин</div>
             </div>
           </div>
-          <div className={styles.list}>
-            {!cartContext.cart?.lines.length ? <div className={styles.empty}>Корзина пуста</div> : null}
-            {cartContext.cart?.lines.map((i, index) =>
-              <CartLine item={i} key={i.id} />
-            )}
-          </div>
         </div>
-        <PaymentSelect isSticky className={styles.footer}/>
+        <div className={styles.list}>
+          {!cartContext.cart?.lines.length ? <div className={styles.empty}>Корзина пуста</div> : null}
+          {cartContext.cart?.lines.map((i, index) =>
+            <CartLine item={i} key={i.id} />
+          )}
+        </div>
+        <PromoForm className={styles.promo} />
+        <PaymentSelect isSticky className={styles.footer} />
       </div>
     </StickyContainer>
   )

@@ -1,15 +1,16 @@
-import {createContext, ReactElement, useContext, useEffect, useRef, useState} from 'react'
-import {debounce} from 'lodash'
-import {useAppContext} from 'context/state'
-import {ICart} from 'data/interfaces/ICart'
-import {ICartLineCreateRequestData, ICartLineUpdateRequestData} from 'data/interfaces/ICartLineRequestData'
-import {ICartUpdateRequestData} from 'data/interfaces/ICartUpdateRequestData'
+import { createContext, ReactElement, useContext, useEffect, useRef, useState } from 'react'
+import { debounce } from 'lodash'
+import { useAppContext } from 'context/state'
+import { ICart } from 'data/interfaces/ICart'
+import { ICartLineCreateRequestData, ICartLineUpdateRequestData } from 'data/interfaces/ICartLineRequestData'
+import { ICartUpdateRequestData } from 'data/interfaces/ICartUpdateRequestData'
 import CartRepository from 'data/repositories/CartRepository'
 import CartLineRepository from 'data/repositories/CartLineRepository'
-import {ICartLine} from 'data/interfaces/ICartLine'
+import { ICartLine } from 'data/interfaces/ICartLine'
 import CartUtils from 'utils/CartUtils'
 import useWindowFocus from 'use-window-focus'
-import {IProduct} from 'data/interfaces/IProduct'
+import { IProduct } from 'data/interfaces/IProduct'
+import { SnackbarType } from 'types/enums'
 
 interface IState {
   cart: ICart | null;
@@ -22,6 +23,7 @@ interface IState {
   addProduct: (product: IProduct, unitId: number) => void,
   updateLineQuantity: (line: ICartLine, isAdd?: boolean) => void,
   updateProductQuantity: (product: IProduct, isAdd?: boolean) => void,
+  updatePromocode: (data: { code: string }) => void
   deleteLine: (lineId: number) => ICart | null;
   groupingIdQuantityMap: QuantityMap
   productQuantityMap: QuantityMap
@@ -39,6 +41,7 @@ const defaultValue: IState = {
   addProduct: () => null,
   updateLineQuantity: () => null,
   updateProductQuantity: () => null,
+  updatePromocode: () => null,
   deleteLine: () => null,
   groupingIdQuantityMap: {},
   productQuantityMap: {}
@@ -49,9 +52,9 @@ const CartContext = createContext<IState>(defaultValue)
 interface Props {
   children: ReactElement | ReactElement[]
 }
-type QuantityMap = {[key: string]: number}
-type BoolMap = {[key: string]: boolean}
-type DebounceMap = {[key: string]: () => void}
+type QuantityMap = { [key: string]: number }
+type BoolMap = { [key: string]: boolean }
+type DebounceMap = { [key: string]: () => void }
 export function CartWrapper(props: Props) {
   const appContext = useAppContext()
   const [cart, setCartState] = useState<ICart | null>(null)
@@ -86,15 +89,15 @@ export function CartWrapper(props: Props) {
     setCartState(cart)
   }
   const setGroupingIdQuantityMap = (key: string, value: number) => {
-   setGroupingIdQuantityMapState({...groupingIdQuantityMapRef.current, [key]: value} )
+    setGroupingIdQuantityMapState({ ...groupingIdQuantityMapRef.current, [key]: value })
     groupingIdQuantityMapRef.current[key] = value
   }
   const fetch = async (): Promise<ICart> => {
     const cart = await CartRepository.fetch(appContext.currentLocation)
     setCart(cart)
-    if(cart != null){
+    if (cart != null) {
       _updateQuantity()
-    }else{
+    } else {
       clearQuantity()
     }
     return cart
@@ -110,20 +113,20 @@ export function CartWrapper(props: Props) {
     return cart
   }
   const updateCartLineReq = async (lineId: string, data: ICartLineUpdateRequestData): Promise<ICart> => {
-    const cart = await CartLineRepository.update(lineId,data,appContext.currentLocation)
+    const cart = await CartLineRepository.update(lineId, data, appContext.currentLocation)
     setCart(cart)
     return cart
   }
   const deleteCartLineReq = async (lineId: string): Promise<ICart> => {
-    const cart = await CartLineRepository.delete(lineId,appContext.currentLocation)
+    const cart = await CartLineRepository.delete(lineId, appContext.currentLocation)
     setCart(cart)
     return cart
   }
 
   const getProductQuantityMapValue = (groupingIdQuantityMap: QuantityMap, productId: string) => {
-   return Object.keys(groupingIdQuantityMap)
+    return Object.keys(groupingIdQuantityMap)
       .filter((e) => e.startsWith(`${productId}:`))
-      .reduce( (t, e) => t + groupingIdQuantityMap[e]!, 0)
+      .reduce((t, e) => t + groupingIdQuantityMap[e]!, 0)
   }
   const _updateQuantity = () => {
     const groupingIdQuantityMap: QuantityMap = {}
@@ -145,7 +148,7 @@ export function CartWrapper(props: Props) {
     const quantity = Object.keys(groupingIdQuantityMapRef.current)
       .filter((e) => e.startsWith(`${productId}:`))
       .reduce((t, e) => t + groupingIdQuantityMapRef.current[e]!, 0)
-    setProductQuantityMap({...productQuantityMap, [productId]: quantity})
+    setProductQuantityMap({ ...productQuantityMap, [productId]: quantity })
 
   }
   const syncOrderProductQuantity = async (groupingId: string) => {
@@ -156,19 +159,19 @@ export function CartWrapper(props: Props) {
       updateLoading()
       if (userQuantity > line.quantity || (userQuantity < line.quantity && userQuantity > 0)) {
         await updateCartLineReq(line.id!,
-          {quantity: groupingIdQuantityMapRef.current[line.groupingId]!})
+          { quantity: groupingIdQuantityMapRef.current[line.groupingId]! })
       } else if (userQuantity == 0) {
         await deleteCartLineReq(line.id)
       }
       const updatedLine = cartRef.current!.lines.find((i) => i.id == line.id)
 
       if (updatedLine?.quantity != groupingIdQuantityMapRef.current[line.groupingId]) {
-         await syncOrderProductQuantity(groupingId)
+        await syncOrderProductQuantity(groupingId)
         return
       }
     }
 
-   delete productIsSyncingMapRef.current[groupingId]
+    delete productIsSyncingMapRef.current[groupingId]
     if (Object.keys(productIsSyncingMapRef.current).length === 0) {
       _updateQuantity()
     }
@@ -176,7 +179,7 @@ export function CartWrapper(props: Props) {
   }
 
 
- const changeCartLineQuantity = (line: ICartLine, isAdd: boolean) => {
+  const changeCartLineQuantity = (line: ICartLine, isAdd: boolean) => {
     if (line == null) {
       return
     }
@@ -195,9 +198,9 @@ export function CartWrapper(props: Props) {
       return
     }
 
-    if(quantityChangeDebounceRef.current[key]){
+    if (quantityChangeDebounceRef.current[key]) {
       quantityChangeDebounceRef.current[key]()
-    }else{
+    } else {
       quantityChangeDebounceRef.current[key] = debounce(() => {
         syncOrderProductQuantity(line.groupingId)
       }, 300)
@@ -206,7 +209,7 @@ export function CartWrapper(props: Props) {
   }
 
   const addToCart = async (data: ICartLineCreateRequestData) => {
-    const groupingId = CartUtils.getLineGroupingId({productId: data.productId, modificationLines: data.modificationLines})
+    const groupingId = CartUtils.getLineGroupingId({ productId: data.productId, modificationLines: data.modificationLines })
 
     const findLine = cart?.lines.find((i) => i.groupingId == groupingId)
     if (findLine != null) {
@@ -220,11 +223,11 @@ export function CartWrapper(props: Props) {
     updateProductQuantityMap(data.productId)
     await createCartLineReq(data)
 
-    const  updatedLine = cartRef.current!.lines.find((i) => i.groupingId == groupingId)
+    const updatedLine = cartRef.current!.lines.find((i) => i.groupingId == groupingId)
     if (updatedLine?.quantity != groupingIdQuantityMapRef.current[groupingId]) {
       return syncOrderProductQuantity(groupingId)
     }
-   delete productIsSyncingMapRef.current[groupingId]
+    delete productIsSyncingMapRef.current[groupingId]
     if (Object.keys(productIsSyncingMapRef.current).length === 0) {
       _updateQuantity()
     }
@@ -246,7 +249,7 @@ export function CartWrapper(props: Props) {
       return
     }
     if (windowFocused && Object.keys(productIsSyncingMapRef.current).length === 0) {
-     // debouncedReconnect()
+      // debouncedReconnect()
     }
   }, [windowFocused])
 
@@ -267,27 +270,32 @@ export function CartWrapper(props: Props) {
     },
 
     addProduct: async (product: IProduct, unitId: number) => {
-      if(cart && unitId !== cart?.unitId){
+      if (cart && unitId !== cart?.unitId) {
         //TODO show alert clear
         return
-      }else if(product.modificationGroups?.length > 0){
+      } else if (product.modificationGroups?.length > 0) {
         // Todo Show Product Modal
-      }else {
-        await addToCart({productId: product.id, unitId, quantity: 1})
+      } else {
+        await addToCart({ productId: product.id, unitId, quantity: 1 })
       }
     },
     updateLineQuantity: (line: ICartLine, isAdd?: boolean) => {
       changeCartLineQuantity(line, isAdd)
     },
     updateProductQuantity: async (product: IProduct, isAdd?: boolean) => {
-      if(product.modificationGroups?.length > 0 && isAdd){
+      if (product.modificationGroups?.length > 0 && isAdd) {
         // Todo Show Product Modal
-      }else{
+      } else {
         const line = cartRef.current.lines.find(i => i.productId === product.id)
-        if(line != null) {
+        if (line != null) {
           await changeCartLineQuantity(line, isAdd)
         }
       }
+    },
+    updatePromocode: async (data: { code: string }) => {
+      const cart = await CartRepository.applyPromocode(data, appContext.user.currentAddress?.location.lng, appContext.user.currentAddress?.location.lat)
+      setCart(cart)
+      return cart
     },
     deleteLine: (lineId: number) => null
 

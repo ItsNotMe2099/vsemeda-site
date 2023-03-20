@@ -26,6 +26,9 @@
     line-height: 17px;
     color: #4C4958;
     max-width: 154px;
+    @include mq($MPhoneWidth + 1, max) {
+      font-size: 12px;
+    }
   }
 
   .bottom {

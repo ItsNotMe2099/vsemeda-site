@@ -25,6 +25,15 @@ export default class CartRepository {
     return CartUtils.formatCart(res)
   }
 
+  static async applyPromocode(data: {code: string}, lng: number, lat: number): Promise<ICart> {
+    const res = await request<ICart>({
+      method: 'post',
+      url: `/api/cart/current/apply-promocode?lat=${lat}}&lng=${lng}`,
+      data
+    })
+    return res
+  }
+
   static async clear(): Promise<boolean> {
     const res = await request<any>({
       method: 'delete',
