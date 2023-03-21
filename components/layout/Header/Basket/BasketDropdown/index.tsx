@@ -29,7 +29,7 @@ export const BasketDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => 
           )}
         </div>
         {props.items.length ? <PromoForm className={styles.promo}/> : null}
-        <PaymentSelect isSticky className={styles.footer} />
+        {props.items.length ? <PaymentSelect isSticky className={styles.footer} /> : null}
       </div >
     </StickyContainer >
   )

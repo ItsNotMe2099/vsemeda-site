@@ -31,7 +31,7 @@ export default function PaymentMethodComponent({ item, chosen, cardValid, onClic
         <div className={styles.title}>
           {(chosen || cardValid) ? <div className={styles.check}><CheckSvg color='#000' /></div> : null}
           <div className={styles.text}>
-            {item?.title}{chosen ? (cartContext.cart?.moneyChange ? <>(Сдача {cartContext.cart?.moneyChange - cartContext.cart?.total} руб.)</>
+            {item?.title}{chosen && cartContext.cart.paymentMethod === PaymentMethod.Cash ? (cartContext.cart?.moneyChange ? <>(Сдача {cartContext.cart?.moneyChange - cartContext.cart?.total} руб.)</>
 
               : <>(без сдачи)</>) : null}</div>
         </div>

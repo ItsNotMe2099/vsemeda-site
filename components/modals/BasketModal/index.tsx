@@ -55,8 +55,8 @@ const BasketModalInner = (props: Props) => {
             <CartLine item={i} key={i.id} />
           )}
         </div>
-        <PromoForm className={styles.promo} />
-        <PaymentSelect isSticky className={styles.footer} />
+        {cartContext.cart?.lines.length ? <PromoForm className={styles.promo} /> : null}
+        {cartContext.cart?.lines.length ? <PaymentSelect isSticky className={styles.footer} /> : null}
       </div>
     </StickyContainer>
   )

@@ -42,10 +42,11 @@
 }
 
 .noMargin {
-  margin-bottom: 84px;
+  margin-bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 16px;
 }
 
 .empty {
