@@ -1,6 +1,6 @@
 @import "styles/index";
 
-.modalLayout{
+.modalLayout {
   position: relative;
   width: 444px;
   max-height: 90vh;
@@ -8,23 +8,36 @@
   min-height: 400px;
   padding: 32px;
 }
-.modalBody{
+
+.modalBody {
   position: relative;
   flex: 1;
   width: 100%;
+  overflow: auto;
 }
-.bodyWrapper{
+
+.bodyWrapper {
   display: flex;
   flex-direction: row;
   flex: 1;
   height: 100%;
   width: 100%;
+
+  @include mq($PhoneWidth, max) {
+    max-height: 400px;
+    overflow: auto;
+  }
 }
 
-.list{
+.list {
   display: flex;
   flex-direction: column;
-  > * + * {
+
+  >*+* {
     margin-top: 16px;
   }
+}
+
+.bottomSheetBody {
+  max-height: 400px;
 }

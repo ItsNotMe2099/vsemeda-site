@@ -10,6 +10,10 @@
   padding: 0 !important;
 
   padding-top: 35px !important;
+
+  @include mq($PhoneWidth, max){
+    display: none;
+  }
 }
 
 .container {
