@@ -10,7 +10,7 @@ import useStopPropagation from 'hooks/useStopPropagation'
 
 interface Props extends IButton {
   children: React.ReactNode
-  styleType: 'outlinedPurple' | 'outlinedWhite' | 'filledGrey' | 'filledGreen' | 'filledWhite';
+  styleType: 'outlinedPurple' | 'outlinedWhite' | 'filledGrey' | 'filledGreen' | 'filledWhite' | 'icon';
   font?: 'normal12' | 'normalBold' | 'semibold14' | 'semibold16' | 'semibold18'
   className?: string
   arrow?: boolean

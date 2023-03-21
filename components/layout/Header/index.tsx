@@ -19,6 +19,7 @@ import MenuSvg from 'components/svg/MenuSvg'
 import BackBtn from 'components/ui/BackBtn'
 import BurgerSvg from 'components/svg/BurgerSvg'
 import Basket from './Basket'
+import ArrowHeaderSvg from 'components/svg/ArrowHeaderSvg'
 
 interface Props {
   isSticky?: boolean
@@ -49,14 +50,14 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
   ]
 
   return (
-    <div className={classNames(styles.root, {[styles.none]: appContext.modal})} ref={ref} style={props.style} {...(props.restProps ?? {})}>
+    <div className={classNames(styles.root, { [styles.none]: appContext.modal })} ref={ref} style={props.style} {...(props.restProps ?? {})}>
       <div className={styles.desktop}>
         <div className={styles.container}>
           <div className={styles.left}>
 
             <Link href='/'>
               <div className={styles.logo}>
-                <LogoEdaSvg />
+                {router.asPath !== '/' ? <ArrowHeaderSvg color={colors.white} /> : <LogoEdaSvg />}
               </div>
             </Link>
             <DividerDotsSvg className={styles.divider} />
@@ -71,12 +72,12 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             </div>
           </div>
           <div className={styles.right}>
-            <LoupeSvg color={colors.white} />
+            {router.asPath === '/' ? <LoupeSvg color={colors.white} /> : null}
             <DividerDotsSvg className={styles.divider} />
             <Basket />
             <DividerDotsSvg className={styles.divider} />
-            {!appContext.token ? <LoginButton /> :
-              <UserMenu />}
+            {router.asPath === '/' ? (!appContext.token ? <LoginButton /> :
+              <UserMenu />) : null}
           </div>
           <div className={classNames(styles.shadow, styles.shadow1)} />
           <div className={classNames(styles.shadow, styles.shadow2)} />
