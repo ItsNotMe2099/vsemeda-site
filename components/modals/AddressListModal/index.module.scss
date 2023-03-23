@@ -26,6 +26,7 @@
   @include mq($PhoneWidth, max) {
     max-height: 400px;
     overflow: auto;
+    margin-top: 22px;
   }
 }
 
@@ -40,4 +41,15 @@
 
 .bottomSheetBody {
   max-height: 400px;
+}
+
+.btn {
+  border-radius: 16px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 23.8824px;
+  line-height: 29px;
+  color: #4C4958;
 }

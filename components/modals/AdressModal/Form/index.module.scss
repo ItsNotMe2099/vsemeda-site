@@ -1,5 +1,6 @@
 @import "styles/index";
-.root{
+
+.root {
   display: flex;
   flex-direction: column;
   width: 320px;
@@ -10,72 +11,100 @@
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 
+  @include mq($PhoneWidth, max) {
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+  }
+
 }
-.header{
+
+.header {
   display: flex;
   flex-direction: row;
   align-items: center;
 
+  button {
+    @include mq($PhoneWidth, max) {
+      display: none;
+    }
+  }
+
 }
-.title{
+
+.title {
   font-size: 14px;
   font-weight: 400;
   color: $white;
   margin-left: 10px;
 }
-.line{
+
+.line {
   height: 1px;
   width: 100%;
   background-color: $purple4;
   margin: 16px 0px;
 }
-.mainFields{
+
+.mainFields {
   display: flex;
   flex-direction: column;
   margin-top: 16px;
-  > * + * {
+
+  >*+* {
     margin-top: 8px;
   }
 }
-.row{
+
+.row {
   display: flex;
   flex-direction: row;
-  .columns{
+
+  .columns {
     flex: 1;
 
   }
-  > * + * {
+
+  >*+* {
     margin-left: 8px;
   }
 }
-.header{
 
-}
-.body{
- flex: 1;
+.header {}
+
+.body {
+  flex: 1;
   overflow-y: auto;
 }
-.footer{
 
+.footer {
+  @include mq($PhoneWidth, max) {
+    margin-top: 24px;
+    button{
+      border-radius: 16px;
+    }
+  }
 }
-.addressDetails{
+
+.addressDetails {
   margin-top: 16px;
 }
-.address{
-  .addressLabel{
+
+.address {
+  .addressLabel {
     color: #E0E0E0;
     font-size: 12px;
   }
 
-  .addressValue{
+  .addressValue {
     margin-top: 8px;
     color: #FFFFFF;
     font-size: 14px;
     line-height: 150%;
   }
 }
-.addressDetails{
-  > * + *{
+
+.addressDetails {
+  >*+* {
     margin-top: 16px;
   }
 }

@@ -37,7 +37,8 @@ $fieldHeightDefaultExSmall: 38px;
     border: 1px solid grey;
     background: #fff;
     border-radius: 10px;
-    padding: 18px 15px 0 15px;
+    //padding: 18px 15px 0 15px;
+    padding: 0 15px;
     font-size: 16px;
     transition: background-color 0.2s;
 
@@ -46,7 +47,7 @@ $fieldHeightDefaultExSmall: 38px;
     }
 
     &::placeholder {
-      color: grey;
+      color: #fff;
     }
 
     &:-webkit-autofill {

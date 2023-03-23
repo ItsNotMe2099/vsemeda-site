@@ -18,6 +18,8 @@ import classNames from 'classnames'
 import Converter from 'utils/converter'
 import AddressFormConfirm from 'components/modals/AdressModal/Confirm'
 import {YMapLocationRequest} from '@yandex/ymaps3-types'
+import BackBtn from 'components/ui/BackBtn'
+import { ModalType } from 'types/enums'
 const YandexMap = dynamic(() => import('components/ui/YandexMap'), {
   ssr: false
 })
@@ -71,9 +73,20 @@ const AddressFormModalInner = (props: Props) => {
     setAddressFormShown(true)
   }
 
+  const handleBack = () => {
+    if(args?.address){
+      appContext.hideModal()
+      appContext.showBottomSheet(ModalType.AddressList)
+    }else {
+      appContext.hideModal()
+      appContext.showBottomSheet(ModalType.AddressList)
+    }
+  }
+
 
   const body = (
     <div className={styles.bodyWrapper}>
+      <BackBtn className={styles.btn} onClick={handleBack} bgColor={'white'} />
       {addressFormShown && <AddressForm initialAddress={args?.address ? args.address  : Converter.convertGeoObjectToUserAddress(geoObject)} />}
       <div className={styles.mapWrapper}>
         <YandexMap className={styles.map} center={location}/>

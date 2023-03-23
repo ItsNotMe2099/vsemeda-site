@@ -16,6 +16,10 @@
   &.selected {
     background-color: $purple;
 
+    @include mq($PhoneWidth, max) {
+      background-color: #000;
+    }
+
     .icon {
       background-color: #61D46E;
     }

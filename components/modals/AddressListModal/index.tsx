@@ -32,15 +32,18 @@ const AddressListModalInner = (props: Props) => {
   const handleClick = (address: IUserAddress) => {
     appContext.setCurrentAddress(address)
   }
-  const body = (
-    <div className={styles.bodyWrapper}>
-      <div className={styles.list}>{addressContext.addresses.map(i => <AddressCard item={i} isSelected={appContext.currentAddress?.id === i.id} onClick={() => handleClick(i)} />)}</div>
 
-    </div>
+  const body = (
+    <>
+      {props.isBottomSheet ? <div className={styles.title}>Адрес доставки</div> : null}
+      <div className={styles.bodyWrapper}>
+        <div className={styles.list}>{addressContext.addresses.map(i => <AddressCard item={i} isSelected={appContext.currentAddress?.id === i.id} onClick={() => handleClick(i)} />)}</div>
+      </div>
+    </>
   )
 
   const footer = (<div className={styles.actions}>
-    <Button styleType={'filledGreen'} fluid type={'submit'} onClick={() => appContext.showModal(ModalType.AddressForm)}>Добавить адрес</Button>
+    <Button className={classNames({ [styles.btn]: props.isBottomSheet })} styleType={'filledGreen'} fluid type={'submit'} onClick={() => appContext.showModal(ModalType.AddressForm)}>Добавить адрес</Button>
 
   </div>
   )
