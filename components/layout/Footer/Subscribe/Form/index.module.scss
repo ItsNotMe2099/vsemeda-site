@@ -1,0 +1,27 @@
+@import "styles/index";
+
+.form {
+  max-width: 254px;
+  position: relative;
+}
+
+.btn {
+  border-radius: 100%;
+  padding: 0;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  svg {
+    fill: #000;
+  }
+
+  &:hover {
+    svg {
+      fill: #fff;
+    }
+  }
+}

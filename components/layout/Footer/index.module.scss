@@ -2,46 +2,50 @@
 
 .footer {
   width: 100%;
-  padding: 16px 0px;
+  padding-top: 54px;
+  padding-bottom: 62px;
   background-color: $basic-gray-1;
   margin-top: auto;
-
-  @include mq($TabletWidth, max) {
-    display: none;
-  }
 }
 
 .container {
   display: flex;
   justify-content: space-between;
   height: 100%;
-  @include container;
+  padding-right: 88px;
+  padding-left: 48px;
+
+  @include mq($SmDesktopWidth, max){
+    padding: 0 20px;
+  }
 
   @include mq($TabletWidth, max) {
     flex-direction: column;
+    gap: 16px;
   }
 }
 
 .left {
   width: 25%;
 
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
   @include mq($TabletWidth, max) {
     width: 100%;
-  }
-
-  .copyright {
-    @include mq($TabletWidth, max) {
-      display: none;
-    }
+    align-items: baseline;
   }
 }
 
 .logo {
-  margin-bottom: 27px;
 
   svg {
     max-width: 300px;
     max-height: 40px;
+    width: 114px;
+    height: 30px;
+    filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.0196802)) drop-shadow(0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0282725)) drop-shadow(0px 22.3363px 17.869px rgba(0, 0, 0, 0.035)) drop-shadow(0px 12.5216px 10.0172px rgba(0, 0, 0, 0.0417275)) drop-shadow(0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0503198)) drop-shadow(0px 2.76726px 2.21381px rgba(0, 0, 0, 0.07));
   }
 
   .social {
@@ -68,16 +72,18 @@
 }
 
 .copyright {
-  margin-top: 23px;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  color: $basic-gray-4;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #828282;
+  background: #F0F2F7;
+  padding: 6px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .center {
-  width: calc(50% - 48px);
-  margin: 0 24px;
+  display: flex;
 
   @include mq($TabletWidth, max) {
     width: 100%;
@@ -87,26 +93,38 @@
 
 .menu {
   width: 100%;
-  height: 40px;
   display: flex;
+  flex-direction: column;
+  gap: 16px;
   justify-content: space-between;
-  align-items: center;
   padding: 0px 16px;
-  margin-bottom: 24px;
+  align-self: flex-start;
+
+  .title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #333333;
+  }
 
   .item {
-    color: $basic-gray-4;
-    font-size: 14px;
-    line-height: 22px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #828282;
 
     &:hover {
-      color: $green-main-1;
+      color: #4F4F4F;
     }
-  }
 
-  @include mq($SmDesktopWidth, max) {
-    display: none;
   }
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #333333;
 }
 
 .cities {
@@ -156,26 +174,24 @@
 }
 
 .right {
-  width: 25%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  justify-content: space-between;
 
-  .social {
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
     @include mq($TabletWidth, max) {
-      display: none;
-    }
-  }
-
-  .copyright {
-    @include mq($TabletWidth, min) {
-      display: none;
+      align-items: center;
     }
   }
 
   @include mq($TabletWidth, max) {
     width: 100%;
     align-items: center;
+    gap: 16px;
 
     .apps {
       flex-direction: row;
@@ -186,25 +202,17 @@
 .social {
   display: flex;
   height: 40px;
-  margin-bottom: 24px;
   align-items: center;
+  gap: 8px;
 
   .item {
-    margin-right: 32px;
-    opacity: 0.5;
+
+    opacity: 1;
     transition: 0.3s opacity linear;
 
     &:hover {
-      opacity: 1;
+      opacity: 0.5;
     }
-
-    @include mq($MPhoneWidth, max) {
-      margin-right: 8px;
-    }
-  }
-
-  .item:last-child {
-    margin-right: 0;
   }
 
 }
@@ -227,5 +235,25 @@
 
   @include mq($MdDesktopWidth, max) {
     flex-direction: column-reverse;
+  }
+}
+
+.contacts {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #828282;
+}
+
+.address {
+  display: flex;
+  gap: 9px;
+
+  .text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0.03em;
+    color: #6C6C6C;
   }
 }

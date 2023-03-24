@@ -2,7 +2,10 @@
 export const CONTACTS = {
   instagram: '#',
   facebook: '#',
-  vk: '#'
+  vk: '#',
+  telegram: '#',
+  whatsapp: '#',
+  odnoklassniki: '#'
 }
 
 export const LINKS = {
