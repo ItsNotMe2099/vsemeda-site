@@ -20,6 +20,7 @@
 .aside {
   width: 282px;
   flex-shrink: 0;
+  margin-right: 60px;
 
   @include mq($TabletWidth, max) {
     display: none;

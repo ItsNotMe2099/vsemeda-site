@@ -5,6 +5,7 @@ import Sticky from 'react-stickynode'
 import RestaurantMenu from 'components/for_pages/restaurant/RestaurantMenu'
 import Header from '../Header'
 import { StickyContainer } from 'react-sticky'
+
 export default function RestaurantPage() {
 
   return (

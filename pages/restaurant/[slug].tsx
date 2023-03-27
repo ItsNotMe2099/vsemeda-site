@@ -7,9 +7,12 @@ import {IUnit} from 'data/interfaces/IUnit'
 import {UnitWrapper} from 'context/unit_state'
 import {useRouter} from 'next/router'
 import RestaurantPage from 'components/for_pages/restaurant/RestaurantPage'
+import styles from './index.module.scss'
+
 interface Props{
   initialUnit: IUnit
 }
+
 export default function Restaurant(props: Props) {
   const router = useRouter()
   const [loading, setIsLoading] = useState(true)
@@ -19,7 +22,7 @@ export default function Restaurant(props: Props) {
   }, [])
 
   return (
-    <Layout>
+    <Layout classRoot={styles.restaurant} className={styles.restaurant}>
       <UnitWrapper id={router.query.slug as string} initialUnit={props.initialUnit}>
         <RestaurantPage/>
       </UnitWrapper>

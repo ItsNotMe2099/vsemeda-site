@@ -10,16 +10,17 @@ import VisibleXs from 'components/visibility/VisibleXs'
 interface Props {
   children?: React.ReactNode
   className?: string
+  classRoot?: string
 }
 
-export default function Layout({ children, className }: Props) {
+export default function Layout({ children, className, classRoot }: Props) {
 
   const appContext = useAppContext()
 
   console.log('appContext.isOverlayShown', appContext.isOverlayShown)
 
   return (
-    <div className={styles.root}>
+    <div className={classNames(styles.root, classRoot)}>
       <StickyContainer>
         <Header isSticky={!appContext.modal || !appContext.isOverlayShown} />
         <div className={styles.content}>
