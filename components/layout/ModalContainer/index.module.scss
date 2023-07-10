@@ -20,7 +20,7 @@
   overflow-x: hidden;
   overscroll-behavior: none;
   padding: 10px;
-  z-index: 2;
+  z-index: $zIndexTop;
 
   &.menu,
   &.menuOwner {

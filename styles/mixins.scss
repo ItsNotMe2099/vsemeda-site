@@ -198,3 +198,52 @@
 @mixin boxShadowButtonInner {
   box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
+
+
+@mixin list($gap, $row: false) {
+  @if $row == true {
+    & > * + * {
+      margin: 0 0 0 $gap;
+    }
+  } @else {
+    & > * + * {
+      margin: $gap 0 0 0;
+    }
+  }
+}
+
+
+@mixin swiperPagination($color: $purple){
+  :global .swiper{
+    padding-bottom: 40px;
+  }
+  :global .swiper-pagination-bullet{
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    background-color: $color;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease width;
+    opacity: 0.5;
+    &:last-child {
+      margin-right: 0;
+    }
+
+  }
+  :global .swiper-pagination-bullet-active{
+    width: 24px;
+    cursor: auto;
+    opacity: 1;
+  }
+}
+
+@mixin borderDashed() {
+    -o-border-image: url(/images/icons/border_dashed.svg) 25% repeat;
+    -webkit-border-image: url(/images/icons/border_dashed.svg) 25% repeat;
+    border-image: url(/images/icons/border_dashed.svg) 25% repeat;
+    border-width: 0px;
+    border-top-width: 1px;
+    border-style: solid;
+
+}

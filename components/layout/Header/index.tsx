@@ -1,12 +1,11 @@
 import styles from './index.module.scss'
 import { Sticky, StickyChildArgs } from 'react-sticky'
 import Link from 'next/link'
-import { forwardRef } from 'react'
+import {forwardRef, useRef} from 'react'
 import { useRouter } from 'next/router'
 import { useAppContext } from 'context/state'
 import LogoEdaSvg from 'components/svg/LogoEdaSvg'
 import HeaderAddress from 'components/layout/Header/HeaderAddress'
-import HeaderDelivery from 'components/layout/Header/HeaderDelivery'
 import LoginButton from 'components/layout/Header/LoginButton'
 import DividerDotsSvg from 'components/svg/DividerDotsSvg'
 import { colors } from 'styles/variables'
@@ -17,11 +16,12 @@ import IconButton from 'components/ui/IconButton'
 import MenuSvg from 'components/svg/MenuSvg'
 import BackBtn from 'components/ui/BackBtn'
 import BurgerSvg from 'components/svg/BurgerSvg'
-import Basket from './Basket'
+import BasketButton from 'components/layout/Header/BasketButton'
 import ArrowHeaderSvg from 'components/svg/ArrowHeaderSvg'
 
 interface Props {
   isSticky?: boolean
+  hasBack?: boolean
   restProps?: any
   childArgs?: StickyChildArgs
 }
@@ -29,7 +29,7 @@ interface Props {
 const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number }>((props, ref) => {
 
   const appContext = useAppContext()
-
+  const basketButtonRef = useRef()
   const handleOpenMobileMenu = () => {
 
   }
@@ -43,14 +43,16 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
           <div className={styles.left}>
 
             <Link href='/'>
-              <div className={styles.logo}>
-                {router.asPath !== `/${appContext.region.slug}` ? <ArrowHeaderSvg color={colors.white} /> : <LogoEdaSvg />}
-              </div>
+              {props.hasBack ? <div className={styles.back}>
+                <ArrowHeaderSvg color={colors.white}/>
+              </div> : <div className={styles.logo}>
+                <LogoEdaSvg />
+              </div>}
+
+
             </Link>
             <DividerDotsSvg className={styles.divider} />
             <HeaderAddress />
-            <DividerDotsSvg className={styles.divider} />
-            <HeaderDelivery />
             <div
               className={styles.menuOpen}
               onClick={handleOpenMobileMenu}
@@ -59,12 +61,11 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             </div>
           </div>
           <div className={styles.right}>
-            {router.asPath === `/${appContext.region.slug}` ? <LoupeSvg color={colors.white} /> : null}
+            <LoupeSvg color={colors.white} />
             <DividerDotsSvg className={styles.divider} />
-            <Basket />
+            <BasketButton ref={basketButtonRef}/>
             <DividerDotsSvg className={styles.divider} />
-            {router.asPath === `/${appContext.region.slug}` ? (!appContext.token ? <LoginButton /> :
-              <UserMenu />) : null}
+            {!appContext.isLogged ? <LoginButton /> : <UserMenu />}
           </div>
           <div className={classNames(styles.shadow, styles.shadow1)} />
           <div className={classNames(styles.shadow, styles.shadow2)} />
@@ -76,18 +77,18 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
       </div>
       {!appContext.modal ? <div className={styles.phone}>
         <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
-          {router.asPath === `/${appContext.region.slug}` ?
+          {router.asPath === `/${appContext.region?.slug}` ?
             <IconButton bgColor='white' size='large'>
               <MenuSvg color='#812292' />
             </IconButton>
             :
             <BackBtn size='large' bgColor='white' onClick={() => router.push('/')} />}
-          {router.asPath === `/${appContext.region.slug}` ?
+          {router.asPath === `/${appContext.region?.slug}` ?
             <HeaderAddress
               isSticky={props.distanceFromTop < 0 ? true : false}
               isMobile /> : null}
           <IconButton bgColor='white' size='large'>
-            {router.asPath === `/${appContext.region.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292' />}
+            {router.asPath === `/${appContext.region?.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292' />}
           </IconButton>
         </div>
       </div> : null}

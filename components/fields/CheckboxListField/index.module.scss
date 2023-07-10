@@ -1,0 +1,20 @@
+@import 'styles/mixins.scss';
+
+.root {
+  position: relative;
+  margin-bottom: 20px;
+
+}
+
+.radioNoGrid {
+  margin-bottom: 18px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 0 10px 0px;
+  letter-spacing: -0.24px;
+  color: #E0E0E0;
+}

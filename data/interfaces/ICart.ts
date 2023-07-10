@@ -23,5 +23,7 @@ export interface ICart {
   total: number;
   lines: ICartLine[];
   pLayout: ICartProgressLayout
+  serviceFee?: number
+  availableTimes?: string[][]
 
 }

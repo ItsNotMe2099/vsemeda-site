@@ -14,3 +14,10 @@
   }
 }
 
+
+.card{
+  height: calc(((((100vw - 80px - 216px + 36px) / 3) - 36px) * 0.59) + 56px);
+  max-height: 333px;
+  min-height: 254px;
+  width: 33%;
+}

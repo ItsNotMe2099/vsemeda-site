@@ -14,7 +14,6 @@ export default function LoginButton(props: Props) {
 
   const handleClick = () => {
     appContext.showModal(ModalType.Login)
-    console.log('LOGIN')
   }
 
   const handleClose = () => {

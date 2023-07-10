@@ -1,0 +1,47 @@
+@import "styles/index";
+
+.root {
+    display: flex;
+  flex-direction: column;
+
+}
+.switchLabel{
+  color: $white;
+}
+.moneyChangeForm{
+  display: flex;
+  flex-direction: row;
+  @include list(8px, true);
+  .btn {
+    border-radius: 16px;
+    height: 46px;
+    width: 67px;
+  }
+
+  .input {
+    width: 100%;
+    input {
+      max-width: 200px;
+    }
+  }
+}
+.bottom{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  opacity: 0.76;
+  .label{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #f2f2f2;
+  }
+  .value{
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 16px;
+    margin-left: 16px;
+    color: $white;
+  }
+}
+

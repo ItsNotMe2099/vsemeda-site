@@ -1,0 +1,26 @@
+@import "styles/index";
+.root{
+  position: relative;
+  width: 100%;
+  :global .swiper{
+    padding-bottom: 40px;
+  }
+  @include swiperPagination();
+}
+.slide{
+  width: 380px !important;
+}
+.arrow{
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  &.prev{
+    left: -12px;
+    transform: translate(-100%, -50%);
+  }
+  &.next{
+    right: -12px;
+    transform: translate(100%, -50%);
+  }
+}
+

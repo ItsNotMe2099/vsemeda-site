@@ -63,10 +63,9 @@ export default function Basket(props: Props) {
       }} onClick={handleClick} className={classNames(styles.root, props.className)} >
       <ShoppingCartSvg color={colors.white} />
       <BasketDropdown isActive={showDropDown}
-        items={cartContext.cart?.lines ?? []}
         ref={setReferenceElement}
         attributes={attributes.popper}
-        style={popperStyles.popper} 
+        style={popperStyles.popper}
         onClick={handleDropdownClick}
         />
     </div >

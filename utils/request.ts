@@ -6,11 +6,13 @@ import NodeCache from 'node-cache'
 import { isClient, isServer } from 'utils/media'
 import { RequestError } from 'types/types'
 import queryString from 'query-string'
+import {CookiesLifeTime} from 'types/constants'
 interface Options {
   url: string
   method?: 'post' | 'put' | 'get' | 'delete' | 'patch'
   data?: any
-  token?: string // needed for requests from server side
+  token?: string
+  sessionId?: string
   file?: File
   disableCache?: boolean
   config?: AxiosRequestConfig
@@ -23,6 +25,7 @@ async function request<T = any>(options: string | Options): Promise<T> {
   const { HOST, CACHE_TIME_HOURS } = runtimeConfig
   const optionsIsString = typeof options === 'string'
   const accessToken = (!optionsIsString && options.token) ? options.token : Cookies.get(CookiesType.accessToken)
+  const sessionId = (!optionsIsString && options.sessionId) ? options.sessionId : Cookies.get(CookiesType.sessionId)
   let url = ''
   let method = 'get'
   let data: any = null
@@ -57,6 +60,7 @@ async function request<T = any>(options: string | Options): Promise<T> {
 
   const headers: HeadersInit = {
     'Authorization': accessToken ? `Bearer ${accessToken}` : '',
+    'X-Session': sessionId ? sessionId : '',
   }
 
   if (!file) {
@@ -72,6 +76,10 @@ async function request<T = any>(options: string | Options): Promise<T> {
     validateStatus: (status) => true
   })
 
+  const xSession = res.headers['X-Session']
+  if(xSession){
+    Cookies.set(CookiesType.sessionId, xSession, {       expires: CookiesLifeTime.accessToken, })
+  }
   if (res.status === 401) {
     Cookies.remove(CookiesType.accessToken)
     if (isClient) {
@@ -87,9 +95,6 @@ async function request<T = any>(options: string | Options): Promise<T> {
     }
     return jsonData
   }
-
-  console.log('Error URL: ', correctUrl)
-
   throw new RequestError(jsonData?.errors || res.statusText || 'Ошибка', res.status ?? 500)
 }
 

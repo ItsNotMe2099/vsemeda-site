@@ -22,7 +22,6 @@ export default function OtpCodeField(props: Props) {
   const showError = meta.touched && !!meta.error
   const authContext = useAuthContext()
   const handleComplete = (value: string) => {
-    console.log('handleComplete', value)
     helpers.setValue(value)
     setTimeout(() => {
       props.onComplete(value)
@@ -30,8 +29,7 @@ export default function OtpCodeField(props: Props) {
 
   }
 
-  console.log('ERRRRRR', props.snackbar)
-  return (
+   return (
     <div className={classNames(styles.root, { [styles.error]: props.snackbar })}>
       <PinInput
         focus

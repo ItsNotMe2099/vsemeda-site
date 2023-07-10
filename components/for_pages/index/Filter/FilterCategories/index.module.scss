@@ -1,0 +1,44 @@
+@import "styles/index";
+
+.root{
+  display: flex;
+  flex-direction: row;
+  @include list(16px, true);
+  max-width: 100%;
+}
+
+.item {
+  padding: 10px 19px;
+  background: $grey6;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: $dark2;
+  letter-spacing: -0.24px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+
+  @include mq($TabletWidth, max) {
+    padding: 6px 19px;
+    border-radius: 23px;
+  }
+
+  img {
+    position: relative !important;
+    height: auto !important;
+    width: auto !important;
+    margin-right: 5px;
+  }
+
+  span {
+    color: #828282;
+  }
+}
+
+.active {
+  color: #fff;
+  background: #812292;
+}
+

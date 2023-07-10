@@ -23,7 +23,6 @@ export default class Validator {
   }
 
   static phone(value: string): string | undefined{
-    console.log('PhoneLen', Formatter.cleanPhone(value ?? '')?.length >= 12)
     return Formatter.cleanPhone(value ?? '')?.length >= 12 ? undefined : 'Неверный формат'
   }
 

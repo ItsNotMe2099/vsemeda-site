@@ -54,8 +54,6 @@ export default function LoginForm(props: Props) {
     setSeconds(authContext.remainSec)
   }
 
-  console.log('VALUES!!!!', formik.values)
-
   useEffect(() => {
     if (seconds > 0) {
       const timeoutId = setTimeout(() => setSeconds(seconds - 1), 1000)

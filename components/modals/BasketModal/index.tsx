@@ -5,12 +5,16 @@ import ModalLayout from 'components/layout/Modal/ModalLayout'
 import BottomSheetBody from 'components/layout/BottomSheet/BottomSheetBody'
 import BackBtn from 'components/ui/BackBtn'
 import { useCartContext } from 'context/cart_state'
-import CartLine from 'components/layout/Header/Basket/CartLine'
+import CartLine from 'components/modals/BasketModal/CartLine'
 import { useAppContext } from 'context/state'
-import LocationSvg from 'components/svg/LocationSvg'
-import PaymentSelect from 'components/layout/Header/Basket/PaymentSelect'
-import { StickyContainer } from 'react-sticky'
-import PromoForm from 'components/layout/Header/Basket/PromoForm'
+import PaymentSelect from 'components/modals/BasketModal/PaymentSelect'
+import PromoForm from 'components/modals/BasketModal/PromoForm'
+import ModalHeader from 'components/layout/Modal/ModalHeader'
+import ModalBody from 'components/layout/Modal/ModalBody'
+import ModalFooter from 'components/layout/Modal/ModalFooter'
+import BasketAddressDetails from 'components/modals/BasketModal/BasketAddressDetails'
+import BasketReceipt from 'components/modals/BasketModal/BasketReceipt'
+import BasketEmpty from 'components/modals/BasketModal/BasketEmpty'
 
 
 interface Props {
@@ -18,7 +22,7 @@ interface Props {
   onRequestClose: () => void
 }
 
-const BasketModalInner = (props: Props) => {
+export default function BasketModal(props: Props) {
 
   const handleCloseClick = () => {
     props.onRequestClose()
@@ -26,40 +30,29 @@ const BasketModalInner = (props: Props) => {
 
   const cartContext = useCartContext()
   const appContext = useAppContext()
+const header = (
 
-
-  const body = (
-    <StickyContainer>
+  <div className={styles.close}>
+    <BackBtn bgColor='white' onClick={handleCloseClick} />
+  </div>
+  )
+  const body = ( cartContext.isEmpty ? <BasketEmpty/> : (
       <div className={styles.bodyWrapper}>
-        <div className={styles.head}>
-          Подтверждение заказа
-        </div>
         <div className={styles.content}>
           <div className={styles.title}>Ваш заказ 🤝</div>
-          <div className={styles.address}>
-            <div className={styles.ofDeliver}>
-              Адрес доставки:
-            </div>
-            <div className={styles.current}>
-              <div>{appContext.currentAddress.address}</div><LocationSvg color='#828282' />
-            </div>
-            <div className={styles.toDelivery}>
-              <div className={styles.text}>Время доставки:</div>
-              <div className={styles.time}>45-60 мин</div>
-            </div>
-          </div>
+          <BasketAddressDetails/>
+          <BasketReceipt  />
         </div>
         <div className={styles.list}>
           {!cartContext.cart?.lines.length ? <div className={styles.empty}>Корзина пуста</div> : null}
           {cartContext.cart?.lines.map((i, index) =>
-            <CartLine item={i} key={i.id} />
+            <CartLine item={i} key={i.id} quantity={cartContext.groupingIdQuantityMap[i.groupingId]}/>
           )}
         </div>
         {cartContext.cart?.lines.length ? <PromoForm className={styles.promo} /> : null}
-        {cartContext.cart?.lines.length ? <PaymentSelect isSticky className={styles.footer} /> : null}
-      </div>
-    </StickyContainer>
+      </div>)
   )
+  const footer = !cartContext.isEmpty && (<><PaymentSelect/></>)
 
   if (props.isBottomSheet) {
     return (
@@ -69,19 +62,13 @@ const BasketModalInner = (props: Props) => {
     )
   }
 
+
   return (
-    <ModalLayout fixed className={styles.modalLayout}>
-      <div className={styles.close}>
-        <BackBtn bgColor='white' onClick={handleCloseClick} />
-      </div>
-      {body}
+    <ModalLayout fixed className={styles.modalLayout} >
+      {appContext.isMobile && <ModalHeader>{header}</ModalHeader>}
+      <ModalBody fixed>{body}</ModalBody>
+      <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>
     </ModalLayout>
   )
 }
 
-export default function BasketModal(props: Props) {
-
-  return (<>
-    <BasketModalInner {...props} />
-  </>)
-}

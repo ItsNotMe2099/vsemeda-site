@@ -1,46 +1,45 @@
-@import "styles/index";
-
-.root {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 400px;
-    max-height: 135px;
-    min-height: 135px;
-    padding: 24px;
-    transition: opacity .3s linear, box-shadow .3s linear;
-    box-shadow: 3px 3px 23px rgba(0, 0, 0, .1);
-    border-radius: 12px;
-    overflow: hidden;
-    justify-content: flex-start;
-
-    @include mq($PhoneWidth, max) {
-        min-height: 120px;
-        max-height: 120px;
-    }
+.root{
+  font-family: 'Montserrat';
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: 16px;
+  max-width: 380px;
+  height: 102px;
 }
-
-.front {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+.image{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  max-height: 90%;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
-
-.header {
-    background-color: #fff;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    padding: 4px 12px;
-    max-width: max-content;
+.block{
+  background: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 600;
+  margin-right: 20%;
+  z-index: 1;
+  > * + * {
+    margin-left: 10px;
+  }
 }
-
-.desc {
-    max-width: 75%;
-    font-size: 16px;
-    line-height: 100%;
-    color: #fff;
-    max-width: 120px;
+.name{
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
 }
-
-.img {}
+.badge{
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}

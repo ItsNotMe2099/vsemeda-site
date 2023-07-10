@@ -16,7 +16,11 @@
 }
 
 .stack {
-  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 40px -12px 0px -12px;
+
 }
 
 .category {
@@ -27,10 +31,10 @@
 
 .products {
   margin-top: 32px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 24px;
-
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  margin: 0px -24px;
   @include mq($DesktopWidth, max) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -43,7 +47,19 @@
     grid-template-columns: 1fr;
   }
 }
+.productCard{
 
+  position: relative;
+  flex: 0 0 25%;
+  max-width: 25%;
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  > div{
+    flex: 1;
+  }
+
+}
 .filter {
   @include mq($TabletWidth, min) {
     display: none !important;

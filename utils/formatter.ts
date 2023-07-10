@@ -22,12 +22,12 @@ export default class Formatter {
     return phone
   }
 
-  static formatDateUntil(date: string | Date) {
+  static formatDateRelative(date: string | Date) {
     const formatRelativeLocale: { [key: string]: string } = {
-      'yesterday': 'Вчера до HH:mm',
-      'today': 'до HH:mm',
-      'tomorrow': 'Завтра до HH:mm',
-      'other': 'до dd.MM.yyyy HH:mm', // Difference: Add time to the date
+      'yesterday': 'Вчера в HH:mm',
+      'today': ' в HH:mm',
+      'tomorrow': 'Завтра в HH:mm',
+      'other': 'dd.MM.yyyy HH:mm', // Difference: Add time to the date
     }
 
     const locale = {
@@ -73,7 +73,7 @@ export default class Formatter {
     if (!price) {
       return
     }
-    return `${this.formatNumber(Math.ceil(price / 100))} ₽`
+    return `${this.formatNumber(Math.ceil(price))} ₽`
   }
 
   static formatDeliveryPeriod(minPeriod: number, maxPeriod: number) {
@@ -87,6 +87,13 @@ export default class Formatter {
 
   static formatAddressSuggestionSubTitle(subTitle: string): string {
     return subTitle?.split(',').map((e) => e.trim()).reverse().join(', ')
+  }
+
+  static formatDeliveryTime({minDeliveryTime, maxDeliveryTime}: {minDeliveryTime?: number, maxDeliveryTime?: number}) {
+    return `${minDeliveryTime ?? ''}${minDeliveryTime != null && maxDeliveryTime != null ? '-' : ''}${maxDeliveryTime ?? ''}${minDeliveryTime != null || maxDeliveryTime != null ? ' мин' : ''}`
+  }
+  static formatPreOrderTime(date: Date) {
+    return Formatter.formatDateRelative(date)
   }
 
 

@@ -48,8 +48,6 @@ export default function ProfileForm(props: Props) {
     onSubmit: submit
   })
 
-  console.log('VALUES!!!!!', formik.values)
-
   return (
     <FormikProvider value={formik}>
       <Form className={styles.root}>

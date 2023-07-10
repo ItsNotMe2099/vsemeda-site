@@ -1,0 +1,51 @@
+@import "styles/index";
+
+.modalLayout {
+  padding: 16px 16px 82px 16px;
+}
+
+.top{
+  display: flex;
+}
+.imgContainer{
+  width: 50%;
+  img{
+    max-width: 100%;
+    display: block;
+    border-radius: 12px;
+  }
+}
+.name{
+  font-size: 20px;
+  font-weight: 600;
+}
+.description{
+  margin-top: 10px;
+
+}
+.info{
+  padding-left: 15px;
+  width: 50%;
+}
+
+
+
+.toolbar{
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: #812392;
+  border-radius: 24px;
+  .price{
+    color: $white;
+      font-size: 24px;
+      font-weight: 500;
+
+  }
+}

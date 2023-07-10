@@ -4,7 +4,7 @@
   display: flex;
   min-height: $heightHeader;
   flex-direction: column;
-  z-index: 300;
+  z-index: $zIndexHeader;
   position: relative;
   @include container;
 
@@ -19,7 +19,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: $heightHeader;
+  height: $heightHeader;
   border-radius: 24px;
   background: $purple;
   padding: 0px 8px 0px 16px;
@@ -69,7 +69,12 @@
 .divider {
   margin: 0px 24px;
 }
-
+.back{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 .logo {
   display: block;
   cursor: pointer;

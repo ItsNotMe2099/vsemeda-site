@@ -4,6 +4,7 @@ import {PromoIcon} from 'data/enum/PromoIcon'
 import IFile from 'data/interfaces/IFile'
 import {PromoType} from 'data/enum/PromoType'
 import {PromoKind} from 'data/enum/PromoKind'
+import {PromoColor} from 'data/enum/PromoColor'
 
 export interface IPromo {
   id: number
@@ -19,7 +20,7 @@ export interface IPromo {
   image?: IFile
   imageVert?: IFile
   imageLarge?: IFile
-  color: string
+  color: PromoColor
   textColor: string
   badgeColor: string
   badgeTextColor: string

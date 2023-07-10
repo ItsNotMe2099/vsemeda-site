@@ -43,8 +43,6 @@ const ProfileModalInner = (props: Props) => {
     appContext.showModal(ModalType.Profile, value)
   }
 
-  console.log('argsssss', appContext.modalArguments)
-
   const item = items.find(i => i.value === appContext.modalArguments)
 
 
@@ -99,7 +97,6 @@ const ProfileModalInner = (props: Props) => {
 }
 
 export default function ProfileModal(props: Props) {
-  console.log('showProfile1111')
   return (<>
     <ProfileModalInner {...props} />
   </>)

@@ -5,7 +5,11 @@ export enum ModalType {
   Login = 'login',
   Profile = 'profile',
   ProfileMenu = 'profileMenu',
-  Basket = 'basket'
+  Basket = 'basket',
+  ProductModal = 'productModal',
+  PreOrderForm = 'preOrderForm',
+  IndexFilter = 'indexFilter',
+  Confirm = 'confirm'
 }
 
 export enum SnackbarType {
@@ -15,8 +19,9 @@ export enum SnackbarType {
 
 export enum CookiesType {
   accessToken = 'accessToken',
-  sessionId = 'sessionId',
-  uuid = 'uuid'
+  sessionId = 'x-session',
+  uuid = 'uuid',
+  address = 'address'
 }
 
 export enum LocalStorageKey {

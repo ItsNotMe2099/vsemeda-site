@@ -19,9 +19,6 @@ interface Props {
 const LoginFormModalInner = (props: Props) => {
 
   const [step, setStep] = useState<number>(1)
-
-  console.log(step)
-
   const handleCloseClick = () => {
     step === 1 ? props.onRequestClose() : setStep(1)
   }

@@ -1,16 +1,49 @@
 @import "styles/index";
 
+@mixin container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0px $DesktopContainerPadding;
+
+  @include mq($MdDesktopWidth, max) {
+    padding: 0px $SmDesktopContainerPadding;
+  }
+
+  @include mq($TabletWidth, max) {
+    padding: 0px $MobileContainerPadding;
+  }
+}
 .root{
   display: flex;
   min-height: 100%;
   position:relative;
   flex-direction: column;
   background-color: #f9f9f9;
+
 }
 
 .content{
   background-color: $basic-gray-6;
   min-height: calc(100vh - 280px);
+  /*
+    1500px
+   */
+
+  /*
+  1873px
+   */
+
+
+  /*
+    content
+    1356 -> 892
+
+    aside 232
+    margin-right: 32px
+
+
+
+   */
 }
 
 .container{

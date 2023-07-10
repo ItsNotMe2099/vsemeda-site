@@ -1,0 +1,53 @@
+@import "styles/index";
+
+.root {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+
+    .image {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $white;
+        border-radius: 100%;
+    }
+
+}
+.right {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .text {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #FFFFFF;
+    }
+  }
+
+}
+.heading {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #F2F2F2;
+  opacity: 0.76;
+}
+.check{
+    width: 18px;
+    height: 18px;
+    background-color: #61D56E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}

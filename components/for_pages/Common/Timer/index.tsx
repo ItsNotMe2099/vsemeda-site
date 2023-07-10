@@ -1,6 +1,7 @@
 import styles from './index.module.scss'
 import { useState, useEffect } from 'react'
 import TimerSvg from 'components/svg/TimerSvg'
+import {colors} from 'styles/variables'
 
 
 interface Props {
@@ -26,7 +27,7 @@ export default function Timer({ seconds }: Props) {
 
   return (
     <div className={styles.root}>
-      <TimerSvg className={styles.timer}/>
+      <TimerSvg className={styles.timer} color={colors.white}/>
       <div className={styles.seconds}>
         {countdown}c.
       </div>

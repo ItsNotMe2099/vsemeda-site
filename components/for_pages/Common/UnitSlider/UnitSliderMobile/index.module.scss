@@ -1,0 +1,29 @@
+@import "styles/index";
+@import 'swiper/scss/effect-creative';
+.root{
+ :global .swiper{
+    padding-bottom: 40px;
+     overflow: visible;
+     width: 380px;
+     height: 400px;
+
+  }
+  @include swiperPagination();
+}
+.slide{
+  width: 380px !important;
+}
+.arrow{
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  &.prev{
+    left: -12px;
+    transform: translate(-100%, -50%);
+  }
+  &.next{
+    right: -12px;
+    transform: translate(100%, -50%);
+  }
+}
+

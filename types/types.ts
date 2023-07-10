@@ -1,7 +1,8 @@
 import {UrlObject} from 'url'
-import {HTMLInputTypeAttribute, MouseEventHandler} from 'react'
+import {HTMLInputTypeAttribute, MouseEventHandler, ReactElement} from 'react'
 import {FieldConfig} from 'formik'
 import {SnackbarType} from 'types/enums'
+import {PaymentMethod} from 'data/enum/PaymentMethod'
 
 
 export class RequestError extends Error{
@@ -47,6 +48,10 @@ export interface IOption<T> {
   description?: string
 }
 
+export interface IPaymentOption extends IOption<PaymentMethod> {
+  icon?: ReactElement
+}
+
 export interface SnackbarData {
   text: string
   type: SnackbarType
@@ -59,15 +64,5 @@ export interface IButton {
   onClick?: MouseEventHandler
   href?: string | UrlObject
   isExternalHref?: boolean // add target blank and no referrer
-}
-
-export interface IRegion {
-  id: number
-  name: string
-  default_address: string
-  slug: string
-  is_default: boolean
-  latitude: number
-  longtitude: number
 }
 

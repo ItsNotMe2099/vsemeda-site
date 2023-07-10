@@ -1,17 +1,13 @@
 import Radio from './Radio'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import { IField } from 'types/types'
+import {IField, IOption} from 'types/types'
 import { useField, useFormikContext } from 'formik'
 
-interface IOption {
-  value: string
-  label: string
-}
 
 interface Props<T> extends IField<T> {
-  options: IOption[],
-  restrictedValues?: string[],
+  options: IOption<T>[],
+  restrictedValues?: T[],
   grid?: number
   label?: string
   itemClassName?: string
@@ -21,20 +17,19 @@ interface Props<T> extends IField<T> {
   rootClass?: string
 }
 
-export default function RadioListField<T>(props: Props<string>) {
+export default function RadioListField<T>(props: Props<T>) {
   const { restrictedValues, options, label, type, ...rest } = props
-  const [field, meta] = useField(props as any)
+  const [field, meta, helpers] = useField(props as any)
   const { value } = field
   const { setFieldValue, setFieldTouched } = useFormikContext()
 
-  const handleCheckboxChanged = (value: string) => {
-    setFieldValue(props.name, value)
+  const handleCheckboxChanged = (value: T) => {
+    helpers.setValue(value)
   }
 
   return (
     <div className={classNames(styles.root, props.rootClass)}>
       {label && <div className={classNames(styles.label, props.labelClassName)}>{label}</div>}
-
       <div style={{
         display: (props.grid) ? 'grid' : (props.flex) ? 'flex' : 'block',
         gridTemplateColumns: props.grid ? Array.from({ length: props.grid }, (_, i) => '1fr').join(' ') : '',
@@ -42,7 +37,7 @@ export default function RadioListField<T>(props: Props<string>) {
       }}>
         {options.filter(item => restrictedValues.indexOf(item.value) === -1).map(item => (
           <div className={styles.radio}>
-            <Radio
+            <Radio<T>
               className={classNames(props.itemClassName, [...(!props.grid ? [styles.radioNoGrid] : [])])}
               labelClassName={props.itemLabelClassName}
               value={item.value} isActive={item.value === value} label={item.label}

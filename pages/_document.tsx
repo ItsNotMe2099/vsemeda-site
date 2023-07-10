@@ -1,6 +1,21 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
-
+import Document, {Html, Head, Main, NextScript, DocumentContext} from 'next/document'
+import { Cookies } from 'react-cookie'
 class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const originalRenderPage = ctx.renderPage
+
+    ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceComponent: Component => {
+          (Component as any).universalCookies = new Cookies(ctx.req.headers.cookie)
+          return Component
+        },
+      })
+
+    const initialProps = await Document.getInitialProps(ctx)
+
+    return initialProps
+  }
   render() {
     return (
       <Html>
@@ -11,7 +26,7 @@ class MyDocument extends Document {
           <link rel="manifest" href="/site.webmanifest"/>
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#812292"/>
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={'1'}/>
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={'1'}/>
               <link
                 href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap"
                 rel="stylesheet"/>

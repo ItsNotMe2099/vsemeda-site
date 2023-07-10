@@ -25,13 +25,12 @@ export const MenuDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const authContext = useAuthContext()
 
   const handleClick = (value: string) => {
-    console.log('handleClick', value)
     appContext.hideOverlay()
     if(value !== 'exit'){
       appContext.showModal(ModalType.Profile, value)
     }
     else{
-      authContext.logOut()
+      appContext.logout()
     }
   }
 

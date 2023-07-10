@@ -2,13 +2,13 @@ import {IBrand} from 'data/interfaces/IBrand'
 import {ILocation} from 'data/interfaces/ILocation'
 import {PaymentMethod} from 'data/enum/PaymentMethod'
 import {IUnitCardLayout} from 'data/interfaces/IUnitCardLayout'
+import {IPromoUnit} from 'data/interfaces/IPromoUnit'
 
 export interface UnitCookingSettings {
   cookingTime: number
   isCookingTimeIncrease: boolean
   startAmount: number
   stepAmount: number
-
   stepTime: number
 }
 
@@ -37,4 +37,7 @@ export interface IUnit {
   cookingTime: number
   isAvailable?: boolean
   cardLayout?: IUnitCardLayout
+  deliveryPrice?: number
+  deliveryTime?: number
+  promoUnits: IPromoUnit[]
 }

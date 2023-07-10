@@ -1,12 +1,14 @@
 import styles from 'components/for_pages/index/BestOffers/index.module.scss'
-import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 import DropdownMenu from 'components/ui/DropdownMenu'
 import { ICategory } from 'data/interfaces/ICategory'
 import MenuRepository from 'data/repositories/MenuRepository'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-export default function BestOffers() {
+import UnitSlider from 'components/for_pages/Common/UnitSlider'
+import {IViewLayoutItem} from 'data/interfaces/IViewLayout'
+interface Props{
+ item: IViewLayoutItem
+}
+export default function BestOffers(props: Props) {
 
   const [items, setItems] = useState<ICategory[] | null>(null)
 
@@ -19,15 +21,7 @@ export default function BestOffers() {
   }, [])
 
   return (
-    <div className={styles.root}>
-      <div className={styles.bg} />
-      <div className={styles.sales_left}>
-        <Image src={'/images/bg/sales_left.png'} alt='' fill />
-      </div>
-      <div className={styles.sales_right}>
-        <Image src={'/images/bg/sales_right.png'} alt='' fill />
-      </div>
-      <div className={styles.container}>
+      <div className={styles.root}>
         <div className={styles.left}>
           <div className={styles.title}>
             Лучшие<br /> рестораны
@@ -36,7 +30,8 @@ export default function BestOffers() {
             Выберите тип заведения
           </div>
           <div className={styles.drop}>
-            {items ? <DropdownMenu options={items} /> : null}
+            {items ? <DropdownMenu options={items} className={styles.dropDown} /> : null}
+            <img src={'/images/icons/best-offers-arrow.svg'}/>
           </div>
         </div>
         <div className={styles.mobile}>
@@ -44,8 +39,7 @@ export default function BestOffers() {
             Лучшие<br/> предложения 😍
           </div>
         </div>
+        <div className={styles.right}><UnitSlider units={props.item.units}/></div>
       </div>
-      <CirclesBgSvg className={styles.circle} />
-    </div>
   )
 }

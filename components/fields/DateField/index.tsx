@@ -26,8 +26,6 @@ export default function DateField(props: Props) {
   const [wrapperRef, press] = usePressAndHover()
   const [field, meta, helpers] = useField<string>(props as any)
   const showError = meta.touched && !!meta.error
-  console.log('DateValue', field.value)
-
   const [date, setDate] = useState<Date | null>(null)
 
   return (
@@ -56,8 +54,7 @@ export default function DateField(props: Props) {
           excludeDates={props.excludeDates}
           onChange={(date) => {
             if (date) {
-              console.log('OnChange', format(date, 'dd.MM.yyyy'))
-              helpers.setValue(format(date, 'dd.MM.yyyy'))
+             helpers.setValue(format(date, 'dd.MM.yyyy'))
             } else {
               helpers.setValue('')
             }

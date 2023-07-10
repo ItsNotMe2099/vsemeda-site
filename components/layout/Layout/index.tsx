@@ -16,9 +16,6 @@ interface Props {
 export default function Layout({ children, className, classRoot }: Props) {
 
   const appContext = useAppContext()
-
-  console.log('appContext.isOverlayShown', appContext.isOverlayShown)
-
   return (
     <div className={classNames(styles.root, classRoot)}>
       <StickyContainer>

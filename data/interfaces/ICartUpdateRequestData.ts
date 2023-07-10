@@ -7,7 +7,7 @@ export interface ICartUpdateRequestData{
   paymentMethod?: PaymentMethod;
   deliveryMethod?: DeliveryMethod;
   isPreOrder?: boolean;
-  preOrderAt?: Date;
+  preOrderAt?: string;
   moneyChange?: number;
   isContactLessDelivery?: boolean;
 }

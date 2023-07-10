@@ -36,9 +36,6 @@ export const DropdownDelivery = forwardRef<HTMLDivElement, Props>((props, ref) =
     e.preventDefault()
     props.onClick()
   }
-
-  console.log(props.isActive)
-
   const handleOptionClick = (item: IOption) => {
     setCurrentLabel(item.name)
     props.onOptionClick()

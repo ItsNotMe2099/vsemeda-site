@@ -28,7 +28,7 @@ export default class UserAddressRepository {
   static async sync(currentAddressId: string, addresses: IUserAddress[]): Promise<{newCurrentAddressId: string}> {
     const res = await request<{newCurrentAddressId: string}>({
       method: 'post',
-      url: '/api/user-address',
+      url: '/api/user-address/sync',
       data: {
         currentAddressId,
         addresses: addresses.map(i => ({...i, localId: i.id}))

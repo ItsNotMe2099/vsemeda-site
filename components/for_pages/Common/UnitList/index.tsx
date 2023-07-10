@@ -9,7 +9,7 @@ interface Props {
 export default function UnitList(props: Props) {
   return (
     <ul className={styles.root}>
-      {props.units.map(unit => <UnitCard unit={unit}/>)}
+      {props.units.map(unit => <UnitCard unit={unit} className={styles.card}/>)}
     </ul>
   )
 }

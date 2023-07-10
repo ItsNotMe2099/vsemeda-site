@@ -12,8 +12,6 @@ export const useDetectOutsideClick = (el: any, initialState: any) => {
       else if (el.current !== null && !el.current.contains(e.target)) {
         setIsActive(!isActive)
         document.removeEventListener('click', pageClickEvent)
-        console.log('el.current', el.current)
-        console.log('e.target', e.target)
       }
 
     }

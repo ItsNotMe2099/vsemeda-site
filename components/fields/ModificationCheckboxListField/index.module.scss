@@ -1,0 +1,37 @@
+@import 'styles/index.scss';
+
+.root {
+  position: relative;
+  margin-bottom: 20px;
+
+}
+
+.radioNoGrid {
+  margin-bottom: 18px;
+}
+
+.item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 16px;
+  background: $white;
+  color: $grey2;
+  font-size: 14px;
+
+  @include list(8px, true);
+  border-radius: 16px;
+  .name{
+    flex: 1;
+  }
+  .price{
+
+  }
+  &.selected{
+    background: #F4FFF6;
+    color: $dark2;
+  }
+}
+.right{
+
+}

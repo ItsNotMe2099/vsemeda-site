@@ -1,0 +1,19 @@
+@import "styles/index";
+
+.root{
+  position: relative;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+}
+.fluid{
+  display: flex;
+  .label{
+    flex: 1;
+  }
+}
+
+.label{
+
+}
+

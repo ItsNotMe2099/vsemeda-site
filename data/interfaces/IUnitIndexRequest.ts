@@ -15,6 +15,7 @@ export enum IUnitIndexRequestSortType {
 
 export interface IUnitIndexRequest {
   location: ILocation;
+  regionId?: number;
   priceRatings?: PriceRating[];
   categories?: number[];
   paymentMethods?: PaymentMethod[];

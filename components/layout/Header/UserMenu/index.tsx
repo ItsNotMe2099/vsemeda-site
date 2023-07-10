@@ -8,7 +8,6 @@ import { useAppContext } from 'context/state'
 import { useDetectOutsideClick } from 'components/hooks/useDetectOutsideClick'
 import ChevronSvg from 'components/svg/ChevronSvg'
 import { colors } from 'styles/variables'
-import Image from 'next/image'
 import { MenuDropdown } from './MenuDropdown'
 
 
@@ -77,7 +76,7 @@ export default function UserMenu(props: Props) {
       <div className={styles.name}>{appContext.user ? appContext.user.name : null}</div>
       <ChevronSvg className={styles.chevron} color={colors.white} />
       <div className={styles.icon}>
-        <Image src='/images/UserMenu/profile.svg' alt='' fill />
+        <img src='/images/UserMenu/profile.svg' alt='' />
       </div>
       <div className={classNames(styles.activeWrapper, { [styles.active]: showDropDown })}>
         <MenuDropdown items={items}

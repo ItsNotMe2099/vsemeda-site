@@ -10,7 +10,6 @@ interface Props{
 export default function AppOverlay(props: Props) {
  const appContext = useAppContext()
   const handleClick: MouseEventHandler = (e) => {
-    console.log('HideOverlay')
     appContext.hideOverlay()
   }
   return (

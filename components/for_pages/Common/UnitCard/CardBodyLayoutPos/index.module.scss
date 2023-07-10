@@ -2,7 +2,11 @@
 .list{
   display: flex;
   flex-direction: row;
-
+  .dot{
+    width: 3px;
+    height: 3px;
+    background-color: #D9D9D9;
+  }
 }
 
 .small{

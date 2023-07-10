@@ -109,11 +109,11 @@ $fieldHeightDefaultExSmall: 38px;
   }
 
   &.error {
-    border-color: $red;
-    color: $red;
+    border-color: $red !important;
+    color: $red !important;
 
     &::placeholder {
-      color: $red;
+      color: $red !important;
     }
   }
 
@@ -148,8 +148,11 @@ $fieldHeightDefaultExSmall: 38px;
   &.cashForm {
     border-radius: 16px;
     height: 46px;
-    color: #fff;
-    padding: 0 42px;
+    color: $white;
+    text-align: center;
+    &::placeholder{
+      color: $white;
+    }
   }
 
   &.subscribe {

@@ -1,12 +1,15 @@
-import {createContext, ReactElement, useContext} from 'react'
+import {createContext, ReactElement, useContext, useEffect} from 'react'
 import {useAppContext} from 'context/state'
 import {ICart} from 'data/interfaces/ICart'
 import {IUserAddress} from 'data/interfaces/IUserAddress'
 import {DeepPartial} from 'types/types'
 import UserAddressRepository from 'data/repositories/UserAddressRepository'
-import {LocalStorageKey} from 'types/enums'
-import { writeStorage } from '@rehooks/local-storage'
-import { v4 as uuidv4 } from 'uuid'
+import {CookiesType, LocalStorageKey} from 'types/enums'
+import {writeStorage} from '@rehooks/local-storage'
+import {v4 as uuidv4} from 'uuid'
+import {useCookies} from 'react-cookie'
+import CookiesUtils from 'utils/CookiesUtils'
+
 interface IState {
   currentAddress?: IUserAddress;
   addresses: IUserAddress[];
@@ -36,6 +39,7 @@ interface Props {
 export function AddressWrapper(props: Props) {
   const appContext = useAppContext()
 
+  const [cookies, setCookie, removeCookie] = useCookies([CookiesType.address])
   const createReq = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
     return UserAddressRepository.create(data)
   }
@@ -46,34 +50,54 @@ export function AddressWrapper(props: Props) {
     return  UserAddressRepository.delete(id)
   }
 
-  const createLoc = async (data: DeepPartial<IUserAddress>) => {
+  const createLoc = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
      data.id = uuidv4()
-     writeStorage<IUserAddress[]>(LocalStorageKey.addresses, [data as IUserAddress, ...appContext.addresses])
+    setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
+    return data as IUserAddress
   }
-  const updateLoc = async (id: string, data: DeepPartial<IUserAddress>): Promise<any> => {
-    writeStorage<IUserAddress[]>(LocalStorageKey.addresses, appContext.addresses.map(i => i.id === id ? {...i, ...data as IUserAddress} : i))
+  const updateLoc = async (id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
+    setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
+    return data as IUserAddress
   }
   const deleteLoc = async (id: string): Promise<any> => {
-    writeStorage<IUserAddress[]>(LocalStorageKey.addresses, appContext.addresses.filter(i => i.id !== id))
+    removeCookie(CookiesType.address)
 
   }
 
+  useEffect( () => {
+    const subscription = appContext.loginState$.subscribe((logged) => {
+      if (!logged && appContext.currentAddress) {
+        createLoc(appContext.currentAddress)
+      }
+    })
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [appContext.currentAddress])
 
   const value: IState = {
     ...defaultValue,
     addresses: appContext.addresses,
-    create: (data: DeepPartial<IUserAddress>) => {
+    create: async (data: DeepPartial<IUserAddress>) => {
       if(appContext.isLogged){
-        return createReq(data)
+        const address = await createReq(data)
+        appContext.setCurrentAddress(address)
       }else{
-        return createLoc(data)
+        const address = await createLoc(data)
+        appContext.setCurrentAddress(address)
       }
     },
-    update: (id: string, data: DeepPartial<IUserAddress>) => {
+    update: async (id: string, data: DeepPartial<IUserAddress>) => {
       if(appContext.isLogged){
-        return updateReq(id, data)
+        const address = await updateReq(id, data)
+        if(id === appContext.currentAddress?.id){
+          appContext.setCurrentAddress(address)
+        }
       }else{
-        return updateLoc(id, data)
+        const address = await  updateLoc(id, data)
+        if(id === appContext.currentAddress?.id){
+          appContext.setCurrentAddress(address)
+        }
       }
     },
     delete: (id: string)  => {
@@ -85,6 +109,8 @@ export function AddressWrapper(props: Props) {
     },
     setCurrentAddress: (address: IUserAddress) => {
       appContext.setCurrentAddress(address)
+      writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
+
     },
   }
 

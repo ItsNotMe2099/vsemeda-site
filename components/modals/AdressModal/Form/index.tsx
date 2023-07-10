@@ -25,7 +25,6 @@ export default function AddressForm(props: Props) {
   const [loading, setLoading] = useState(false)
   const args = appContext.modalArguments as AddressFormModalArguments
   const submit = async (data: DeepPartial<IUserAddress>) => {
-    console.log('Submit', data)
     setLoading(true)
     try {
       const submitData: DeepPartial<IUserAddress> = {

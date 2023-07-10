@@ -8,6 +8,16 @@
   border-radius: 16px;
   &.empty{
     background-color: $grey5;
+    cursor: pointer;
+    &:hover{
+      background-color: $purple;
+      color: $white;
+    }
+  }
+  &.white{
+    .quantity{
+      color: $white;
+    }
   }
 }
 .btn {
@@ -15,7 +25,7 @@
   cursor: pointer;
   outline: none;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   font-size: 16px;
   flex: 1;
@@ -27,6 +37,7 @@
     font-weight: 600;
   font-size: 16px;
   color: $dark2;
+  text-align: center;
 
 }
 .emptyText{

@@ -5,9 +5,16 @@ import Sticky from 'react-stickynode'
 import RestaurantMenu from 'components/for_pages/restaurant/RestaurantMenu'
 import Header from '../Header'
 import { StickyContainer } from 'react-sticky'
+import RestaurantPromoList from 'components/for_pages/restaurant/RestaurantPromoList'
+import {useUnitContext} from 'context/unit_state'
+import {useEffect} from 'react'
 
 export default function RestaurantPage() {
+    const unitContext = useUnitContext()
 
+  useEffect(() => {
+
+  }, [])
   return (
     <div className={styles.root}>
       <div className={styles.aside}>
@@ -15,12 +22,11 @@ export default function RestaurantPage() {
           <DesktopMenu />
         </Sticky>
       </div>
-      <StickyContainer>
-        <div className={styles.content}>
-          <Header isSticky />
+      <StickyContainer className={styles.content}>
+          <Header />
           <RestaurantBanner className={styles.banner} />
+          <RestaurantPromoList promoUnits={unitContext.unit.promoUnits}/>
           <RestaurantMenu />
-        </div>
       </StickyContainer>
     </div>
   )

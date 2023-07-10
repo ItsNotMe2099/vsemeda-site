@@ -11,14 +11,17 @@
 }
 
 .scroll{
-  
-  
+
+
 }
 
 .wrapper{
   display: block;
   width: 100%;
   overflow-y: auto;
+  &.fixed{
+    flex: 1;
+  }
 }
 
 .verticalTrack{

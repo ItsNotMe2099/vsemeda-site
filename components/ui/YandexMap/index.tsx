@@ -41,7 +41,6 @@ const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, ce
   const createMap = async (center: YMapLocationRequest) => {
     if(typeof ymaps3 === 'undefined' || !mapRootNode.current) return
     await ymaps3.ready
-    console.log('MapCreated')
     const { YMapZoomControl } = await ymaps3.import('@yandex/ymaps3-controls@0.0.1')
     /*
       text: query,
@@ -72,7 +71,6 @@ const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, ce
     if(yMap.current){
       return
     }
-    console.log('CreateYaMaps')
     yMap.current = new YMap(mapRootNode.current, {
       location: center,
       behaviors: ['drag', 'scrollZoom', 'mouseTilt', 'mouseRotate'],
@@ -98,21 +96,16 @@ const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, ce
   }, [])
 
   const updateMap = (center: YMapLocationRequest) => {
-    console.log('SetLocation',  yMap.current)
     yMap.current?.setLocation(center)
   }
 
   useEffect(() => {
-    console.log('centerChanged', center)
     if(isMapCreated.current){
       updateMap(center)
     } else {
       createMap(center)
     }
   }, [center])
-  useEffect(() => {
-    console.log('MapCreated')
-  }, [])
 
   useEffect(() => {
     return destroyMap

@@ -5,12 +5,15 @@ import { ModalType } from 'types/enums'
 import classNames from 'classnames'
 import { RemoveScroll } from 'react-remove-scroll'
 import AddressFormModal from 'components/modals/AdressModal'
-import { useEffect } from 'react'
 import LoginFormModal from 'components/modals/LoginModal'
 import ProfileModal from 'components/modals/ProfileModal'
 import MobileProfileMenuModal from 'components/modals/MobileProfileMenuModal'
 import AddressListModal from 'components/modals/AddressListModal'
 import BasketModal from 'components/modals/BasketModal'
+import ProductModal from 'components/modals/ProductModal'
+import PreOrderModal from 'components/modals/PreOrderModal'
+import IndexFilterModal from 'components/modals/IndexFilterModal'
+import {ConfirmModal} from 'components/modals/ConfirmModal'
 
 
 interface Props { }
@@ -22,12 +25,6 @@ export default function ModalContainer(props: Props) {
     className: styles.modal,
     overlayClassName: classNames([styles.overlay, appContext.modal && styles[appContext.modal]]),
   }
-  useEffect(() => {
-    console.log('ModalContainer')
-  }, [])
-
-
-  console.log('ModalType', appContext.modal)
 
   return (
     <RemoveScroll enabled={!!appContext.modal}>
@@ -55,6 +52,18 @@ export default function ModalContainer(props: Props) {
         </Modal>
         <Modal isOpen={appContext.modal === ModalType.Basket} {...commonSettings}>
           {appContext.modal === ModalType.Basket && <BasketModal onRequestClose={appContext.hideModal} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.ProductModal} {...commonSettings}>
+          {appContext.modal === ModalType.ProductModal && <ProductModal onRequestClose={appContext.hideModal} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.PreOrderForm} {...commonSettings}>
+          {appContext.modal === ModalType.PreOrderForm && <PreOrderModal onRequestClose={appContext.hideModal} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.IndexFilter} {...commonSettings}>
+          {appContext.modal === ModalType.IndexFilter && <IndexFilterModal onRequestClose={appContext.hideModal} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.Confirm} {...commonSettings}>
+          {appContext.modal === ModalType.Confirm && <ConfirmModal onRequestClose={appContext.hideModal} />}
         </Modal>
       </div>
     </RemoveScroll>

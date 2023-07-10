@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { IRegion, SnackbarData } from 'types/types'
+import {createContext, useContext, useEffect, useRef, useState} from 'react'
+import { SnackbarData } from 'types/types'
 import { useRouter } from 'next/router'
 import {CookiesLifeTime} from 'types/constants'
 import {CookiesType, LocalStorageKey, ModalType, SnackbarType} from 'types/enums'
@@ -13,7 +13,10 @@ import {ILocation} from 'data/interfaces/ILocation'
 import {ICart} from 'data/interfaces/ICart'
 import CartRepository from 'data/repositories/CartRepository'
 import UserAddressRepository from 'data/repositories/UserAddressRepository'
-import {useLocalStorage, writeStorage} from '@rehooks/local-storage'
+import { writeStorage} from '@rehooks/local-storage'
+import {useCookies} from 'react-cookie'
+import CookiesUtils from 'utils/CookiesUtils'
+import {IRegion} from 'data/interfaces/IRegion'
 
 interface IState {
   isMobile: boolean
@@ -42,14 +45,14 @@ interface IState {
   hideBottomSheet: () => void
   setModalNonSkippable: (val: boolean) => void
   showSnackbar: (text: string, type: SnackbarType) => void
-  updateTokenFromCookies: () => void
   updateUser: (newUser?: IUser) => void
   token: string | null
-  setToken: (token: string) => void
+  setToken: (token: string) => Promise<void>
   logout: () => void
   isOverlayShown?: boolean
   showOverlay: () => void
   hideOverlay: () => void
+  regionSlug: string
 }
 
 
@@ -87,14 +90,14 @@ const defaultValue: IState = {
   hideModal: () => null,
   hideBottomSheet: () => null,
   showSnackbar: (text, type) => null,
-  setToken: (token) => null,
+  setToken: async (token) => null,
   token: null,
   logout: () => null,
-  updateTokenFromCookies: () => null,
   updateUser: () => null,
   isOverlayShown: false,
   showOverlay: () => null,
-  hideOverlay: () => null
+  hideOverlay: () => null,
+  regionSlug: ''
 }
 
 const AppContext = createContext<IState>(defaultValue)
@@ -103,6 +106,7 @@ interface Props {
   children: React.ReactNode
   isMobile: boolean
   token?: string
+  regionSlug?: string
 }
 
 export function AppWrapper(props: Props) {
@@ -110,59 +114,51 @@ export function AppWrapper(props: Props) {
   const [modalArguments, setModalArguments] = useState<any>(null)
   const [bottomSheet, setBottomSheet] = useState<ModalType | null>(null)
   const [snackbar, setSnackbar] = useState<SnackbarData | null>(null)
-  const [auth, setAuth] = useState<boolean>(false)
   const [token, setToken] = useState<string | null>(props.token ?? null)
   const [user, setUser] = useState<IUser | null>(null)
   const [userLoaded, setUserLoaded] = useState<boolean>(false)
-  const [currentLocation, setCurrentLocation] = useState<ILocation | null>( {lat: 55.85644835024383, lng: 37.00685434662651 })
+  const [currentLocation, setCurrentLocation] = useState<ILocation | null>( null)
   const [currentAddress, setCurrentAddress] = useState<IUserAddress>(null)
   const [modalNonSkippable, setModalNonSkippable] = useState<boolean>(false)
   const [isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
-  const [addressLocal] = useLocalStorage<IUserAddress[]>(LocalStorageKey.addresses, [])
-  const [currentAddressIdLocal] = useLocalStorage<string | null>(LocalStorageKey.currentAddressId, null)
 
-  const regions: IRegion[] = [
-    {
-      id: 2,
-      name: 'Санкт-Петербург',
-      default_address: 'Невский 18',
-      slug: 'sankt-peterburg',
-      is_default: true,
-      latitude: 59.936557,
-      longtitude: 30.318249
-    },
-    {
-      id: 1,
-      name: 'Москва',
-      default_address: 'Большая садовая улица, 94',
-      slug: 'moskva',
-      is_default: false,
-      latitude: 47.222066,
-      longtitude: 39.718112
-    }
-  ]
-  //temp
+  const [cookies, setCookie, removeCookie] = useCookies([CookiesType.address])
+  const addressLocal = CookiesUtils.decodeJson<IUserAddress>(cookies.address)
+  const [isLogged, setIsLogged] = useState<boolean>(false)
+  const userRef = useRef<IUser | null>(null)
+  const regions: IRegion[] = []
+
   const [isMobile, setIsMobile] = useState<boolean>(props.isMobile)
   const [region, setRegion] = useState<IRegion | null>(regions[0])
   const router = useRouter()
-  const setInitialAddressFromLocal = () => {
 
-    setCurrentAddress(addressLocal.find(i => i.id === currentAddressIdLocal))
+  const setInitialAddressFromLocal = () => {
+    setCurrentAddress(addressLocal)
 
   }
   const setInitialAddressFromUser = (user: IUser) => {
-    setCurrentAddress(user.addresses.find(i => i.id === user.currentAddressId) ?? user.addresses[0])
-
+    setCurrentAddress( user.currentAddressId  && user.currentAddressId === addressLocal?.id ? user.addresses.find(i => i.id === user.currentAddressId) ?? addressLocal ?? user.addresses[0] : addressLocal ?? user.addresses[0])
   }
+
+  useEffect(() => {
+    userRef.current = user
+  }, [user])
+  useEffect(() => {
+    if (props.token) {
+      setIsLogged(true)
+    } else {
+      setIsLogged(false)
+    }
+  }, [props.token])
   useEffect(() => {
     const promises = []
 
     if (props.token) {
       promises.push(
         updateUser().then((user) => {
-          setInitialAddressFromUser(user)
+            setInitialAddressFromUser(user)
         }).catch(() => {
-          setAuth(false)
+          setIsLogged(false)
         }),
       )
     } else {
@@ -171,8 +167,6 @@ export function AppWrapper(props: Props) {
     }
 
     Promise.all(promises).then((i) => setTimeout(() => { }, 1))
-
-    if (!auth) return
   }, [])
 
   const updateRegion = (slug: string) => {
@@ -244,8 +238,9 @@ export function AppWrapper(props: Props) {
     token,
     currentAddress,
     currentLocation: currentAddress?.location ?? currentLocation,
-    addresses: user?.addresses ?? addressLocal,
+    addresses: user?.addresses ?? addressLocal ? [addressLocal] : [],
     initialLoaded: userLoaded,
+    isLogged,
     showModal,
     showBottomSheet,
     showSnackbar: (text, type: SnackbarType) => {
@@ -257,32 +252,17 @@ export function AppWrapper(props: Props) {
     hideModal,
     hideBottomSheet,
     updateUser,
-    setToken: (token: string) => {
+    setToken: async (token: string) => {
+
+      const oldToken = token
+      const newToken = Cookies.get(CookiesType.accessToken) ?? null
       Cookies.set(CookiesType.accessToken, token, {
         expires: CookiesLifeTime.accessToken,
       })
-      setAuth(true)
-      loginState$.next(true)
-    },
-    logout: () => {
-      Cookies.remove(CookiesType.accessToken)
-      setAuth(false)
-      setUser(null)
-
-      loginState$.next(false)
-    },
-    setCurrentAddress: (address: IUserAddress) => {
-      setCurrentAddress(address)
-      writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
-      currentAddressState$.next(address)
-    },
-    updateTokenFromCookies: async () => {
-      const oldToken = token
-      const newToken = Cookies.get(CookiesType.accessToken) ?? null
       setToken(newToken)
       if (!oldToken && newToken) {
         loginState$.next(true)
-        const syncAddressRes = await UserAddressRepository.sync(currentAddress.id, addressLocal)
+        const syncAddressRes = await UserAddressRepository.sync(currentAddress.id, [addressLocal])
         const newUser = await updateUser()
         const newCurrentAddress = newUser.addresses.find(i => i.id === syncAddressRes.newCurrentAddressId) ?? user.addresses[0]
         setCurrentAddress(newCurrentAddress)
@@ -298,6 +278,21 @@ export function AppWrapper(props: Props) {
         loginState$.next(false)
         loginUserState$.next(null)
       }
+
+      setIsLogged(true)
+    },
+
+    logout: () => {
+      Cookies.remove(CookiesType.accessToken)
+      setIsLogged(false)
+      setUser(null)
+
+      loginState$.next(false)
+    },
+    setCurrentAddress: (address: IUserAddress) => {
+      setCurrentAddress(address)
+      writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
+      currentAddressState$.next(address)
     },
     isOverlayShown,
     showOverlay: () => {
@@ -305,7 +300,8 @@ export function AppWrapper(props: Props) {
     },
     hideOverlay: () => {
       setIsOverlayShown(false)
-    }
+    },
+    regionSlug: props.regionSlug
   }
 
 

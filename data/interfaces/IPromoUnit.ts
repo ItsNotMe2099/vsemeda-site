@@ -1,3 +1,5 @@
+import {IPromo} from 'data/interfaces/IPromo'
+
 export interface IPromoUnit {
   id: number;
   includedCategoriesIds?: number[];
@@ -9,5 +11,5 @@ export interface IPromoUnit {
   includedProductsIds?: number[];
   excludedProductsIds?: number[];
   minOrderAmount: number;
-
+  promo: IPromo
 }

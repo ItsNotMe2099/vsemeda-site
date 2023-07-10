@@ -8,14 +8,21 @@
   color: $dark2;
   font-weight: 400;
   font-size: 14px;
+    padding-left: 16px;
   &.active{
     background-color: $purple;
     border-radius: 16px;
     color: $white;
+    .arrow{
+      display: block;
+    }
   }
 }
 .name{
   flex: 1;
   padding-right: 8px;
 
+}
+.arrow{
+  display: none;
 }

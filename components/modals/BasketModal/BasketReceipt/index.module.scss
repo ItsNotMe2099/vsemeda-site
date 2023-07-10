@@ -1,0 +1,24 @@
+@import "styles/index";
+
+.root{
+  display: flex;
+  flex-direction: column;
+  @include list(16px, false)
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .label{
+    flex: 1;
+    color: $grey2;
+  }
+  .value{
+    color: $dark1;
+  }
+}
+.separator{
+  @include borderDashed();
+  margin: 8px 0px;
+}

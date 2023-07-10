@@ -1,0 +1,46 @@
+@import "styles/index";
+
+.root{
+  position: relative;
+}
+
+.options{
+  display: flex;
+  justify-content: space-between;
+}
+
+.option{
+  cursor: pointer;
+
+  background: $grey6;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: $dark2;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  height: 40px;
+  padding: 0px 18px;
+  transition: background 0.2s, box-shadow 0.2s;
+  &:last-of-type{
+    margin-right: 0;
+  }
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.08) inset;
+
+  &.optionActive{
+    background: $purple;
+    color: $white;
+  }
+  &:hover{
+    background: $purple;
+    color: $white;
+  }
+  &.error{
+    color: $red;
+  }
+
+}

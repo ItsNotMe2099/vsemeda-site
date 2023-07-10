@@ -1,26 +1,22 @@
-import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import classNames from 'classnames'
-interface Props {
-  value: string,
+import CheckSvg from 'components/svg/CheckSvg'
+interface Props<T> {
+  value: T,
   isActive: boolean
   label?: string,
   className?: string
   children?: any
-  onChange: (value: string) => void
+  onChange: (value: T) => void
   labelClassName?: string
 }
-export default function Radio(props: Props) {
-  const [active, setActive] = useState(props.isActive)
-  useEffect(() => {
-    setActive(props.isActive)
-  }, [props.isActive])
+export default function Radio<T>(props: Props<T>) {
   const handleClick = () => {
     props.onChange(props.value)
   }
   return (
-    <div className={`${styles.root} ${props.className || ''}`} onClick={handleClick}>
-      {props.isActive ? <img src={'/images/UserMenu/radio-active.svg'} /> : <img src={'/images/UserMenu/radio.svg'} />}
+    <div className={classNames(styles.root, {[styles.active]: props.isActive}, props.className)} onClick={handleClick}>
+      <div className={styles.circle}>{props.isActive && <CheckSvg color={'black'}/>}</div>
       {props.children && props.children.length ? props.children : <div className={classNames(styles.label, props.labelClassName)}>{props.label}</div>}
 
     </div>

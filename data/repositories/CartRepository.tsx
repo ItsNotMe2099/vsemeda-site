@@ -11,7 +11,7 @@ export default class CartRepository {
     const res = await request<ICart>({
       method: 'get',
       url: '/api/cart/current',
-      data: { location }
+      data: { ...location }
     })
     return CartUtils.formatCart(res)
   }
@@ -25,13 +25,13 @@ export default class CartRepository {
     return CartUtils.formatCart(res)
   }
 
-  static async applyPromocode(data: {code: string}, lng: number, lat: number): Promise<ICart> {
+  static async applyPromoСode(data: {code: string}, location: ILocation): Promise<ICart> {
     const res = await request<ICart>({
       method: 'post',
-      url: `/api/cart/current/apply-promocode?lat=${lat}}&lng=${lng}`,
+      url: `/api/cart/current/apply-promocode?${queryString.stringify(location)}`,
       data
     })
-    return res
+    return CartUtils.formatCart(res)
   }
 
   static async clear(): Promise<boolean> {

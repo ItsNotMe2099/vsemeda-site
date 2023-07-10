@@ -1,0 +1,58 @@
+@import "styles/index";
+
+.root {
+  background: #FFFFFF;
+  border: 1px solid #F2F2F2;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin-top: 24px;
+
+}
+
+
+.ofDeliver {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #828282;
+}
+
+.current {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 8px;
+
+  div {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4C4958;
+  }
+}
+.separator{
+  @include borderDashed();
+  margin: 8px 0px;
+}
+
+.toDelivery {
+  margin-top: 11px;
+  display: flex;
+  align-items: center;
+}
+.text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #828282;
+  flex: 1;
+}
+
+.time {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4C4958;
+}

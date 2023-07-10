@@ -30,7 +30,7 @@ const AddressListModalInner = (props: Props) => {
   const addressContext = useAddressContext()
   const header = (<div />)
   const handleClick = (address: IUserAddress) => {
-    appContext.setCurrentAddress(address)
+    addressContext.setCurrentAddress(address)
   }
 
   const body = (

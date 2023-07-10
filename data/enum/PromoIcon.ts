@@ -3,4 +3,5 @@ export enum PromoIcon {
   Percent = 'percent',
   Ruble = 'ruble',
   OnePlusOne = 'onePlusOne',
+  Gift = 'gift'
 }

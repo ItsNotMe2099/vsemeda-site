@@ -1,0 +1,60 @@
+@import "../../../../styles/index";
+
+
+.root {
+  padding: 20px 16px;
+  background: #812292;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.bottom {
+  margin-top: 16px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+
+  .top {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000;
+  }
+
+
+}
+
+.right {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+
+  .total {
+    letter-spacing: -0.24px;
+    color: #000000;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+  }
+}
+
+.middle {
+  margin-top: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chevron {
+  transform: rotate(180deg);
+}
+
+.cash {
+  transform: rotate(90deg);
+}

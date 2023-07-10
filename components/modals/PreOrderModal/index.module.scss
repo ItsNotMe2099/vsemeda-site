@@ -1,0 +1,86 @@
+@import "styles/index";
+.root{
+  flex: 1;
+  max-height: 100%;
+}
+.header{
+  display: flex;
+  flex-direction: column;
+
+}
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalLayout {
+  position: relative;
+  height: 80vh;
+  max-height: 80vh;
+  width: 428px;
+  min-width: 310px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 0px;
+  right: $DesktopContainerPadding;
+  &.bottomSheet{
+    width: 100%;
+  }
+  overflow: hidden;
+  margin-top: 50px;
+
+  @include mq($PhoneWidth, max) {
+    width: 100vw;
+    border-radius: 0;
+    background: url('../../../public/images/BasketModal/bg.png');
+    margin-top: 0;
+    height: 100vh;
+    background-size: cover;
+  }
+  display: flex;
+
+}
+
+.head {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #828282;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.content {
+  margin-top: 32px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 29px;
+  color: #4C4958;
+}
+
+.list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 16px;
+  width: 100%;
+  padding: 16px 0;
+  min-height: 200px;
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  max-height: calc(100vh - 30%);
+}
+
+.bodyWrapper {
+
+  @include mq($PhoneWidth, max) {
+    padding: 0 24px;
+  }
+}
+

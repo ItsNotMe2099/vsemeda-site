@@ -1,0 +1,16 @@
+@import "html";
+
+@mixin headerButton() {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  background: $purple2;
+  border-radius: 16px;
+  padding: 8px 16px;
+  > * + *{
+    margin-left: 10px;
+  }
+  font-size: 14px;
+  color: $white;
+}

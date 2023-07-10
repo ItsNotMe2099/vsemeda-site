@@ -1,0 +1,31 @@
+@import "styles/index";
+
+.root {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+
+    background: $green;
+    height: 50px;
+    border-radius: 16px;
+    @include list(8px, true);
+    padding: 0px 15px;
+
+}
+.details{
+  flex: 1;
+}
+.title{
+  font-weight: 600;
+  font-size: 16px;
+}
+.delivery{
+  font-weight: 500;
+  font-size: 14px;
+  color: #414141;
+}
+.total{
+  font-size: 20px;
+  font-weight: 600;
+}
+

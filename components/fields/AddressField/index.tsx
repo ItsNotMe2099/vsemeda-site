@@ -87,12 +87,11 @@ export default function AddressField(props: Props) {
 
     })
 
-    console.log('Res111', suggestions.map(i => i.title.text), res.map(i => i.title.text))
+   // console.log('Res111', suggestions.map(i => i.title.text), res.map(i => i.title.text))
     setSuggestions(res)
   }
   const {callback, cancel, callPending} = useThrottleFn(querySuggestions, 300)
   const geocode = async (suggestion: string) => {
-    console.log('TryGeocode')
     setIsEditMode(false)
     setIsExpanded(false)
     const geocoded = await GeocodingRepository.geocodeYandex({
@@ -101,7 +100,6 @@ export default function AddressField(props: Props) {
       bbox: [[37.057361, 55.350331], [38.429321, 56.070876]],
     })
     const feature = geocoded.response.GeoObjectCollection.featureMember.length > 0 ? geocoded.response.GeoObjectCollection.featureMember[0] : null
-    console.log('geocoded', geocoded)
 
     let error = ''
     let hint = ''
@@ -124,8 +122,7 @@ export default function AddressField(props: Props) {
         hint = 'Уточните адрес'
     }
 
-    console.log('Res111', feature, error)
-    if (error) {
+   if (error) {
       setMessage(error)
       setMessageIsError(true)
     } else {
@@ -159,8 +156,7 @@ export default function AddressField(props: Props) {
     setSuggestionOnExit()
   }
   const handleKeyDown: KeyboardEventHandler = (e) => {
-    console.log('handleKeyDown', e)
-    if (e.key === 'Enter') {
+     if (e.key === 'Enter') {
       setSuggestionOnExit()
     }
 
@@ -209,7 +205,6 @@ export default function AddressField(props: Props) {
     }, 400)
     props.onEditClick()
   }
-  console.log('setIsExpanded', isExpanded)
   const hasError = !!meta.error && meta.touched
   return (
     <div className={cx(styles.root, {

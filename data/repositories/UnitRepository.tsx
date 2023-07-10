@@ -2,11 +2,11 @@ import request from 'utils/request'
 import {IUnitDetails} from 'data/interfaces/IUnitDetails'
 import {IMenuRequest} from 'data/interfaces/IMenuRequest'
 import {IMenuCategory} from 'data/interfaces/IMenu'
-import {ILocation} from 'data/interfaces/ILocation'
+import {ILocationRequest} from 'data/interfaces/ILocation'
 import {IProduct} from 'data/interfaces/IProduct'
 import {IUnitIndex} from 'data/interfaces/IUnitIndex'
 import {IUnitIndexRequest} from 'data/interfaces/IUnitIndexRequest'
-import queryString from 'query-string'
+import {IUnitRequest} from 'data/interfaces/IUnitRequest'
 
 export default class UnitRepository {
   static async fetchUnitIndex(data: IUnitIndexRequest): Promise<IUnitIndex> {
@@ -17,23 +17,42 @@ export default class UnitRepository {
     })
     return res
   }
-  static async fetchById(id: string, location: ILocation): Promise<IUnitDetails> {
-    console.log('dsadsad', `/api/unit/${id}?${queryString.stringify(location)}`)
+
+  static async fetchBySlug(slug: string, data:  IMenuRequest & ILocationRequest): Promise<IUnitDetails> {
     const res = await request<IUnitDetails>({
       method: 'get',
-      url: `/api/unit/${id}?${queryString.stringify(location)}`,
-    })
-    return res
-  }
-
-  static async fetchMenuById(id: string, data: IMenuRequest & ILocation): Promise<IMenuCategory[]> {
-    const res = await request<IMenuCategory[]>({
-      method: 'get',
-      url: `/api/unit/menu/${id}`,
+      url: `/api/unit/bySlug/${slug}`,
       data
     })
     return res
   }
+
+  static async fetchByBrandSlug(brandSlug: string, data:  IUnitRequest & IMenuRequest & ILocationRequest): Promise<IUnitDetails> {
+    const res = await request<IUnitDetails>({
+      method: 'get',
+      url: `/api/unit/byBrandSlug/${brandSlug}`,
+      data
+    })
+    return res
+  }
+
+  static async fetchMenuBySlug(slug: string, data: IMenuRequest & ILocationRequest): Promise<IMenuCategory[]> {
+    const res = await request<IMenuCategory[]>({
+      method: 'get',
+      url: `/api/unit/menu/bySlug/${slug}`,
+      data
+    })
+    return res
+  }
+  static async fetchMenuByBrandSlug(slug: string, data: IMenuRequest & ILocationRequest): Promise<IMenuCategory[]> {
+    const res = await request<IMenuCategory[]>({
+      method: 'get',
+      url: `/api/unit/menu/byBrandSlug/${slug}`,
+      data
+    })
+    return res
+  }
+
   static async fetchUpsellById(id: number, data: IMenuRequest = {}): Promise<IProduct[]> {
     const res = await request<IProduct[]>({
       method: 'get',

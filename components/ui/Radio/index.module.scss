@@ -1,0 +1,27 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  cursor: pointer;
+
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  border: 1px solid #828282;
+  &.active {
+    position: relative;
+    background: $green;
+    border-color: $green;
+    &:after{
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: $white;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+    }
+  }
+}

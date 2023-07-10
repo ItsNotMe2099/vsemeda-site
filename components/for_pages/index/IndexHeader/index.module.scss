@@ -1,0 +1,123 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+  overflow: hidden;
+  top: #{-50 + -20 + -6}px;
+  padding-bottom: 74px;
+  padding-top: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include mq($PhoneWidth, max) {
+    align-items: baseline;
+    height: 100%;
+  }
+}
+
+.bg {
+  @include posAbsoluteAll();
+  top: #{-50 + -20 + -290}px;
+  bottom: -40px;
+  background: radial-gradient(circle at center, #B648D7, #882CB6, #4A078A);
+
+  @include mq($PhoneWidth, max) {
+    background: url('../../../../public/images/mobileBg/mobileBg.png');
+  }
+}
+
+.circle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0px;
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}
+
+.container {
+  display: flex;
+  position: relative;
+  z-index: 1;
+
+  @include mq($PhoneWidth, max) {
+    margin-top: 114px;
+  }
+}
+
+.title {
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  color: $white;
+
+  @include mq($PhoneWidth, max) {
+    color: #4C4958;
+  }
+
+  @include mq($MPhoneWidth, max) {
+    font-size: 30px;
+  }
+}
+
+.choose {
+  margin-top: 24px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: $white;
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}
+
+.drop {
+  margin-top: 24px;
+}
+
+.sales_left {
+  height: 100%;
+  position: absolute;
+  bottom: -30%;
+  left: 0;
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+
+  img {
+    width: auto !important;
+  }
+}
+
+.sales_right {
+  height: 100%;
+  position: absolute;
+  bottom: -30%;
+  right: 0;
+
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+
+  img {
+    width: auto !important;
+    inset: unset !important;
+    right: 0 !important;
+  }
+}
+
+.left {
+  @include mq($PhoneWidth, max) {
+    display: none;
+  }
+}
+
+.mobile{
+  @include mq($PhoneWidth, min) {
+    display: none;
+  }
+}

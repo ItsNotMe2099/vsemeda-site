@@ -1,0 +1,11 @@
+@import "styles/index";
+
+.root {
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.next{
+  transform: rotate(180deg);
+}

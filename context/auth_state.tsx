@@ -1,9 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 import { useAppContext } from 'context/state'
-import { CookiesType, SnackbarType } from 'types/enums'
-import { RequestError, SnackbarData } from 'types/types'
+import { SnackbarType } from 'types/enums'
+import { RequestError } from 'types/types'
 import useInterval from 'use-interval'
-import Cookies from 'js-cookie'
 import UserRepository from 'data/repositories/UserRepository'
 import { useRouter } from 'next/router'
 import { ILoginResponse } from 'data/interfaces/ILoginResponse'
@@ -115,14 +114,12 @@ export function AuthWrapper(props: Props) {
       return false
     }
 
-    Cookies.set(CookiesType.accessToken, accessToken, { expires: 365 })
 
-
-
+    await  appContext.setToken(accessToken)
     appContext.setModalNonSkippable(false)
     appContext.hideModal()
     appContext.hideBottomSheet()
-    appContext.updateTokenFromCookies()
+
     setConfirmSpinner(false)
     if (redirect) {
       await router.push(redirect)
@@ -156,11 +153,7 @@ export function AuthWrapper(props: Props) {
   }
 
   const logOut = () => {
-    Cookies.remove(CookiesType.accessToken)
-    appContext.updateTokenFromCookies()
-    if (router.pathname.includes('/lk')) {
-      router.push('/')
-    }
+
   }
 
   const clear = () => {

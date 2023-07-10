@@ -5,8 +5,6 @@ $radius: 24px;
 .root {
   position: relative;
   flex: 0 0 auto;
-  width: 33.333333333333336%;
-  display: inline-block;
   padding: 0px 12px;
   margin-bottom: 64px;
 
@@ -21,7 +19,15 @@ $radius: 24px;
   border-bottom-left-radius: $radius;
   border-bottom-right-radius: $radius;
 }
+.bodeCenterWrap{
+  display: flex;
+  flex-direction: column;
+  @include list(4px);
+}
+.bodySeparator{
+  @include borderDashed();
 
+}
 .name {
   font-size: 18px;
   font-weight: 600;

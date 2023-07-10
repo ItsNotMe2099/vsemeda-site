@@ -1,4 +1,4 @@
 
 export interface IMenuRequest{
-promoId?: number
+  promoId?: number
 }

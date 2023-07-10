@@ -29,8 +29,6 @@ export default function DropdownMenu(props: Props) {
     setIsActive(!isActive)
   }
 
-  console.log(isActive)
-
   const handleOptionClick = (item: ICategory) => {
     setCurrentLabel(item.name)
     setIsActive(false)
@@ -52,7 +50,7 @@ export default function DropdownMenu(props: Props) {
         </div>
       </a>
       <nav ref={dropdownRef} className={classNames(styles.dropDown, { [styles.dropDownActive]: isActive })}>
-        {(props.style === 'more' ? options : filtered).map((item, index) => <div key={index} 
+        {(props.style === 'more' ? options : filtered).map((item, index) => <div key={index}
         className={classNames(styles.option, {[styles.optionCurrent]: props.style === 'more' && item.name === currentLabel})}
           onClick={() => handleOptionClick(item)}>
           <a>{item.name}</a></div>)}

@@ -32,6 +32,7 @@ export const colors = {
   grey3: '#AEAEAE',
   grey4: '#CACACA',
 
+  grey5: '#F2F2F2',
 // Base Purple
   purple: '#812292',
   purple2: '#781F88',
@@ -45,6 +46,7 @@ export const colors = {
 // Orange
   orange: '#F58220',
   orange1: '#ED5F1C',
+  orange2: '#F2994A',
 
 // Red
   red: '#EB5757',
