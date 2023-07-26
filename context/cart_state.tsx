@@ -300,7 +300,7 @@ export function CartWrapper(props: Props) {
       if (cart && unitId !== cart?.unitId) {
         //TODO show alert clear
         appContext.showModal(ModalType.Confirm, {
-          text: 'Очистить корзину для нового заказа? В вашей корзине товары из дрого заведения',
+          text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
           onConfirm: async () => {
             await  clear()
             appContext.hideModal()

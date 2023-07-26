@@ -53,7 +53,6 @@ export default function UnitSliderMobile(props: Props) {
        //slidesPerView={'auto'}
        spaceBetween={0}
        loop={props.units.length > 2 ? true : false}
-       onSwiper={(swiper) => console.log(swiper)}
        {...{      speed: 600,
          resistanceRatio: 0,
          grabCursor: true,

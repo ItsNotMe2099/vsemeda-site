@@ -81,10 +81,8 @@ export default function FilterCategories(props: Props) {
         return acc
       }, lastLinkWidth)
     }
-    console.log('sumWidthLinks', listWidth,sumWidthLinks(), linksCacheRef.current, lastLinkWidth)
-    if (listWidth < sumWidthLinks()) {
+     if (listWidth < sumWidthLinks()) {
       while (widthLinks.length > 1 && sliceMenu > 1) {
-        // console.log(listWidth, sumWidthLinks(), sliceMenu);
         if (listWidth < sumWidthLinks()) {
           widthLinks.pop()
           sliceMenu--

@@ -31,13 +31,14 @@ const AddressListModalInner = (props: Props) => {
   const header = (<div />)
   const handleClick = (address: IUserAddress) => {
     addressContext.setCurrentAddress(address)
+    appContext.hideModal()
   }
 
   const body = (
     <>
       {props.isBottomSheet ? <div className={styles.title}>Адрес доставки</div> : null}
       <div className={styles.bodyWrapper}>
-        <div className={styles.list}>{addressContext.addresses.map(i => <AddressCard item={i} isSelected={appContext.currentAddress?.id === i.id} onClick={() => handleClick(i)} />)}</div>
+        <div className={styles.list}>{appContext.addresses.map(i => <AddressCard item={i} isSelected={appContext.currentAddress?.id === i.id} onClick={() => handleClick(i)} />)}</div>
       </div>
     </>
   )

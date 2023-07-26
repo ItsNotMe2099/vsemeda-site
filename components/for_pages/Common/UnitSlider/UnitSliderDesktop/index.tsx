@@ -28,7 +28,6 @@ export default function UnitSliderDesktop(props: Props) {
        spaceBetween={0}
        loop={props.units.length > 2 ? true : false}
        centeredSlides={true}
-       onSwiper={(swiper) => console.log(swiper)}
        pagination={true}
        modules={[Pagination, Mousewheel, Keyboard, Parallax, EffectCarousel]}
      >

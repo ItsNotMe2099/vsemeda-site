@@ -131,7 +131,6 @@ export function AppWrapper(props: Props) {
   const [isMobile, setIsMobile] = useState<boolean>(props.isMobile)
   const [region, setRegion] = useState<IRegion | null>(regions[0])
   const router = useRouter()
-
   const setInitialAddressFromLocal = () => {
     setCurrentAddress(addressLocal)
 
@@ -180,6 +179,7 @@ export function AppWrapper(props: Props) {
   const updateUser = async (newUser?: IUser): Promise<IUser> => {
     if (newUser) {
       setUser(newUser)
+      setInitialAddressFromUser(newUser)
       return newUser
     } else {
       const data = await UserRepository.fetchCurrent()
@@ -238,7 +238,7 @@ export function AppWrapper(props: Props) {
     token,
     currentAddress,
     currentLocation: currentAddress?.location ?? currentLocation,
-    addresses: user?.addresses ?? addressLocal ? [addressLocal] : [],
+    addresses: user?.addresses ?? (addressLocal ? [addressLocal] : []),
     initialLoaded: userLoaded,
     isLogged,
     showModal,
@@ -254,11 +254,13 @@ export function AppWrapper(props: Props) {
     updateUser,
     setToken: async (token: string) => {
 
-      const oldToken = token
-      const newToken = Cookies.get(CookiesType.accessToken) ?? null
+      const newToken = token
+      const oldToken = Cookies.get(CookiesType.accessToken) ?? null
       Cookies.set(CookiesType.accessToken, token, {
         expires: CookiesLifeTime.accessToken,
       })
+
+
       setToken(newToken)
       if (!oldToken && newToken) {
         loginState$.next(true)

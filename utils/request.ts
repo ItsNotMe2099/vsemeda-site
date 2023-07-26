@@ -76,7 +76,7 @@ async function request<T = any>(options: string | Options): Promise<T> {
     validateStatus: (status) => true
   })
 
-  const xSession = res.headers['X-Session']
+  const xSession = res.headers['x-session']
   if(xSession){
     Cookies.set(CookiesType.sessionId, xSession, {       expires: CookiesLifeTime.accessToken, })
   }

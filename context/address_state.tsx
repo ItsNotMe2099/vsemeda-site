@@ -11,8 +11,6 @@ import {useCookies} from 'react-cookie'
 import CookiesUtils from 'utils/CookiesUtils'
 
 interface IState {
-  currentAddress?: IUserAddress;
-  addresses: IUserAddress[];
   initialLoaded: boolean;
   create: (data: DeepPartial<IUserAddress>) => void
   update: (id: string, data: DeepPartial<IUserAddress>)  => void
@@ -22,8 +20,6 @@ interface IState {
 
 
 const defaultValue: IState = {
-  currentAddress: null,
-  addresses: [],
   initialLoaded: false,
   create: (data: DeepPartial<IUserAddress>) => null,
   update: (id: string, data: DeepPartial<IUserAddress>) => null,
@@ -77,7 +73,6 @@ export function AddressWrapper(props: Props) {
 
   const value: IState = {
     ...defaultValue,
-    addresses: appContext.addresses,
     create: async (data: DeepPartial<IUserAddress>) => {
       if(appContext.isLogged){
         const address = await createReq(data)

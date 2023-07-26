@@ -86,8 +86,6 @@ export default function AddressField(props: Props) {
       highlight: true,
 
     })
-
-   // console.log('Res111', suggestions.map(i => i.title.text), res.map(i => i.title.text))
     setSuggestions(res)
   }
   const {callback, cancel, callPending} = useThrottleFn(querySuggestions, 300)
