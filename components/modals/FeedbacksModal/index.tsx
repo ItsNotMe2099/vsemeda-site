@@ -1,13 +1,13 @@
-import ModalBody from "components/layout/Modal/ModalBody";
-import ModalLayout from "components/layout/Modal/ModalLayout";
-import StartFilledSvg from "components/svg/StartFilledSvg";
-import UserSvg from "components/svg/UserSvg";
-import CloseModalBtn from "components/ui/CloseModalBtn";
-import { colors } from "styles/variables";
-import styles from "./index.module.scss"
-import { useEffect, useState } from "react";
-import FeedbackRepository from "data/repositories/FeedbackRepository";
-import { useAppContext } from "context/state";
+import ModalBody from 'components/layout/Modal/ModalBody'
+import ModalLayout from 'components/layout/Modal/ModalLayout'
+import StartFilledSvg from 'components/svg/StartFilledSvg'
+import UserSvg from 'components/svg/UserSvg'
+import CloseModalBtn from 'components/ui/CloseModalBtn'
+import { colors } from 'styles/variables'
+import styles from './index.module.scss'
+import { useEffect, useState } from 'react'
+import FeedbackRepository from 'data/repositories/FeedbackRepository'
+import { useAppContext } from 'context/state'
 
 
 interface Props {
@@ -60,14 +60,14 @@ function FeedbacksModalInner (props: Props) {
 
     const body = (<>
         <div className={styles.title}>
-            <p className={styles.name}>{brand? brand.name: "no available name"}</p>
+            <p className={styles.name}>{brand? brand.name: 'no available name'}</p>
             <div className={styles.points}>
                 <StartFilledSvg color={colors.orange2} className={styles.points__star}/>
                 <p className={styles.points__count} >4.8 (273 отзывов)</p>
             </div>
         </div>
         <div className={styles.feedbacks}>
-            
+
             
             <div className={styles.item}>
                 <div className={styles.item__top}>
