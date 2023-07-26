@@ -7,6 +7,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 8px;
+  cursor: pointer;
   @include list(8px);
   &.centered{
     justify-content: center;

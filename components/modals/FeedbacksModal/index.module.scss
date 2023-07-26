@@ -1,0 +1,134 @@
+@import "styles/index";
+
+
+.body {
+    padding: 4px 32px;
+}
+
+.modalLayout {
+    border-radius: 16px;
+    max-width: 444px;
+    background-color: $purple3;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name {
+    color: $dark1;   
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+.close {
+    margin-left: auto;
+    padding: 6px 10px;
+    transition: .6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: rotate(0deg);
+    &:hover {
+        transform: rotate(90deg);
+    }
+}
+
+.points {
+    display: flex;
+    align-items: center;
+
+    &__star {
+        width: 30px;
+        transform: translateY(-4px);
+        height: 25px;
+        margin-right: 5px;
+    }
+
+    &__count {
+        color: $dark1;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+}
+
+.feedbacks {
+    margin-top: 20px;
+}
+
+.item {
+    background-color: $white;
+    border-radius: 16px;
+    padding: 16px;
+    
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 16px;
+    }
+
+    &__body {
+        border-top: 1px $grey4 dotted;
+        padding-block: 16px;
+        color: $grey1;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: 0.28px;
+    }
+
+    &__posted {
+        color: $grey1;
+        font-size: 14px;
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+    }
+
+    &__userLogo {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $grey5;
+        overflow: hidden;
+        margin-right: 10px;
+    }
+
+    &__userName {
+        color: $dark1;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    &__userSvg {
+        width: 20px;
+        height: 24px;
+    }
+
+    &__points {
+        display: flex;
+        align-items: center;
+
+        &__stars {
+            display: flex;
+            margin-right: 10px;
+        }
+
+        &__star {
+            width: 18px;
+            height: 17px;
+        }
+
+        &__number {
+            color: $dark1;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+}
+

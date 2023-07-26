@@ -10,7 +10,7 @@ import {useUnitContext} from 'context/unit_state'
 import {useEffect} from 'react'
 
 export default function RestaurantPage() {
-    const unitContext = useUnitContext()
+  const unitContext = useUnitContext()
 
   useEffect(() => {
 

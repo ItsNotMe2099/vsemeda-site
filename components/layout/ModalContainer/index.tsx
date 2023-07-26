@@ -14,6 +14,7 @@ import ProductModal from 'components/modals/ProductModal'
 import PreOrderModal from 'components/modals/PreOrderModal'
 import IndexFilterModal from 'components/modals/IndexFilterModal'
 import {ConfirmModal} from 'components/modals/ConfirmModal'
+import FeedbacksModal from 'components/modals/FeedbacksModal'
 
 
 interface Props { }
@@ -64,6 +65,9 @@ export default function ModalContainer(props: Props) {
         </Modal>
         <Modal isOpen={appContext.modal === ModalType.Confirm} {...commonSettings}>
           {appContext.modal === ModalType.Confirm && <ConfirmModal onRequestClose={appContext.hideModal} />}
+        </Modal>
+        <Modal isOpen={appContext.modal === ModalType.Feedbacks} {...commonSettings}>
+          {appContext.modal === ModalType.Feedbacks && <FeedbacksModal onRequestClose={appContext.hideModal} />}
         </Modal>
       </div>
     </RemoveScroll>
