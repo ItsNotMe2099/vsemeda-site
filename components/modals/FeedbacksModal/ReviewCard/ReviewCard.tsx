@@ -1,10 +1,10 @@
-import ArrowAnswerSvg from "components/svg/ArrowAnswerSvg"
-import StartFilledSvg from "components/svg/StartFilledSvg"
-import UserSvg from "components/svg/UserSvg"
-import { IReview } from "data/interfaces/IReview"
-import { colors } from "styles/variables"
-import Formatter from "utils/formatter"
-import s from "./reviewCard.module.scss"
+import ArrowAnswerSvg from 'components/svg/ArrowAnswerSvg'
+import StartFilledSvg from 'components/svg/StartFilledSvg'
+import UserSvg from 'components/svg/UserSvg'
+import { IReview } from 'data/interfaces/IReview'
+import { colors } from 'styles/variables'
+import Formatter from 'utils/formatter'
+import s from './reviewCard.module.scss'
 
 interface Props {
     item: IReview
@@ -14,7 +14,7 @@ interface Props {
 export default function ReviewCard(props: Props) {
 
     const maxStarMarks = 5
-    
+
     const starMarks = () => {
         let marks:JSX.Element[] = []
         for(let i = 0; i < maxStarMarks; i++) {
