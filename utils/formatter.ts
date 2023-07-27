@@ -96,7 +96,18 @@ export default class Formatter {
     return Formatter.formatDateRelative(date)
   }
 
-
+  /** return dd.MM.yy HH:mm date format */ 
+  static formatToShortYear(date: string|Date) {
+    const locale = {
+      ...ru,
+      formatRelative: () =>
+      'dd.MM.yy HH:mm',
+    }
+    if (!date) {
+      return ''
+    }
+    return formatRelative(typeof date === 'string' ? new Date(date) : date, new Date(), {locale})
+  }
 }
 
 export const pad = Formatter.pad

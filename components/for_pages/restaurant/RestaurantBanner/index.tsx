@@ -14,6 +14,7 @@ interface Props {
 }
 
 export default function RestaurantBanner(props: Props) {
+  
   const unitContext = useUnitContext()
   const unit = unitContext.unit
 

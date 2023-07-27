@@ -1,0 +1,102 @@
+@import "styles/index";
+
+.item {
+    background-color: $white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 16px;
+    }
+
+    &__body {
+        border-top: 1px $grey4 dotted;
+        padding-block: 16px;
+        color: $grey1;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: 0.28px;
+    }
+
+    &__posted {
+        color: $grey1;
+        font-size: 14px;
+    }
+
+    &__user {
+        display: flex;
+        align-items: center;
+    }
+
+    &__userLogo {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $grey5;
+        overflow: hidden;
+        margin-right: 10px;
+    }
+
+    &__userName {
+        color: $dark1;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    &__userSvg {
+        width: 20px;
+        height: 24px;
+    }
+
+    &__points {
+        display: flex;
+        align-items: center;
+
+        &__stars {
+            display: flex;
+            margin-right: 10px;
+        }
+
+        &__star {
+            width: 18px;
+            height: 17px;
+        }
+
+        &__number {
+            color: $dark1;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+
+    &__answerWrapper {
+        display: flex;
+        border-top: 1px dotted $grey4;
+        padding-top: 16px;
+    }
+
+    &__answer {
+        color: $dark2;
+        font-size: 14px;
+    }
+
+    &__answerTitle {
+        color: #812392;
+        font-size: 14px;
+        line-height: 150%;
+        margin-right: 12px;
+    }
+
+    &__answerSvg {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+    }
+}

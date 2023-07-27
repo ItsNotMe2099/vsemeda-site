@@ -20,4 +20,8 @@
   max-height: 333px;
   min-height: 254px;
   width: 33%;
+
+  @include mq($TabletWidth, max) {
+    width: 100%;
+  }
 }

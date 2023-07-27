@@ -26,25 +26,25 @@ const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
 
   return (
     <div className={classNames(styles.root, {[styles.none]: appContext.modal})} ref={ref} style={props.style} {...(props.restProps ?? {})}>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath === `/${region.slug}` && !appContext.modal })}>
+      <div className={classNames(styles.item, { [styles.active]: router.asPath === `/${region?.slug}` && !appContext.modal })}>
         <HomeSvg />
         <div className={styles.title}>
           Главная
         </div>
       </div>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region.slug}` })}>
+      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
         <HistorySvg />
         <div className={styles.title}>
           История
         </div>
       </div>
-      <div onClick={() => appContext.showModal(ModalType.Basket)} className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region.slug}` })}>
+      <div onClick={() => appContext.showModal(ModalType.Basket)} className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
         <CartSvg />
         <div className={styles.title}>
           Корзина
         </div>
       </div>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region.slug}` })}>
+      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
         <AboutSvg />
         <div className={styles.title}>
           О нас
