@@ -1,7 +1,6 @@
 import ModalBody from 'components/layout/Modal/ModalBody'
 import ModalLayout from 'components/layout/Modal/ModalLayout'
 import StartFilledSvg from 'components/svg/StartFilledSvg'
-import CloseModalBtn from 'components/ui/CloseModalBtn'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 import { useEffect, useRef, useState } from 'react'
@@ -13,6 +12,8 @@ import { IReview } from 'data/interfaces/IReview'
 import Spinner from 'components/ui/Spinner'
 import ReviewCard from './ReviewCard/ReviewCard'
 import Formatter from 'utils/formatter'
+import ArrowLeftSvg from 'components/svg/ArrowLeftSvg'
+import CrossSvg from 'components/svg/CrossSvg'
 
 
 interface Props {
@@ -52,17 +53,43 @@ function FeedbacksModalInner (props: Props) {
         fetchFeedbacks(id, feedBackPage, limit)
     }, [feedBackPage])
 
-    const body = (<>
+    const closeButton = (<>
+        <div className={styles.close} onClick={props.onRequestClose}>
+            {appContext.isDesktop?
+           
+            <CrossSvg color={colors.grey3} />:
+            <ArrowLeftSvg className={styles.closeSvg} color={colors.purple} />
+            }
+        </div>
+    </>)
+
+    const deskHead = (<>   
+        {closeButton}
         <div className={styles.title}>
-            <p className={styles.name}>{ brand.name ?? 'No Brand'}</p>
+            {brand.name&& 
+                <p className={styles.name}>{ brand.name}</p>
+            }
             <div className={styles.points}>
-                <StartFilledSvg color={colors.orange2} className={styles.points__star}/>
+                <StartFilledSvg color={colors.orange2} className={styles.points__star}/>:
                 <p className={styles.points__count}>
                     {rating} ({total} {Formatter.pluralize(total, 'отзыв', 'отзыва', 'отзывов')})
                 </p>
             </div>
+
         </div>
-        <div className={styles.feedbacks} ref={feedBackContainer}>          
+    </>)
+
+    const mobileHead = (<div className={styles.title}>
+        {closeButton}
+        <p className={styles.subNname}>Все отзывы ресторана </p>
+                {brand.name&& 
+        <p className={styles.name}>{brand.name}</p>}
+    </div>)
+
+    
+
+    const body = (<>
+        <div className={styles.feedbacks} ref={feedBackContainer}>              
             <InfiniteScroll
             dataLength={feedBacksState.length}
             next={()=>setPage(feedBackPage + 1)}
@@ -75,14 +102,13 @@ function FeedbacksModalInner (props: Props) {
                     <ReviewCard item={i} key={index} />
                 )}
              </InfiniteScroll>
+            
         </div>
     </>)
 
     return (<>
         <ModalLayout fixed className={styles.modalLayout}>
-            <div className={styles.close}>
-                <CloseModalBtn color={colors.grey3} onClick={props.onRequestClose}/>
-            </div>
+            {appContext.isDesktop?deskHead:mobileHead}
             <ModalBody className={styles.body}>{body}</ModalBody>
         </ModalLayout>
     </>)

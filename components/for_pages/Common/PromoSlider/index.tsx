@@ -7,6 +7,7 @@ import { Pagination, Mousewheel, Keyboard } from 'swiper'
 import { useRef} from 'react'
 import SliderArrow from 'components/ui/SliderArrow'
 import {IPromo} from 'data/interfaces/IPromo'
+import HiddenXs from 'components/visibility/HiddenXs'
 interface Props {
   className?: string
   promos: IPromo[]
@@ -17,7 +18,9 @@ export default function PromoSlider(props: Props) {
   const sliderRef = useRef(null)
   return (
    <div className={styles.root}>
-     <SliderArrow direction={'prev'} sliderRef={sliderRef} className={classNames(styles.arrow, styles.prev)}/>
+    <HiddenXs>
+      <SliderArrow direction={'prev'} sliderRef={sliderRef} className={classNames(styles.arrow, styles.prev)}/>
+    </HiddenXs>
      <Swiper
        ref={sliderRef}
        slidesPerView={'auto'}
@@ -29,7 +32,9 @@ export default function PromoSlider(props: Props) {
          <PromoCard promo={i}/>
        </SwiperSlide>)}
      </Swiper>
-     <SliderArrow direction={'next'} sliderRef={sliderRef} className={classNames(styles.arrow, styles.next)}/>
+     <HiddenXs>
+      <SliderArrow direction={'next'} sliderRef={sliderRef} className={classNames(styles.arrow, styles.next)}/>
+     </HiddenXs>
 
    </div>
   )

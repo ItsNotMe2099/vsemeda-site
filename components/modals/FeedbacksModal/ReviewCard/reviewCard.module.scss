@@ -42,6 +42,7 @@
         background-color: $grey5;
         overflow: hidden;
         margin-right: 10px;
+        flex-shrink: 0;
     }
 
     &__userName {

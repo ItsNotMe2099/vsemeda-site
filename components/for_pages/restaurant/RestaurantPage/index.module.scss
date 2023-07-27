@@ -13,6 +13,7 @@
 
   @include mq($PhoneWidth, max) {
     margin-top: -138px;
+    padding: 0px;
   }
 }
 .title{
@@ -34,6 +35,9 @@
   width: 100%;
   @include mq($TabletWidth, max) {
     margin-left: 0;
+  }
+  @include mq($PhoneWidth, max) {
+    padding-left: 0px;
   }
 }
 
