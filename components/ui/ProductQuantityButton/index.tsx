@@ -11,7 +11,8 @@ interface Props {
   onMinusClick: () => void,
   className?: string
   theme?: 'white' | 'grey'
-  min?: number
+  min?: number,
+  price?: string
 }
 
 export default function ProductQuantityButton(props: Props) {
@@ -22,7 +23,7 @@ export default function ProductQuantityButton(props: Props) {
         <MinusSvg color={props.theme ==='white'?  colors.white : colors.black}/>
       </div>}
       {props.quantity > 0 && <div className={styles.quantity}>{props.quantity}</div>}
-      {(props.quantity === 0 || !props.quantity) && <div className={styles.emptyText}>Добавить</div>}
+      {(props.quantity === 0 || !props.quantity) && <div className={styles.emptyText}>{props.price?props.price:'Добавить'}</div>}
 
       {props.quantity > 0 && <div onClick={props.disabled ? null : props.onAddClick}
                                   className={styles.btn}>

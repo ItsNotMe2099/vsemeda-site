@@ -9,9 +9,18 @@
   &.empty{
     background-color: $grey5;
     cursor: pointer;
+    transition: .2s linear;
+    @include mq($PhoneWidth, max) {
+      background-color: transparent;
+      border: 2px $purple solid;
+      border-radius: 16px;
+    }
+
     &:hover{
-      background-color: $purple;
-      color: $white;
+      @media (hover: hover) {
+        background-color: $purple;
+        color: $white;
+      }
     }
   }
   &.white{
@@ -45,4 +54,7 @@
   font-size: 12px;
   text-align: center;
   flex: 1;
+  @include mq($PhoneWidth, max) {
+    color: $purple;
+  }
 }

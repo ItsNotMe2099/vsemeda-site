@@ -7,6 +7,7 @@ import CardBodyLayoutPos from './CardBodyLayoutPos'
 import ProductQuantityButton from 'components/ui/ProductQuantityButton'
 import {colors} from 'styles/variables'
 import Formatter from 'utils/formatter'
+import { useAppContext } from 'context/state'
 
 interface Props {
   product: IProduct
@@ -17,7 +18,12 @@ interface Props {
 }
 
 export default function MenuProductCard(props: Props) {
+  
   const {product} = props
+
+  const appContext = useAppContext()
+  const formattedPrice = Formatter.formatPrice(product.price)
+  
 
 
   return (
@@ -32,12 +38,22 @@ export default function MenuProductCard(props: Props) {
           {product.layout && product.layout[ProductCardLayoutPosType.CardT] &&
             <CardBodyLayoutPos items={product.layout[ProductCardLayoutPosType.CardT]} color={props.quantity > 0 ? colors.white : colors.grey1}/>}
           <div className={styles.name}>{product.name}</div>
-          <div className={styles.price}>{Formatter.formatPrice(product.price)}</div>
+          {(appContext.isDesktop||appContext.isMobile&&props.quantity > 0)&&
+            <div className={styles.price}>{formattedPrice}</div>
+          }
+          {appContext.isMobile &&
+            <div className={styles.weight}>{product.weight} гр.</div>
+          }
         </div>
         <div className={styles.spacer}/>
         <div className={styles.btnContainer}>
-          <ProductQuantityButton className={styles.btn} quantity={props.quantity} onAddClick={props.onAddClick} theme={props.quantity > 0 ? 'white' : 'grey'}
-                                 onMinusClick={props.onMinusClick}/>
+          <ProductQuantityButton 
+          price={appContext.isMobile&&formattedPrice} 
+          className={styles.btn} 
+          quantity={props.quantity} 
+          onAddClick={props.onAddClick} 
+          theme={props.quantity > 0 ? 'white' : 'grey'}
+          onMinusClick={props.onMinusClick}/>
         </div>
       </div>
     </div>

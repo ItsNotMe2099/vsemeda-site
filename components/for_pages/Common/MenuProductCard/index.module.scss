@@ -55,6 +55,16 @@ $radius: 24px;
   font-weight: 500;
   color: $dark2;
   margin-top: 8px;
+  @include mq($PhoneWidth, max) {
+    display: inline-block;
+    margin-right: 20px;
+  }
+}
+
+.weight {
+  display: inline-block;
+  color: $grey1;
+  font-size: 14px;
 }
 
 .imgContainer {
@@ -79,6 +89,10 @@ $radius: 24px;
 
 .btnContainer {
   padding: 0px 24px 12px 24px;
+  @include mq($PhoneWidth, max) {
+    padding: 0;
+    padding-bottom: 12px;
+  }
 }
 
 .btn {
