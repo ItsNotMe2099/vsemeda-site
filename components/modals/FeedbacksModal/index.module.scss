@@ -62,8 +62,8 @@
     @include mq($PhoneWidth, max) {
         position: absolute;
         top: 50%;
-        left: 0;
         transform: translateY(-50%);
+        left: 0;
         width: 48px;
         height: 48px;
         display: flex;
@@ -73,6 +73,7 @@
         border-radius: 50%;
         transition: unset;
         box-shadow: 0px 8px 10px 2px $grey4;  
+        margin: 0;
     }
 }
 
@@ -80,6 +81,10 @@
     width: 16px;
     height: 16px;
     display: block;
+    @include mq($PhoneWidth, max) {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .points {
