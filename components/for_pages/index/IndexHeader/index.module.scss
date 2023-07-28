@@ -13,6 +13,10 @@
   @include mq($PhoneWidth, max) {
     align-items: baseline;
     height: 100%;
+    padding-bottom: 0;
+    justify-content: flex-start;
+    padding-inline: 24px;
+   
   }
 }
 
@@ -42,9 +46,9 @@
   position: relative;
   z-index: 1;
 
-  @include mq($PhoneWidth, max) {
-    margin-top: 114px;
-  }
+  // @include mq($PhoneWidth, max) {
+  //   margin-top: 114px;
+  // }
 }
 
 .title {

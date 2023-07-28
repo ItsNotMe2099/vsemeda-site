@@ -18,6 +18,7 @@ import BackBtn from 'components/ui/BackBtn'
 import BurgerSvg from 'components/svg/BurgerSvg'
 import BasketButton from 'components/layout/Header/BasketButton'
 import ArrowHeaderSvg from 'components/svg/ArrowHeaderSvg'
+import HeaderDelivery from './HeaderDelivery'
 
 interface Props {
   isSticky?: boolean
@@ -53,12 +54,17 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             </Link>
             <DividerDotsSvg className={styles.divider} />
             <HeaderAddress />
-            <div
-              className={styles.menuOpen}
-              onClick={handleOpenMobileMenu}
-            >
+
+            {/* TODO: узнать какая была задумка, img путь битый */}
+            <div className={styles.menuOpen} onClick={handleOpenMobileMenu}>
               <img src="/images/header/menu.svg" alt="" />
             </div>
+
+            {/* TODO: был убран headerDelivery, в макете он есть, узнать логику */}
+            <DividerDotsSvg className={styles.divider} />
+            <HeaderDelivery/>
+            <DividerDotsSvg className={styles.divider} />
+            
           </div>
           <div className={styles.right}>
             <LoupeSvg color={colors.white} />

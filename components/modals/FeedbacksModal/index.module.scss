@@ -16,6 +16,11 @@
         top: 0;
         left: 0;
         border-radius: 0;
+        max-width: unset;
+        // background-color: $purple2;
+        background-image: url('../../../public/images/mobileBg/mobileBg.png');
+        background-size: contain;
+        background-position: center;
     }
 }
 
@@ -24,12 +29,13 @@
     justify-content: space-between;
     position: relative;
     padding:  0 32px;
-    @include mq($PhoneWidth, max) {
+    //если у нас устройство с тач скрином
+    @media (hover: none) {
         flex-direction: column;
         align-items: center;
         margin-top: 33px;
         margin-inline: 23px;
-    } 
+    }
 }
 
 .name {
@@ -59,7 +65,8 @@
             transform: rotate(90deg);
         }
     }
-    @include mq($PhoneWidth, max) {
+
+    @media(hover: none) {       
         position: absolute;
         top: 50%;
         transform: translateY(-50%);

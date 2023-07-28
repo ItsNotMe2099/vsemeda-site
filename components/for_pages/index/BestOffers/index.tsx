@@ -5,6 +5,7 @@ import MenuRepository from 'data/repositories/MenuRepository'
 import { useEffect, useState } from 'react'
 import UnitSlider from 'components/for_pages/Common/UnitSlider'
 import {IViewLayoutItem} from 'data/interfaces/IViewLayout'
+import HiddenXs from 'components/visibility/HiddenXs'
 interface Props{
  item: IViewLayoutItem
 }
@@ -15,6 +16,8 @@ export default function BestOffers(props: Props) {
   const fetchData = async () => {
     await MenuRepository.fetchCategories().then(i => setItems(i))
   }
+
+
 
   useEffect(() => {
     fetchData()
@@ -34,12 +37,14 @@ export default function BestOffers(props: Props) {
             <img src={'/images/icons/best-offers-arrow.svg'}/>
           </div>
         </div>
-        <div className={styles.mobile}>
-          <div className={styles.title}>
+        <div className={styles.mobile} >
+          <div className={styles.title} >
             Лучшие<br/> предложения 😍
           </div>
         </div>
-        <div className={styles.right}><UnitSlider units={props.item.units}/></div>
+        <HiddenXs>
+          <div className={styles.right}><UnitSlider units={props.item.units}/></div>
+        </HiddenXs>
       </div>
   )
 }

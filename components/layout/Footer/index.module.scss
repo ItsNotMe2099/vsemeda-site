@@ -4,7 +4,7 @@
   width: 100%;
   padding-top: 54px;
   padding-bottom: 62px;
-  background-color: $grey1;
+  background-color: #F7F8FA;
   margin-top: auto;
 }
 
@@ -84,6 +84,7 @@
 
 .center {
   display: flex;
+  width: 50%;
 
   @include mq($TabletWidth, max) {
     width: 100%;

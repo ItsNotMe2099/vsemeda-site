@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import styles from 'components/for_pages/Common/UnitCard/index.module.scss'
+import styles from './index.module.scss'
 import classNames from 'classnames'
 import Image from 'next/image'
 import {useAppContext} from 'context/state'
@@ -54,7 +54,7 @@ export default function UnitCard({unit, className}: Props) {
                                layout={unit.cardLayout[UnitCardLayoutPosType.CardB]} unit={unit}/>}
 
 
-      </div>
+      </div>  
     </Link>
   )
 }

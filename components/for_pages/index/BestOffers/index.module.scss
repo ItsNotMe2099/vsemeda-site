@@ -7,9 +7,11 @@
   align-items: center;
   justify-content: center;
   max-width: 100%;
+
   @include mq($PhoneWidth, max) {
     align-items: baseline;
     height: 100%;
+    flex-direction: column
   }
 }
 
@@ -45,16 +47,12 @@
 
 .title {
   font-weight: 600;
-  font-size: 36px;
+  font-size: Clamp(30px, 10vw, 36px);
   line-height: 44px;
   color: $white;
 
   @include mq($PhoneWidth, max) {
     color: #4C4958;
-  }
-
-  @include mq($MPhoneWidth, max) {
-    font-size: 30px;
   }
 }
 

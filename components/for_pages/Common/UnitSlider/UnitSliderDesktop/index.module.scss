@@ -2,9 +2,11 @@
 .root{
   position: relative;
   max-width: 100%;
+  width: 90vw;
   @include swiperPagination($white);
   :global .swiper{
     padding-bottom: 20px;
+    overflow: unset !important;
   }
 }
 .slide{

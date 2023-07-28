@@ -35,6 +35,7 @@ export default function UnitCardLayoutItem({ item, size, color, unit }: Props) {
         return <div className={classNames(styles.root, classes)}>
           <PriceRatingUi className={styles.priceRating} rating={unit.brand?.priceRating} colorActive={colors.dark1}
                          colorDisabled={'#C0C0C0'}/>
+          {/* TODO: добавить тип кухни и зеленый значок подтверждения */}
         </div>
       }else{
         return null
