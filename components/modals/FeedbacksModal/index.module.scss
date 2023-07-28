@@ -23,6 +23,7 @@
     display: flex;
     justify-content: space-between;
     position: relative;
+    padding:  0 32px;
     @include mq($PhoneWidth, max) {
         flex-direction: column;
         align-items: center;
@@ -48,12 +49,12 @@
 }
 
 
-.close {
-    margin-left: auto;
-    padding: 6px 10px;
-    transition: .6s cubic-bezier(0.34, 1.56, 0.64, 1);
+.close {   
+    margin: 9px 14px 8px auto;
+    transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform: rotate(0deg);
-    &:hover {
+    cursor: pointer;
+    &:hover {   
         @media (hover: hover) {
             transform: rotate(90deg);
         }
@@ -76,31 +77,31 @@
 }
 
 .closeSvg {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
+    display: block;
 }
 
 .points {
     display: flex;
     align-items: center;
+}
 
-    &__star {
-        width: 30px;
-        transform: translateY(-4px);
-        height: 25px;
-        margin-right: 5px;
-    }
+.pointsStar {
+    width: 30px;
+    transform: translateY(-4px);
+    height: 25px;
+    margin-right: 5px;
+}
 
-    &__count {
-        color: $dark1;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
+.pointsCount {
+    color: $dark1;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .feedbacks {
-    margin-top: 20px;
+    margin-top: 18px;
     height: 400px;
     @include mq($PhoneWidth, max) {
         height: calc(100vh - 98px);
@@ -108,5 +109,6 @@
         overflow: hidden;
     }
 }
+
 
 

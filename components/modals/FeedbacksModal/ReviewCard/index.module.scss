@@ -1,0 +1,104 @@
+@import "styles/index";
+
+.root {
+    background-color: $white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.userLogo {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $grey5;
+    overflow: hidden;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.userSvg {
+    width: 20px;
+    height: 24px;
+}
+
+.userName {
+    color: $dark1;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.createdTime {
+    color: $grey1;
+    font-size: 14px;
+}
+
+.points {
+    display: flex;
+    align-items: center;
+}
+
+.pointsNumber {
+    color: $dark1;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pointsStars {
+    display: flex;
+    margin-right: 10px;
+}
+
+.pointsStar {
+    width: 18px;
+    height: 17px;
+}
+
+
+.body {
+    border-top: 1px $grey4 dotted;
+    padding-block: 16px;
+    color: $grey1;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.28px;
+}
+
+.answerWrapper {
+    display: flex;
+    border-top: 1px dotted $grey4;
+    padding-top: 16px;
+}
+
+.answer {
+    color: $dark2;
+    font-size: 14px;
+}
+
+.answerTitle {
+    color: #812392;
+    font-size: 14px;
+    line-height: 150%;
+    margin-right: 12px;
+}
+
+.answerSvg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}

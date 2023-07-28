@@ -4,7 +4,7 @@ import UserSvg from 'components/svg/UserSvg'
 import { IReview } from 'data/interfaces/IReview'
 import { colors } from 'styles/variables'
 import Formatter from 'utils/formatter'
-import s from './reviewCard.module.scss'
+import styles from './index.module.scss'
 
 interface Props {
     item: IReview
@@ -19,47 +19,47 @@ export default function ReviewCard(props: Props) {
         let marks:JSX.Element[] = []
         for(let i = 0; i < maxStarMarks; i++) {
             marks.push(
-            <StartFilledSvg key={i} color={props.item.mark > i? colors.orange2: colors.grey4} className={s.item__points__star}/>
+            <StartFilledSvg key={i} color={props.item.mark > i? colors.orange2: colors.grey4} className={styles.pointsStar}/>
             )
         }
         return marks
     }
     
     return (
-        <div className={s.item} key={props.key}>
-            <div className={s.item__top}>
-                <div className={s.item__user}>
-                    <div className={s.item__userLogo}>
+        <div className={styles.root} key={props.key}>
+            <div className={styles.top}>
+                <div className={styles.user}>
+                    <div className={styles.userLogo}>
                         {/* сюда рендер аватара пользователя, если нет - svg */}
-                        <UserSvg color="black" className={s.item__userSvg}/>
+                        <UserSvg color="black" className={styles.userSvg}/>
                         
                     </div>
                     <div>
                         {props.item.userName && 
-                            <div className={s.item__userName}>{props.item.userName}</div>
+                            <div className={styles.userName}>{props.item.userName}</div>
                         }
-                        <time className={s.item__posted} dateTime="2022-11-10 15:32">
+                        <time className={styles.createdTime} dateTime="2022-11-10 15:32">
                             {Formatter.formatToShortYear(props.item.createdAt)}
                         </time>
                     </div>
                 </div>
-                <div className={s.item__points}>
-                    <div className={s.item__points__stars}>
+                <div className={styles.points}>
+                    <div className={styles.pointsStars}>
                         {starMarks().map(el=> {
                             return el
                         })}
                     </div>
-                    <p className={s.item__points__number}>{props.item.mark}.0</p>
+                    <p className={styles.pointsNumber}>{props.item.mark}.0</p>
                 </div>
             </div>
-            <p className={s.item__body}>
+            <p className={styles.body}>
                {props.item.text}
             </p>
             {props.item.answer&&
-            <div className={s.item__answerWrapper}>
-                <ArrowAnswerSvg className={s.item__answerSvg}/>
-                <p className={s.item__answerTitle}>ответ:</p>
-                <p className={s.item__answer}>{props.item.answer}</p>
+            <div className={styles.answerWrapper}>
+                <ArrowAnswerSvg className={styles.answerSvg}/>
+                <p className={styles.answerTitle}>ответ:</p>
+                <p className={styles.answer}>{props.item.answer}</p>
             </div>
             }
         </div>

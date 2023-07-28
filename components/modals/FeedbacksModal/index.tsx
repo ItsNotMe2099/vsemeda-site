@@ -10,7 +10,7 @@ import { IUnit } from 'data/interfaces/IUnit'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { IReview } from 'data/interfaces/IReview'
 import Spinner from 'components/ui/Spinner'
-import ReviewCard from './ReviewCard/ReviewCard'
+import ReviewCard from './ReviewCard'
 import Formatter from 'utils/formatter'
 import ArrowLeftSvg from 'components/svg/ArrowLeftSvg'
 import CrossSvg from 'components/svg/CrossSvg'
@@ -53,11 +53,13 @@ function FeedbacksModalInner (props: Props) {
         fetchFeedbacks(id, feedBackPage, limit)
     }, [feedBackPage])
 
+    console.log(rating)
+
     const closeButton = (<>
         <div className={styles.close} onClick={props.onRequestClose}>
             {appContext.isDesktop?
            
-            <CrossSvg color={colors.grey3} />:
+            <CrossSvg className={styles.closeSvg} color={colors.grey3} />:
             <ArrowLeftSvg className={styles.closeSvg} color={colors.purple} />
             }
         </div>
@@ -70,8 +72,8 @@ function FeedbacksModalInner (props: Props) {
                 <p className={styles.name}>{ brand.name}</p>
             }
             <div className={styles.points}>
-                <StartFilledSvg color={colors.orange2} className={styles.points__star}/>:
-                <p className={styles.points__count}>
+                <StartFilledSvg color={colors.orange2} className={styles.pointsStar}/>               
+                <p className={styles.pointsCount}>
                     {rating} ({total} {Formatter.pluralize(total, 'отзыв', 'отзыва', 'отзывов')})
                 </p>
             </div>
