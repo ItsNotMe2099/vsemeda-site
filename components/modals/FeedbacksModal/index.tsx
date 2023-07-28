@@ -53,8 +53,6 @@ function FeedbacksModalInner (props: Props) {
         fetchFeedbacks(id, feedBackPage, limit)
     }, [feedBackPage])
 
-    console.log(rating)
-
     const closeButton = (<>
         <div className={styles.close} onClick={props.onRequestClose}>
             {appContext.isDesktop?
