@@ -1,13 +1,10 @@
 @import "styles/index";
 
-.root {
-
-}
-
 .name{
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
   color: #4C4958;
-  margin-top: 60px;
+  margin-top: Clamp(20px, 7vw, 60px);
+  margin-bottom: 20px;
 }

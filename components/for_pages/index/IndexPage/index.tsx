@@ -9,8 +9,10 @@ import Filter from 'components/for_pages/index/Filter'
 import LayoutItem from 'components/for_pages/index/LayoutItem'
 import UnitList from 'components/for_pages/Common/UnitList'
 import UnitSlider from 'components/for_pages/Common/UnitSlider'
-import VisibleXs from 'components/visibility/VisibleXs'
+// import VisibleXs from 'components/visibility/VisibleXs'
 import { useAppContext } from 'context/state'
+import { breakpoints } from 'styles/variables'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
 
 interface Props{
 }
@@ -30,10 +32,10 @@ const IndexPageInner = (props: Props) => {
             <FilterBtn />
             <Filter />
 
-            <VisibleXs>
+            <VisibleOnSize width={breakpoints.PhoneWidth}>
               {/* TODO: добавить сверху на мобилке "Лучшие предложения" и выяснить, лучше ли использовать мобильный свайпер */}
-              <UnitSlider units={layoutItemBestOffers.units} />
-            </VisibleXs>
+              <UnitSlider units={layoutItemBestOffers.units} isMobile />
+            </VisibleOnSize>
 
 
             {indexPageContext.isLoading && <div className={styles.loading}>Загружается</div>}

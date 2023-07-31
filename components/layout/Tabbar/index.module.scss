@@ -1,7 +1,7 @@
 @import "styles/index";
 
 .root {
-    padding: 8px 30px;
+    padding: Clamp(8px, 2vw, 18px) 30px;
     background: #812292;
     box-shadow: 0px -5px 24px rgba(0, 0, 0, 0.15);
     border-radius: 16px 16px 0px 0px;

@@ -6,7 +6,7 @@ $radius: 24px;
   position: relative;
   flex: 0 0 auto;
   padding: 0px 12px;
-  margin-bottom: Clamp(32px, 10vw, 64px);
+  margin-bottom: Clamp(32px, 7vw, 64px);
 
   @include mq($TabletWidth, max) {
     width: 100%;

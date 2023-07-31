@@ -37,7 +37,7 @@ const header = (
   </div>
   )
   const body = ( cartContext.isEmpty ? <BasketEmpty/> : (
-      <div className={styles.bodyWrapper}>
+      <>
         <div className={styles.content}>
           <div className={styles.title}>Ваш заказ 🤝</div>
           <BasketAddressDetails/>
@@ -45,14 +45,16 @@ const header = (
         </div>
         <div className={styles.list}>
           {!cartContext.cart?.lines.length ? <div className={styles.empty}>Корзина пуста</div> : null}
-          {cartContext.cart?.lines.map((i, index) =>
+          {cartContext.cart?.lines.map(i =>
             <CartLine item={i} key={i.id} quantity={cartContext.groupingIdQuantityMap[i.groupingId]}/>
-          )}
+            )}
         </div>
         {cartContext.cart?.lines.length ? <PromoForm className={styles.promo} /> : null}
-      </div>)
+      </>
+      
+      )
   )
-  const footer = !cartContext.isEmpty && (<><PaymentSelect/></>)
+  const footer = !cartContext.isEmpty && (<PaymentSelect/>)
 
   if (props.isBottomSheet) {
     return (

@@ -1,7 +1,11 @@
 @import "styles/index";
-.root{
 
+.root {
+  @include mq($TabletWidth, max) {
+    padding-left: 24px;
+  }
 }
+
 .title{
   margin-top: 32px;
 }

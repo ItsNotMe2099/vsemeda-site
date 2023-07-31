@@ -1,25 +1,25 @@
 @import "styles/index";
 
 .dropdownMobile {
+  
   position: fixed;
   bottom: 0px;
   left: -100%;
-  top: 19%;
+  // top: 19%;
+  top: 0;
   z-index: 20;
   padding: 32px;
   max-width: 338px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   overflow: hidden;
-
+  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
   transition: all .5s ease-in-out;
 }
 
 .active {
   left: 0;
-  top: 0;
   right: 43px;
-  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
 }
 
 .circle {

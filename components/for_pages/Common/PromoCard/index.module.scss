@@ -9,6 +9,7 @@
   border-radius: 16px;
   max-width: 380px;
   height: 102px;
+  cursor: pointer;
 }
 .image{
   position: absolute;
@@ -34,7 +35,7 @@
 }
 .name{
   flex: 1;
-  font-size: 14px;
+  font-size: Clamp(12px, 3.75vw, 14px);
   font-weight: 600;
   color: black;
 }

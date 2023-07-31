@@ -21,6 +21,9 @@
   overscroll-behavior: none;
   padding: 10px;
   z-index: $zIndexTop;
+  @include mq($PhoneWidth, max) {
+    padding: 0px;
+  } 
 
   &.menu,
   &.menuOwner {

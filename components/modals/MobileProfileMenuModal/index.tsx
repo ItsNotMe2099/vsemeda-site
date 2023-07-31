@@ -4,6 +4,7 @@ import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 import LogoEdaSvg from 'components/svg/LogoEdaSvg'
 import { useAuthContext } from 'context/auth_state'
 import { useAppContext } from 'context/state'
+import { useState } from 'react'
 import { colors } from 'styles/variables'
 import { ModalType } from 'types/enums'
 import styles from './index.module.scss'
@@ -17,8 +18,16 @@ interface Props {
 
 export default function MobileProfileMenuModal(props: Props) {
 
+  const appContext = useAppContext()
+  const authContext = useAuthContext()
+
+  const [isOpen, toggleModal] = useState<boolean>(props.isOpen)
+
   const handleCloseClick = () => {
-    props.onRequestClose()
+    toggleModal(false)
+    setTimeout(()=> {
+      props.onRequestClose()    
+    }, 400)
   }
 
   const items = [
@@ -32,8 +41,7 @@ export default function MobileProfileMenuModal(props: Props) {
     { icon: '/images/UserMenu/exit.svg', text: 'Выход', value: 'exit' },
   ]
 
-  const appContext = useAppContext()
-  const authContext = useAuthContext()
+
 
   const handleOptionClick = (value: string) => {
     if (value !== 'exit') {
@@ -46,10 +54,10 @@ export default function MobileProfileMenuModal(props: Props) {
   }
 
   return (
-    <div className={classNames(styles.dropdownMobile, { [styles.active]: props.isOpen })}>
+    <div className={classNames(styles.dropdownMobile,  { [styles.active]: isOpen })}>
       <CirclesBgSvg className={styles.circle} />
       <div className={styles.content}>
-        <div className={styles.head}>
+        <div className={styles.head} >
           <LogoEdaSvg />
           <ArrowLeftSvg onClick={handleCloseClick} className={styles.close} color={colors.white} />
         </div>

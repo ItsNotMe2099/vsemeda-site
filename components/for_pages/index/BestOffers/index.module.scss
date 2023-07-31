@@ -7,6 +7,9 @@
   align-items: center;
   justify-content: center;
   max-width: 100%;
+  @include mq($TabletWidth, max) {
+    flex-wrap: wrap;
+  }
 
   @include mq($PhoneWidth, max) {
     align-items: baseline;
@@ -47,7 +50,7 @@
 
 .title {
   font-weight: 600;
-  font-size: Clamp(30px, 10vw, 36px);
+  font-size: Clamp(30px, 9vw, 36px);
   line-height: 44px;
   color: $white;
 
@@ -120,10 +123,14 @@
 .right{
   min-width: 0;
   flex: 1;
-  max-width: 700px;
+  width: Clamp(450px, 50vw,700px);
   display: flex;
   align-items: center;
   justify-content: center;
+  @include mq($TabletWidth, max) {
+    flex: unset;
+  }
+
 }
 .mobile{
   @include mq($PhoneWidth, min) {

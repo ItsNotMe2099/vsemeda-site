@@ -5,7 +5,8 @@ import MenuRepository from 'data/repositories/MenuRepository'
 import { useEffect, useState } from 'react'
 import UnitSlider from 'components/for_pages/Common/UnitSlider'
 import {IViewLayoutItem} from 'data/interfaces/IViewLayout'
-import HiddenXs from 'components/visibility/HiddenXs'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
+import { breakpoints } from 'styles/variables'
 interface Props{
  item: IViewLayoutItem
 }
@@ -42,9 +43,9 @@ export default function BestOffers(props: Props) {
             Лучшие<br/> предложения 😍
           </div>
         </div>
-        <HiddenXs>
+        <VisibleOnSize width={breakpoints.PhoneWidth} minSize >
           <div className={styles.right}><UnitSlider units={props.item.units}/></div>
-        </HiddenXs>
+        </VisibleOnSize>
       </div>
   )
 }

@@ -7,10 +7,12 @@
   align-content: start;
   flex-direction: row;
   margin-top: 32px;
+  justify-content: center;
 
   @include mq($TabletWidth, max) {
-    flex-direction: column;
-    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: 2% ;
+ 
   }
 }
 
@@ -21,13 +23,17 @@
   // min-height: 254px;
   // width: 33%;
   width: 25%;
+  max-width: 318px;
   @include mq($MdDesktopWidth, max) {
     width: 33%;
   }
 
   @include mq($TabletWidth, max) {
-    width: 100%;
+    width: 49%;
     padding: 0px;
+  }
+  @include mq($PhoneWidth, max) {
+    width: 100%;
   }
 }
 

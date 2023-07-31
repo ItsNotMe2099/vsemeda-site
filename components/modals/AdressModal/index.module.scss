@@ -9,7 +9,6 @@
   @include mq($PhoneWidth, max) {
     width: 100vw !important;
     height: 100vh !important;
-    border-radius: 0 !important;
   }
 }
 
@@ -104,6 +103,10 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  @include mq($PhoneWidth, max) {
+    border-radius: 0;
+
+  }
 }
 
 .title {

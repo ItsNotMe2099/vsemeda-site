@@ -21,9 +21,10 @@
 }
 .aside {
   position: absolute;
-  width: 282px;
+  width: Clamp(180px, 15vw, 282px);
   flex-shrink: 0;
   margin-right: 60px;
+  margin-bottom: 200px;
 
   @include mq($TabletWidth, max) {
     display: none;
@@ -31,13 +32,10 @@
 }
 
 .content {
-  padding-left: 302px;
+  padding-left: Min(302px, 25vw) ;
   width: 100%;
   @include mq($TabletWidth, max) {
-    margin-left: 0;
-  }
-  @include mq($PhoneWidth, max) {
-    padding-left: 0px;
+    padding-left: 0;
   }
 }
 

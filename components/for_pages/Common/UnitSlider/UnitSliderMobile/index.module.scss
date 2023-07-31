@@ -3,15 +3,20 @@
 .root{
  :global .swiper{
     padding-bottom: 40px;
-     overflow: visible;
-     width: 380px;
-     height: 400px;
+    overflow: visible;
+    width: Clamp(200px, 100vw - 62px, 380px);
+    @include mq($PhoneWidth, max) {
+     padding-bottom: 0 !important;
+     padding-top: Clamp(9px, 3vw, 30px);
+    }
+    //  height: 400px;
 
   }
   @include swiperPagination();
 }
 .slide{
-  width: 380px !important;
+  // width: Clamp(200px, 100vw - 62px, 380px) !important;
+  overflow: unset !important;
 }
 .arrow{
   position: absolute;

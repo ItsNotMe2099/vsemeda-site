@@ -10,7 +10,7 @@ export enum ModalType {
   PreOrderForm = 'preOrderForm',
   IndexFilter = 'indexFilter',
   Confirm = 'confirm',
-  Feedbacks = "feedbacks"
+  Feedbacks = 'feedbacks'
 }
 
 export enum SnackbarType {

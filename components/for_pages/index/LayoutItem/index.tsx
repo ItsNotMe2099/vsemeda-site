@@ -17,9 +17,9 @@ export default function LayoutItem(props: Props) {
   const body = () => {
     switch (props.item.type){
       case ViewTemplateItemType.SliderPromo:
-        return <PromoSlider promos={props.item.promos}/>
+        return props.item.promos && props.item.promos.length > 0 ? <PromoSlider promos={props.item.promos}/>: null
       case ViewTemplateItemType.SliderBrands:
-        return <UnitSlider units={props.item.units}/>
+        return props.item.units.length && props.item.units.length > 0 ? <UnitSlider units={props.item.units}/> : null
       case ViewTemplateItemType.BannerPromo:
       case ViewTemplateItemType.BannerBrand:
 

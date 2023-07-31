@@ -8,6 +8,8 @@ interface Props {
 }
 
 export default function UnitSlider(props: Props) {
+
+  //TODO: зарефакторить слайдеры
   return (
     props.isMobile ? <UnitSliderMobile units={props.units}/> : <UnitSliderDesktop units={props.units}/>
   )

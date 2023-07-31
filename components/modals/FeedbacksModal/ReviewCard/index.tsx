@@ -7,8 +7,7 @@ import Formatter from 'utils/formatter'
 import styles from './index.module.scss'
 
 interface Props {
-    item: IReview
-    key: number
+    item: IReview   
 }
 
 export default function ReviewCard(props: Props) {
@@ -26,7 +25,7 @@ export default function ReviewCard(props: Props) {
     }
     
     return (
-        <div className={styles.root} key={props.key}>
+        <div className={styles.root}>
             <div className={styles.top}>
                 <div className={styles.user}>
                     <div className={styles.userLogo}>

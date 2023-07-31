@@ -8,7 +8,7 @@ import LogoEdaSvg from 'components/svg/LogoEdaSvg'
 import HeaderAddress from 'components/layout/Header/HeaderAddress'
 import LoginButton from 'components/layout/Header/LoginButton'
 import DividerDotsSvg from 'components/svg/DividerDotsSvg'
-import { colors } from 'styles/variables'
+import { breakpoints, colors } from 'styles/variables'
 import LoupeSvg from 'components/svg/LoupeSvg'
 import classNames from 'classnames'
 import UserMenu from './UserMenu'
@@ -18,7 +18,8 @@ import BackBtn from 'components/ui/BackBtn'
 import BurgerSvg from 'components/svg/BurgerSvg'
 import BasketButton from 'components/layout/Header/BasketButton'
 import ArrowHeaderSvg from 'components/svg/ArrowHeaderSvg'
-import HeaderDelivery from './HeaderDelivery'
+// import HeaderDelivery from './HeaderDelivery'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
 
 interface Props {
   isSticky?: boolean
@@ -39,6 +40,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
 
   return (
     <div className={classNames(styles.root, { [styles.none]: appContext.modal })} ref={ref} style={props.style} {...(props.restProps ?? {})}>
+      <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
       <div className={styles.desktop}>
         <div className={styles.container}>
           <div className={styles.left}>
@@ -59,11 +61,6 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             <div className={styles.menuOpen} onClick={handleOpenMobileMenu}>
               <img src="/images/header/menu.svg" alt="" />
             </div>
-
-            {/* TODO: был убран headerDelivery, в макете он есть, узнать логику */}
-            <DividerDotsSvg className={styles.divider} />
-            <HeaderDelivery/>
-            <DividerDotsSvg className={styles.divider} />
             
           </div>
           <div className={styles.right}>
@@ -81,24 +78,29 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
           <div className={classNames(styles.shadow, styles.shadow6)} />
         </div>
       </div>
-      {!appContext.modal ? <div className={styles.phone}>
-        <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
-          {router.asPath === `/${appContext.region?.slug}` ?
+      </VisibleOnSize>
+
+      <VisibleOnSize width={breakpoints.PhoneWidth}>
+        {!appContext.modal ? <div className={styles.phone}>
+          <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
+            {router.asPath === `/${appContext.region?.slug}` ?
+              <IconButton bgColor='white' size='large'>
+                <MenuSvg color='#812292' />
+              </IconButton>
+              :
+              <BackBtn size='large' bgColor='white' onClick={() => router.push('/')} />}
+            {router.asPath === `/${appContext.region?.slug}` ?
+              <HeaderAddress
+                isSticky={props.distanceFromTop < 0 ? true : false}
+                isMobile /> : null}
             <IconButton bgColor='white' size='large'>
-              <MenuSvg color='#812292' />
+              {router.asPath === `/${appContext.region?.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292' />}
             </IconButton>
-            :
-            <BackBtn size='large' bgColor='white' onClick={() => router.push('/')} />}
-          {router.asPath === `/${appContext.region?.slug}` ?
-            <HeaderAddress
-              isSticky={props.distanceFromTop < 0 ? true : false}
-              isMobile /> : null}
-          <IconButton bgColor='white' size='large'>
-            {router.asPath === `/${appContext.region?.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292' />}
-          </IconButton>
-        </div>
-      </div> : null}
+          </div>
+        </div> : null}
+      </VisibleOnSize>
     </div>
+   
   )
 })
 

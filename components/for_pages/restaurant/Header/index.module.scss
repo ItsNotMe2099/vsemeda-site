@@ -45,6 +45,7 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  z-index: 259;
 
   @include mq($SmDesktopWidth, max) {
     flex-grow: 0;

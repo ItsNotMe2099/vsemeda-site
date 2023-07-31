@@ -22,7 +22,10 @@
     background: url('../../../public/images/BasketModal/bg.png');
     margin-top: 0;
     height: 100vh;
+    //dvh - height для safari и chrome на мобильных
+    height: 100dvh;
     background-size: cover;
+    right: 0 ;
   }
 }
 
@@ -58,16 +61,16 @@
   min-height: 200px;
   position: relative;
   height: 100%;
-  overflow: auto;
+  // overflow: auto;
   max-height: calc(100vh - 30%);
 }
 
-.bodyWrapper {
+// .bodyWrapper {
 
-  @include mq($PhoneWidth, max) {
-    padding: 0 24px;
-  }
-}
+//   @include mq($PhoneWidth, max) {
+//     padding: 0 24px;
+//   }
+// }
 
 .close {
   background: #FFFFFF;

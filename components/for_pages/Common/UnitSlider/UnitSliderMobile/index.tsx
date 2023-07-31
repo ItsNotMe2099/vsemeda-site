@@ -1,4 +1,4 @@
-import styles from 'components/for_pages/Common/UnitSlider/UnitSliderMobile/index.module.scss'
+import styles from './index.module.scss'
 import classNames from 'classnames'
 import {useUnitContext} from 'context/unit_state'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -57,17 +57,36 @@ export default function UnitSliderMobile(props: Props) {
          resistanceRatio: 0,
          grabCursor: true,
          parallax: true,
-         creativeEffect: {
-           limitProgress: 3,
-           perspective: true,
-           shadowPerProgress: true,
-           prev: {
-             shadow: true,
-             translate: ['-15%', 0, -200],
-           },
-           next: {
-             translate: [calcNextOffset(), 0, 0],
-           }}}}
+         
+        //  creativeEffect: {
+        //    limitProgress: 3,
+        //    perspective: true,
+        //    shadowPerProgress: true,
+        //    prev: {
+        //      shadow: true,
+        //      translate: ['-15%', 0, -200],
+        //    },
+        //    next: {
+        //      translate: [calcNextOffset(), 0, 0],
+        //    }}
+
+        loopedSlides: 3,
+        initialSlide: props.units.length > 2 ? 2 : 1,
+        creativeEffect: {
+          limitProgress: 2,
+          prev: {
+            shadow: false,
+            translate: ['-5%', 0, -50],
+            scale: 1
+          },
+          next: {
+            shadow: false,
+            translate: ['400%', 0, 30],
+            opacity: 0,
+            scale: 1,
+          },
+        }
+          }}
     //   pagination={true}
        modules={[ Parallax, EffectCreative]}
      >

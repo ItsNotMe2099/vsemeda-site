@@ -1,6 +1,6 @@
 import styles from './index.module.scss'
 import classNames from 'classnames'
-import {useUnitContext} from 'context/unit_state'
+// import {useUnitContext} from 'context/unit_state'
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react'
 import {Pagination, Mousewheel, Keyboard, Parallax, EffectCreative} from 'swiper'
 import { useRef} from 'react'
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function UnitSliderDesktop(props: Props) {
-  const unitContext = useUnitContext()
+  // const unitContext = useUnitContext()
   const sliderRef = useRef<SwiperRef>(null)
   const appContext = useAppContext()
 
@@ -58,16 +58,16 @@ export default function UnitSliderDesktop(props: Props) {
     modules: [EffectCreative]
   } as SwiperProps
 
-  const swiperOptions = () => {
-    return appContext.isDesktop? deskSwiperOptions: mobileSwiperOptions
-  }
+  // const swiperOptions = () => {
+  //   return appContext.isDesktop? deskSwiperOptions: mobileSwiperOptions
+  // }
 
   return (
     <div className={styles.root}>
       <HiddenXs>
         <SliderArrow direction={'prev'} color={colors.grey5} sliderRef={sliderRef} className={classNames(styles.arrow, styles.prev)}/>
       </HiddenXs>
-      <Swiper {...swiperOptions()}
+      <Swiper {...deskSwiperOptions}
       >
        {props.units.map(unit => <SwiperSlide className={styles.slide}>
          <UnitCard unit={unit} className={styles.card}/>

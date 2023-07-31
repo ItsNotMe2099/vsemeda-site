@@ -6,9 +6,12 @@
     padding-bottom: 40px;
   }
   @include swiperPagination();
+  @include mq($LPhoneWidth, max) {
+    width: calc(100% - 24px);
+  } 
 }
 .slide{
-  width: 380px !important;
+  width: Clamp(260px, calc(100vw - 48px), 380px) !important;
 }
 .arrow{
   position: absolute;

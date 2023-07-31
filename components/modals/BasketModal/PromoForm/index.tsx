@@ -1,4 +1,4 @@
-import styles from 'components/modals/BasketModal/PromoForm/index.module.scss'
+import styles from './index.module.scss'
 import { Form, FormikProvider, useFormik } from 'formik'
 import InputField from 'components/fields/InputField'
 import Button from 'components/ui/Button'
@@ -44,32 +44,32 @@ export default function PromoForm(props: Props) {
 
   const [promo, setPromo] = useState<boolean>(false)
 
-  return (
-      <div>
-      <div className={classNames(styles.discount, {[styles.active]: promo})}>
-        <div className={styles.text}>
-          Активная скидка:
-        </div>
-        <div className={styles.promo} onClick={() => !promo ? setPromo(true) : null}>
-          Есть промокод?
-        </div>
+  return (<>
+    <div className={classNames(styles.discount, {[styles.active]: promo})}>
+      <div className={styles.text}>
+        Активная скидка:
       </div>
-
-      {promo &&    <FormikProvider value={formik}>
-        <Form className={classNames(styles.root, props.className)}>
-          <InputField
-            className={styles.input}
-            name='code'
-            styleType={'promo'}
-            color='white'
-            disabled={loading}
-            placeholder='Введите промокод' />
-          <Button type='submit' className={styles.btn} font='semibold16' styleType='filledGreen' spinner={loading}>
-            Применить
-          </Button>
-        </Form>
-      </FormikProvider>}
-      <PromoSlider promos={cartContext.promos}/>
+      <div className={styles.promo} onClick={() => !promo ? setPromo(true) : null}>
+        Есть промокод?
+      </div>
     </div>
-  )
+
+    {promo &&    <FormikProvider value={formik}>
+      <Form className={classNames(styles.root, props.className)}>
+        <InputField
+          className={styles.input}
+          name='code'
+          styleType={'promo'}
+          color='white'
+          disabled={loading}
+          placeholder='Введите промокод' />
+        <Button type='submit' className={styles.btn} font='semibold16' styleType='filledGreen' spinner={loading}>
+          Применить
+        </Button>
+      </Form>
+    </FormikProvider>}
+    {cartContext.promos&&cartContext.promos.length > 0&&
+      <PromoSlider promos={cartContext.promos}/>
+    }
+  </>)
 }

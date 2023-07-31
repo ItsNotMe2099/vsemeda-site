@@ -8,6 +8,8 @@ import { StickyContainer } from 'react-sticky'
 import RestaurantPromoList from 'components/for_pages/restaurant/RestaurantPromoList'
 import {useUnitContext} from 'context/unit_state'
 import {useEffect} from 'react'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
+import { breakpoints } from 'styles/variables'
 
 export default function RestaurantPage() {
   const unitContext = useUnitContext()
@@ -17,11 +19,13 @@ export default function RestaurantPage() {
   }, [])
   return (
     <div className={styles.root}>
-      <div className={styles.aside}>
-        <Sticky enabled={true} top={120} bottomBoundary={0}>
-          <DesktopMenu />
-        </Sticky>
-      </div>
+      <VisibleOnSize width={breakpoints.PhoneWidth} minSize >
+        <div className={styles.aside}>
+          <Sticky enabled={true} top={120} bottomBoundary={0}>
+            <DesktopMenu />
+          </Sticky>
+        </div>
+      </VisibleOnSize>
       <StickyContainer className={styles.content}>
           <Header />
           <RestaurantBanner className={styles.banner} />
