@@ -10,6 +10,7 @@ import SwitchField from 'components/fields/SwitchField'
 import {colors} from 'styles/variables'
 import ChevronSvg from 'components/svg/ChevronSvg'
 import {ModalType} from 'types/enums'
+import { useResize } from 'components/hooks/useResize'
 
 interface Props {
 
@@ -18,6 +19,9 @@ interface Props {
 export default function BasketAddressDetails(props: Props) {
   const appContext = useAppContext()
   const cartContext = useCartContext()
+  const {isPhoneWidth} = useResize()
+
+
   const deliveryTimeStr = useMemo(() => {
     if(cartContext.cart.isPreOrder){
       return Formatter.formatPreOrderTime(cartContext.cart.preOrderAt)
@@ -26,6 +30,15 @@ export default function BasketAddressDetails(props: Props) {
     }
 
   }, [cartContext?.cart?.preOrderAt, cartContext.cart?.unit?.deliveryTime, cartContext.cart?.isPreOrder])
+
+
+
+  const openDeliveryTimeModal = () => {
+    isPhoneWidth ? 
+    appContext.showBottomSheet(ModalType.PreOrderForm):
+    appContext.showModal(ModalType.PreOrderForm)
+  }
+
   return (
     <div className={styles.root}>
       <div className={styles.ofDeliver}>
@@ -39,10 +52,12 @@ export default function BasketAddressDetails(props: Props) {
         <SwitchField className={styles.contactLessField} name={'isContactLessDelivery'} label={'Бесконтактная доставка'} offColor={colors.grey5} onColor={colors.grey5} offHandleColor={colors.dark2} fluid/>
       </Formik>
       <div className={styles.separator}/>
-      <div className={styles.toDelivery} onClick={() => appContext.showModal(ModalType.PreOrderForm)}>
+      <div className={styles.toDelivery} onClick={openDeliveryTimeModal}>
         <div className={styles.text}>Время доставки:</div>
         <div className={styles.time}>{deliveryTimeStr}</div>
-        <ChevronSvg className={styles.chevron} color={colors.dark2} />
+        {!isPhoneWidth&& 
+          <ChevronSvg className={styles.chevron} color={colors.dark2} />
+        }
       </div>
     </div>
   )

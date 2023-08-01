@@ -8,7 +8,8 @@ import CloseModalBtn from 'components/ui/CloseModalBtn'
 interface Props {
   children: React.ReactNode
   lineOver?: boolean
-  closeIconColor?: string
+  closeIconColor?: string,
+  backgroundColor? : string
 
 }
 
@@ -16,7 +17,7 @@ export default function BottomSheetLayout(props: Props) {
   const appContext = useAppContext()
   return (
     <>
-      <Sheet.Container style={{ background: colors.white, borderRadius: '10px 10px 0 0' }}>
+      <Sheet.Container style={{ background: props.backgroundColor ? props.backgroundColor: colors.white, borderRadius: '10px 10px 0 0' }}>
         <Sheet.Content dragListener={false}>
           <div className={styles.root}>
             <Sheet.Header style={{ position: props.lineOver ? 'absolute' : 'static', zIndex: 1 }} />

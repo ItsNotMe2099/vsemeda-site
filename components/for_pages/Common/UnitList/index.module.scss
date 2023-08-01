@@ -4,7 +4,7 @@
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  align-content: start;
+  align-content: flex-start;
   flex-direction: row;
   margin-top: 32px;
   justify-content: center;
@@ -34,6 +34,7 @@
   }
   @include mq($PhoneWidth, max) {
     width: 100%;
+    max-width: unset;
   }
 }
 

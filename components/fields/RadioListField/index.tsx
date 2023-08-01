@@ -11,8 +11,11 @@ interface Props<T> extends IField<T> {
   grid?: number
   label?: string
   itemClassName?: string
+  activeItemClassName?: string
   itemLabelClassName?: string
   labelClassName?: string
+  wrapperClassName? : string
+  itemCircleClassname?: string
   flex?: boolean
   rootClass?: string
 }
@@ -30,19 +33,22 @@ export default function RadioListField<T>(props: Props<T>) {
   return (
     <div className={classNames(styles.root, props.rootClass)}>
       {label && <div className={classNames(styles.label, props.labelClassName)}>{label}</div>}
-      <div style={{
+      <div className={props.wrapperClassName} 
+      style={{
         display: (props.grid) ? 'grid' : (props.flex) ? 'flex' : 'block',
         gridTemplateColumns: props.grid ? Array.from({ length: props.grid }, (_, i) => '1fr').join(' ') : '',
         gridGap: '1vw'
       }}>
-        {options.filter(item => restrictedValues.indexOf(item.value) === -1).map(item => (
-          <div className={styles.radio}>
+        {options.filter(item => restrictedValues.indexOf(item.value) === -1).map((item, index) => (
+         
             <Radio<T>
+              key={index}
               className={classNames(props.itemClassName, [...(!props.grid ? [styles.radioNoGrid] : [])])}
+              activeClassName={props.activeItemClassName}
               labelClassName={props.itemLabelClassName}
+              circleClassName={props.itemCircleClassname}
               value={item.value} isActive={item.value === value} label={item.label}
               onChange={() => handleCheckboxChanged(item.value)} />
-          </div>
         ))}
       </div>
     </div>

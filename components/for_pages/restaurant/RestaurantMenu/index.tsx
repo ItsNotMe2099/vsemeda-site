@@ -29,7 +29,9 @@ export default function RestaurantMenu(props: Props) {
     cartContext.updateProductQuantity(product, false)
   }
   const handleClick = (product: IProduct) => {
-      appContext.showModal(ModalType.ProductModal, {product: product, unitId: unit.id})
+    appContext.isDesktop? 
+      appContext.showModal(ModalType.ProductModal, {product: product, unitId: unit.id}):
+      appContext.showBottomSheet(ModalType.ProductModal, {product: product, unitId: unit.id})
   }
 
   return (

@@ -3,7 +3,8 @@ import { useField } from 'formik'
 import ProductQuantityButton from 'components/ui/ProductQuantityButton'
 
 interface Props extends IField<number> {
-  min?: number
+  min?: number,
+  className?: string
 }
 
 export default function QuantityField(props: Props) {
@@ -24,7 +25,7 @@ export default function QuantityField(props: Props) {
 
 
   return (
-    <ProductQuantityButton quantity={value} theme={'grey'} onAddClick={handleAddClick} onMinusClick={handleMinusClick}/>
+    <ProductQuantityButton quantity={value} theme={'grey'} className={props.className} onAddClick={handleAddClick} onMinusClick={handleMinusClick}/>
 
   )
 }

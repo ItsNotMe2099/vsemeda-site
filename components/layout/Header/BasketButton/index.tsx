@@ -27,6 +27,7 @@ const  BasketButton = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const handleClick = () => {
     appContext.showModal(ModalType.Basket)
   }
+  
   return (
     <div ref={ref} className={classNames(styles.root, {[styles.active]: !cartContext.isEmpty})} onClick={handleClick}>
       {cartContext.isEmpty && <ShoppingCartSvg color={colors.white}/>}

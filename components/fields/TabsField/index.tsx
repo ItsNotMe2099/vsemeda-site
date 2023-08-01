@@ -7,11 +7,16 @@ import {IField, IOption} from 'types/types'
 interface Props<T> extends IField<T> {
   options: IOption<T>[]
   disabled?: boolean
+  wrapperClassName? : string
+  optionClassName? : string
+  rootClassName? : string
+  activeOptionClassName? : string
+
   renderIcon?: (value: IOption<T>, active: boolean) => React.ReactNode
 }
 
 export default function TabsField<T>(props: Props<T>) {
-  const {options} = props
+  const {options, wrapperClassName, optionClassName, activeOptionClassName} = props
   const [field, meta, helpers] = useField(props as any)
   const showError = meta.touched && !!meta.error
   const handleChange = (item: IOption<T>) => {
@@ -21,8 +26,8 @@ export default function TabsField<T>(props: Props<T>) {
   }
 
   return (
-    <div className={classNames(styles.root, {[styles.hasError]: showError})}>
-      <div className={styles.options}>
+    <div className={classNames(styles.root, props.rootClassName, {[styles.hasError]: showError})}>
+      <div className={classNames(styles.options, wrapperClassName)}>
         {options.map(item => (
           <div
             key={`${item.value}`}
@@ -30,6 +35,8 @@ export default function TabsField<T>(props: Props<T>) {
               [styles.option]: true,
               [styles.error]: showError,
               [styles.optionActive]: field.value === item.value},
+              optionClassName, 
+              {[activeOptionClassName]: field.value === item.value}
             )}
             onClick={() => handleChange(item)}
           >

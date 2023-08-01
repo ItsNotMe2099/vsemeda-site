@@ -26,6 +26,9 @@
   @include mq($SmDesktopWidth, max) {
     justify-content: space-between;
   }
+  @include mq($PhoneWidth, max) {
+    height: unset;
+  }
 }
 
 .shadow {

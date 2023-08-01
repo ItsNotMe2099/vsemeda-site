@@ -5,6 +5,8 @@ import { ModalType } from 'types/enums'
 import { RemoveScroll } from 'react-remove-scroll'
 import AddressFormModal from 'components/modals/AdressModal'
 import AddressListModal from 'components/modals/AddressListModal'
+import ProductModal from 'components/modals/ProductModal'
+import PreOrderModal from 'components/modals/PreOrderModal'
 
 interface Props { }
 
@@ -30,6 +32,25 @@ export default function BottomSheetContainer(props: Props) {
           className={styles[appContext.bottomSheet]}
         >
           <AddressListModal isBottomSheet={true} />
+        </Sheet>
+
+        <Sheet
+          isOpen={appContext.bottomSheet == ModalType.ProductModal}
+          onClose={appContext.hideBottomSheet}         
+          disableDrag={appContext.modalNonSkippable}
+          className={styles[appContext.bottomSheet]}
+        >
+          <ProductModal isBottomSheet={true} />
+        </Sheet>
+
+        <Sheet
+          isOpen={appContext.bottomSheet == ModalType.PreOrderForm}
+          snapPoints={[400]}
+          onClose={appContext.hideBottomSheet}         
+          disableDrag={appContext.modalNonSkippable}
+          className={styles[appContext.bottomSheet]}
+        >
+          <PreOrderModal isBottomSheet={true} />
         </Sheet>
 
 

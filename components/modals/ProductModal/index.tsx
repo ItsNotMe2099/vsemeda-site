@@ -17,6 +17,9 @@ import Button from 'components/ui/Button'
 import {useCartContext} from 'context/cart_state'
 import {ProductCardLayoutPosType} from 'data/interfaces/IProductCardLayout'
 import CardImgLayoutPos from 'components/for_pages/Common/MenuProductCard/CardImgLayoutPos'
+import { useResize } from 'components/hooks/useResize'
+import CartSvg from 'components/svg/TabBar/CartSvg'
+
 
 interface IFormData{
   [key: string]: number | any[]
@@ -24,13 +27,15 @@ interface IFormData{
 
 interface Props {
   isBottomSheet?: boolean
-  onRequestClose: () => void
+  onRequestClose?: () => void
 }
 
-const ProductModalInner = (props: Props) => {
+const ProductModalInner = (props: Props) => {  
   const appContext = useAppContext()
   const cartContext = useCartContext()
   const args = appContext.modalArguments as ProductModalArguments
+
+  const {isPhoneWidth} = useResize()
 
   const handleSubmit =async (data: any) => {
     const oneToMany = args.product.modificationGroups.filter(i => i.type === ModificationGroupType.OneOfMany).filter(i => !!data[`group_${i.id}`])
@@ -64,10 +69,10 @@ const ProductModalInner = (props: Props) => {
             <CardImgLayoutPos items={args.product.layout[ProductCardLayoutPosType.ImgT]}/>}
         </div>
         <div className={styles.info}>
-          <div className={styles.name}>{args.product.name}</div>
-          {args.product.description && <div className={styles.description}>
+          {!isPhoneWidth && <p className={styles.name}>{args.product.name}</p> }
+          {args.product.description && <p className={styles.description}>
             {args.product.description}
-          </div>}
+          </p>}
         </div>
       </div>
 
@@ -82,10 +87,17 @@ const ProductModalInner = (props: Props) => {
                 }
           })}
           <div className={styles.toolbar}>
-            <div className={styles.price}>{Formatter.formatPrice(args.product.price)}</div>
-            <QuantityField name={'quantity'} min={1} />
+            <div className={styles.productData}>
+              {args.product.image && isPhoneWidth && <img src={`${args.product.image?.link}?w=100`} className={styles.imageSmall} alt={args.product.name}/>}
+              <div>
+                {isPhoneWidth &&  <p className={styles.name}>{args.product.name}</p>}
+                <p className={styles.price}>{Formatter.formatPrice(args.product.price)}{isPhoneWidth && <> &#183; {args.product.weight}гр.</>}</p>
+              </div>
+            </div>
+            <QuantityField name={'quantity'} min={1}  className={styles.quantityRoot}/>
+
             <Button type='submit' className={styles.btn} styleType='filledGreen' font='semibold16'>
-              Добавить
+              {isPhoneWidth? <>В корзину <CartSvg color={colors.black} className={styles.btnSvg}/></> : 'Добавить'}
             </Button>
           </div>
         </Form>
@@ -93,7 +105,10 @@ const ProductModalInner = (props: Props) => {
     </div>
   )
 
+
+
   if (props.isBottomSheet) {
+  // if (appContext.bottomSheet === ModalType.ProductModal) {    
     return (
       <BottomSheetLayout closeIconColor={colors.grey2}>
         <BottomSheetBody>{body}</BottomSheetBody>

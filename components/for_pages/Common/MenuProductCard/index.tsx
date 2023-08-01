@@ -8,6 +8,7 @@ import ProductQuantityButton from 'components/ui/ProductQuantityButton'
 import {colors} from 'styles/variables'
 import Formatter from 'utils/formatter'
 import { useAppContext } from 'context/state'
+import { useResize } from 'components/hooks/useResize'
 
 interface Props {
   product: IProduct
@@ -23,6 +24,8 @@ export default function MenuProductCard(props: Props) {
 
   const appContext = useAppContext()
   const formattedPrice = Formatter.formatPrice(product.price)
+
+  const {isPhoneWidth} = useResize()
   
 
 
@@ -52,7 +55,7 @@ export default function MenuProductCard(props: Props) {
           className={styles.btn} 
           quantity={props.quantity} 
           onAddClick={props.onAddClick} 
-          theme={props.quantity > 0 ? 'white' : 'grey'}
+          theme={props.quantity > 0 ? (isPhoneWidth?'grey':'white') : 'grey'}
           onMinusClick={props.onMinusClick}/>
         </div>
       </div>

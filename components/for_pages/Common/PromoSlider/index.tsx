@@ -29,7 +29,7 @@ export default function PromoSlider(props: Props) {
        modules={[Pagination, Mousewheel, Keyboard]}
      >
        {props.promos.map(i => <SwiperSlide className={styles.slide}>
-         <PromoCard promo={i}/>
+         <PromoCard promo={i} key={i.id} />
        </SwiperSlide>)}
      </Swiper>
      <HiddenXs>

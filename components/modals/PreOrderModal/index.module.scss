@@ -6,6 +6,11 @@
 .header{
   display: flex;
   flex-direction: column;
+  @include mq($PhoneWidth, max) {
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+  }
 
 }
 .footer{
@@ -83,6 +88,98 @@
 
   @include mq($PhoneWidth, max) {
     padding: 0 24px;
+  }
+}
+
+
+.radio {
+  @include mq($PhoneWidth, max) {
+    overflow: scroll;
+    height: 100%;
+    width: 50%;
+  }
+}
+
+.radioItem {
+  color: $black;
+}
+
+.radioLabel {
+  color: $black;
+  @include mq($PhoneWidth, max) {
+    color: $white;
+    padding: 0 10px;
+    margin: 0 auto;
+  }
+  
+}
+
+
+.selectorMobile {
+  display: flex;
+  height: 250px;
+  position: relative;
+  justify-content: space-around;
+  margin-bottom: auto;
+}
+
+.activeItem {
+  @include mq($PhoneWidth, max) {
+    background-color: white;
+    border-radius: 20px;
+    >div {
+      color: black;
+    }
+  }
+}
+
+.radioCircle {
+  @include mq($PhoneWidth, max) {   
+    display: none;   
+  }
+}
+
+.daysWrapper {
+  @include mq($PhoneWidth, max) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+    padding: 26px 0px;
+  }
+}
+
+.daysRoot {
+  @include mq($PhoneWidth, max) {
+    overflow: scroll;
+  }
+}
+
+.daysOption {
+  @include mq($PhoneWidth, max) {
+    background: transparent !important;
+    color: $white !important;
+  }
+}
+
+.daysOptonActive {
+  @include mq($PhoneWidth, max) {
+    background: white !important;
+    color: $black !important;
+  }
+}
+
+
+
+.radioWrapper { 
+  @include mq($PhoneWidth, max) {
+    padding: 26px;
+  }
+}
+
+.submitButton {
+  @include mq($PhoneWidth, max) {
+    width: 100%;
+    padding: 12px 35px;
   }
 }
 

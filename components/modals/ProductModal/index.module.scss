@@ -1,14 +1,32 @@
 @import "styles/index";
 
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
 .modalLayout {
-  padding: 16px 16px 82px 16px;
+  // padding: 16px 16px 82px 16px;
+  width: 592px;
+  padding: 16px 16px 16px 16px;
+  @include mq($PhoneWidth, max) {
+    padding-bottom: 150px;
+  }
 }
 
 .top{
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include mq($PhoneWidth, max) {
+    padding-bottom: 160px;
+  }
 }
 .imgContainer{
   width: 50%;
+  @include mq($PhoneWidth, max) {
+    width: 100%;
+  }
   img{
     max-width: 100%;
     display: block;
@@ -16,8 +34,11 @@
   }
 }
 .name{
-  font-size: 20px;
+  font-size: Clamp(16px, 3vw, 20px);
   font-weight: 600;
+  @include mq($PhoneWidth, max) {
+    color: $white;
+  }
 }
 .description{
   margin-top: 10px;
@@ -25,27 +46,89 @@
 }
 .info{
   padding-left: 15px;
-  width: 50%;
+  // width: 50%;
+  width: 100%;
+}
+
+.imageSmall {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+
+}
+
+.productData {
+  display: flex;
+  width: 100%;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.btn {
+  border-radius: 16px;
+  height: 40px;
+  text-transform: unset;
+  font-size: 14px;
+  width: 38%;
+  max-width: 182px;
+  @include mq($PhoneWidth, max) {
+    width: 65%;
+    max-width: unset;
+    padding: 6px;
+    height: 48px;
+  }
+}
+
+.btnSvg {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
 }
 
 
 
 .toolbar{
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
+  margin-top: 20px;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
+  padding: 16px Clamp(16px, 4vw, 32px);
   background: #812392;
   border-radius: 24px;
+  @include mq($PhoneWidth, max) {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-radius: unset;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding-bottom: Clamp(24px, 6vw, 38px);
+  }
+
+
   .price{
     color: $white;
-      font-size: 24px;
-      font-weight: 500;
+    font-size: Clamp(16px, 3vw, 24px);
+    font-weight: 500;
+    @include mq($PhoneWidth, max) {
+      width: 100%;
+      font-weight: 600;
+    }
 
+  }
+}
+
+.quantityRoot {
+  background-color: white;
+  width: 38%;
+  max-width: 188px;
+  @include mq($PhoneWidth, max) {
+    padding: 6px;
+    width: 30%;
+    height: 48px !important;
   }
 }
