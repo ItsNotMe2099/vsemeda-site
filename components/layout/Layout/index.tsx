@@ -16,6 +16,7 @@ interface Props {
 export default function Layout({ children, className, classRoot }: Props) {
 
   const appContext = useAppContext()
+
   return (
     <div className={classNames(styles.root, classRoot)}>
       <StickyContainer>

@@ -32,7 +32,7 @@ const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           Главная
         </div>
       </div>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
+      <div onClick={() => appContext.showModal(ModalType.Profile, 'orders') } className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
         <HistorySvg />
         <div className={styles.title}>
           История
@@ -50,7 +50,7 @@ const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           О нас
         </div>
       </div>
-      <div onClick={() => appContext.showModal( !appContext.token ? ModalType.Login : ModalType.ProfileMenu)} className={styles.item}>
+      <div onClick={() => appContext.showModal( !appContext.token ? ModalType.Login : ModalType.Profile, 'profile')} className={styles.item}>
         <ProfileSvg />
         <div className={styles.title}>
           Профиль

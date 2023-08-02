@@ -15,7 +15,7 @@ export default function DesktopMenu(props: Props) {
     <div className={classNames(styles.root, {[styles.closed]: unit.isAvailable})}>
       <div className={styles.title}>Меню:</div>
       <div className={styles.list}>
-        {unitContext.menu.filter(i => !i.parentId).map(item => <DesktopMenuItem name={item.name} link={item.id} onClick={() => unitContext.scrollToCategory(item)}
+        {unitContext.menu.filter(i => !i.parentId)?.map((item, index) => <DesktopMenuItem key={index} name={item.name} link={item.id} onClick={() => unitContext.scrollToCategory(item)}
                                                                                 isActive={unitContext.activeCategoryId === item.id}/>)}
       </div>
     </div>

@@ -13,6 +13,7 @@ interface IState {
   unit: IUnit | null,
   menu: IMenuCategory[],
   activeCategoryId: string | null
+  setActiveCategory: (id: string)=> void
   scrollToCategory: (category: IMenuCategory) => void
   isAvailable: boolean
 }
@@ -22,6 +23,7 @@ const defaultValue: IState = {
   unit: null,
   menu: [],
   activeCategoryId: null,
+  setActiveCategory: (id: string) => null,
   scrollToCategory: (category: IMenuCategory) => null,
   isAvailable: true
 }
@@ -72,6 +74,10 @@ export function UnitWrapper(props: Props) {
   const fetchUnitByBrand = () => {
 
   }
+  const setActiveCategory = (id: string) => {
+    setActiveCategoryId(id)
+  }
+
   const init = async () => {
     const [unit, menu] = router.query.place ? await Promise.all([
         UnitRepository.fetchBySlug(router.query.place as string, appContext.currentLocation),
@@ -92,6 +98,7 @@ export function UnitWrapper(props: Props) {
     unit,
     menu,
     activeCategoryId,
+    setActiveCategory,
     scrollToCategory: (category: IMenuCategory) => {
       const target = document.getElementById(`category-${category.id}`)
       const offsetTop = target.getBoundingClientRect().top

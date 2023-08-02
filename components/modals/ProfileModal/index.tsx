@@ -51,8 +51,8 @@ const ProfileModalInner = (props: Props) => {
       <div className={styles.menu}>
         <BackBtn bgColor='white' onClick={handleCloseClick} />
         <div className={styles.options}>
-          {items.map((i, index) =>
-            <Option item={i} key={i.value} onClick={() => handleOptionClick(i.value)} />
+          {items.map((i, index) =>{
+            return <Option item={i} key={i.value} onClick={() => handleOptionClick(i.value)} />}
           )}
         </div>
       </div>

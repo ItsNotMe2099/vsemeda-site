@@ -11,7 +11,7 @@ interface Props {
 
 export default function CardImgLayoutPos(props: Props) {
   return <div className={classNames(styles.root)}>
-    {props.items.map((item) => <div className={styles.item}>
+    {props.items.map((item, index) => <div key={index} className={styles.item}>
       {item.img && <LayoutIconImage icon={item.img} color={item.clr ?? colors.green}/>}
     </div>)}
   </div>

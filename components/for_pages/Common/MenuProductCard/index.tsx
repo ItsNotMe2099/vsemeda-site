@@ -16,6 +16,7 @@ interface Props {
   onAddClick: () => void
   onMinusClick: () => void
   onClick: () => void
+
 }
 
 export default function MenuProductCard(props: Props) {
@@ -26,11 +27,9 @@ export default function MenuProductCard(props: Props) {
   const formattedPrice = Formatter.formatPrice(product.price)
 
   const {isPhoneWidth} = useResize()
-  
-
 
   return (
-    <div className={classNames(styles.root, {[styles.stop]: product.isAvailable, [styles.inBasket]: props.quantity > 0})}>
+    <div className={classNames(styles.root, {[styles.stop]: product.isAvailable, [styles.inBasket]: props.quantity > 0})} >
       <div className={styles.imgContainer} onClick={props.onClick}>
         {product.image && <img src={`${product.image?.link}?w=600`} className={styles.image} alt={product.name}/>}
         {product.layout && product.layout[ProductCardLayoutPosType.ImgT] &&

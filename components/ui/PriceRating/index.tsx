@@ -21,7 +21,7 @@ export default function PriceRatingUi(props: Props) {
         return 3
     }
   }, [props.rating])
-  return <div className={styles.root}>{Array.from({length: 3}, (_, i) => '₽').map((val, key) => <span style={{color: (key) < lengthActive ? props.colorActive : props.colorDisabled}}>₽</span>)}</div>
+  return <div className={styles.root}>{Array.from({length: 3}, (_, i) => '₽').map((val, key) => <span key={key} style={{color: (key) < lengthActive ? props.colorActive : props.colorDisabled}}>₽</span>)}</div>
 
 }
 

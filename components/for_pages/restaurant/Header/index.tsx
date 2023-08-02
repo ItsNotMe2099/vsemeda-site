@@ -44,7 +44,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
 
   return (
     <div className={classNames(styles.root, { [styles.none]: appContext.modal })} ref={ref} style={props.style} {...(props.restProps ?? {})}>
-      <div className={styles.desktop}>
+      <div className={styles.desktop}>        
         <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
           <div className={styles.left}>
             <Link href='/'>

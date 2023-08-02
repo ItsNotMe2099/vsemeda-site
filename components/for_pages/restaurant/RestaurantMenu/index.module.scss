@@ -15,58 +15,7 @@
   }
 }
 
-.stack {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  // margin: 40px -12px 0px -12px;
-  margin-top: 40px;
-  @include mq($PhoneWidth, max) {
-    margin: 0;
-    margin-top: 64px;
-  }
 
-}
 
-.category {
-  font-size: 20px;
-  font-weight: 600;
-  color: $dark1;
-}
 
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
-  margin: 0px clamp(-12px, -2vw, -6px);
-  margin-top: Clamp(24px, 5.5vw, 32px);
-  @include mq($MPhoneWidth, max) {
-    justify-content: center;
-  }
- 
-}
-.productCard{
-  position: relative;
-  // flex: 0 0 25%;
-  width: Clamp(200px, 33%, 232px);
-  padding: Clamp(6px, 2vw, 12px);
-  display: flex;
-  > div{
-    flex: 1;
-  }
-  // @include  
 
-  @include mq($PhoneWidth, max) {
-    width: Clamp(170px, 50%, 320px);
-    flex: unset;
-  }
-  @include mq($MPhoneWidth, max) {
-    width: 80%;
-  }
-
-}
-.filter {
-  @include mq($TabletWidth, min) {
-    display: none !important;
-  }
-}

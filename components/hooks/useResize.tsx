@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState,  useEffect } from 'react'
 import { breakpoints } from 'styles/variables'
 
 
 export const useResize = () => {
-  const [width, setWidth] = useState(window.innerWidth)
+
+  const [width, setWidth] = useState<number>()
 
   useEffect(() => {
+    const initialWidth = window.innerWidth
+    setWidth(initialWidth)
+    
     const handleResize = (event: Event) => {
         const target = event.target as Window
         setWidth(target.innerWidth)

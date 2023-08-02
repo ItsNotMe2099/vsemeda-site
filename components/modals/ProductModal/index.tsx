@@ -107,8 +107,7 @@ const ProductModalInner = (props: Props) => {
 
 
 
-  if (props.isBottomSheet) {
-  // if (appContext.bottomSheet === ModalType.ProductModal) {    
+  if (props.isBottomSheet) { 
     return (
       <BottomSheetLayout closeIconColor={colors.grey2}>
         <BottomSheetBody>{body}</BottomSheetBody>

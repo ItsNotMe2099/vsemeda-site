@@ -33,7 +33,6 @@ const IndexPageInner = (props: Props) => {
             <Filter />
 
             <VisibleOnSize width={breakpoints.PhoneWidth}>
-              {/* TODO: добавить сверху на мобилке "Лучшие предложения" и выяснить, лучше ли использовать мобильный свайпер */}
               <UnitSlider units={layoutItemBestOffers.units} isMobile />
             </VisibleOnSize>
 

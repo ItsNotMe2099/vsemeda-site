@@ -15,17 +15,18 @@ import UserMenu from './UserMenu'
 import IconButton from 'components/ui/IconButton'
 import MenuSvg from 'components/svg/MenuSvg'
 import BackBtn from 'components/ui/BackBtn'
-import BurgerSvg from 'components/svg/BurgerSvg'
+// import BurgerSvg from 'components/svg/BurgerSvg'
 import BasketButton from 'components/layout/Header/BasketButton'
 import ArrowHeaderSvg from 'components/svg/ArrowHeaderSvg'
 // import HeaderDelivery from './HeaderDelivery'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
+import { ModalType } from 'types/enums'
 
 interface Props {
   isSticky?: boolean
   hasBack?: boolean
   restProps?: any
-  childArgs?: StickyChildArgs
+  childArgs?: StickyChildArgs,
 }
 
 const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number }>((props, ref) => {
@@ -33,10 +34,14 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
   const appContext = useAppContext()
   const basketButtonRef = useRef()
   const handleOpenMobileMenu = () => {
-
+    appContext.showModal(ModalType.ProfileMenu)
   }
 
   const router = useRouter()
+
+  //TODO: возможно отрефакторить эти проверки
+  const isOnRestaurantPage = router.asPath.search('/rest/') >= 0 
+  const isOnMainPage = router.asPath === `/${appContext.regionSlug}`
 
   return (
     <div className={classNames(styles.root, { [styles.none]: appContext.modal })} ref={ref} style={props.style} {...(props.restProps ?? {})}>
@@ -56,8 +61,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             </Link>
             <DividerDotsSvg className={styles.divider} />
             <HeaderAddress />
-
-            {/* TODO: узнать какая была задумка, img путь битый */}
+           
             <div className={styles.menuOpen} onClick={handleOpenMobileMenu}>
               <img src="/images/header/menu.svg" alt="" />
             </div>
@@ -81,23 +85,25 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
       </VisibleOnSize>
 
       <VisibleOnSize width={breakpoints.PhoneWidth}>
-        {!appContext.modal ? <div className={styles.phone}>
-          <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 })}>
-            {router.asPath === `/${appContext.region?.slug}` ?
-              <IconButton bgColor='white' size='large'>
+        <div className={styles.phone}>
+          <div className={classNames(styles.container, { [styles.sticky]: props.distanceFromTop < 0 &&  !isOnRestaurantPage} )}>
+            {isOnMainPage ?
+              <IconButton bgColor='white' size='large' onClick={handleOpenMobileMenu}>
                 <MenuSvg color='#812292' />
               </IconButton>
               :
               <BackBtn size='large' bgColor='white' onClick={() => router.push('/')} />}
-            {router.asPath === `/${appContext.region?.slug}` ?
+
+            {isOnMainPage ?
               <HeaderAddress
                 isSticky={props.distanceFromTop < 0 ? true : false}
                 isMobile /> : null}
+
             <IconButton bgColor='white' size='large'>
-              {router.asPath === `/${appContext.region?.slug}` ? <LoupeSvg color='#812292' /> : <BurgerSvg color='#812292' />}
+              <LoupeSvg color='#812292' /> 
             </IconButton>
           </div>
-        </div> : null}
+        </div> 
       </VisibleOnSize>
     </div>
    

@@ -28,7 +28,7 @@ export default function PromoSlider(props: Props) {
         pagination={true}
        modules={[Pagination, Mousewheel, Keyboard]}
      >
-       {props.promos.map(i => <SwiperSlide className={styles.slide}>
+       {props.promos.map((i, index) => <SwiperSlide key={index} className={styles.slide}>
          <PromoCard promo={i} key={i.id} />
        </SwiperSlide>)}
      </Swiper>
