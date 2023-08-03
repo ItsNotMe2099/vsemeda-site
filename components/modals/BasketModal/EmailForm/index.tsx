@@ -13,6 +13,7 @@ import {RequestError} from 'types/types'
 interface IFormData {
   moneyChange: number,
   needMoneyChange: boolean,
+  email?: string|undefined
 }
 
 interface Props {
@@ -26,9 +27,10 @@ export default function EmailForm(props: Props) {
   const [loading, setLoading] = useState(false)
 
   const submit = async (data: IFormData) => {
+    debugger
     try {
       setLoading(true)
-      await cartContext.update({...data, moneyChange: data.needMoneyChange ?  +data.moneyChange : null})
+      await cartContext.update({...data, email: data.email ? data.email : undefined})
       props.onSubmit()
     } catch (err: any) {
       if (err instanceof RequestError) {
@@ -57,7 +59,7 @@ export default function EmailForm(props: Props) {
             styleType={'cashForm'}
             color='darkPurple'
             placeholder='Введите email'
-            isNumbersOnly
+            // isNumbersOnly
           validate={Validator.combine([Validator.required, Validator.email])}/>
         <Spacer basis={20}/>
         <PaymentButton onClick={() => formik.submitForm()} loading={loading}/>

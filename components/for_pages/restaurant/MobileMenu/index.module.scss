@@ -19,7 +19,7 @@
     margin-right: -24px;
   }
   @include mq($PhoneWidth, max) {
-    padding: 12px 0px; 
+    padding: 12px 10px; 
   }
 }
 
@@ -66,8 +66,7 @@
 .left,
 .right {
   display: flex;
-  gap: 16px;
-  padding: 0 24px;
+  gap: 16px; 
 }
 
 .right {

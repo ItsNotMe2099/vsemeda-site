@@ -22,29 +22,33 @@ const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
 
   const appContext = useAppContext()
 
-  const region = appContext.region
+  // const region = appContext.region
+
+  const isOnMainPage = router.asPath === `/${appContext.regionSlug}`
+
+  const mainPagePath = '/moskva'
 
   return (
     <div className={classNames(styles.root, {[styles.none]: appContext.modal})} ref={ref} style={props.style} {...(props.restProps ?? {})}>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath === `/${region?.slug}` && !appContext.modal })}>
+      <div onClick={()=> {router.push(mainPagePath)}} className={classNames(styles.item, { [styles.active]: !isOnMainPage && !appContext.modal })}>
         <HomeSvg />
         <div className={styles.title}>
           Главная
         </div>
       </div>
-      <div onClick={() => appContext.showModal(ModalType.Profile, 'orders') } className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
+      <div onClick={() => appContext.showModal(ModalType.Profile, 'orders') } className={classNames(styles.item, { [styles.active]: isOnMainPage })}>
         <HistorySvg />
         <div className={styles.title}>
           История
         </div>
       </div>
-      <div onClick={() => appContext.showModal(ModalType.Basket)} className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
+      <div onClick={() => appContext.showModal(ModalType.Basket)} className={classNames(styles.item, { [styles.active]: isOnMainPage })}>
         <CartSvg />
         <div className={styles.title}>
           Корзина
         </div>
       </div>
-      <div className={classNames(styles.item, { [styles.active]: router.asPath !== `/${region?.slug}` })}>
+      <div className={classNames(styles.item, { [styles.active]: isOnMainPage })}>
         <AboutSvg />
         <div className={styles.title}>
           О нас

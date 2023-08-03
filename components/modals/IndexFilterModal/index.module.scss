@@ -8,13 +8,13 @@
   min-width: 310px;
   background: #fff;
   border-radius: 20px;
-  padding: 0px;
-  right: $DesktopContainerPadding;
+  padding: 20px;
+  // right: $DesktopContainerPadding;
   &.bottomSheet{
     width: 100%;
   }
   overflow: hidden;
-  margin-top: 50px;
+  // margin-top: 50px;
 
   @include mq($PhoneWidth, max) {
     width: 100vw;
@@ -42,9 +42,12 @@
 
 .title {
   font-weight: 600;
-  font-size: 23.8823px;
-  line-height: 29px;
+  font-size: Clamp(16px, 4.5vw, 23px);
+  line-height: 120%;
   color: #4C4958;
+  @include mq($PhoneWidth, max) {
+    color: $white;
+  }
 }
 
 .list {
@@ -65,7 +68,8 @@
 .bodyWrapper {
 
   @include mq($PhoneWidth, max) {
-    padding: 0 24px;
+    // padding: 0 24px;
+    padding: 0px;
   }
 }
 
@@ -144,9 +148,118 @@
 
 .footer {
   padding: 0px !important;
+  padding-top: 20px !important;
+  display: flex;
+  justify-content: space-between;
+  @include mq($PhoneWidth, max) {
+    flex-direction: row-reverse;
+  }
+}
+
+.footerButton {
+  width: 49%;
+  height: Clamp(40px, 10vw, 50px);
+  padding-top: 5%;
+  @include mq($PhoneWidth, max) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: $white;
+    color: $purple2;
+  }
 }
 
 .promo{
   padding: 0;
   margin-bottom: 0;
 }
+
+
+.radioWrapper {
+  @include mq($PhoneWidth, max) {
+    display: flex !important;
+    flex-wrap: wrap;  
+  }
+}
+
+.radioItem {
+  @include mq($PhoneWidth, max) {
+    margin-right: 12px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    background-color: $purple4;
+    border-radius: 50%;
+
+  }
+}
+
+.radioLabel {
+  color: black !important;
+  @include mq($PhoneWidth, max) {
+    margin-left: unset !important;
+    color: $white;
+  }
+}
+
+.radioCircle {
+  @include mq($PhoneWidth, max) {
+    display: none !important;
+  }
+ }
+
+.radioItemActive {
+  @include mq($PhoneWidth, max) {
+    background-color: $white;
+    
+    .radioLabel {
+      color: $purple2;
+    }
+  }
+}
+
+.checkboxItem {
+  @include mq($PhoneWidth, max) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    background-color: $purple4;
+    height: 40px;
+    border-radius: 30px;
+  }
+}
+
+
+.checkboxWrapper {
+  @include mq($PhoneWidth, max) {
+    display: flex !important;
+    flex-wrap: wrap;
+  }
+}
+
+.checkboxActive {
+  @include mq($PhoneWidth, max) {
+    background-color: $white;
+    
+    .radioLabel {
+      color: $purple2;
+    }
+  }
+}
+
+
+.third {
+  width: 32%;
+}
+
+.sheetFooter {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top: 2px $purple2 solid;
+}
+
+
+
+

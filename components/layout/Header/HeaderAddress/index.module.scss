@@ -20,13 +20,9 @@
 
   .value {
     font-weight: 500;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: Clamp(12px, 3.7vw, 16px);
+    line-height: 120%;
     color: #4C4958;
-
-    @include mq($MPhoneWidth, max) {
-      font-size: 12px;
-    }
   }
 }
 
@@ -36,11 +32,11 @@
   align-items: center;
   cursor: pointer;
 
-  .value {
-    @include mq($MPhoneWidth, max) {
-      font-size: 12px;
-    }
-  }
+  // .value {
+  //   @include mq($MPhoneWidth, max) {
+  //     font-size: 12px;
+  //   }
+  // }
 }
 
 .sticky {

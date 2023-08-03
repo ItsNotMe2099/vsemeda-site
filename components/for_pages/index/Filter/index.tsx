@@ -8,13 +8,11 @@ import {useDetectOutsideClick} from 'components/hooks/useDetectOutsideClick'
 import FilterSvg from 'components/svg/FilterSvg'
 import FilterCategories from 'components/for_pages/index/Filter/FilterCategories'
 import {useAppContext} from 'context/state'
-import {ModalType} from 'types/enums'
-import {IndexFilterModalArguments} from 'types/modal_arguments'
 import {useIndexPageContext} from 'context/index_page_state'
-import {IndexFilterFormData} from 'types/form_data/IndexFilterFormData'
 
 interface Props {
   className?: string
+  onFilterButtonClick: () => void
 }
 
 export default function Filter(props: Props) {
@@ -56,6 +54,8 @@ export default function Filter(props: Props) {
     ]
   })
 
+  
+
 
   return (
     <div className={classNames(styles.root, props.className)}>
@@ -69,14 +69,7 @@ export default function Filter(props: Props) {
           onClick={() => setShowDropDown(!showDropDown)}
           onOptionClick={() => setShowDropDown(false)}
         />*/}
-        <div className={styles.item} onClick={() => appContext.showModal(ModalType.IndexFilter, {
-          categories: unitIndexContext.categories,
-          onSubmit: (data: IndexFilterFormData) =>{
-            unitIndexContext.setFilter(data)
-            appContext.hideModal()
-          },
-          onClear: () => unitIndexContext.setFilter({})
-        } as IndexFilterModalArguments)}>
+        <div className={styles.item} onClick={props.onFilterButtonClick}>
           <FilterSvg className={styles.filterSvg} color='#828282' />
           <span>Фильтр</span>
         </div>

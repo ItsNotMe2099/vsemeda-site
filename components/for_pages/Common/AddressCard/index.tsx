@@ -22,10 +22,11 @@ export default function AddressCard({ item, isSelected, onClick, className }: Pr
   const [wrapperRef, press, hover] = usePressAndHover()
   const handleEdit = () => {
     appContext.showModal(ModalType.AddressForm, {address: item} as AddressFormModalArguments)
+    // appContext.showModal(ModalType.AddressForm)
   }
   return (
-   <div ref={wrapperRef} className={classNames(styles.root, {[styles.selected]: isSelected, [styles.hover]: hover, [className]: isSelected})} onClick={onClick}>
-     <div className={styles.icon}>{isSelected ? <CheckSvg color={colors.black}/> : <PlaceMarkSvg color={hover ? colors.black : colors.grey2}/>}</div>
+   <div ref={wrapperRef} className={classNames(styles.root, {[styles.selected]: isSelected, [styles.hover]: hover, [className]: isSelected})} >
+     <div onClick={onClick} className={styles.icon}>{isSelected ? <CheckSvg color={colors.black}/> : <PlaceMarkSvg color={hover ? colors.black : colors.grey2}/>}</div>
      <div className={styles.info}>
      <div className={styles.subTitle}>{item.address}</div>
      </div>

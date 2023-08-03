@@ -5,6 +5,8 @@ import DropdownMenu from 'components/ui/DropdownMenu'
 import { ICategory } from 'data/interfaces/ICategory'
 import { usePopper } from 'react-popper'
 import {useIndexPageContext} from 'context/index_page_state'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
+import { breakpoints } from 'styles/variables'
 
 interface Props {
   className?: string
@@ -101,6 +103,11 @@ export default function FilterCategories(props: Props) {
     }
   }
 
+  const handleOptionClick = (category: ICategory) => {
+    setActive(category.name)
+    handleClickCategory(category)
+  }
+
   return (
       <div className={styles.root} ref={listRef}>
         <div
@@ -130,7 +137,11 @@ export default function FilterCategories(props: Props) {
           )}
 
             <div ref={lastLinkRef}>
-              {(!sliceInited || slice > 0) &&   <DropdownMenu  optionClick={(option) => setActive(option.name)} style='more' options={props.categories ?? []} />}
+              <VisibleOnSize width={breakpoints.PhoneWidth} minSize> 
+                  {(!sliceInited || slice > 0) && 
+                    <DropdownMenu  optionClick={(category) => handleOptionClick(category)} style='more' options={props.categories ?? []} />
+                   }
+              </VisibleOnSize>
             </div>
 
       </div>

@@ -32,6 +32,7 @@ interface Props {
 }
 
 const AddressFormModalInner = (props: Props) => {
+  debugger
   const appContext = useAppContext()
   const [addressSearchShown, setAddressSearchShown] = useState(true)
   const [addressFormShown, setAddressFormShown] = useState(false)
@@ -41,7 +42,7 @@ const AddressFormModalInner = (props: Props) => {
   const header = (<div/>)
   const [geoObject, setGeoObject] = useState<GeoObject>()
   const args = appContext.modalArguments as AddressFormModalArguments
-  useEffect(() => {
+  useEffect(() => {    
     if(args?.address){
       setAddressFormShown(true)
       setAddressSearchShown(false)
@@ -126,7 +127,7 @@ const AddressFormModalInner = (props: Props) => {
   )
 }
 
-export default function AddressFormModal(props: Props) {
+export default function AddressFormModal(props: Props) { 
 
   return (<>
       <AddressFormModalInner {...props}/>

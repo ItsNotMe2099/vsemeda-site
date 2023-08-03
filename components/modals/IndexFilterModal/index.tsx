@@ -19,6 +19,10 @@ import Button from 'components/ui/Button'
 import CheckboxListField from 'components/fields/CheckboxListField'
 import RadioListField from 'components/fields/RadioListField'
 import {IndexFilterFormData} from 'types/form_data/IndexFilterFormData'
+import BottomSheetFooter from 'components/layout/BottomSheet/BottomSheetFooter'
+import { useResize } from 'components/hooks/useResize'
+import BottomSheetHeader from 'components/layout/BottomSheet/BottomSheetHeader'
+import classNames from 'classnames'
 
 export interface IFormData {
 
@@ -26,13 +30,14 @@ export interface IFormData {
 
 interface Props {
   isBottomSheet?: boolean
-  onRequestClose: () => void
+  onRequestClose?: () => void
 }
 
 export default function IndexFilterModal(props: Props) {
   const appContext = useAppContext()
   const [loading, setLoading] = useState(false)
   const args = appContext.modalArguments as IndexFilterModalArguments
+  const {isPhoneWidth} = useResize()
   const handleCloseClick = () => {
     props.onRequestClose()
   }
@@ -64,45 +69,95 @@ export default function IndexFilterModal(props: Props) {
   const header = (
     <div className={styles.header}>
       <div className={styles.title}>
-        Фильтр
+        {isPhoneWidth? 'Фильтрация заведений' : 'Фильтр'}
       </div>
-      <div className={styles.close}>
-        <BackBtn bgColor='white' onClick={handleCloseClick}/>
-      </div>
-    </div>
-  )
-  const body = (
-    <div className={styles.bodyWrapper}>
-      <RadioListField<number> label={'Время доставки'} options={[{label: '15', value: 15}, {label: '30', value: 30}, {
-        label: '45',
-        value: 45
-      }, {label: '60', value: 60}, {label: '90', value: 90}]} name={'deliveryTime'}/>
-      <CheckboxListField<PriceRating> label={'Стоимость'} options={[{label: '₽', value: PriceRating.Cheap}, {
-        label: '₽₽',
-        value: PriceRating.Average
-      }, {label: '₽₽₽', value: PriceRating.Expensive}]} name={'priceRatings'}/>
-      <CheckboxListField<PaymentMethod> label={'Метод оплаты'} options={[{
-        label: 'Картой онлайн',
-        value: PaymentMethod.CardOnline
-      }, {label: 'Картой курьеру', value: PaymentMethod.CardCourier}, {label: 'Наличными', value: PaymentMethod.Cash}]}
-                                     name={'paymentMethods'}/>
-      <CheckboxListField<number> label={'Кухня и типы блюд'} grid={2}
-                              options={args.categories.map(i => ({label: i.name, value: i.id}))}
-                              name={'categories'}/>
+      {!isPhoneWidth && 
+        <div className={styles.close}>
+          <BackBtn bgColor='white' onClick={handleCloseClick}/>
+        </div>
+      }
     </div>
   )
 
-  const footer = (<div className={styles.footer}>
-    <Button type={'button'} onClick={() => handleClear()} font='semibold16' styleType='filledGreen'>Очистить
+  //TODO: было бы круто рендерить фильтры откуда-то с бэка :)
+  const body = (
+    <div className={styles.bodyWrapper}>
+      <RadioListField<number> 
+        wrapperClassName={styles.radioWrapper}
+        itemClassName={styles.radioItem}
+        activeItemClassName={styles.radioItemActive}
+        itemCircleClassname={styles.radioCircle}
+        itemLabelClassName={styles.radioLabel}
+        labelClassName={styles.radioLabel}
+        label={'Время доставки'} 
+        name={'deliveryTime'}
+        options={[
+          {label: '15', value: 15}, 
+          {label: '30', value: 30}, 
+          {label: '45', value: 45 }, 
+          {label: '60', value: 60}, 
+          {label: '90', value: 90}]} 
+      />
+      <CheckboxListField<PriceRating> 
+        wrapperClassName={styles.checkboxWrapper}
+        itemClassName={classNames(styles.checkboxItem, styles.third)}
+        itemLabelClassName={styles.radioLabel}
+        labelClassName={styles.radioLabel}
+        activeClassName={styles.checkboxActive}
+        circleClassName={styles.radioCircle}
+        label={'Стоимость'} 
+        name={'priceRatings'}
+        options={[
+          {label: '₽', value: PriceRating.Cheap}, 
+          {label: '₽₽', value: PriceRating.Average}, 
+          {label: '₽₽₽', value: PriceRating.Expensive}]} 
+      />
+      <CheckboxListField<PaymentMethod> 
+        wrapperClassName={styles.checkboxWrapper}
+        itemClassName={styles.checkboxItem}
+        itemLabelClassName={styles.radioLabel}
+        labelClassName={styles.radioLabel}
+        activeClassName={styles.checkboxActive}
+        circleClassName={styles.radioCircle}
+        label={'Метод оплаты'} 
+        name={'paymentMethods'}
+        options={[
+          {label: 'Картой онлайн', value: PaymentMethod.CardOnline}, 
+          {label: 'Картой курьеру', value: PaymentMethod.CardCourier}, 
+          {label: 'Наличными', value: PaymentMethod.Cash}]}
+      />
+      <CheckboxListField<number> 
+        circleClassName={styles.radioCircle}
+        itemClassName={styles.checkboxItem}
+        itemLabelClassName={styles.radioLabel}
+        labelClassName={styles.radioLabel}
+        activeClassName={styles.checkboxActive}
+        label={'Кухня и типы блюд'} 
+        grid={2} 
+        name={'categories'}
+        options={args.categories.map(i => ({label: i.name, value: i.id}))}
+      />
+    </div>
+  )
+
+  const footer = (<>
+    <Button className={styles.footerButton} type={'button'} onClick={() => handleClear()} font='semibold16' styleType='filledGreen'>Очистить
       фильтр</Button>
-    <Button type={'submit'}  spinner={loading} font='semibold16' styleType='filledGreen'>Сохранить</Button>
-  </div>)
+    <Button className={styles.footerButton} type={'submit'}  spinner={loading} font='semibold16' styleType='filledGreen'>Сохранить</Button>
+  </>
+  )
 
   if (props.isBottomSheet) {
     return (
-      <BottomSheetLayout closeIconColor={colors.grey2}>
-        <BottomSheetBody>{body}</BottomSheetBody>
-      </BottomSheetLayout>
+      <FormikProvider value={formik}>
+        <Form className={styles.root}>
+          <BottomSheetLayout closeIconColor={colors.grey2} backgroundColor={colors.purple}>
+            <BottomSheetHeader>{header}</BottomSheetHeader>
+            <BottomSheetBody>{body}</BottomSheetBody>
+            <BottomSheetFooter className={styles.sheetFooter}>{footer}</BottomSheetFooter>
+          </BottomSheetLayout>
+        </Form>
+      </FormikProvider>
     )
   }
 

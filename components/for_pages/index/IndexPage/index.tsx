@@ -13,6 +13,9 @@ import UnitSlider from 'components/for_pages/Common/UnitSlider'
 import { useAppContext } from 'context/state'
 import { breakpoints } from 'styles/variables'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
+import { ModalType } from 'types/enums'
+import { IndexFilterFormData } from 'types/form_data/IndexFilterFormData'
+import { useResize } from 'components/hooks/useResize'
 
 interface Props{
 }
@@ -22,6 +25,26 @@ const IndexPageInner = (props: Props) => {
   const layoutItemBestOffers = indexPageContext.unitIndex?.layout?.items?.find(i => i.type === ViewTemplateItemType.SliderBrands)
   const layoutItems = layoutItemBestOffers?  indexPageContext.unitIndex?.layout?.items.filter(i => i.type !== layoutItemBestOffers.type && i.name !== layoutItemBestOffers.name) : indexPageContext.unitIndex?.layout?.items
 
+  const {isPhoneWidth} = useResize()
+
+
+  const onFilterButtonClick = () => {
+    const filterOptions  = {
+      categories: indexPageContext.categories,
+      onSubmit: (data: IndexFilterFormData) =>{
+        indexPageContext.setFilter(data)
+        appContext.hideModal()
+      },
+      onClear: () => indexPageContext.setFilter({})
+    }
+    
+
+    isPhoneWidth?
+    appContext.showBottomSheet(ModalType.IndexFilter, filterOptions):
+    appContext.showModal(ModalType.IndexFilter, filterOptions)
+  }
+
+
   return (
     <Layout>
         {indexPageContext.unitIndex && <><IndexHeader>
@@ -29,8 +52,13 @@ const IndexPageInner = (props: Props) => {
         </IndexHeader>
 
           <div className={styles.body}>
-            <FilterBtn />
-            <Filter />
+            <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
+              <Filter onFilterButtonClick={onFilterButtonClick} />
+            </VisibleOnSize>
+
+            <VisibleOnSize width={breakpoints.PhoneWidth}>
+            <FilterBtn  onFilterButtonClick={onFilterButtonClick}/>
+            </VisibleOnSize>
 
             <VisibleOnSize width={breakpoints.PhoneWidth}>
               <UnitSlider units={layoutItemBestOffers.units} isMobile />

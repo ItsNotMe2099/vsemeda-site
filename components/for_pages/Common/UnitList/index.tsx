@@ -12,7 +12,7 @@ export default function UnitList(props: Props) {
   return (<div className={styles.wrapper}>
     <p className={styles.title}>{appContext.isMobile? 'Рестораны 🙌':'Лучшие рестораны 🙌'}</p>
       <ul className={styles.root}>
-        {props.units.map(unit => <UnitCard unit={unit} className={styles.card}/>)}
+        {props.units.map((unit, index) => <UnitCard key={index} unit={unit} className={styles.card}/>)}
       </ul>
   </div >)
 }

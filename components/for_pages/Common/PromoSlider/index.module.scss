@@ -12,6 +12,7 @@
 }
 .slide{
   width: Clamp(260px, calc(100vw - 48px), 380px) !important;
+  max-width: 100%;
 }
 .arrow{
   position: absolute;

@@ -4,14 +4,12 @@ import DesktopMenu from 'components/for_pages/restaurant/DesktopMenu'
 import Sticky, {Status} from 'react-stickynode'
 import RestaurantMenu from 'components/for_pages/restaurant/RestaurantMenu'
 import Header from '../Header'
-// import { StickyContainer } from 'react-sticky'
 import RestaurantPromoList from 'components/for_pages/restaurant/RestaurantPromoList'
 import {useUnitContext} from 'context/unit_state'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
 import { breakpoints } from 'styles/variables'
 import MobileMenu from '../MobileMenu'
-import { IMenuCategory } from 'data/interfaces/IMenu'
 
 
 export default function RestaurantPage() {
@@ -23,15 +21,6 @@ export default function RestaurantPage() {
     changeMobMenuState(state.status === 2 ? true: false)
   }
 
-  const onIntersetion = (entries: IntersectionObserverEntry[], observer: IntersectionObserver, item: IMenuCategory) => {
-    if(entries[0].isIntersecting) {
-      unitContext.setActiveCategory(item.parentId||item.id)
-    }
-  }
-
-  useEffect(() => {
-
-  }, [])
   return (
     <div className={styles.root}>
       <VisibleOnSize width={breakpoints.PhoneWidth} minSize >
@@ -51,7 +40,7 @@ export default function RestaurantPage() {
             </Sticky>
           </VisibleOnSize>
           <RestaurantPromoList promoUnits={unitContext.unit.promoUnits}/>
-          <RestaurantMenu onIntersection={onIntersetion} />
+          <RestaurantMenu/>
       </div>
     </div>
   )

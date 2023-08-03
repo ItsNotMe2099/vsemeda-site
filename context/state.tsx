@@ -191,7 +191,7 @@ export function AppWrapper(props: Props) {
     }
   }
 
-  const showModal = (type: ModalType, args?: any) => {
+  const showModal = (type: ModalType, args?: any) => {    
     if (props.isMobile && ModalsBottomSheet.includes(type)) {
       showBottomSheet(type, args)
       return

@@ -5,14 +5,13 @@ import { useAppContext } from 'context/state'
 import { useUnitContext } from 'context/unit_state'
 import { IMenuCategory } from 'data/interfaces/IMenu'
 import { IProduct } from 'data/interfaces/IProduct'
-import { useLayoutEffect, useRef } from 'react'
+import useOnScreen from 'hooks/useOnScreen'
+import { useEffect, useRef } from 'react'
 import { ModalType } from 'types/enums'
-import withThrottle from 'utils/throttle'
 import styles from './index.module.scss'
 
 interface Props {
     item: IMenuCategory
-    onIntersection: (entries: IntersectionObserverEntry[], observer: IntersectionObserver, item: IMenuCategory) => void
 }
 
 
@@ -28,22 +27,19 @@ export default function MenuStack (props: Props) {
 
   const appContext = useAppContext()
 
+  const options: IntersectionObserverInit = {
+    root: null,
+    threshold: 0,
+    rootMargin: '0px 0px -70% 0px'
+  }
 
+  const isOnScreen = useOnScreen(refStack, options)
 
-
-  
-  useLayoutEffect(()=> {
-    const options: IntersectionObserverInit = {
-      root: document,
-      threshold: 0.1,
-      rootMargin: '-400px 0px 0px 0px'
+  useEffect(()=> {    
+    if(!unitContext.scrollToCategoryFired) {
+      isOnScreen && unitContext.setActiveCategory(props.item.parentId||props.item.id)
     }
-    
-    let observer = new IntersectionObserver((entries, observer) => {withThrottle(props.onIntersection(entries, observer, props.item), 5000)}, options)
-    
-    observer.observe(refStack.current)
-  }, [])
-
+  }, [isOnScreen, unitContext.scrollToCategoryFired])
 
   const handleAddClick = (product: IProduct) => {
       if (cartContext.productQuantityMap[product.id] > 1) {

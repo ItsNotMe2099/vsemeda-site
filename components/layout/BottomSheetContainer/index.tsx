@@ -7,6 +7,7 @@ import AddressFormModal from 'components/modals/AdressModal'
 import AddressListModal from 'components/modals/AddressListModal'
 import ProductModal from 'components/modals/ProductModal'
 import PreOrderModal from 'components/modals/PreOrderModal'
+import IndexFilterModal from 'components/modals/IndexFilterModal'
 
 interface Props { }
 
@@ -51,6 +52,15 @@ export default function BottomSheetContainer(props: Props) {
           className={styles[appContext.bottomSheet]}
         >
           <PreOrderModal isBottomSheet={true} />
+        </Sheet>
+
+        <Sheet
+          isOpen={appContext.bottomSheet == ModalType.IndexFilter}
+          onClose={appContext.hideBottomSheet}         
+          disableDrag={appContext.modalNonSkippable}
+          className={styles[appContext.bottomSheet]}
+        >
+          <IndexFilterModal isBottomSheet={true} />
         </Sheet>
 
 

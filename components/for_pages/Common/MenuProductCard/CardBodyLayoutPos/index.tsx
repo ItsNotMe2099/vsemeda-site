@@ -12,7 +12,7 @@ interface Props {
 
 export default function CardBodyLayoutPos(props: Props) {
   return <div className={classNames(styles.root)}>
-    {props.items.map((item) => <div className={styles.item}>
+    {props.items.map((item, index) => <div key={index} className={styles.item}>
       {item.img && <LayoutIconImage icon={item.img} color={item.clr ?? colors.green}/>}
       {item.txt && <div className={styles.txt} style={{color: props.color ?? colors.grey1}}>{item.txt}</div>}
     </div>)}

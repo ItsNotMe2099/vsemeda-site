@@ -1,6 +1,6 @@
-import { useState, useEffect, MutableRefObject } from 'react'
+import { useState, useEffect, MutableRefObject, Dispatch, SetStateAction } from 'react'
 
-export const useDetectOutsideClick = (el: any, initialState: any) => {
+export const useDetectOutsideClick: (el: MutableRefObject<any>, initialState: boolean) => [boolean, Dispatch<SetStateAction<boolean>>] = (el, initialState) => {
   const [isActive, setIsActive] = useState(initialState)
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export const useDetectOutsideClick = (el: any, initialState: any) => {
         return
       }
       else if (el.current !== null && !el.current.contains(e.target)) {
-        setIsActive(!isActive)
+        setIsActive(!isActive) 
         document.removeEventListener('click', pageClickEvent)
       }
 

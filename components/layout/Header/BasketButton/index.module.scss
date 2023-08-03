@@ -17,14 +17,14 @@
 }
 .quantity{
   font-weight: 500;
-  font-size: 13px;
+  font-size: Clamp(12px, 1.2vw, 13px);
 }
 .delivery{
   font-weight: 500;
-  font-size: 13px;
+  font-size: Clamp(12px, 1.2vw, 13px);
 }
 .total{
-  font-size: 16px;
+  font-size: Clamp(12px, 2vw, 16px);
   font-weight: 500;
 }
 

@@ -28,11 +28,11 @@ export default function CardBodyLayoutPos({ layout, margin, color, size, classNa
     case UnitCardLayoutPosItemsType.ListDot:
       return  <div className={classNames(styles.list, classes)}>
                 {layout.items.map((item, index) => <>
-                <UnitCardLayoutItem color={color} item={item} size={size} unit={unit}/>
+                <UnitCardLayoutItem key={index} color={color} item={item} size={size} unit={unit}/>
                 {(index % 2 === 0 && index !== layout.items.length - 1) && <div className={styles.dot}/>}</>)}
               </div>
     case UnitCardLayoutPosItemsType.List:
     default:
-      return <div className={classNames(styles.list, classes)}>{layout.items.map(item => <UnitCardLayoutItem color={color} item={item} size={size} unit={unit}/>)}</div>
+      return <div className={classNames(styles.list, classes)}>{layout.items.map((item, index) => <UnitCardLayoutItem key={index} color={color} item={item} size={size} unit={unit}/>)}</div>
   }
 }

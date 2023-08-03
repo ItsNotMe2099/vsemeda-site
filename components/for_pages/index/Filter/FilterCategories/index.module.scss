@@ -5,6 +5,10 @@
   flex-direction: row;
   @include list(16px, true);
   max-width: 100%;
+  width: calc(100vw - 280px);
+  @include mq($TabletWidth, max) {
+    width: 100%;
+  }
 }
 
 .item {
@@ -13,12 +17,13 @@
   border-radius: 16px;
   font-weight: 500;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 100%;
   color: $dark2;
   letter-spacing: -0.24px;
   cursor: pointer;
   position: relative;
   display: flex;
+  align-items: center;
 
   @include mq($TabletWidth, max) {
     padding: 6px 19px;

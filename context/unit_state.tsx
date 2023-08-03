@@ -15,6 +15,7 @@ interface IState {
   activeCategoryId: string | null
   setActiveCategory: (id: string)=> void
   scrollToCategory: (category: IMenuCategory) => void
+  scrollToCategoryFired: boolean
   isAvailable: boolean
 }
 
@@ -25,7 +26,8 @@ const defaultValue: IState = {
   activeCategoryId: null,
   setActiveCategory: (id: string) => null,
   scrollToCategory: (category: IMenuCategory) => null,
-  isAvailable: true
+  scrollToCategoryFired: false,
+  isAvailable: true,
 }
 
 const UnitContext = createContext<IState>(defaultValue)
@@ -43,6 +45,7 @@ export function UnitWrapper(props: Props) {
   const [unit, setUnit] = useState<IUnit>(props.initialUnit)
   const [activeCategoryId, setActiveCategoryId] = useState(null)
   const [isAvailable, setIsAvailable] = useState(false)
+  const [scrollToCategoryFired, setScrollFired] = useState<boolean>(false)
 
   /*
     Получаем unit
@@ -78,6 +81,19 @@ export function UnitWrapper(props: Props) {
     setActiveCategoryId(id)
   }
 
+  const scrollToCategory = (category: IMenuCategory) => {
+    setScrollFired(true)
+    setActiveCategoryId(category.id)
+    const target = document.getElementById(`category-${category.id}`)
+    const offsetTop = target.getBoundingClientRect().top
+    Scroll.animateScroll.scrollTo(offsetTop + document.documentElement.scrollTop - 100, {behavior: 'smooth'})
+    setTimeout(()=> {
+      setScrollFired(false)
+
+    }, 2000)
+    // withThrottle(setScrollFired, 8000)(false)
+  }
+
   const init = async () => {
     const [unit, menu] = router.query.place ? await Promise.all([
         UnitRepository.fetchBySlug(router.query.place as string, appContext.currentLocation),
@@ -99,11 +115,8 @@ export function UnitWrapper(props: Props) {
     menu,
     activeCategoryId,
     setActiveCategory,
-    scrollToCategory: (category: IMenuCategory) => {
-      const target = document.getElementById(`category-${category.id}`)
-      const offsetTop = target.getBoundingClientRect().top
-      Scroll.animateScroll.scrollTo(offsetTop + document.documentElement.scrollTop - 100, {behavior: 'smooth'})
-    }
+    scrollToCategory,
+    scrollToCategoryFired
   }
 
   return (

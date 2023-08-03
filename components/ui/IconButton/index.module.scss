@@ -21,8 +21,8 @@
   }
 
   &.large {
-    width: 48px;
-    height: 48px;
+    width: Clamp(36px, 11.2vw, 48px);
+    height: Clamp(36px, 11.2vw, 48px);
   }
 }
 

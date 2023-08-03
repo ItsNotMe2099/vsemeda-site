@@ -7,10 +7,26 @@ $radius: 24px;
   flex: 0 0 auto;
   padding: 0px 12px;
   margin-bottom: Clamp(32px, 7vw, 64px);
+  
+  
 
   @include mq($TabletWidth, max) {
     width: 100%;
   }
+}
+
+.cardWrapper {
+  transition: .3s linear;
+  transform: scale(1);
+  box-shadow: transparent;
+  border-radius: 24px;
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 10px 10px 20px 0px $grey4;
+    }
+  }
+
 }
 
 .body {

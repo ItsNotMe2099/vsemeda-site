@@ -5,6 +5,7 @@
   flex-direction: row;
   justify-content: flex-start;
   margin: 0 auto;
+  scroll-behavior: smooth;
   @include container;
 
   @include mq($TabletWidth, max) {
@@ -45,6 +46,7 @@
 
 .mobileMenuActive {
   position: relative;
+  padding: 0px 10px;
   
   &:after {
     content: '';
