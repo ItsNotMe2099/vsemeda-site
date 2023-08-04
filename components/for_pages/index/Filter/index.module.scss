@@ -34,6 +34,7 @@
 
 .filterSvg {
   margin-right: 5px;
+  transition: .2s linear;
 }
 
 .item {
@@ -63,5 +64,21 @@
 
   span {
     color: #828282;
+    transition: .2s linear;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+
+      span {
+        color: black;
+      }
+      
+      .filterSvg {
+        path{
+          fill: black;
+        }
+      }
+    }
   }
 }
