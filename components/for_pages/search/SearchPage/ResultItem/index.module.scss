@@ -1,0 +1,112 @@
+@import "styles/index";
+
+.root {
+    background-color: $white;
+    padding: 8px;
+    border-radius: 16px;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 480px;
+}
+
+.top {
+    display: flex;
+    align-items: flex-start;
+}
+
+.imgWrapper {
+    background-color: $grey1;
+    position: relative;
+    border-radius: 16px;
+    width: Min(calc(30% - 10px), 100px);
+    padding-top: Min(calc(30% - 10px), 100px);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+}
+
+.rating {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background-color: $purple;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 16px;
+    padding: 4px;
+    height: 30px;
+}
+
+.info {
+    margin-left: 10px;
+    width: 100%;
+}
+
+.restInfo {
+    padding-bottom: 12px;
+    .delay {
+        color: $grey3;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+
+    .restName {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 170%;
+        color: $black;
+    }
+
+    .restType {
+        display: flex;
+        align-items: center;
+        color: $grey1;
+        font-weight: 600;
+        font-size: 14px;
+    }
+}
+
+.time {
+    border-top: 2px dotted $grey6;
+    border-bottom: 2px dotted $grey6;
+    padding: 12px 0;
+    color: $grey1;
+    font-weight: 500;
+}
+
+.discount {
+    color: $grey1;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
+
+
+    &__more {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $grey6;
+        border-radius: 16px;
+        padding: 2px 10px;
+        padding-top: 6px;
+    }
+}
+
+
+.bottom {
+    display: flex;
+    margin-top: 16px;
+}
+
+
+.slide {
+    width: 70%;
+}

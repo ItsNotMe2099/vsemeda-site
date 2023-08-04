@@ -68,7 +68,7 @@ export default function ModalContainer(props: Props) {
         </Modal>
         <Modal isOpen={appContext.modal === ModalType.Feedbacks} {...commonSettings}>
           {appContext.modal === ModalType.Feedbacks && <FeedbacksModal onRequestClose={appContext.hideModal} />}
-        </Modal>
+        </Modal> 
       </div>
     </RemoveScroll>
   )

@@ -1,0 +1,39 @@
+@import "styles/index";
+
+.root {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px $grey5 solid;
+    border-radius: 16px;   
+    flex-shrink: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.imageWrapper {
+    background-color: $grey6;
+    border-radius: 16px;
+    width: 30%;
+    padding-top: 30%;
+    flex-shrink: 0;
+    margin-right: 16px;
+}
+
+.name {
+    color: $dark1;
+    font-weight: 600;
+}
+
+.price {
+    color: $dark2;
+    font-weight: 500;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+
+}

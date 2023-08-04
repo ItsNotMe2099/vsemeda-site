@@ -1,0 +1,13 @@
+@import "styles/index";
+
+.root {
+    background-color: $purple3;
+    display: flex;
+    min-height: 100%;
+    position:relative;
+    flex-direction: column;
+}
+
+.sticky {
+    z-index: 400;
+}

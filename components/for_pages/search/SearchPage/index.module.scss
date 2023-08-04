@@ -1,0 +1,12 @@
+@import "styles/index";
+
+
+.root {
+    background-color: $purple3;
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: 24px;
+
+}

@@ -39,6 +39,8 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
 
   const router = useRouter()
 
+  const basePath = '/moskva'
+
   //TODO: возможно отрефакторить эти проверки
   const isOnRestaurantPage = router.asPath.search('/rest/') >= 0 
   const isOnMainPage = router.asPath === `/${appContext.regionSlug}`
@@ -68,7 +70,9 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             
           </div>
           <div className={styles.right}>
-            <LoupeSvg color={colors.white} />
+            <div onClick={()=> router.push(basePath + '/search')} className={styles.searchWrapper}>
+              <LoupeSvg color={colors.white} />
+            </div>
             <DividerDotsSvg className={styles.divider} />
             <BasketButton ref={basketButtonRef}/>
             <DividerDotsSvg className={styles.divider} />
@@ -99,7 +103,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
                 isSticky={props.distanceFromTop < 0 ? true : false}
                 isMobile /> : null}
 
-            <IconButton bgColor='white' size='large'>
+            <IconButton bgColor='white' size='large' onClick={()=> router.push(basePath + '/search')}>
               <LoupeSvg color='#812292' /> 
             </IconButton>
           </div>

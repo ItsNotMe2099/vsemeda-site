@@ -136,4 +136,17 @@
 }
 
 
+.searchWrapper {
+  transform: scale(1);
+  transition: .2s linear;
+  cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.2);
+
+    }
+  }
+}
+
+
 
