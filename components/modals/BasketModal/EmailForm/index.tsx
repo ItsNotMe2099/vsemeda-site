@@ -26,8 +26,7 @@ export default function EmailForm(props: Props) {
   const appContext = useAppContext()
   const [loading, setLoading] = useState(false)
 
-  const submit = async (data: IFormData) => {
-    debugger
+  const submit = async (data: IFormData) => {    
     try {
       setLoading(true)
       await cartContext.update({...data, email: data.email ? data.email : undefined})

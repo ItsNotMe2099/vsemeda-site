@@ -13,16 +13,17 @@ import {Routes} from 'types/routes'
 interface Props {
   unit: IUnit
   className?: string
+  wrapperClassName?: string
 }
 
-export default function UnitCard({unit, className}: Props) {
+export default function UnitCard({unit, className, wrapperClassName}: Props) {
 
   const appContext = useAppContext()
 
 
   return (
     <Link href={Routes.restaurant(appContext.regionSlug, unit.brand.slug, unit.slug)} className={classNames(styles.root, 'swiper-carousel-animate-opacity', className)}>
-      <div className={styles.cardWrapper}>
+      <div className={classNames(styles.cardWrapper, wrapperClassName)}>
       
         <div className={styles.imgContainer}>
           <Image src={unit.brand?.image.link} alt={unit.brand.name} fill/>

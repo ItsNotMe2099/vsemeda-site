@@ -27,3 +27,10 @@
   }
 }
 
+.card {
+  &:hover {
+    transform: unset;
+    box-shadow: unset;
+  }
+}
+

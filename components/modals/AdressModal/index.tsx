@@ -32,7 +32,6 @@ interface Props {
 }
 
 const AddressFormModalInner = (props: Props) => {
-  debugger
   const appContext = useAppContext()
   const [addressSearchShown, setAddressSearchShown] = useState(true)
   const [addressFormShown, setAddressFormShown] = useState(false)
