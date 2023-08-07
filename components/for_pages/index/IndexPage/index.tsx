@@ -16,6 +16,10 @@ import VisibleOnSize from 'components/visibility/VisibleOnSize'
 import { ModalType } from 'types/enums'
 import { IndexFilterFormData } from 'types/form_data/IndexFilterFormData'
 import { useResize } from 'components/hooks/useResize'
+import { useEffect, useState } from 'react'
+import OrderRepository from 'data/repositories/OrderRepository'
+import { IOrder } from 'data/interfaces/IOrder'
+import ActiveOrder from '../ActiveOrder'
 
 interface Props{
 }
@@ -24,6 +28,7 @@ const IndexPageInner = (props: Props) => {
   const indexPageContext = useIndexPageContext()
   const layoutItemBestOffers = indexPageContext.unitIndex?.layout?.items?.find(i => i.type === ViewTemplateItemType.SliderBrands)
   const layoutItems = layoutItemBestOffers?  indexPageContext.unitIndex?.layout?.items.filter(i => i.type !== layoutItemBestOffers.type && i.name !== layoutItemBestOffers.name) : indexPageContext.unitIndex?.layout?.items
+  const [activeOrders, setActiveOrders] = useState<IOrder[]>([]) 
 
   const {isPhoneWidth} = useResize()
 
@@ -37,18 +42,26 @@ const IndexPageInner = (props: Props) => {
       },
       onClear: () => indexPageContext.setFilter({})
     }
-    
 
     isPhoneWidth?
     appContext.showBottomSheet(ModalType.IndexFilter, filterOptions):
     appContext.showModal(ModalType.IndexFilter, filterOptions)
   }
 
+  // получение активного заказа
+  useEffect(()=> {
+    OrderRepository.fetchActive()
+    .then(res=> {
+      setActiveOrders(res)
+    })
+  }, [])
+
 
   return (
     <Layout>
         {indexPageContext.unitIndex && <><IndexHeader>
           {layoutItemBestOffers && <BestOffers item={layoutItemBestOffers} />}
+          {activeOrders && <>{activeOrders.map(item => <ActiveOrder item={item}/>)}</>}
         </IndexHeader>
 
           <div className={styles.body}>

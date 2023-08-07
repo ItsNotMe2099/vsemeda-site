@@ -24,6 +24,9 @@ export interface ICart {
   lines: ICartLine[];
   pLayout: ICartProgressLayout
   serviceFee?: number
-  availableTimes?: string[][]
+  availableTimes?: string[][],
+  email?: string,
+  personsCount?: number
+
 
 }

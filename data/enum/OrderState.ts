@@ -14,14 +14,7 @@ export enum OrderState {
   Arrived = 'arrived',
   Delivered = 'delivered',
 }
-export interface IOrderStateDetails {
-  name: string;
-  shortName?: string;
-  desc?: string;
-  icon: OrderStateIcon;
-  color: OrderStateColor;
-  buttons: OrderStateButton[];
-}
+
 export enum OrderStateIcon {
   Phone = 'phone',
   Preparing = 'preparing',

@@ -14,6 +14,9 @@ import PaymentSelectTitle from 'components/modals/BasketModal/PaymentSelect/Paym
 import {useAppContext} from 'context/state'
 import {ModalType} from 'types/enums'
 import EmailForm from 'components/modals/BasketModal/EmailForm'
+import { IOrderCreateRequest } from 'data/interfaces/IOrderCreateRequest'
+import { Platform } from 'data/enum/Plaform'
+import OrderRepository from 'data/repositories/OrderRepository'
 
 enum State {
   Closed = 'closed',
@@ -57,12 +60,37 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }
   })
 
+  const createNewOrder = () => {
+    /* TODO: добавить количество персон 
+    добавить правильное отображение предзаказа и его времени,
+    правильная работа свитчера бесконтактная оплата,
+    имя клиента    
+    */   
+   
+    const orderData: IOrderCreateRequest = {
+      address: appContext.currentAddress,
+      location: appContext.currentLocation,
+      paymentMethod: cartContext.cart.paymentMethod || paymentMethod,
+      deliveryMethod: cartContext.cart.deliveryMethod,
+      platform: Platform.Site,
+      email: appContext.user.email ?  appContext.user.email: cartContext.cart.email,
+      personsCount: cartContext.cart.personsCount,
+      clientName: appContext.user.name,
+      isPreOrder: cartContext.cart.isPreOrder,
+      preOrderAt: cartContext.cart.preOrderAt,
+      moneyChange: cartContext.cart.moneyChange,
+      isContactLessDelivery: cartContext.cart.isContactLessDelivery
+    }
 
-  const handlePay = () => {
-
+    OrderRepository.create(orderData)
+    .then(res => {
+      if(res.paymentMethod === PaymentMethod.CardOnline) {
+        window.location.href = res.paymentData.payUrl
+      }
+    })
   }
-  const handleSubmit = () => {
-    //pay
+
+  const handleSubmit = () => {  
     if(!appContext.isLogged){
       appContext.showModal(ModalType.Login)
       return
@@ -70,18 +98,20 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     if(!paymentMethod && state === State.Closed){
       setState(State.Opened)
       return
-    }else if(paymentMethod === PaymentMethod.CardOnline && appContext.user?.email){
+    }else if(paymentMethod === PaymentMethod.CardOnline && !appContext.user?.email){
       setState(State.Email)
     }else{
-
+      createNewOrder()    
     }
   }
+
   const handleSelectPaymentMethod = (method: PaymentMethod) => {
     if(method === PaymentMethod.Cash){
       setState(State.Cash)
     }
     setPaymentMethod(method)
   }
+
   const handleTitleClick = () => {
     switch (state){
       case State.Cash:
@@ -96,6 +126,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
         break
     }
   }
+
   const currentPaymentItem = paymentMethod ?
     <PaymentMethodItem heading={'Оплата'} item={paymentOptions.find(i => i.value === paymentMethod)}/> : null
 

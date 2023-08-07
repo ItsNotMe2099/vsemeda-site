@@ -28,17 +28,20 @@ export default function CashForm(props: Props) {
   const  minMoneyChange = (value: string | number): string | undefined => {
     return isNaN(+value) || value  < cartContext.cart.total ? 'Введенное число должно быть больше суммы заказа' : undefined
   }
-  const submit = async (data: IFormData) => {
+  const submit = (data: IFormData) => {
     try {
       setLoading(true)
-      await cartContext.update({...data, moneyChange: data.needMoneyChange ?  +data.moneyChange : null})
-      props.onSubmit()
+      cartContext.update({...data, moneyChange: data.needMoneyChange ?  +data.moneyChange : null})
+      .then(() => {
+        setLoading(false)
+        props.onSubmit()
+      })
     } catch (err: any) {
       if (err instanceof RequestError) {
         appContext.showSnackbar(err.message, SnackbarType.error)
+        setLoading(false)
       }
     }
-    setLoading(false)
   }
 
   const formik = useFormik<IFormData>({
@@ -49,6 +52,7 @@ export default function CashForm(props: Props) {
     onSubmit: submit
   })
 
+  //TODO: неправильно высчитывает сумму сдачи, не учитывает доставку и сервисный сбор почему-то (на формирование корзины не влияет, только визуал)
   return (
 
     <FormikProvider value={formik}>

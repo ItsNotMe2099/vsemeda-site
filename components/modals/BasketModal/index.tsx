@@ -30,14 +30,16 @@ export default function BasketModal(props: Props) {
 
   const cartContext = useCartContext()
   const appContext = useAppContext()
-const header = (
 
+  const header = (
   <div className={styles.close}>
     <BackBtn bgColor='white' onClick={handleCloseClick} />
   </div>
   )
-  const body = ( cartContext.isEmpty ? <BasketEmpty/> : (
-      <>
+
+  const body = ( cartContext.isEmpty 
+    ? <BasketEmpty/> 
+    : (<>
         <div className={styles.content}>
           <div className={styles.title}>Ваш заказ 🤝</div>
           <BasketAddressDetails/>
@@ -47,13 +49,12 @@ const header = (
           {!cartContext.cart?.lines.length ? <div className={styles.empty}>Корзина пуста</div> : null}
           {cartContext.cart?.lines.map(i =>
             <CartLine item={i} key={i.id} quantity={cartContext.groupingIdQuantityMap[i.groupingId]}/>
-            )}
+          )}
         </div>
         {cartContext.cart?.lines.length ? <PromoForm className={styles.promo} /> : null}
-      </>
-      
-      )
+      </>)
   )
+  
   const footer = !cartContext.isEmpty && (<PaymentSelect/>)
 
   if (props.isBottomSheet) {

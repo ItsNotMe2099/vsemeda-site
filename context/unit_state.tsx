@@ -91,7 +91,6 @@ export function UnitWrapper(props: Props) {
       setScrollFired(false)
 
     }, 2000)
-    // withThrottle(setScrollFired, 8000)(false)
   }
 
   const init = async () => {

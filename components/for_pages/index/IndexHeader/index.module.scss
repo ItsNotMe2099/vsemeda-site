@@ -46,9 +46,10 @@
   position: relative;
   z-index: 1;
 
-  // @include mq($PhoneWidth, max) {
-  //   margin-top: 114px;
-  // }
+  @include mq($PhoneWidth, max) {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .title {

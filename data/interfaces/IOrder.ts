@@ -5,9 +5,13 @@ import {IBrand} from 'data/interfaces/IBrand'
 import {IUserAddress} from 'data/interfaces/IUserAddress'
 import {ILocation} from 'data/interfaces/ILocation'
 import {IOrderLine} from 'data/interfaces/IOrderLine'
+import { IOrderStateDetails } from './IOrderStateDetails'
+import { OrderState } from 'data/enum/OrderState'
 export interface IOrderPaymentData{
   payUrl: string
 }
+
+
 export interface IOrder {
   id: string;
   number: string;
@@ -31,5 +35,7 @@ export interface IOrder {
   moneyChange: number;
   isContactLessDelivery: boolean;
   lines: IOrderLine[];
-  paymentData?: IOrderPaymentData
+  paymentData?: IOrderPaymentData,
+  stateDetails?: IOrderStateDetails,
+  state?: OrderState
 }
