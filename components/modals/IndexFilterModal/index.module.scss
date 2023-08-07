@@ -170,6 +170,8 @@
   }
 }
 
+
+//TODO: зарефакторить, потому что пришлось перебивать стили в компоненте с important
 .promo{
   padding: 0;
   margin-bottom: 0;
@@ -199,7 +201,7 @@
   color: black !important;
   @include mq($PhoneWidth, max) {
     margin-left: unset !important;
-    color: $white;
+    color: $white !important;
   }
 }
 
@@ -214,7 +216,7 @@
     background-color: $white;
     
     .radioLabel {
-      color: $purple2;
+      color: $purple2 !important;
     }
   }
 }
@@ -244,7 +246,7 @@
     background-color: $white;
     
     .radioLabel {
-      color: $purple2;
+      color: $purple2 !important;
     }
   }
 }
@@ -258,6 +260,8 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border-top: 2px $purple2 solid;
+  display: flex;
+  justify-content: space-between;
 }
 
 

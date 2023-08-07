@@ -1,30 +1,25 @@
+import { ISearchUnit } from 'data/interfaces/ISearchBrand'
 import styles from './index.module.scss'
 import ResultItem from './ResultItem'
 
 
 interface Props {
-    found: number
+    results: ISearchUnit[]
+   
 }
 
 export default function SearchPage(props: Props) {
 
-    const body = (<>
-    {props.found &&
-        <p className={styles.found}>{props.found}</p>
-    }
-        
+  
+
+    const body = (
     <div className={styles.root}>
-      <ResultItem/>
-      <ResultItem/>
-      <ResultItem/>
-      <ResultItem/>
-      <ResultItem/>
-      <ResultItem/>
-    </div>
-    </>
-    )
-
-
+        {props.results?
+            props.results.map(item => {
+                return <ResultItem key={item.id} unit={item}/>
+            }): null
+        }
+    </div>)
 
     return (<>
         {body}

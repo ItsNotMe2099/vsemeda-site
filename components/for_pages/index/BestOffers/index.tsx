@@ -25,8 +25,7 @@ export default function BestOffers(props: Props) {
   }
   
 
-  //TODO: как будто не  убирается eventListener при размонтировании... 
-  //поэтому вылетает ошибка при переходе с главной на другую страницу (пока пофиксил костылем)
+
 
   const throt = useThrottleFn((e, top)=> {    
     if(!offersRef.current) {return}
@@ -34,6 +33,8 @@ export default function BestOffers(props: Props) {
     offersRef.current.style.cssText = `transform: translate(${(top - topPos)*1.5}px) ;`        
   }, 50)
 
+    //TODO: как будто не  убирается eventListener при размонтировании... 
+  //поэтому вылетает ошибка при переходе с главной на другую страницу (пока пофиксил костылем)
   const scrollProgress = (type? :'stop') => {  
     if(!offersRef.current) {return}    
     const top = offersRef.current.getBoundingClientRect().top

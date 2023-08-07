@@ -29,8 +29,8 @@
 
 .card {
   &:hover {
-    transform: unset;
-    box-shadow: unset;
+    transform: unset !important;
+    box-shadow: unset !important;
   }
 }
 

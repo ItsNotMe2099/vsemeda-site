@@ -1,15 +1,14 @@
-import MopedSvg from 'components/svg/MopedSvg'
-import ShieldCheckSvg from 'components/svg/ShieldCheckSvg'
 import StartFilledSvg from 'components/svg/StartFilledSvg'
-import TicketDiscountSvg from 'components/svg/TicketDiscount'
 import { colors } from 'styles/variables'
 import styles from './index.module.scss'
 import Product from './Product'
 import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react'
+import { ISearchUnit } from 'data/interfaces/ISearchBrand'
+import Image from 'next/image'
 
 
 interface Props {
-
+    unit: ISearchUnit
 }
 
 export default function ResultItem(props: Props) {
@@ -20,48 +19,30 @@ export default function ResultItem(props: Props) {
 
     return (<div className={styles.root}>
         <div className={styles.top}>
-            <div className={styles.imgWrapper}>
-                {/* //тут будет изображение */}
+            <div className={styles.imgWrapper}>             
+                <Image src={props.unit.brand.image.link} alt={props.unit.brand.name} width={100} height={100}/>
                 <div className={styles.rating}>
                     <StartFilledSvg color={colors.white}/>
-                    <p>{'4.5'}</p>
+                    <p>{props.unit.rating}</p>
                 </div>
             </div>
             <div className={styles.info}>
                 <div className={styles.restInfo}>
-                    <p className={styles.delay}> <MopedSvg color={colors.red}/> Задержка +{'20'} мин</p>
-                    <p className={styles.restName}>Ollis</p>
-                    <p className={styles.restType}><ShieldCheckSvg color={colors.green}/>  &#183; {'₽₽₽'} &#183; {'Фастфуд'}</p>
+                    <p className={styles.restName}>{props.unit.brand.name}</p>
                 </div>
-                <p className={styles.time}>{'75 мин'} &#183; {'8 km'}</p>
-                <p className={styles.discount}>
-                    <TicketDiscountSvg color={colors.green}/>
-                    Скидка {'20%'}
-                    &#183;
-                    <span className={styles.discount__more}>7+</span>
-                </p>
+                <p className={styles.time}>{props.unit.deliveryTime} мин</p>              
             </div>
         </div>
         <div className={styles.bottom}>
-            {/* //TODO: сюда рендер продуктов из поиска, сделать InfiniteScroll */}
+            
+            {/* //TODO: сделать InfiniteScroll */}
+            {props.unit.products.length > 1 ? 
             <Swiper {...swiperOptions}>
-                <SwiperSlide className={styles.slide}>
-                    <Product/>
-                </SwiperSlide >
-                <SwiperSlide className={styles.slide}>
-                    <Product/>
-                </SwiperSlide>
-                <SwiperSlide className={styles.slide}>
-                    <Product/>
-                </SwiperSlide>
-                <SwiperSlide className={styles.slide}>
-                    <Product/>
-                </SwiperSlide>
-                <SwiperSlide className={styles.slide}>
-                    <Product/>
-                </SwiperSlide>
-                
-            </Swiper>
+                {props.unit.products.map(product => {
+                    return <SwiperSlide key={product.id} className={styles.slide}><Product product={product}/></SwiperSlide >
+                })}
+            </Swiper> : <Product product={props.unit.products[0]}/>
+            }
             
         </div>
     </div>)
