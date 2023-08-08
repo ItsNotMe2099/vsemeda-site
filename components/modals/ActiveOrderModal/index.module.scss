@@ -1,0 +1,118 @@
+@import "styles/index";
+
+
+.body {
+  position: relative;
+  height: 70vw;
+  max-height: 796px;
+  width: 100%;
+  display: flex;
+  border-radius: 32px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+  @include mq($PhoneWidth, max) {
+    width: 100%;
+    height: 100%;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      height: fit-content;
+      background-image: url('/images/mobileBg/mobileBg.png');
+
+
+    }
+
+  }
+} 
+
+.closeWrapper {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 16px;
+  rotate: 0deg;
+  transition: .3s ease-in-out;
+  cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      rotate: 90deg;
+    }
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+.primaryText {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 20px;
+
+}
+
+.secondaryText {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.button {
+  border-radius: 17px;
+  display: flex;
+  justify-content: center;
+  padding: 14px 15px 10px;
+  width: 48%;
+  scale: 1;
+  transition: .3s ease-in-out;
+  cursor: pointer;
+  font-size: clamp(12px, 3vw, 16px);
+  line-height: 100%;
+  align-items: center;
+  @media (hover: hover) {
+    &:hover {
+      scale: 1.04;
+    }
+  } 
+}
+
+.cancelButton {
+  @extend .button;
+  background-color: $white;
+  color: $black;
+  @include mq($PhoneWidth, max) {
+    column-gap: 10px;
+    background-color: transparent;
+    border: 1px $grey1 solid;
+    color: $grey1;
+  }
+}
+
+.payButton {
+  @extend .button;
+  background-color: $black;
+  color: $white;
+  @include mq($PhoneWidth, max) {
+    background-color: $green;
+    color: $black;
+  }
+}
+
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  min-width: 300px;
+  @include mq($PhoneWidth, max) {
+    width: 100%;
+    justify-content: center;
+    column-gap: 2%;
+  }
+}

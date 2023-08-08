@@ -17,6 +17,7 @@ import EmailForm from 'components/modals/BasketModal/EmailForm'
 import { IOrderCreateRequest } from 'data/interfaces/IOrderCreateRequest'
 import { Platform } from 'data/enum/Plaform'
 import OrderRepository from 'data/repositories/OrderRepository'
+import { useResize } from 'components/hooks/useResize'
 
 enum State {
   Closed = 'closed',
@@ -36,6 +37,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   const cartContext = useCartContext()
   const appContext = useAppContext()
   const [state, setState] = useState<State>(State.Closed)
+  const {isPhoneWidth} = useResize()
 
   const [loading, setLoading] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState(cartContext.cart?.paymentMethod)
@@ -83,9 +85,13 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }
 
     OrderRepository.create(orderData)
-    .then(res => {
+    .then(res => {      
       if(res.paymentMethod === PaymentMethod.CardOnline) {
         window.location.href = res.paymentData.payUrl
+      } else {
+        isPhoneWidth 
+        ? appContext.showBottomSheet(ModalType.ActiveOrder, res)
+        : appContext.showModal(ModalType.ActiveOrder, res)
       }
     })
   }

@@ -1,4 +1,4 @@
-import { OrderStateButton, OrderStateColor, OrderStateIcon } from "data/enum/OrderState";
+import { OrderStateButton, OrderStateColor, OrderStateIcon } from 'data/enum/OrderState'
 
 export interface IOrderStateDetails {
     name: string;

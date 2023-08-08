@@ -15,12 +15,11 @@ import UserMenu from './UserMenu'
 import IconButton from 'components/ui/IconButton'
 import MenuSvg from 'components/svg/MenuSvg'
 import BackBtn from 'components/ui/BackBtn'
-// import BurgerSvg from 'components/svg/BurgerSvg'
 import BasketButton from 'components/layout/Header/BasketButton'
 import ArrowHeaderSvg from 'components/svg/ArrowHeaderSvg'
-// import HeaderDelivery from './HeaderDelivery'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
 import { ModalType } from 'types/enums'
+import ActiveOrder from 'components/for_pages/index/ActiveOrder'
 
 interface Props {
   isSticky?: boolean
@@ -33,15 +32,15 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
 
   const appContext = useAppContext()
   const basketButtonRef = useRef()
+  const router = useRouter()
+
   const handleOpenMobileMenu = () => {
     appContext.showModal(ModalType.ProfileMenu)
   }
 
-  const router = useRouter()
-
+  //TODO: возможно отрефакторить эти проверки и поменять basePath
   const basePath = '/moskva'
 
-  //TODO: возможно отрефакторить эти проверки
   const isOnRestaurantPage = router.asPath.search('/rest/') >= 0 
   const isOnMainPage = router.asPath === `/${appContext.regionSlug}`
 
@@ -77,6 +76,7 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             <BasketButton ref={basketButtonRef}/>
             <DividerDotsSvg className={styles.divider} />
             {!appContext.isLogged ? <LoginButton /> : <UserMenu />}
+            <ActiveOrder/>
           </div>
           <div className={classNames(styles.shadow, styles.shadow1)} />
           <div className={classNames(styles.shadow, styles.shadow2)} />

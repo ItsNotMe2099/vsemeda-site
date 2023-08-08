@@ -32,6 +32,16 @@ export default class OrderRepository {
   }
 
 
+  //TODO: уточнить про отмену заказа, потому что эндпоинт не работает
+  static async cancel(id: string): Promise<IOrder> {
+    const res = await request<IOrder>({
+      method: 'post',
+      url: `/api/order/${id}/cancel`,
+    })
+    return res
+  }
+
+
   static async create(data: IOrderCreateRequest): Promise<IOrder> {
     const res = await request<IOrder>({
       method: 'post',

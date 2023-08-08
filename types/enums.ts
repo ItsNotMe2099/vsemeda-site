@@ -11,7 +11,8 @@ export enum ModalType {
   IndexFilter = 'indexFilter',
   Confirm = 'confirm',
   Feedbacks = 'feedbacks',
-  Search = 'search'
+  Search = 'search',
+  ActiveOrder = 'activeOrderModal'
 }
 
 export enum SnackbarType {
@@ -56,4 +57,15 @@ export enum Preset {
   xlResize,
   /** 1800px */
   xlCrop,
+}
+
+export enum RiveArtboard {
+  loader_v1 = 'loader_v1',
+  loader_v2 = 'loader_v2',
+  loader_v3 = 'loader_v3',
+  spinner = 'spinner',
+  delivered = 'delivered',
+  delivering = 'delivering',
+  preparing = 'preparing',
+  phone = 'phone'
 }

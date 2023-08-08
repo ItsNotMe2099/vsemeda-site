@@ -15,6 +15,7 @@ import PreOrderModal from 'components/modals/PreOrderModal'
 import IndexFilterModal from 'components/modals/IndexFilterModal'
 import {ConfirmModal} from 'components/modals/ConfirmModal'
 import FeedbacksModal from 'components/modals/FeedbacksModal'
+import ActiveOrderModal from 'components/modals/ActiveOrderModal'
 
 
 interface Props { }
@@ -68,6 +69,9 @@ export default function ModalContainer(props: Props) {
         </Modal>
         <Modal isOpen={appContext.modal === ModalType.Feedbacks} {...commonSettings}>
           {appContext.modal === ModalType.Feedbacks && <FeedbacksModal onRequestClose={appContext.hideModal} />}
+        </Modal>  
+        <Modal isOpen={appContext.modal === ModalType.ActiveOrder} {...commonSettings}>
+          {appContext.modal === ModalType.ActiveOrder && <ActiveOrderModal onRequestClose={appContext.hideModal} />}
         </Modal> 
       </div>
     </RemoveScroll>

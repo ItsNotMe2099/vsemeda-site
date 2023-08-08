@@ -29,14 +29,16 @@ export default function EmailForm(props: Props) {
   const submit = async (data: IFormData) => {    
     try {
       setLoading(true)
-      await cartContext.update({...data, email: data.email ? data.email : undefined})
-      props.onSubmit()
+      cartContext.update({...data, email: data.email ? data.email : undefined})
+      .then(() => {
+        props.onSubmit()
+        setLoading(false)
+      })
     } catch (err: any) {
       if (err instanceof RequestError) {
         appContext.showSnackbar(err.message, SnackbarType.error)
       }
     }
-    setLoading(false)
   }
 
   const formik = useFormik<IFormData>({

@@ -1,0 +1,53 @@
+@import "styles/index";
+
+.root {
+    border-radius: 16px;
+    background-color: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    margin-left: 12px;
+    user-select: none;
+    cursor: pointer;
+    // @media (hover: hover) {
+    // }
+    @include mq($PhoneWidth, max) {
+        padding: 16px;
+        margin-top: 30px;
+        width: 100%;
+        margin-left: unset;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        height: unset;
+        align-items: flex-start;
+    }
+
+}
+
+.descWrapper {
+    display: flex;
+    flex-wrap: wrap;  
+    flex-direction: column; 
+    align-items: center;
+    margin-left: 6px;
+    @include mq($PhoneWidth, max) {
+        margin-left: unset;
+        row-gap: 4px;
+        align-items: flex-start;
+    }
+ }
+
+.rive {
+    width: 24px;
+    height: 24px;
+}
+
+.primaryText {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.secondaryText {
+    font-size: 12px;
+}

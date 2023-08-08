@@ -18,6 +18,7 @@
     "@pbe/react-yandex-maps": "^1.2.2",
     "@react-cmpt/use-throttle": "^0.3.3",
     "@rehooks/local-storage": "^2.4.4",
+    "@rive-app/react-canvas": "^4.1.2",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",

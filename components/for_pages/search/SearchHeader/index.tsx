@@ -24,6 +24,7 @@ export default function SearchHeader(props: Props) {
 
   const [inputValue, changeInputValue] = useState<string>(props.inputValue||'')
 
+  //TODO: вынести дебаунс наверх
   const withThrottle = useThrottleFn((data)=> {    
     props.onChange(data)
   }, 300)
