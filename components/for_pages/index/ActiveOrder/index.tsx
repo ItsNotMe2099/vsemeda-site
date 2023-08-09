@@ -19,7 +19,7 @@ export default function ActiveOrder(props: Props) {
       setActiveOrders(res)
     })
   }, [])
-
+  
   return (
     <div className={styles.root}>
       {activeOrders.map(item => <ActiveOrderItem key={item.id} item={item}/>)}
