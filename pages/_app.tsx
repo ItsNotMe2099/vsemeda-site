@@ -17,6 +17,7 @@ import {CookiesType} from 'types/enums'
 import {CartWrapper} from 'context/cart_state'
 import 'swiper/css'
 import {CookiesProvider} from 'react-cookie'
+import { ActiveOrderWrapper } from 'context/order_state'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
@@ -42,21 +43,23 @@ function MyApp({Component, pageProps}: AppProps) {
     <CookiesProvider cookies={(Component as any).universalCookies}>
       <AppWrapper isMobile={pageProps.isMobile} token={pageProps.token} regionSlug={pageProps.region}>
         <AddressWrapper>
-          <CartWrapper>
-            <AuthWrapper>
-              <Head>
-                <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover"
-                />
-              </Head>
-              <Component {...pageProps} />
-              {clientVisible && <ModalContainer/>}
-              {clientVisible && <BottomSheetContainer/>}
-              {clientVisible && <Snackbar/>}
-              <AppOverlay/>
-            </AuthWrapper>
-          </CartWrapper>
+          <ActiveOrderWrapper>
+            <CartWrapper>
+              <AuthWrapper>
+                <Head>
+                  <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover"
+                  />
+                </Head>
+                <Component {...pageProps} />
+                {clientVisible && <ModalContainer/>}
+                {clientVisible && <BottomSheetContainer/>}
+                {clientVisible && <Snackbar/>}
+                <AppOverlay/>
+              </AuthWrapper>
+            </CartWrapper>
+          </ActiveOrderWrapper>
         </AddressWrapper>
       </AppWrapper>
     </CookiesProvider>

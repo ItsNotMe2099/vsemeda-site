@@ -10,8 +10,8 @@
     margin-left: 12px;
     user-select: none;
     cursor: pointer;
-    // @media (hover: hover) {
-    // }
+    width: max-content;
+
     @include mq($PhoneWidth, max) {
         padding: 16px;
         margin-top: 30px;

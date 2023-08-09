@@ -1,6 +1,5 @@
 import styles from './index.module.scss'
 import RadioListField from 'components/fields/RadioListField'
-import { useCartContext } from 'context/cart_state'
 import { useAppContext } from 'context/state'
 import { OrderCancelReason } from 'data/enum/OrderState'
 import OrderRepository from 'data/repositories/OrderRepository'
@@ -8,18 +7,19 @@ import { Form, FormikProvider, useFormik } from 'formik'
 import { ModalType, SnackbarType } from 'types/enums'
 import { colors } from 'styles/variables'
 import ChevronSvg from 'components/svg/ChevronSvg'
+import { useOrderContext } from 'context/order_state'
 
 interface Props {
   id: string,
   isBottomSheet: boolean,
-  onBackPress: () => void
+  onBackClick: () => void
   image: JSX.Element
 }
 
 export default function CancelReasonForm(props: Props) {
 
   const appContext = useAppContext()
-  const {setIsOrderActive} = useCartContext()
+  const {setIsOrderActive} = useOrderContext()
 
   const submit = (data: { cancelReason: OrderCancelReason|undefined }) => {
    
@@ -31,7 +31,7 @@ export default function CancelReasonForm(props: Props) {
       OrderRepository.cancel(props.id, data)
       .then(res => {
 
-        props.onBackPress()
+        props.onBackClick()
         
         props.isBottomSheet
         ?appContext.hideBottomSheet()
@@ -65,7 +65,7 @@ export default function CancelReasonForm(props: Props) {
 
   return (
     <div className={styles.root}>
-      <div className={styles.header} onClick={props.onBackPress}>
+      <div className={styles.header} onClick={props.onBackClick}>
         <ChevronSvg className={styles.leftChevron} color={colors.black}/>
         <p className={styles.headerText}>
           Укажите причину отмены

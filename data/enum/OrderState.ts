@@ -45,3 +45,8 @@ export enum OrderCancelReason {
   ChangeMyMind = 'changeMyMind',
   Other = 'other',
 }
+
+export enum OrderInitType {
+  Start =  'start',
+  Stop = 'stop'
+}

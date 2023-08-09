@@ -8,6 +8,7 @@
   justify-content: center;
   max-width: 100%;
   transition: .1s linear;
+  
   @include mq($TabletWidth, max) {
     flex-wrap: wrap;
   }
@@ -15,7 +16,8 @@
   @include mq($PhoneWidth, max) {
     align-items: baseline;
     height: 100%;
-    flex-direction: column
+    flex-direction: column;
+    padding-inline: 24px;
   }
 }
 

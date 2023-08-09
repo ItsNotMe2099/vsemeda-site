@@ -1,3 +1,25 @@
+@import "styles/index";
+
 .root {
-    display: flex;
+    @include mq($PhoneWidth, min) {
+        display: flex;
+        max-width: 30%;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-left: 10px;
+    }
+}
+
+.slide {
+    width: unset;
+    @include mq($PhoneWidth, max) {
+        width: 100%;
+    }
+}
+
+.swiper {
+    @include mq($PhoneWidth, max) {
+        width: 100%;
+        padding-inline: 24px;
+    }
 }

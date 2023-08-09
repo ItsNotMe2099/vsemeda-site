@@ -70,7 +70,7 @@ export default function ActiveOrderModal(props: Props) {
     <CancelReasonForm 
       id={item.id} 
       isBottomSheet={props.isBottomSheet} 
-      onBackPress={()=>{setCancelOrder(false)}}
+      onBackClick={()=>{setCancelOrder(false)}}
       image={image(45, 45)}
     />
     : 
