@@ -3,26 +3,36 @@ import styles from './index.module.scss'
 import { useEffect, useState } from 'react'
 import OrderRepository from 'data/repositories/OrderRepository'
 import ActiveOrderItem from './ActiveOrderItem'
+import { useCartContext } from 'context/cart_state'
+import { useAppContext } from 'context/state'
 
 interface Props {
    
 }
 
 export default function ActiveOrder(props: Props) {
-
+  const appContext = useAppContext()
   const [activeOrders, setActiveOrders] = useState<IOrder[]>([]) 
+  const {isActiveOrder, setIsOrderActive} = useCartContext()
 
   // получение активного заказа
   useEffect(()=> {
-    OrderRepository.fetchActive()
-    .then(res=> {
-      setActiveOrders(res)
-    })
-  }, [])
-  
-  return (
-    <div className={styles.root}>
-      {activeOrders.map(item => <ActiveOrderItem key={item.id} item={item}/>)}
-    </div>
-  )
+    if(appContext.isLogged) {
+
+      OrderRepository.fetchActive()
+      .then(res=> {
+        setIsOrderActive(true)
+        setActiveOrders(res)
+      })
+    }
+  }, [appContext.isLogged])
+
+  if(isActiveOrder) {
+    return (
+      <div className={styles.root}>
+        {activeOrders.map(item => <ActiveOrderItem key={item.id} item={item}/>)}
+      </div>
+    )
+  }
+  else return null
 }

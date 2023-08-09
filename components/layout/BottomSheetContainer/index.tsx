@@ -67,7 +67,7 @@ export default function BottomSheetContainer(props: Props) {
         <Sheet
           isOpen={appContext.bottomSheet == ModalType.ActiveOrder}
           onClose={appContext.hideBottomSheet}    
-          snapPoints={[300]}     
+          snapPoints={[350]}     
           disableDrag={appContext.modalNonSkippable}
           className={styles[appContext.bottomSheet]}
         >

@@ -33,8 +33,8 @@ export default function ActiveOrderItem(props: Props) {
     const clickHandler = () => {
         appContext.hideModal()
         isPhoneWidth 
-        ? appContext.showBottomSheet(ModalType.ActiveOrder, {item: props.item, style: style, image: image})
-        : appContext.showModal(ModalType.ActiveOrder, {item: props.item, style: style, image: image})
+        ? appContext.showBottomSheet(ModalType.ActiveOrder, props.item)
+        : appContext.showModal(ModalType.ActiveOrder, props.item)
     } 
 
     return (<div className={styles.root} style={style} onClick={clickHandler}>

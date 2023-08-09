@@ -39,3 +39,9 @@ export enum OrderStateColor {
   Orange = 'orange',
   Red = 'red',
 }
+
+export enum OrderCancelReason {
+  ChangeOrder = 'changeOrder',
+  ChangeMyMind = 'changeMyMind',
+  Other = 'other',
+}

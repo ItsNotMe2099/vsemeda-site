@@ -64,7 +64,7 @@
 }
 
 .button {
-  border-radius: 17px;
+  border-radius: Clamp(10px, 2vw, 17px);
   display: flex;
   justify-content: center;
   padding: 14px 15px 10px;
@@ -80,6 +80,8 @@
       scale: 1.04;
     }
   } 
+
+  
 }
 
 .cancelButton {
@@ -92,6 +94,14 @@
     border: 1px $grey1 solid;
     color: $grey1;
   }
+
+  &__white {
+    @include mq($PhoneWidth, max) {
+      background-color: $white;
+      border: unset;
+      color: $black;
+    }
+  }
 }
 
 .payButton {
@@ -101,6 +111,13 @@
   @include mq($PhoneWidth, max) {
     background-color: $green;
     color: $black;
+  }
+
+  &__black {
+    @include mq($PhoneWidth, max) {
+      background-color: $black;
+      color: $white;
+    }
   }
 }
 

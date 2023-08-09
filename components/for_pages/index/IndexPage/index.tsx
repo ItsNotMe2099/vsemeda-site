@@ -50,7 +50,7 @@ const IndexPageInner = (props: Props) => {
     <Layout>
         {indexPageContext.unitIndex && <><IndexHeader>
           {layoutItemBestOffers && <BestOffers item={layoutItemBestOffers} />}
-          { isPhoneWidth && appContext.isLogged &&  <ActiveOrder />}
+          { isPhoneWidth && <ActiveOrder />}
         </IndexHeader>
 
           <div className={styles.body}>

@@ -40,6 +40,9 @@ interface IState {
   totalWithDelivery: number
   totalBaseWithDelivery: number
   promos: IPromo[]
+  isActiveOrder: boolean,
+  setIsOrderActive: (type: boolean) => void
+
 }
 
 
@@ -64,6 +67,8 @@ const defaultValue: IState = {
   totalWithDelivery: 0,
   totalBaseWithDelivery: 0,
   promos: [],
+  isActiveOrder: false,
+  setIsOrderActive: () => null
 }
 
 const CartContext = createContext<IState>(defaultValue)
@@ -82,6 +87,7 @@ export function CartWrapper(props: Props) {
   const [groupingIdQuantityMap, setGroupingIdQuantityMapState] = useState<QuantityMap>({})
   const [productQuantityMap, setProductQuantityMap] = useState<QuantityMap>({})
   const productIsSyncingMapRef = useRef<BoolMap>({})
+  const [isActiveOrder, isActiveOrderChange] = useState<boolean>(false)
 
   const unit = cart?.unit
 
@@ -338,6 +344,10 @@ export function CartWrapper(props: Props) {
     totalWithDelivery: (cart?.total ?? 0) + (unit?.deliveryPrice ?? 0),
     totalBaseWithDelivery: (cart?.totalBase ?? 0) + (unit?.deliveryPrice ?? 0),
     promos: cart ?  [...(cart?.promo && !cart?.unit?.promoUnits?.find(i => i.promo?.id ===  cart?.promo?.id) ? [cart!.promo] : []), ...(cart?.unit.promoUnits?.map(i => i.promo) ?? [])] : [],
+    isActiveOrder,
+    setIsOrderActive: (type:boolean) => {
+      isActiveOrderChange(type)
+    }
   }
 
   return (

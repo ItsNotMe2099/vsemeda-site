@@ -5,6 +5,7 @@ import { IPagination, IPaginationRequest} from 'types/types'
 import {IOrder, IOrderPaymentData} from 'data/interfaces/IOrder'
 import {IOrderCreateRequest} from 'data/interfaces/IOrderCreateRequest'
 import {IReviewCreateRequest} from 'data/interfaces/IReviewCreateRequest'
+import { OrderCancelReason } from 'data/enum/OrderState'
 export default class OrderRepository {
   static async fetchActive(): Promise<IOrder[]> {
     const res = await request<IOrder[]>({
@@ -33,10 +34,11 @@ export default class OrderRepository {
 
 
   //TODO: уточнить про отмену заказа, потому что эндпоинт не работает
-  static async cancel(id: string): Promise<IOrder> {
+  static async cancel(id: string, data: {cancelReason: OrderCancelReason}): Promise<IOrder> {
     const res = await request<IOrder>({
-      method: 'post',
+      method: 'put',
       url: `/api/order/${id}/cancel`,
+      data
     })
     return res
   }

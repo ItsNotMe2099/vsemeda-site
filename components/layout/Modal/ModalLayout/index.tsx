@@ -7,14 +7,19 @@ import {useAppContext} from 'context/state'
 interface Props {
   fixed?: boolean
   children?: ReactElement | ReactElement[]
-  className?: string
+  className?: string,
+  backgroundColor? : string
+
 }
 
 export default function ModalLayout(props: Props) {
   const context = useAppContext()
 
   return (
-    <div className={classNames(styles.root, {[styles.fixed]: props.fixed || context.isMobile}, props.className)}>
+    <div 
+      className={classNames(styles.root, {[styles.fixed]: props.fixed || context.isMobile}, props.className)}
+      style={{background: props.backgroundColor}}
+    >
       {props.children}
     </div>
     )

@@ -9,13 +9,14 @@ import classNames from 'classnames'
 import CrossSvg from 'components/svg/CrossSvg'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
 import CancelSvg from 'components/svg/CancelSvg'
-import { OrderStateButton } from 'data/enum/OrderState'
+import { OrderState, OrderStateButton } from 'data/enum/OrderState'
 import RepeatSvg from 'components/svg/RepeatSvg'
 import OrderRepository from 'data/repositories/OrderRepository'
 import { useResize } from 'components/hooks/useResize'
 import { getOrderColor, getOrderIcon, getOrderImage } from 'components/for_pages/index/ActiveOrder/ActiveOrderItem'
-
-
+import { useEffect, useState } from 'react'
+import CancelReasonForm from './CancelReasonForm'
+import CSS from 'csstype'
 
 
 interface Props {
@@ -25,22 +26,17 @@ interface Props {
 }
 
 
-export default function ActiveOrderModal(props: Props) {
+export default function ActiveOrderModal(props: Props) {  
   const appContext = useAppContext()
   const {isPhoneWidth} = useResize()
-
-  const {item} = appContext.modalArguments as {item: IOrder}
+  const [cancelOrderModal, setCancelOrder] = useState<boolean>(false)
+  
+  const item = appContext.modalArguments as IOrder
   const orderType = getOrderIcon(item.stateDetails.icon)
   const style = getOrderColor(item.stateDetails.color)
   const image = (width: number, height: number) => {return getOrderImage(orderType, width, height)}
+  const [backgroundColor, changeBackgroundColor] = useState<CSS.Property.BackgroundColor>(style.backgroundColor)
 
-  const cancelHandler = () => {
-    /* TODO: нарисовать действие отмены на 
-    десктопе, потому что есть только для мобилки. 
-    видимо должна быть еще одна модалка для подтверждения */
-    OrderRepository.cancel(item.id)
-    appContext.hideModal()
-  }
 
   const payHandler = () => {
     OrderRepository.payById(item.id)
@@ -51,7 +47,7 @@ export default function ActiveOrderModal(props: Props) {
   }
 
   const cancelButton = (
-    <button type='button' className={styles.cancelButton} onClick={cancelHandler}> 
+    <button type='button' className={classNames(styles.cancelButton, item.state === OrderState.PaymentError&&styles.cancelButton__white)} onClick={()=> {setCancelOrder(true)}}> 
         {<VisibleOnSize width={breakpoints.PhoneWidth}>
             <CancelSvg/>
         </VisibleOnSize>} 
@@ -60,7 +56,7 @@ export default function ActiveOrderModal(props: Props) {
   )
 
   const payButton = (
-    <button className={styles.payButton}  type='button' onClick={payHandler}>Оплатить</button>
+    <button className={classNames(styles.payButton, item.state === OrderState.PaymentError&&styles.payButton__black)}  type='button' onClick={payHandler}>Оплатить</button>
   )
 
 
@@ -69,45 +65,67 @@ export default function ActiveOrderModal(props: Props) {
   )
     
     
-  const body = (
-    <div className={styles.body} style={style}>  
-        <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
-            <div className={styles.closeWrapper} onClick={props.onRequestClose}>
-                <CrossSvg color={colors.black}/>
-            </div>
-        </VisibleOnSize>
-        {isPhoneWidth? image(100, 100): image(140, 140)}
-        <p className={styles.primaryText}>
-            {item.stateDetails.name}
-        </p>
-        <p className={styles.secondaryText}>
-            {item.stateDetails.desc}
-        </p>
-        <div className={styles.buttonsWrapper}>
-            {item.stateDetails.buttons.map(item=> {                                
-                return item === OrderStateButton.Cancel
-                ?cancelButton
-                :item === OrderStateButton.Pay
-                ?payButton
-                :item === OrderStateButton.Repeat
-                ?repeatButton
-                :null
-            })}
-        </div>
+  const body = (cancelOrderModal
+    ? 
+    <CancelReasonForm 
+      id={item.id} 
+      isBottomSheet={props.isBottomSheet} 
+      onBackPress={()=>{setCancelOrder(false)}}
+      image={image(45, 45)}
+    />
+    : 
+    <div className={styles.body}>  
+      <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
+      <div className={styles.closeWrapper} onClick={props.onRequestClose}>
+      <CrossSvg color={colors.black}/>
+      </div>
+      </VisibleOnSize>
+      {isPhoneWidth? image(100, 100): image(140, 140)}
+      <p className={styles.primaryText}>
+        {item.stateDetails.name}
+      </p>
+      <p className={styles.secondaryText}>
+        {item.stateDetails.desc}
+      </p>
+      <div className={styles.buttonsWrapper}>
+          {item.stateDetails.buttons.map(item=> {                                
+            return item === OrderStateButton.Cancel
+            ?cancelButton
+            :item === OrderStateButton.Pay
+            ?payButton
+            :item === OrderStateButton.Repeat
+            ?repeatButton
+            :null
+          })}
+      </div>
     </div>
   )
 
+  useEffect(()=> {
+    if(cancelOrderModal) {
+      changeBackgroundColor(colors.green)
+    }
+    else {
+      changeBackgroundColor(style.backgroundColor)
+    }
 
+  }, [cancelOrderModal])
+
+
+
+  //TODO: взять картинку бэкграунда
   if (props.isBottomSheet) { 
     return (
-      <BottomSheetLayout closeIconColor={colors.black} backgroundColor={style.backgroundColor}>
-        <BottomSheetBody>{body}</BottomSheetBody>
+      <BottomSheetLayout closeIconColor={colors.black} backgroundColor={backgroundColor + ' url(/images/mobileBg/mobileBgLowOpacity.png)'}>
+        <BottomSheetBody>
+          {body}
+          </BottomSheetBody>
       </BottomSheetLayout>
     )
   }
 
   return (
-    <ModalLayout fixed className={classNames(styles.modalLayout)}>
+    <ModalLayout fixed className={classNames(styles.modalLayout)} backgroundColor={backgroundColor}>
       {body}
     </ModalLayout>
   )
