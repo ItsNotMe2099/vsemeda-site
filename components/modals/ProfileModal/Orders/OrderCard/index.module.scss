@@ -63,6 +63,7 @@
     gap: 6px;
     position: relative;
     margin-top: 8px;
+    align-items: center;
 
     .percent {
       font-weight: 500;
@@ -73,6 +74,7 @@
 
     img {
       position: relative !important;
+      width: 30px;
     }
   }
 }

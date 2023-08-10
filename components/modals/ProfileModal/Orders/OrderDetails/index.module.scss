@@ -1,0 +1,42 @@
+@import "styles/index";
+
+.root {
+  position: relative;
+
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:after {
+    content: '';
+    display: block;
+  }
+}
+
+.title {
+  font-size: 16px;
+  color: $white;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin:  0 auto;
+}
+
+.orderStatus {
+  width: 100% ;
+  height: 60px ;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  border-radius: 16px;
+  padding: 20px;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+

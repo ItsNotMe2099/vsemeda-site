@@ -33,7 +33,6 @@ export default class OrderRepository {
   }
 
 
-  //TODO: уточнить про отмену заказа, потому что эндпоинт не работает
   static async cancel(id: string, data: {cancelReason: OrderCancelReason}): Promise<IOrder> {
     const res = await request<IOrder>({
       method: 'put',
@@ -66,6 +65,15 @@ export default class OrderRepository {
       method: 'post',
       url: `/api/order/${orderId}/feedback`,
       data
+    })
+    return res
+  }
+
+  // пофиксить типизацию
+  static async getOrderStatusById(orderId: string): Promise<IOrder> {
+    const res = await request<any>({
+      method: 'get',
+      url: '/api/order/' + orderId
     })
     return res
   }

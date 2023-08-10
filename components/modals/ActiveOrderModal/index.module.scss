@@ -124,7 +124,8 @@
 
 .buttonsWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  column-gap: 2%;
   margin-top: 20px;
   min-width: 300px;
   @include mq($PhoneWidth, max) {

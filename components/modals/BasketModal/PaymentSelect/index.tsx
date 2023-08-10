@@ -1,4 +1,4 @@
-import {forwardRef, useEffect, useState} from 'react'
+import {forwardRef, useEffect, useRef, useState} from 'react'
 import styles from 'components/modals/BasketModal/PaymentSelect/index.module.scss'
 import CardCourierSvg from 'components/svg/CardCourierSvg'
 import CashSvg from 'components/svg/CashSvg'
@@ -41,11 +41,14 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
 
   const [loading, setLoading] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState(cartContext.cart?.paymentMethod)
+  const currentEmail = useRef<string|undefined>('')
+
   useEffect(() => {
     if (cartContext.cart?.paymentMethod) {
       setPaymentMethod(cartContext.cart?.paymentMethod)
     }
   }, [cartContext.cart?.paymentMethod])
+
 
   const paymentOptions = cartContext.unit.paymentMethods.map(i => {
     switch (i) {
@@ -63,6 +66,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   })
 
   const createNewOrder = () => {
+    
     /* TODO: добавить количество персон 
     добавить правильное отображение предзаказа и его времени,
     правильная работа свитчера бесконтактная оплата,
@@ -75,7 +79,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       paymentMethod: cartContext.cart.paymentMethod || paymentMethod,
       deliveryMethod: cartContext.cart.deliveryMethod,
       platform: Platform.Site,
-      email: appContext.user.email ?  appContext.user.email: cartContext.cart.email,
+      email: appContext.user.email ?  appContext.user.email: currentEmail.current,
       personsCount: cartContext.cart.personsCount,
       clientName: appContext.user.name,
       isPreOrder: cartContext.cart.isPreOrder,
@@ -96,7 +100,10 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     })
   }
 
-  const handleSubmit = () => {  
+  const handleSubmit = (mail?: string) => {  
+    
+    currentEmail.current = mail
+    
     if(!appContext.isLogged){
       appContext.showModal(ModalType.Login)
       return
@@ -104,10 +111,11 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     if(!paymentMethod && state === State.Closed){
       setState(State.Opened)
       return
-    }else if(paymentMethod === PaymentMethod.CardOnline && !appContext.user?.email){
+    }else if(paymentMethod === PaymentMethod.CardOnline && !appContext.user?.email && !currentEmail.current){
       setState(State.Email)
     }else{
       createNewOrder()    
+      cartContext.clear()
     }
   }
 
@@ -157,7 +165,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       </div>}
 
       {[State.Opened, State.Closed].includes(state) &&  <div className={styles.bottom}>
-        <PaymentButton onClick={handleSubmit} loading={loading}/>
+        <PaymentButton onClick={()=> {handleSubmit()}} loading={loading}/>
       </div>}
     </div>
   )

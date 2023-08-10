@@ -1,4 +1,5 @@
 import {IOrderModificationLine} from 'data/interfaces/IOrderModificationLine'
+import { IProduct } from './IProduct'
 
 export interface IOrderLine  {
   id: string
@@ -10,4 +11,5 @@ export interface IOrderLine  {
   productId: number
   isWeighted: boolean
   modificationsPrice: number
+  product?: IProduct
 }

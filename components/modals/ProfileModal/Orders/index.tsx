@@ -5,6 +5,9 @@ import { IOrder } from 'data/interfaces/IOrder'
 import OrderRepository from 'data/repositories/OrderRepository'
 import Spinner from 'components/ui/Spinner'
 import InfiniteScroll from 'react-infinite-scroll-component'
+// import OrderDetails from './OrderDetails'
+// import { useResize } from 'components/hooks/useResize'
+// import { useOrderContext } from 'context/order_state'
 
 
 interface Props {
@@ -18,6 +21,9 @@ export default function Orders(props: Props) {
   const [total, setTotal] = useState<number>(0)
   const [page, setPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false)
+  // const [orderDetails, setOrderDetails] = useState<IOrder|null>(null)
+  // const {isPhoneWidth} = useResize()
+  // const orderContext = useOrderContext()
 
   const fetchOrders = async (page: number, limit: number) => {
     setLoading(true)
@@ -45,6 +51,12 @@ export default function Orders(props: Props) {
     setLoading(false)
   }
 
+  // if(orderDetails && isPhoneWidth) {
+  //   return <OrderDetails item={orderDetails} onBackClick={()=>orderDetailsHandler()}/>
+  // }
+
+
+
   return (
     <>
       <div className={styles.title}>
@@ -61,7 +73,7 @@ export default function Orders(props: Props) {
             scrollableTarget='scrollableDiv'
           >
             {orders.map((i, index) =>
-              <OrderCard order={i} key={index} />
+              <OrderCard order={i} key={index}/>
             )}
           </InfiniteScroll>
         }

@@ -1,7 +1,7 @@
 import styles from './index.module.scss'
 import {Form, FormikProvider, useFormik} from 'formik'
 import InputField from 'components/fields/InputField'
-import {useCartContext} from 'context/cart_state'
+// import {useCartContext} from 'context/cart_state'
 import {useAppContext} from 'context/state'
 import {SnackbarType} from 'types/enums'
 import Spacer from 'components/ui/Spacer'
@@ -17,23 +17,26 @@ interface IFormData {
 }
 
 interface Props {
-  onSubmit: () => void
+  onSubmit: (string?: string) => void
 }
 
 export default function EmailForm(props: Props) {
 
-  const cartContext = useCartContext()
+  // const cartContext = useCartContext()
   const appContext = useAppContext()
   const [loading, setLoading] = useState(false)
+
+  //TODO: добавить проверку, что email является email-ом
 
   const submit = async (data: IFormData) => {    
     try {
       setLoading(true)
-      cartContext.update({...data, email: data.email ? data.email : undefined})
-      .then(() => {
-        props.onSubmit()
+      //bug: update не апдейтит емейл, вот никак... 
+      // cartContext.update({email: data.email ? data.email : undefined})
+      // .then((res) => {
+        props.onSubmit(data.email)
         setLoading(false)
-      })
+      // })
     } catch (err: any) {
       if (err instanceof RequestError) {
         appContext.showSnackbar(err.message, SnackbarType.error)
@@ -45,6 +48,7 @@ export default function EmailForm(props: Props) {
     initialValues: {
       moneyChange: null,
       needMoneyChange: true,
+      email: ''
     },
     onSubmit: submit
   })

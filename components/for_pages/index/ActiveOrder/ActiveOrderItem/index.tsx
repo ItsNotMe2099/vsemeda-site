@@ -11,6 +11,8 @@ import { useAppContext } from 'context/state'
 
 interface Props {
     item: IOrder
+    imageSizes?: {w: number, h: number}
+    rootClassName?: string
 }
 
 interface IOrderIconType {
@@ -20,28 +22,31 @@ interface IOrderIconType {
 
 
 
-export default function ActiveOrderItem(props: Props) {
+export default function ActiveOrderItem({item, imageSizes, rootClassName}: Props) {
 
     const {isPhoneWidth} = useResize()
     const appContext = useAppContext()
 
-    const orderType = getOrderIcon(props.item.stateDetails.icon)
-    const style = getOrderColor(props.item.stateDetails.color)
+    const orderType = getOrderIcon(item.stateDetails.icon)
+    const style = getOrderColor(item.stateDetails.color)
 
     const image = (width: number, height: number) => {return getOrderImage(orderType, width, height)}
 
     const clickHandler = () => {
         appContext.hideModal()
         isPhoneWidth 
-        ? appContext.showBottomSheet(ModalType.ActiveOrder, props.item)
-        : appContext.showModal(ModalType.ActiveOrder, props.item)
+        ? appContext.showBottomSheet(ModalType.ActiveOrder, item)
+        : appContext.showModal(ModalType.ActiveOrder, item)
     } 
 
-    return (<div className={styles.root} style={style} onClick={clickHandler}>
-        {isPhoneWidth?image(50, 50):image(24, 24)}
+    return (<div className={rootClassName?rootClassName:styles.root} style={style} onClick={clickHandler}>
+        {imageSizes
+        ? image(imageSizes.w, imageSizes.h)
+        : (isPhoneWidth?image( 50, 50):image(24, 24))
+        }
         <div className={styles.descWrapper}>
-            <p className={styles.primaryText}>{props.item.stateDetails.name}</p>
-            <p className={styles.secondaryText}>{props.item.stateDetails.desc}</p>
+            <p className={styles.primaryText}>{item.stateDetails.name}</p>
+            <p className={styles.secondaryText}>{item.stateDetails.desc}</p>
         </div>
     </div>)
 

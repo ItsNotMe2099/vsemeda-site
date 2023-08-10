@@ -63,7 +63,7 @@ const defaultValue: IState = {
   total: 0,
   totalWithDelivery: 0,
   totalBaseWithDelivery: 0,
-  promos: []
+  promos: [],
 }
 
 const CartContext = createContext<IState>(defaultValue)
@@ -82,6 +82,7 @@ export function CartWrapper(props: Props) {
   const [groupingIdQuantityMap, setGroupingIdQuantityMapState] = useState<QuantityMap>({})
   const [productQuantityMap, setProductQuantityMap] = useState<QuantityMap>({})
   const productIsSyncingMapRef = useRef<BoolMap>({})
+  
 
   const unit = cart?.unit
 
@@ -114,7 +115,7 @@ export function CartWrapper(props: Props) {
     groupingIdQuantityMapRef.current[key] = value
   }
   const fetch = async (): Promise<ICart> => {
- const cart = await CartRepository.fetch(appContext.currentLocation)
+    const cart = await CartRepository.fetch(appContext.currentLocation)
     setCart(cart)
     if (cart != null) {
       _updateQuantity()
@@ -257,6 +258,7 @@ export function CartWrapper(props: Props) {
   const clear = async () => {
     await CartRepository.clear()
     setCart(null)
+    clearQuantity()
   }
 
   useEffect(() => {

@@ -10,5 +10,4 @@ export interface ICartUpdateRequestData{
   preOrderAt?: string;
   moneyChange?: number;
   isContactLessDelivery?: boolean;
-  email? : string;
 }

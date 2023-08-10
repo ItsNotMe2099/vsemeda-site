@@ -19,7 +19,7 @@ interface Props {
 export default function CancelReasonForm(props: Props) {
 
   const appContext = useAppContext()
-  const {setIsOrderActive} = useOrderContext()
+  const {refreshOrders} = useOrderContext()
 
   const submit = (data: { cancelReason: OrderCancelReason|undefined }) => {
    
@@ -41,8 +41,7 @@ export default function CancelReasonForm(props: Props) {
         ?appContext.showBottomSheet(ModalType.ActiveOrder, res)
         : appContext.showModal(ModalType.ActiveOrder, res)
 
-        setIsOrderActive(false)
-
+        refreshOrders()
       })
     }
     catch (error: any) {

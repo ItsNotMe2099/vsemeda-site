@@ -1,20 +1,24 @@
 import { OrderInitType } from 'data/enum/OrderState'
 import { IOrder } from 'data/interfaces/IOrder'
 import OrderRepository from 'data/repositories/OrderRepository'
-import {createContext, ReactElement, useContext, useEffect, useRef, useState} from 'react'
+import {createContext, ReactElement, useContext,  useRef, useState} from 'react'
 
 interface IState {  
   init: (type: OrderInitType) => void
   ordersExist: boolean,
-  setIsOrderActive: (type: boolean) => void
+  refreshOrders: () => void
   activeOrders: IOrder[]|null
+  activeDetails: IOrder
+  fetchOrderDetails: (id: string)=> void
 }
 
 const defaultValue: IState = {  
   init: () => null,
   ordersExist: false,
-  setIsOrderActive: () => null,
-  activeOrders: null
+  refreshOrders: () => null,
+  activeOrders: null,
+  fetchOrderDetails: ()=>null,
+  activeDetails: null
 }
 
 const ActiveOrderContext = createContext<IState>(defaultValue)
@@ -26,20 +30,28 @@ interface Props {
 export function ActiveOrderWrapper(props: Props) {
   const [ordersExist, setExist] = useState<boolean>(false)
   const [activeOrders, setActiveOrders] = useState<IOrder[]>([]) 
-  const intervalId = useRef<ReturnType<typeof setInterval>>(null!)
+  const intervalId = useRef<any>(null!)
+  const [activeDetails, setActiveDetails] = useState<IOrder>()
   
-  const fetch = () => {
+  const fetchActive = () => {
     OrderRepository.fetchActive().then(res=> {
       setActiveOrders(res)
       setExist(true)
+      
+    })
+  }
+
+  const fetchOrderDetails = (id: string) => {
+    OrderRepository.fetchById(id).then(details=> {
+      setActiveDetails(details)
     })
   }
 
   const init = (type: OrderInitType) => {
     switch (type) {
       case OrderInitType.Start:
-        fetch()
-        intervalId.current = setInterval(fetch, 10000)
+        fetchActive()
+        intervalId.current = setInterval(fetchActive, 10000)
         break
       case OrderInitType.Stop : 
         intervalId.current && clearInterval(intervalId.current)  
@@ -48,17 +60,18 @@ export function ActiveOrderWrapper(props: Props) {
     }
   }
 
-  const setIsOrderActive = (type:boolean) => {
-    setExist(type)
+  const refreshOrders = () => {
+    fetchActive()
   }
-
 
   const value: IState = {
     ...defaultValue,
     ordersExist,
-    setIsOrderActive,
+    refreshOrders,
     init,
-    activeOrders
+    activeOrders,
+    fetchOrderDetails,
+    activeDetails
   }
 
   return (

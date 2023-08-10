@@ -11,6 +11,9 @@ import { useAuthContext } from 'context/auth_state'
 import { LoginFormData } from 'types/form_data/LoginFormData'
 import Image from 'next/image'
 import CirclesBgSvg from 'components/svg/CirclesBgSvg'
+import { useCartContext } from 'context/cart_state'
+import { useAppContext } from 'context/state'
+import { ModalType } from 'types/enums'
 
 
 interface Props {
@@ -26,9 +29,16 @@ export default function LoginForm(props: Props) {
 
   const [seconds, setSeconds] = useState<number>(0)
 
+  const cartContext = useCartContext()
+  const appContext = useAppContext()
 
   const submit = async (data: { phone: string, code: string }) => {
-    await authContext.confirmCode(data.code)
+    authContext.confirmCode(data.code).then(res=>{
+      
+      if(res && !cartContext.isEmpty) {
+        appContext.showModal(ModalType.Basket)
+      }
+    })
   }
 
   const formik = useFormik({

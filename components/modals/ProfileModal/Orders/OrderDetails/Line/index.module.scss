@@ -1,0 +1,48 @@
+@import "styles/index";
+
+.product {
+  display: flex;
+  align-items: center;
+  background-color: $white;
+  border-radius: 16px;
+  padding: 0px;
+  max-height: 0px;
+  transition: .3s linear;
+  overflow: hidden;
+
+  &_active {
+    animation: open .3s forwards;
+  }
+}
+
+@keyframes open {
+  100% {
+    max-height: 200px;
+    padding: 10px;
+  }
+}
+
+
+.name {
+  width: 60%;
+}
+
+.image {
+  width: 20%;
+  object-fit: contain;
+  height: auto;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.counter {
+  margin-left: auto;
+}
