@@ -20,8 +20,8 @@
   margin-top: 8px;
   overflow-y: auto;
   overflow-x: hidden;
-  // height: 100%;
-  height: calc(100% - 200px);
+  height: 100%;
+  // height: calc(100% - 200px);
 
   @include mq($PhoneWidth, max) {
     max-height: 510px;

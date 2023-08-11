@@ -11,6 +11,11 @@ export interface IOrderPaymentData{
   payUrl: string
 }
 
+interface Surcharges {
+  description: string
+  price: number
+}
+
 
 export interface IOrder {
   id: string;
@@ -38,4 +43,6 @@ export interface IOrder {
   paymentData?: IOrderPaymentData,
   stateDetails?: IOrderStateDetails,
   state?: OrderState
+  totalDelivery?: number
+  surcharges?: Surcharges[]
 }

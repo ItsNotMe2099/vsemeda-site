@@ -8,15 +8,14 @@ import ModalLayout from 'components/layout/Modal/ModalLayout'
 import classNames from 'classnames'
 import CrossSvg from 'components/svg/CrossSvg'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
-import CancelSvg from 'components/svg/CancelSvg'
 import { OrderState, OrderStateButton } from 'data/enum/OrderState'
-import RepeatSvg from 'components/svg/RepeatSvg'
 import OrderRepository from 'data/repositories/OrderRepository'
 import { useResize } from 'components/hooks/useResize'
-import { getOrderColor, getOrderIcon, getOrderImage } from 'components/for_pages/index/ActiveOrder/ActiveOrderItem'
 import { useEffect, useState } from 'react'
-import CancelReasonForm from './CancelReasonForm'
 import CSS from 'csstype'
+import OrderHelper from 'utils/orderHelper'
+import { CancelButton, PayButton, RepeatButton } from 'components/ui/OrderButtons'
+import CancelReasonForm from '../CancelReasonModal'
 
 
 interface Props {
@@ -31,47 +30,25 @@ export default function ActiveOrderModal(props: Props) {
   const {isPhoneWidth} = useResize()
   const [cancelOrderModal, setCancelOrder] = useState<boolean>(false)
   
-  const item = appContext.modalArguments as IOrder
-  const orderType = getOrderIcon(item.stateDetails.icon)
-  const style = getOrderColor(item.stateDetails.color)
-  const image = (width: number, height: number) => {return getOrderImage(orderType, width, height)}
-  const [backgroundColor, changeBackgroundColor] = useState<CSS.Property.BackgroundColor>(style.backgroundColor)
+  const order = appContext.modalArguments as IOrder
+  const orderHelper = new OrderHelper({color: order.stateDetails.color, icon: order.stateDetails.icon})
+  const [backgroundStyle] = orderHelper.background
+  const [backgroundColor, changeBackgroundColor] = useState<CSS.Property.BackgroundColor>(backgroundStyle.backgroundColor)
 
 
   const payHandler = () => {
-    OrderRepository.payById(item.id)
+    OrderRepository.payById(order.id)
     .then(res => {
         appContext.hideModal()
-        window.location.href = res.payUrl
+        window.open(res.payUrl, '_blank')
     })
   }
-
-  const cancelButton = (
-    <button type='button' className={classNames(styles.cancelButton, item.state === OrderState.PaymentError&&styles.cancelButton__white)} onClick={()=> {setCancelOrder(true)}}> 
-        {<VisibleOnSize width={breakpoints.PhoneWidth}>
-            <CancelSvg/>
-        </VisibleOnSize>} 
-        Отменить
-    </button>
-  )
-
-  const payButton = (
-    <button className={classNames(styles.payButton, item.state === OrderState.PaymentError&&styles.payButton__black)}  type='button' onClick={payHandler}>Оплатить</button>
-  )
-
-
-  const repeatButton = (
-    <button type='button'>{<RepeatSvg/>}Повторить оплату</button>
-  )
-    
     
   const body = (cancelOrderModal
     ? 
     <CancelReasonForm 
-      id={item.id} 
-      isBottomSheet={props.isBottomSheet} 
+      isBottomSheetPart={props.isBottomSheet} 
       onBackClick={()=>{setCancelOrder(false)}}
-      image={image(45, 45)}
     />
     : 
     <div className={styles.body}>  
@@ -80,21 +57,28 @@ export default function ActiveOrderModal(props: Props) {
       <CrossSvg color={colors.black}/>
       </div>
       </VisibleOnSize>
-      {isPhoneWidth? image(100, 100): image(140, 140)}
+      {isPhoneWidth? orderHelper.image(100, 100): orderHelper.image(140, 140)}
       <p className={styles.primaryText}>
-        {item.stateDetails.name}
+        {order.stateDetails.name}
       </p>
       <p className={styles.secondaryText}>
-        {item.stateDetails.desc}
+        {order.stateDetails.desc}
       </p>
       <div className={styles.buttonsWrapper}>
-          {item.stateDetails.buttons.map(item=> {                                
+          {order.stateDetails.buttons.map(item=> {                                
             return item === OrderStateButton.Cancel
-            ?cancelButton
-            :item === OrderStateButton.Pay
-            ?payButton
-            :item === OrderStateButton.Repeat
-            ?repeatButton
+            ? <CancelButton 
+              showSvg={true}
+              onClick={()=> {setCancelOrder(true)}}
+              className={classNames(styles.cancelButton, order.state === OrderState.PaymentError&&styles.cancelButton__white)}
+              />
+            : item === OrderStateButton.Pay
+            ? <PayButton  
+                className={classNames(styles.payButton, order.state === OrderState.PaymentError&&styles.payButton__black)}
+                onClick={payHandler}
+              />
+            : item === OrderStateButton.Repeat
+            ? <RepeatButton/>
             :null
           })}
       </div>
@@ -106,14 +90,11 @@ export default function ActiveOrderModal(props: Props) {
       changeBackgroundColor(colors.green)
     }
     else {
-      changeBackgroundColor(style.backgroundColor)
+      changeBackgroundColor(backgroundStyle.backgroundColor)
     }
 
   }, [cancelOrderModal])
 
-
-
-  //TODO: взять картинку бэкграунда
   if (props.isBottomSheet) { 
     return (
       <BottomSheetLayout closeIconColor={colors.black} backgroundColor={backgroundColor + ' url(/images/mobileBg/mobileBgLowOpacity.png)'}>

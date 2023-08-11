@@ -4,6 +4,7 @@ import Image from 'next/image'
 import DotSeparatorSvg from 'components/svg/DotSeparatorSvg'
 import { colors } from 'styles/variables'
 import classNames from 'classnames'
+// import { useResize } from 'components/hooks/useResize'
 
 
 
@@ -16,15 +17,15 @@ interface Props {
 export default function ProductLine ({line, isActive}: Props) {
  
     return <div className={classNames(styles.product, isActive&&styles.product_active)}>
-      <Image className={styles.image} src={line.product.image.link} alt={line.product.name} width={150} height={150}/>
-      <div className={styles.description}>
-        <p className={styles.name}>{line.product.name}</p>
-        <p className={styles.price}>
-          {line.product.price} ₽ 
-          <DotSeparatorSvg color={colors.dark1} className={styles.separator}/> 
-          <span className={styles.weight}>{line.product.weight} гр</span></p>
+      <div className={styles.imageWrapper}>
+        <Image className={styles.image} src={line.product.image.link} alt={line.product.name} width={42} height={42}/>
       </div>
-      <p className={styles.counter}>X {line.quantity}</p>
+      <p className={styles.name}>{line.product.name}</p>
+      <p className={styles.price}>
+        {line.product.price} ₽ 
+        <DotSeparatorSvg color={colors.grey3} className={styles.separator}/> 
+        <span className={styles.weight}>{line.product.weight} гр</span>
+      </p>
+      <p className={styles.counter}>X&nbsp;{line.quantity}</p>
     </div>
-  
 }

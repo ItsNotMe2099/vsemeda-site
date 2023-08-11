@@ -2,6 +2,7 @@
 
 .root {
   position: relative;
+  z-index: 2;
 
 }
 
@@ -24,8 +25,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 100%;
   margin:  0 auto;
+}
+
+.propductsWrapper {
+  margin-top: 10px;
+  width: 100%;
 }
 
 .orderStatus {
@@ -39,4 +45,92 @@
   justify-content: space-between;
   flex-direction: row-reverse;
 }
+
+.persons {
+  display: flex;
+  border-radius: 16px;
+  background-color: $white;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.personsImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #dff692;
+  margin-right: 10px;
+}
+
+.personsCounter {
+  margin-left: auto;
+}
+
+.check {
+  background-color: $white;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.checkDesc{
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  color: $grey2;
+  font-size: 14px;
+}
+
+.total {
+  padding-top: 10px;
+  border-top: 1px dotted $grey4;
+}
+
+.checkTitle {
+  padding-bottom: 10px;
+  border-bottom: 1px dotted $grey4;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.checkBody {
+  padding: 5px 0px;
+}
+
+.button {
+  width: 100%;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin-bottom: 10px;
+  border: 1px white solid;
+  color: $white;
+  button {
+    font-weight: 600;
+  }
+
+}
+
+.buttonsWrapper {
+  margin-top: 10px;
+  width: 100%;
+}
+
+// .cancelButton, .paymentButton {
+//   border-radius: 16px;
+
+// }
+
+
 

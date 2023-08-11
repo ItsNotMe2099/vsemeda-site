@@ -9,6 +9,7 @@ import ProductModal from 'components/modals/ProductModal'
 import PreOrderModal from 'components/modals/PreOrderModal'
 import IndexFilterModal from 'components/modals/IndexFilterModal'
 import ActiveOrderModal from 'components/modals/ActiveOrderModal'
+import CancelReasonForm from 'components/modals/CancelReasonModal'
 
 interface Props { }
 
@@ -73,6 +74,20 @@ export default function BottomSheetContainer(props: Props) {
         >
           <ActiveOrderModal isBottomSheet={true} />
         </Sheet>
+
+        <Sheet
+          isOpen={appContext.bottomSheet == ModalType.CancelOrder}
+          onClose={appContext.hideBottomSheet}    
+          snapPoints={[350]}     
+          disableDrag={appContext.modalNonSkippable}
+          className={styles[appContext.bottomSheet]}
+        >
+         <CancelReasonForm 
+          isBottomSheet={true} 
+          onBackClick={appContext.hideBottomSheet}
+        />
+        </Sheet>
+
 
 
       </div>

@@ -13,6 +13,8 @@ import Orders from './Orders'
 import VisibleXs from 'components/visibility/VisibleXs'
 import Image from 'next/image'
 import classNames from 'classnames'
+import { useRef } from 'react'
+import { useOrderContext } from 'context/order_state'
 
 
 interface Props {
@@ -28,6 +30,9 @@ const ProfileModalInner = (props: Props) => {
 
 
   const appContext = useAppContext()
+  const orderContext = useOrderContext()
+
+  const modalArguments = useRef<any>(appContext.modalArguments)
 
   const items = [
     { icon: '/images/UserMenu/profile.svg', text: 'Профиль', value: 'profile' },
@@ -43,7 +48,8 @@ const ProfileModalInner = (props: Props) => {
     appContext.showModal(ModalType.Profile, value)
   }
 
-  const item = items.find(i => i.value === appContext.modalArguments)
+  // const item = items.find(i => i.value === appContext.modalArguments)
+  const item = items.find(i => i.value === modalArguments.current)
 
 
   const body = (
@@ -58,6 +64,7 @@ const ProfileModalInner = (props: Props) => {
       </div>
       <div className={styles.content}>
         <CirclesBgSvg className={styles.circle} />
+        {!orderContext.activeDetails &&
         <VisibleXs>
           <div className={styles.head}>
             <BackBtn className={styles.back} bgColor='white' onClick={handleCloseClick} />
@@ -66,6 +73,7 @@ const ProfileModalInner = (props: Props) => {
             </div>
           </div>
         </VisibleXs>
+        }
         {appContext.modalArguments === 'profile' ? <ProfileForm /> : null}
         {appContext.modalArguments === 'orders' ? <Orders /> : null}
         <VisibleXs>
@@ -90,7 +98,8 @@ const ProfileModalInner = (props: Props) => {
   }
 
   return (
-    <ModalLayout fixed className={classNames(styles.modalLayout, styles[appContext.modalArguments])}>
+    // <ModalLayout fixed className={classNames(styles.modalLayout, styles[appContext.modalArguments])}>
+    <ModalLayout fixed className={classNames(styles.modalLayout, styles[modalArguments.current])}>
       {body}
     </ModalLayout>
   )
