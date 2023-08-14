@@ -12,7 +12,6 @@ import OrderHelper from 'utils/orderHelper'
 import ModalLayout from 'components/layout/Modal/ModalLayout'
 import ModalBody from 'components/layout/Modal/ModalBody'
 import Image from 'next/image'
-import ModalFooter from 'components/layout/Modal/ModalFooter'
 
 interface Props { 
   onBackClick: () => void
