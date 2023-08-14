@@ -36,13 +36,17 @@ export default function ActiveOrderModal(props: Props) {
   const [backgroundColor, changeBackgroundColor] = useState<CSS.Property.BackgroundColor>(backgroundStyle.backgroundColor)
 
 
-  const payHandler = () => {
-    OrderRepository.payById(order.id)
-    .then(res => {
-        appContext.hideModal()
-        window.open(res.payUrl, '_blank')
-    })
-  }
+  // const payHandler = () => {
+  //   OrderRepository.payById(order.id)
+  //   .then(res => {
+  //     try{
+  //       appContext.hideModal()
+  //       window.open(res.payUrl, '_blank')
+  //     } catch (error) {
+
+  //     }
+  //   })
+  // }
     
   const body = (cancelOrderModal
     ? 
@@ -75,7 +79,7 @@ export default function ActiveOrderModal(props: Props) {
             : item === OrderStateButton.Pay
             ? <PayButton  
                 className={classNames(styles.payButton, order.state === OrderState.PaymentError&&styles.payButton__black)}
-                onClick={payHandler}
+                // onClick={payHandler}
               />
             : item === OrderStateButton.Repeat
             ? <RepeatButton/>

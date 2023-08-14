@@ -13,7 +13,9 @@ export enum ModalType {
   Feedbacks = 'feedbacks',
   Search = 'search',
   ActiveOrder = 'activeOrderModal',
-  CancelOrder = 'cancel'
+  CancelOrder = 'cancelOrder',
+  OrderDetails = 'orderDetails',
+  LeaveReview = 'leaveReview'
 }
 
 export enum SnackbarType {

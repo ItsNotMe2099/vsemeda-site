@@ -112,7 +112,7 @@ $radius: 24px;
 }
 
 .btnContainer {
-  padding: 0px 24px 12px 24px;
+  padding: 0px 0px 12px;
   @include mq($PhoneWidth, max) {
     padding: 0;
     padding-bottom: 12px;
@@ -120,6 +120,20 @@ $radius: 24px;
 }
 
 .btn {
+  padding-inline: 24px;
   margin-top: 16px;
+  background-color: $white;
+  @include mq($PhoneWidth, max) {
+    padding-inline: 0px;   
+  }
+}
 
+
+.btnWrapper {
+  @include mq($PhoneWidth, max) {
+    flex: unset;
+    padding: 6px 10px;
+    background-color: $grey5;
+    border-radius: 16px;
+  }
 }

@@ -1,9 +1,30 @@
 @import "styles/index";
 
+.modalLayout {
+  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
+  width: 100vw;
+  border-radius: 0;
+  height: 100vh;
+  margin-top: 0;
+
+}
+
+.footer {
+  padding: 0;
+  display: block;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
+  img{
+    display: block;
+  }
+}
+
 .root {
   position: relative;
   z-index: 2;
-
+  padding-top: 20px;
 }
 
 .header {
@@ -13,6 +34,7 @@
   &:after {
     content: '';
     display: block;
+    width: 36px;
   }
 }
 
@@ -125,6 +147,35 @@
 .buttonsWrapper {
   margin-top: 10px;
   width: 100%;
+}
+
+.commonButton {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px white solid;
+  color: $white;
+  font-weight: 600;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+}
+
+.cancelButton, .payButton {
+  @extend .commonButton;
+  padding: 10px 15px 8px;
+}
+
+.complaintButton {
+  @extend .commonButton;
+  padding: 14px 15px;
+}
+
+.feedbackButton {
+  @extend .commonButton;
+  padding: 14px 15px;
+  background-color: $green;
+  border: unset;
+  color: $black;
 }
 
 // .cancelButton, .paymentButton {

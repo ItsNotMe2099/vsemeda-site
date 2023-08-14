@@ -13,8 +13,9 @@ import Orders from './Orders'
 import VisibleXs from 'components/visibility/VisibleXs'
 import Image from 'next/image'
 import classNames from 'classnames'
-import { useRef } from 'react'
+// import { useRef } from 'react'
 import { useOrderContext } from 'context/order_state'
+
 
 
 interface Props {
@@ -22,17 +23,14 @@ interface Props {
   onRequestClose: () => void
 }
 
-const ProfileModalInner = (props: Props) => {
+const ProfileModalInner = (props: Props) => { 
 
   const handleCloseClick = () => {
     props.onRequestClose()
   }
 
-
   const appContext = useAppContext()
   const orderContext = useOrderContext()
-
-  const modalArguments = useRef<any>(appContext.modalArguments)
 
   const items = [
     { icon: '/images/UserMenu/profile.svg', text: 'Профиль', value: 'profile' },
@@ -48,23 +46,20 @@ const ProfileModalInner = (props: Props) => {
     appContext.showModal(ModalType.Profile, value)
   }
 
-  // const item = items.find(i => i.value === appContext.modalArguments)
-  const item = items.find(i => i.value === modalArguments.current)
-
+  const item = items.find(i => i.value === appContext.modalArguments)
 
   const body = (
     <div className={styles.bodyWrapper}>
       <div className={styles.menu}>
         <BackBtn bgColor='white' onClick={handleCloseClick} />
         <div className={styles.options}>
-          {items.map((i, index) =>{
+          {items.map(i =>{
             return <Option item={i} key={i.value} onClick={() => handleOptionClick(i.value)} />}
           )}
         </div>
       </div>
       <div className={styles.content}>
-        <CirclesBgSvg className={styles.circle} />
-        {!orderContext.activeDetails &&
+        <CirclesBgSvg className={styles.circle} />       
         <VisibleXs>
           <div className={styles.head}>
             <BackBtn className={styles.back} bgColor='white' onClick={handleCloseClick} />
@@ -72,8 +67,7 @@ const ProfileModalInner = (props: Props) => {
               <Option item={item} key={item.value} className={styles.option} />
             </div>
           </div>
-        </VisibleXs>
-        }
+        </VisibleXs>     
         {appContext.modalArguments === 'profile' ? <ProfileForm /> : null}
         {appContext.modalArguments === 'orders' ? <Orders /> : null}
         <VisibleXs>
@@ -99,7 +93,7 @@ const ProfileModalInner = (props: Props) => {
 
   return (
     // <ModalLayout fixed className={classNames(styles.modalLayout, styles[appContext.modalArguments])}>
-    <ModalLayout fixed className={classNames(styles.modalLayout, styles[modalArguments.current])}>
+    <ModalLayout fixed className={classNames(styles.modalLayout, styles[appContext.modalArguments])}>
       {body}
     </ModalLayout>
   )

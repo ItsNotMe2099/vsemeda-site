@@ -12,17 +12,21 @@ import BottomSheetBody from 'components/layout/BottomSheet/BottomSheetBody'
 import { IOrder } from 'data/interfaces/IOrder'
 import Image from 'next/image'
 import BottomSheetLayout from 'components/layout/BottomSheet/BottomSheetLayout'
+import ModalLayout from 'components/layout/Modal/ModalLayout'
+import ModalBody from 'components/layout/Modal/ModalBody'
 
 interface Props {
   isBottomSheetPart?: boolean,
   onBackClick: () => void
   isBottomSheet?: boolean
+  isModal?: boolean
 }
 
 export default function CancelReasonForm(props: Props) {
 
   const appContext = useAppContext()
   const {refreshOrders} = useOrderContext()
+  // const item = appContext.modalArguments as IOrder
   const item = appContext.modalArguments as IOrder
 
   const submit = (data: { cancelReason: OrderCancelReason|undefined }) => {
@@ -34,11 +38,10 @@ export default function CancelReasonForm(props: Props) {
 
       OrderRepository.cancel(item.id, data)
       .then(res => {
-
         props.onBackClick()
-
-        if(props.isBottomSheetPart) {
+        if(props.isBottomSheetPart || props.isBottomSheet) {
           appContext.hideBottomSheet()
+          appContext.hideModal()
           appContext.showBottomSheet(ModalType.ActiveOrder, res)
         } 
         else {
@@ -55,7 +58,6 @@ export default function CancelReasonForm(props: Props) {
       }
       appContext.showSnackbar(errorMessage, SnackbarType.error)
     }
-    
   }
 
   const formik = useFormik({
@@ -94,14 +96,23 @@ export default function CancelReasonForm(props: Props) {
   </div>
   )
 
-  if(props.isBottomSheet) return (
-    <BottomSheetLayout closeIconColor={colors.green} backgroundColor={colors.green + ' url(/images/mobileBg/mobileBgLowOpacity.png)'}>
-      <BottomSheetBody>
+  if(props.isBottomSheet) {
+    return (
+      <BottomSheetLayout closeIconColor={colors.green} backgroundColor={colors.green + ' url(/images/mobileBg/mobileBgLowOpacity.png)'}>
+        <BottomSheetBody>
+          {body}
+        </BottomSheetBody>
+      </BottomSheetLayout>
+  )}
+  else if(props.isModal) {
+    return (
+      <ModalLayout backgroundColor={colors.green + ' url(/images/mobileBg/mobileBgLowOpacity.png)'}>
+      <ModalBody>
         {body}
-      </BottomSheetBody>
-    </BottomSheetLayout>
-  )
-  
-
-  return body
+      </ModalBody>
+    </ModalLayout>
+  )}
+  else {
+    return body
+  }
 }

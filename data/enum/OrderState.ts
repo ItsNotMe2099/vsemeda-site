@@ -31,7 +31,8 @@ export enum OrderStateButton {
   Cancel = 'cancel',
   Pay = 'pay',
   Repeat = 'repeat',
-  Complaint = 'complaint'
+  Complaint = 'complaint',
+  Feedback = 'feedback'
 }
 
 export enum OrderStateColor {

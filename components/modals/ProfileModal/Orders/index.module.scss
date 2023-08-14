@@ -24,6 +24,22 @@
   // height: calc(100% - 200px);
 
   @include mq($PhoneWidth, max) {
-    max-height: 510px;
+    // max-height: 510px;
+    margin-top: 30px;
+    height: 100%;
+    border-radius: 16px;
+    padding-bottom: 80px;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: black;
+      display: block;
+      height: 150px;
+      width: 100%;
+      background: linear-gradient(#cd11ef00 40%, #870dc5f2 90%);
+    }
+    
   }
 }

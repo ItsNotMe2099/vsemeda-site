@@ -16,6 +16,9 @@ import IndexFilterModal from 'components/modals/IndexFilterModal'
 import {ConfirmModal} from 'components/modals/ConfirmModal'
 import FeedbacksModal from 'components/modals/FeedbacksModal'
 import ActiveOrderModal from 'components/modals/ActiveOrderModal'
+import CancelReasonForm from 'components/modals/CancelReasonModal'
+import OrderDetails from 'components/modals/OrderDetailsModal'
+import LeaveFeedbackModal from 'components/modals/LeaveReviewModal'
 
 
 interface Props { }
@@ -72,6 +75,15 @@ export default function ModalContainer(props: Props) {
         </Modal>  
         <Modal isOpen={appContext.modal === ModalType.ActiveOrder} {...commonSettings}>
           {appContext.modal === ModalType.ActiveOrder && <ActiveOrderModal onRequestClose={appContext.hideModal} />}
+        </Modal> 
+        <Modal isOpen={appContext.modal === ModalType.CancelOrder} {...commonSettings}>
+          {appContext.modal === ModalType.CancelOrder && <CancelReasonForm isModal={true} onBackClick={appContext.hideModal} />}
+        </Modal> 
+        <Modal isOpen={appContext.modal === ModalType.OrderDetails} {...commonSettings}>
+          {appContext.modal === ModalType.OrderDetails && <OrderDetails isModal={true} onBackClick={()=>{appContext.showModal(ModalType.Profile, 'orders')}} />}
+        </Modal> 
+        <Modal isOpen={appContext.modal === ModalType.LeaveReview} {...commonSettings}>
+          {appContext.modal === ModalType.LeaveReview && <LeaveFeedbackModal onBackClick={()=>{appContext.showModal(ModalType.Profile, 'orders')}} />}
         </Modal> 
       </div>
     </RemoveScroll>

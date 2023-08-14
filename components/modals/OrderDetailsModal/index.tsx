@@ -8,58 +8,39 @@ import { useOrderContext } from 'context/order_state'
 import PersonsSvg from 'components/svg/Persnons'
 import classnames from 'classnames'
 import { OrderStateButton } from 'data/enum/OrderState'
-import { CancelButton, PayButton, RepeatButton } from 'components/ui/OrderButtons'
-import { useEffect, useState } from 'react'
-import { useAppContext } from 'context/state'
-import { ModalType } from 'types/enums'
-import OrderRepository from 'data/repositories/OrderRepository'
+import OrderHelper from 'utils/orderHelper'
+import ModalLayout from 'components/layout/Modal/ModalLayout'
+import ModalBody from 'components/layout/Modal/ModalBody'
+import Image from 'next/image'
+import ModalFooter from 'components/layout/Modal/ModalFooter'
 
 interface Props { 
   onBackClick: () => void
-  isMobile?: boolean
+  isMobile?: boolean,
+  isModal?: boolean
 }
 
 export default function OrderDetails ({onBackClick, isMobile}: Props) {
   const {activeDetails} = useOrderContext()
-  const [cancelOrderModal, setCancelOrder] = useState<boolean>(false)
-  const appContext = useAppContext()
 
-  useEffect(()=> {   
-    if(cancelOrderModal) {
-      appContext.hideModal()
-      appContext.showBottomSheet(ModalType.CancelOrder)
-    }
-  }, [cancelOrderModal]) 
-
-
-  const payHandler = () => {
-    OrderRepository.payById(activeDetails.id)
-    .then(res => {
-        appContext.hideBottomSheet()
-        window.open(res.payUrl, '_blank')
-    })
-  }
-
-  const getButton = (button: OrderStateButton):JSX.Element|null =>{
-    let returnButton: JSX.Element|null
+  const getNamedButton = (button: OrderStateButton ) => {
+    let buttonName: string
 
     switch (button) {
       case OrderStateButton.Cancel:
-        returnButton = <CancelButton className={styles.cancelButton} onClick={()=>setCancelOrder(true)}/>
-        break
-      case OrderStateButton.Pay:
-        returnButton = <PayButton className={styles.payButton} onClick={payHandler} />
-        break
-      case OrderStateButton.Repeat:
-        returnButton = <RepeatButton/>
+        buttonName = 'Отменить заказ'
         break
       case OrderStateButton.Complaint:
-        returnButton = <button>Пожаловаться</button>
+        buttonName = 'Пожаловаться'
         break
-      default:
-        returnButton = <button>null</button>
+      case OrderStateButton.Feedback: 
+        buttonName = 'Сказать спасибо'
+        break
+      case OrderStateButton.Pay:
+        buttonName = 'Оплатить заказ'
+        break
     }
-    return returnButton
+    return OrderHelper.getButton(button, buttonName, styles[button + 'Button'])
   }
 
   
@@ -115,17 +96,24 @@ export default function OrderDetails ({onBackClick, isMobile}: Props) {
       </div>
 
       <div className={styles.buttonsWrapper}>
-        {activeDetails.stateDetails.buttons.map(button => 
-          <div className={styles.button}>
-            {getButton(button)}
-          </div>
-        )}
+        {activeDetails.stateDetails.buttons.map(button => getNamedButton(button))}
       </div>
-    </div>)
 
-
-  return <div className={styles.root}>
-    {header}
-    {body}
-  </div>
+    </div>
+    )
+    
+    
+    return (
+      <ModalLayout className={styles.modalLayout}>
+    <ModalBody>
+      <div className={styles.root}>
+        {header}
+        {body}
+      </div>
+    </ModalBody>
+    {/* <ModalFooter > */}
+      <Image className={styles.footer}  src={'/images/ProfileModal/bg2.png'} alt='' width={428} height={252} />
+    {/* </ModalFooter> */}
+  </ModalLayout>
+  )
 }

@@ -5,25 +5,22 @@ import { IOrder } from 'data/interfaces/IOrder'
 import OrderRepository from 'data/repositories/OrderRepository'
 import Spinner from 'components/ui/Spinner'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { useResize } from 'components/hooks/useResize'
-import OrderDetails from './OrderDetails'
 import { useOrderContext } from 'context/order_state'
+import { useAppContext } from 'context/state'
+import { ModalType } from 'types/enums'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
+import { breakpoints } from 'styles/variables'
 
 
-interface Props {
-
-}
-
-export default function Orders(props: Props) {
+export default function Orders() {
 
   const limit = 10
   const [orders, setOrders] = useState<IOrder[]>([])
   const [total, setTotal] = useState<number>(0)
   const [page, setPage] = useState<number>(1)
   const [loading, setLoading] = useState<boolean>(false)
-  const {isPhoneWidth} = useResize()
-  const [showDetailsModal, setDetailsModal] = useState<boolean>(false)
   const orderContext = useOrderContext()
+  const appContext = useAppContext()
 
 
   const fetchOrders = async (page: number, limit: number) => {
@@ -56,7 +53,8 @@ export default function Orders(props: Props) {
     if(id !== orderContext.activeDetails?.id) {
       orderContext.fetchOrderDetails(id).then(details=> {
         if(details) {
-          setDetailsModal(true)
+            appContext.hideModal()
+            appContext.showModal(ModalType.OrderDetails, details)
         }
       })
     }
@@ -66,20 +64,18 @@ export default function Orders(props: Props) {
     if(id) {
       activeDetails(id)
     } else {
-      setDetailsModal(false)
       orderContext.setActiveDetails(null)
     }
   }
 
-  if(isPhoneWidth && showDetailsModal && orderContext.activeDetails) {
-    return <OrderDetails  onBackClick={()=>orderDetailsHandler()} isMobile={true}/>
-  }
 
   return (
     <>
-      <div className={styles.title}>
-        История заказов
-      </div>
+      <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
+        <div className={styles.title}>
+          История заказов
+        </div>
+      </VisibleOnSize>
       <div className={styles.container} id='scrollableDiv'>
         {(loading && total === 0) && <Spinner size={50} color="#fff" secondaryColor="rgba(255,255,255,0.4)" />}
         {total > 0 &&

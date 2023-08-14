@@ -5,11 +5,12 @@ import Image from 'next/image'
 import { colors } from 'styles/variables'
 import { format } from 'date-fns'
 import DotSeparatorSvg from 'components/svg/DotSeparatorSvg'
-import ProductLine from '../OrderDetails/Line'
+import ProductLine from '../../../OrderDetailsModal/Line'
 import { useOrderContext } from 'context/order_state'
 import { useResize } from 'components/hooks/useResize'
 import { useCallback, useEffect, useState } from 'react'
 import OrderHelper from 'utils/orderHelper'
+import { OrderStateButton } from 'data/enum/OrderState'
 
 
 interface Props {
@@ -22,6 +23,26 @@ export default function OrderCard({ order, onClickProps}: Props) {
   const orderContext = useOrderContext()
   const {isPhoneWidth} = useResize()
   const [isDetailsActive, setActive] = useState<boolean>(false)
+
+  const getNamedButton = (button: OrderStateButton ) => {
+    let buttonName: string
+    
+    switch (button) {
+      case OrderStateButton.Cancel:
+        buttonName = 'Отменить заказ'
+        break
+      case OrderStateButton.Complaint:
+        buttonName = 'Пожаловаться'
+        break
+      case OrderStateButton.Feedback: 
+        buttonName = 'Сказать спасибо'
+        break
+      case OrderStateButton.Pay:
+        buttonName = 'Оплатить заказ'
+        break
+    }
+    return OrderHelper.getButton(button, buttonName, styles[button + 'Button'])
+  }
 
   const activeDetails = useCallback(()=>{
     if(order.id !== orderContext.activeDetails?.id) {
@@ -83,6 +104,7 @@ export default function OrderCard({ order, onClickProps}: Props) {
       {!isPhoneWidth && isDetailsActive &&
         <div className={styles.linesWrapper}>
           {orderContext.activeDetails.lines.map(product=> <ProductLine line={product} isActive={isDetailsActive}/>)}
+          {orderContext.activeDetails.stateDetails.buttons.map(buttonItem => getNamedButton(buttonItem))}
           <div className={styles.hide} onClick={()=> {setActive(false)}}>
             Свернуть
             <ChevronSvg className={styles.chevronHide} color={colors.black} />

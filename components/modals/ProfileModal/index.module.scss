@@ -19,15 +19,6 @@
   }
 }
 
-// .orders {
-//   @include mq($PhoneWidth, max) {
-//     top: 4%;
-
-//     .footer {
-//       top: -5%;
-//     }
-//   }
-// }
 
 .bodyWrapper {
   display: flex;
@@ -95,6 +86,10 @@
     height: 100dvh;
     overflow: auto;
   }
+
+  @include mq($PhoneWidth, max) {
+    padding: 30px 20px 0px;
+  }
 }
 
 .circle {
@@ -139,6 +134,7 @@
   bottom: 0;
   align-self: center;
   width: 100%;
+  pointer-events: none;
   // margin: 0 -23px;
 
   img {

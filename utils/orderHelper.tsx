@@ -1,11 +1,12 @@
 import CSS from 'csstype'
-import { OrderStateColor, OrderStateIcon } from 'data/enum/OrderState'
+import { OrderStateButton, OrderStateColor, OrderStateIcon } from 'data/enum/OrderState'
 import { Component } from 'react'
 import { colors } from 'styles/variables'
 import { RiveArtboard } from 'types/enums'
 import Image from 'next/image'
 import Rive from '@rive-app/react-canvas'
 import { PaymentMethod } from 'data/enum/PaymentMethod'
+import { CancelButton, FeedbackButton, PayButton, RepeatButton } from 'components/ui/OrderButtons'
 
 
 interface IOrderIconType {
@@ -27,11 +28,13 @@ export default class OrderHelper extends Component {
     icon: IOrderIconType
     background: [style: CSS.Properties, color: string]
 
-    constructor(props: Props) {
+    constructor(props?: Props) {
         super(props.props)
-        if(props.icon) {this.icon = this.orderIcon(props.icon)}
+        if(props.icon) {
+            this.initIcon = props.icon
+            this.icon = this.orderIcon(props.icon)
+        }
         if(props.color) {this.background = this.orderColor(props.color)}
-        this.initIcon = props.icon
     }
     
 
@@ -109,7 +112,7 @@ export default class OrderHelper extends Component {
         return this.orderImage(this.initIcon, w, h )
     }
 
-    public  translatePaymentMethod(method: string): string {
+    public translatePaymentMethod(method: string): string {
         let translated: string
         switch (method) {
           case PaymentMethod.Cash:
@@ -130,5 +133,30 @@ export default class OrderHelper extends Component {
         }
       
         return translated
+    }    
+
+    public static getButton = (button: OrderStateButton, buttonName?: string, className?: string):JSX.Element|null =>{
+        
+        let returnButton: JSX.Element|null
+        switch (button) {
+          case OrderStateButton.Cancel:
+            returnButton = <CancelButton className={className} buttonName={buttonName}/>
+            break
+          case OrderStateButton.Pay:
+            returnButton = <PayButton className={className} buttonName={buttonName}/>
+            break
+          case OrderStateButton.Repeat:
+            returnButton = <RepeatButton/>
+            break
+          case OrderStateButton.Complaint:
+            returnButton = <button className={className}>Пожаловаться</button>
+            break
+          case OrderStateButton.Feedback: 
+            returnButton = <FeedbackButton className={className} buttonName={buttonName}/>
+            break
+          default:
+            returnButton = <button>null</button>
+        }
+        return returnButton
     }
 }

@@ -215,3 +215,39 @@
   height: 100%;
   opacity: .3;
 }
+
+.commonButton {
+  border-radius: 8px;
+  border: 1px black solid;
+  cursor: pointer; 
+  margin-right: 10px;
+  margin-top: 16px;
+  background-color: $white;
+  transition: .2s linear;
+  filter: invert(0);
+  @media(hover: hover) {
+    &:hover {
+      filter: invert(1)
+    }
+  }
+}
+
+.cancelButton, .payButton {
+  @extend .commonButton;
+  padding: 8px 15px 6px;
+}
+
+.complaintButton {
+  @extend .commonButton;
+  padding: 10px 15px 8px;
+}
+
+.feedbackButton {
+  @extend .commonButton;
+  padding: 10px 15px 8px;
+  background-color: $green;
+  border: 1px $green solid;
+  
+
+
+}

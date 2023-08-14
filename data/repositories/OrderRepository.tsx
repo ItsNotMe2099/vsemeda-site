@@ -6,6 +6,8 @@ import {IOrder, IOrderPaymentData} from 'data/interfaces/IOrder'
 import {IOrderCreateRequest} from 'data/interfaces/IOrderCreateRequest'
 import {IReviewCreateRequest} from 'data/interfaces/IReviewCreateRequest'
 import { OrderCancelReason } from 'data/enum/OrderState'
+
+
 export default class OrderRepository {
   static async fetchActive(): Promise<IOrder[]> {
     const res = await request<IOrder[]>({
@@ -69,7 +71,7 @@ export default class OrderRepository {
     return res
   }
 
-  // пофиксить типизацию
+
   static async getOrderStatusById(orderId: string): Promise<IOrder> {
     const res = await request<any>({
       method: 'get',

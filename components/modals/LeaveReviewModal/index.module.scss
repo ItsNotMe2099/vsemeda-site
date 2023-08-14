@@ -1,0 +1,113 @@
+@import "styles/index";
+
+.modalLayout {
+  background: radial-gradient(58.8% 88.2% at 50% 50%, #B648D7 0%, #882CB6 44.74%, #4A078A 100%);
+  overflow: hidden;
+  width: 90vw;
+  max-width: 900px;
+  height: 90vh;
+  max-height: 600px;
+  justify-content: center;
+
+}
+
+
+.circle {
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  width: 100%;
+}
+
+
+.modalBackground {
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  height: unset !important;
+}
+
+.rate {
+  max-width: 335px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 14px;
+}
+
+.title{
+  text-align: center;
+  color: $white;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 83%;
+}
+
+.rateTitle {
+  font-weight: 500;
+}
+
+.rateWrapper {
+  background-color: $white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+}
+
+.starWrapper {
+  display: flex;
+  margin-top: 8px;
+}
+
+.starSvg {
+  width: 34px;
+  height: 32px;
+  display:  block;
+  cursor: pointer;
+}
+
+.svgStarWrapper {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkSvg {
+  width: 32px;
+  height: 23px;
+}
+
+.rateReview {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reviewButton {
+  cursor: pointer;
+  background-color: $green;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 16px;
+  column-gap: 10px;
+  margin-top: 10px;
+}
+
+.rateReviewTitle {
+  color: black;
+  font-weight: 500;
+}

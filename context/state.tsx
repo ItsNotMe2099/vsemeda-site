@@ -208,7 +208,7 @@ export function AppWrapper(props: Props) {
   const hideModal = () => {
     if (bottomSheet) {
       hideBottomSheet()
-      return
+      // return
     }
     setModal(null)
     setModalArguments(null)

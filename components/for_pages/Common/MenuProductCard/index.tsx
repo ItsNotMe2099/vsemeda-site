@@ -52,9 +52,10 @@ export default function MenuProductCard(props: Props) {
           <ProductQuantityButton 
           price={appContext.isMobile&&formattedPrice} 
           className={styles.btn} 
+          buttonsClassName={styles.btnWrapper}
           quantity={props.quantity} 
           onAddClick={props.onAddClick} 
-          theme={props.quantity > 0 ? (isPhoneWidth?'grey':'white') : 'grey'}
+          theme={props.quantity > 0 ? (isPhoneWidth?'grey':'grey') : 'grey'}
           onMinusClick={props.onMinusClick}/>
         </div>
       </div>
