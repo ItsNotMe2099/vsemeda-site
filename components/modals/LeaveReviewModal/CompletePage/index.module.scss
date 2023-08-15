@@ -1,0 +1,53 @@
+@import 'styles/index';
+
+.root {
+  max-width: 382px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  @include mq($PhoneWidth, max) {
+    margin-top: 40px;
+  }
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  color: $white;
+  margin-top: 16px;
+  @include mq($PhoneWidth, max) {
+    color: black;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+.button {
+  width: 100%;
+  background-color: $green;
+  height: 52px;
+  border-radius: 16px;
+  font-weight: 600;
+  transition: .2s linear;
+  margin-top: 64px;
+  cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      background-color: black;
+      color: $green;
+    }
+  }
+
+  @include mq($PhoneWidth, max) {
+    width: unset;
+    height: unset;
+    padding: 10px 16px 8px;
+    font-weight: 400;
+    font-size: 12px;
+    margin-top: 16px;
+  }
+
+}

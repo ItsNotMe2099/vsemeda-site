@@ -31,7 +31,7 @@ export interface IPaginationRequest{
 }
 export type FieldIconName = 'field_phone' | 'field_name' | 'field_comment' | 'field_date' | 'field_time' | 'field_persons' | 'field_email'
 
-export type InputStyleType = 'default' | 'bottomBorder' | 'defaultSmall' | 'defaultExSmall' | 'profile' | 'cashForm' | 'promo' | 'subscribe'
+export type InputStyleType = 'default' | 'bottomBorder' | 'defaultSmall' | 'defaultExSmall' | 'profile' | 'cashForm' | 'promo' | 'subscribe' | 'feedback'
 export interface IField<T> extends FieldConfig<T> {
   label?: string
   placeholder?: string

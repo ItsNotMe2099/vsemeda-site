@@ -182,6 +182,14 @@ $fieldHeightDefaultExSmall: 38px;
       color: #4C4958;
     }
   }
+
+  &.feedback {
+    border-radius: 16px;
+    height: 50px;
+    color: #333333;
+    padding: 0 15px;
+    padding-left: 40px;
+  }
 }
 
 .successIcon {

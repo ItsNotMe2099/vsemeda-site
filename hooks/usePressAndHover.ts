@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 
 export default function usePressAndHover(): [RefObject<any>, boolean, boolean] {
-  const ref = useRef<HTMLButtonElement | HTMLDivElement | HTMLLinkElement>(null)
+  const ref = useRef<HTMLButtonElement | HTMLDivElement | HTMLLinkElement >(null)
   const [hover, setHover] = useState(false)
   const [press, setPress] = useState(false)
 

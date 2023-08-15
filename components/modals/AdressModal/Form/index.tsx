@@ -30,13 +30,12 @@ export default function AddressForm(props: Props) {
       const submitData: DeepPartial<IUserAddress> = {
         ...props.initialAddress,
         ...data,
-
       }
       if (props.initialAddress?.id) {
-        await addressContext.update(props.initialAddress.id, submitData)
+        addressContext.update(props.initialAddress.id, submitData)
         appContext.showModal(ModalType.AddressList)
       } else {
-        await addressContext.create(submitData)
+        addressContext.create(submitData)
         appContext.showModal(ModalType.AddressList)
       }
     } catch (e) {

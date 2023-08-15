@@ -6,7 +6,7 @@ import { RiveArtboard } from 'types/enums'
 import Image from 'next/image'
 import Rive from '@rive-app/react-canvas'
 import { PaymentMethod } from 'data/enum/PaymentMethod'
-import { CancelButton, FeedbackButton, PayButton, RepeatButton } from 'components/ui/OrderButtons'
+import ComplaintButton, { CancelButton, FeedbackButton, PayButton, RepeatButton } from 'components/ui/OrderButtons'
 
 
 interface IOrderIconType {
@@ -149,7 +149,7 @@ export default class OrderHelper extends Component {
             returnButton = <RepeatButton/>
             break
           case OrderStateButton.Complaint:
-            returnButton = <button className={className}>Пожаловаться</button>
+            returnButton = <ComplaintButton className={className} buttonName={buttonName}/>
             break
           case OrderStateButton.Feedback: 
             returnButton = <FeedbackButton className={className} buttonName={buttonName}/>

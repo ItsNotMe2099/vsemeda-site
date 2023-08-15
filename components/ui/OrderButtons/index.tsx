@@ -89,3 +89,18 @@ export function FeedbackButton(props: commonProps) {
 
   return <button className={props.className} onClick={feedbackHandler}>{props.buttonName? props.buttonName: 'Сказать спасибо'}</button>
 }
+
+
+export default function ComplaintButton (props: commonProps) {
+
+  const appContext = useAppContext()
+
+  const complaintHandler = () => {
+    appContext.hideModal()
+    appContext.showModal(ModalType.Complaint)
+  }
+
+  return ( 
+    <button className={props.className} onClick={complaintHandler}>Пожаловаться</button>
+  )
+}

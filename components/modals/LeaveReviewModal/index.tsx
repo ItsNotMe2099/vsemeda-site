@@ -1,91 +1,107 @@
+import styles from './index.module.scss'
+import { useResize } from 'components/hooks/useResize'
 import ModalBody from 'components/layout/Modal/ModalBody'
 import ModalLayout from 'components/layout/Modal/ModalLayout'
-import CheckSvg from 'components/svg/CheckSvg'
 import CirclesBgSvg from 'components/svg/CirclesBgSvg'
-import CommentSvg from 'components/svg/CommentSvg'
-import StartFilledSvg from 'components/svg/StartFilledSvg'
+import { useOrderContext } from 'context/order_state'
+import { useAppContext } from 'context/state'
+import { IReviewCreateRequest } from 'data/interfaces/IReviewCreateRequest'
+import OrderRepository from 'data/repositories/OrderRepository'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
-import styles from './index.module.scss'
+import { useState } from 'react'
+import { SnackbarType } from 'types/enums'
+import BackButton from './BackButton'
+import CompletePage from './CompletePage'
+import ErrorPage from './ErrorPage'
+import RateOrder from './Rate'
+import ReviewForm from './ReviewForm'
 
 interface Props {
   onBackClick?: ()=>void
+}
 
+export enum FeedbackPageNavigation {
+  Stars = 'stars',
+  Form ='form',
+  Complete ='complete',
+  Error = 'error'
 }
 
 export default function LeaveFeedbackModal(props: Props) {
 
-  const goldColor = '#F2994A'
-  const greyColor = '#979797'
+  const orderContext = useOrderContext()
+  const {isPhoneWidth} = useResize()
 
-  const [colors, setColors] = useState<string[]>([])
+  const appContext = useAppContext()
 
   const [choosenStar, chooseStar] = useState<number>(-1)
+  const [pageState, setPageState] = useState<FeedbackPageNavigation>(FeedbackPageNavigation.Stars)
+  const [formData, setFormData] = useState<IReviewCreateRequest>()
 
-  const starsHandler = (rate: number, choosen?: number) => {
-    let items: string[] = []
-    for(let i = 0; i < 5; i++) {
-      if(choosen>=0 && i <= choosen) {
-        items.push(goldColor)
-      } 
-      else if(rate > choosen && i <= rate) {
-        items.push(goldColor + '30')
-      }
-      else {
-        items.push(greyColor)
-      }
-    }
-    colors.length <= 5&&setColors(items)
+  const onSubmit = (data: IReviewCreateRequest, nextPage: FeedbackPageNavigation) => {
+    debugger
+    setFormData(data)   
+    
+    OrderRepository.createFeedBack(orderContext.activeDetails.id, data)
+    .then(r=> {
+      setPageState(nextPage)
+    })
+    .catch(e => {
+      appContext.showSnackbar(e.toString(), SnackbarType.error)
+      setPageState(FeedbackPageNavigation.Error)
+    })     
   }
 
-  const mouseEnterHandler = useCallback((index: number) => {       
-      starsHandler(index, choosenStar)   
-  }, [choosenStar])
+  const navHandler = () => {
+    debugger
+    switch (pageState) {
+      case FeedbackPageNavigation.Stars:
+        appContext.hideModal()
+        break
+      case FeedbackPageNavigation.Form:
+        setPageState(FeedbackPageNavigation.Stars)
+        break
+      case FeedbackPageNavigation.Error:
+        setPageState(FeedbackPageNavigation.Form)
+        break
+      case FeedbackPageNavigation.Complete:
+        setPageState(FeedbackPageNavigation.Form)
+        break
+    }
+  }
 
-  useEffect(()=> {
-    starsHandler(0)
-  }, [])
+  const body = () => {
+    switch (pageState) {
+      case FeedbackPageNavigation.Stars:
+        return <RateOrder rate={choosenStar} onSubmit={onSubmit} chooseRate={chooseStar} changePage={setPageState}/>
 
-  useEffect(()=> {
-    starsHandler(choosenStar, choosenStar) 
-  }, [choosenStar])
+      case FeedbackPageNavigation.Form:
+        return <ReviewForm onSubmit={onSubmit} rate={choosenStar} setData={setFormData} data={formData} changePage={setPageState} item={orderContext.activeDetails}/>
 
-  const body = (
-    <>основа</>
-  )
-
-  const rateOrder = (
-    <div className={styles.rate}>
-      <CheckSvg className={styles.checkSvg} color={'#fff'}/>
-      <p className={styles.title}>Спасибо за заказ</p>
-      <div className={styles.rateWrapper}>
-        <p className={styles.rateTitle}>Оцените ваш заказ</p>
-        <div className={styles.starWrapper} onMouseLeave={()=>{mouseEnterHandler(0)}}>
-          {colors.map((color, index) => <div className={styles.svgStarWrapper}  onClick={()=> chooseStar(index)} onMouseEnter={()=>{mouseEnterHandler(index)}}><StartFilledSvg color={color} className={styles.starSvg}/></div>)}
-        </div>
-        {choosenStar >= 0 &&
-          <div className={styles.rateReview}>
-            <p className={styles.rateReviewTitle}>
-              Желаете оставить отзыв?
-            </p>
-            <button className={styles.reviewButton}>
-              <CommentSvg/>
-              Оставить отзыв
-            </button>
-          </div>
-        }
-      </div>
-     
-    </div>
-  )
+      case FeedbackPageNavigation.Complete:
+        return <CompletePage onClick={()=>{
+          appContext.hideModal()
+          orderContext.setActiveDetails(null)
+        }}/>
+      
+      case FeedbackPageNavigation.Error: 
+        return <ErrorPage onClick={()=>onSubmit(formData, FeedbackPageNavigation.Complete)}/>
+    }
+  }
+ 
 
   return (
     <ModalLayout className={styles.modalLayout}>
+      <BackButton onClick={navHandler}/>
       <ModalBody>
-        {rateOrder}
+        {body()}
       </ModalBody>
-      <CirclesBgSvg className={styles.circle} />
-      <Image className={styles.modalBackground} src={'/images/bg/leave-review.png'} alt='' fill/>
+      {!isPhoneWidth && 
+      <>
+        <CirclesBgSvg className={styles.circle} />
+        <Image className={styles.modalBackground} src={'/images/bg/leave-review.png'} alt='' fill/>
+      </>
+      }
     </ModalLayout>
   )
 

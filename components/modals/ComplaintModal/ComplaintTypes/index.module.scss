@@ -1,0 +1,42 @@
+@import 'styles/index';
+
+.complaintTypes {
+  margin-top: 32px;
+}
+
+.type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: $white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.typeSvg {
+  rotate: -90deg;
+}
+
+.typeDesc {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &::after {
+    content: '';
+    display: block;
+    width: 18px;
+  }
+}
+
+.title {
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}

@@ -1,0 +1,101 @@
+@import 'styles/index';
+
+.rate {
+  max-width: 335px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 14px;
+}
+
+.title{
+  text-align: center;
+  color: $white;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 83%;
+}
+
+.rateTitle {
+  font-weight: 500;
+  @include mq($PhoneWidth, max) {
+    margin-top: 40px;
+  }
+}
+
+.rateWrapper {
+  background-color: $white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+}
+
+.starWrapper {
+  display: flex;
+  margin-top: 8px;
+}
+
+.starSvg {
+  width: 34px;
+  height: 32px;
+  display:  block;
+  cursor: pointer;
+}
+
+.svgStarWrapper {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkSvg {
+  width: 32px;
+  height: 23px;
+}
+
+.rateReview {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reviewButton {
+  cursor: pointer;
+  background-color: $green;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 16px;
+  column-gap: 10px;
+  margin-top: 10px;
+  user-select: none;
+  
+  @include mq($PhoneWidth, max) {
+    width: unset;
+    border-radius: 30px;
+    background-color: $grey2;
+    pointer-events: none;
+    transition: .3s linear;
+  }
+
+  &_active {
+    background-color: $green;
+    pointer-events: all;
+  }
+}
+
+.rateReviewTitle {
+  color: black;
+  font-weight: 500;
+}

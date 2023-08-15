@@ -1,0 +1,31 @@
+@import 'styles/index';
+
+.root {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 40px;
+  height: 40px;
+  background-color: $white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 4;
+  filter: invert(0);
+  transition: .2s linear;
+  @media(hover: hover) {
+    &:hover {
+      filter: invert(1)
+    }
+  }
+
+  @include mq($PhoneWidth, max) {
+    right: 16px;
+    top: 16px;
+    left: unset;
+    background-color: transparent;
+  }
+ 
+}

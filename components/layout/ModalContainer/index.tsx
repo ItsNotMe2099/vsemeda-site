@@ -19,6 +19,7 @@ import ActiveOrderModal from 'components/modals/ActiveOrderModal'
 import CancelReasonForm from 'components/modals/CancelReasonModal'
 import OrderDetails from 'components/modals/OrderDetailsModal'
 import LeaveFeedbackModal from 'components/modals/LeaveReviewModal'
+import ComplaintModal from 'components/modals/ComplaintModal'
 
 
 interface Props { }
@@ -84,6 +85,9 @@ export default function ModalContainer(props: Props) {
         </Modal> 
         <Modal isOpen={appContext.modal === ModalType.LeaveReview} {...commonSettings}>
           {appContext.modal === ModalType.LeaveReview && <LeaveFeedbackModal onBackClick={()=>{appContext.showModal(ModalType.Profile, 'orders')}} />}
+        </Modal> 
+        <Modal isOpen={appContext.modal === ModalType.Complaint} {...commonSettings}>
+          {appContext.modal === ModalType.Complaint && <ComplaintModal onBackClick={()=>{appContext.showModal(ModalType.Profile, 'orders')}} />}
         </Modal> 
       </div>
     </RemoveScroll>
