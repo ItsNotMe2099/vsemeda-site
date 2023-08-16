@@ -112,7 +112,7 @@ export default class OrderHelper extends Component {
         return this.orderImage(this.initIcon, w, h )
     }
 
-    public translatePaymentMethod(method: string): string {
+    public static translatePaymentMethod(method: string): string {
         let translated: string
         switch (method) {
           case PaymentMethod.Cash:

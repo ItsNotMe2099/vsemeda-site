@@ -18,6 +18,7 @@ const TextAreaInner = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement> 
 interface Props extends IField<string> {
   autoSize?: boolean
   color: 'white' | 'purple'
+  areaClassname? : string
 }
 
 export default function TextAreaField(props: Props) {
@@ -48,7 +49,7 @@ export default function TextAreaField(props: Props) {
           [styles.error]: showError,
           [styles.white]: props.color === 'white',
           [styles.purple]: props.color === 'purple',
-        })}
+        }, props.areaClassname&&props.areaClassname)}
       />
       {props.label && <FloatingFieldLabel active={focused || !!field.value}>{props.label}</FloatingFieldLabel>}
       <FieldError showError={showError}>{meta.error}</FieldError>

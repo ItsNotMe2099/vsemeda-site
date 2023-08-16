@@ -73,3 +73,12 @@ export enum RiveArtboard {
   preparing = 'preparing',
   phone = 'phone'
 }
+
+export enum FileUploadAcceptType {
+  Image = 'image',
+  Video = 'video',
+  Document = 'document',
+  Scan = 'scan',
+  Media = 'media',
+  Archives = 'archives'
+}

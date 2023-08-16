@@ -118,7 +118,7 @@ export default function OrderCard({ order, onClickProps}: Props) {
         </div>
         <div className={styles.payment}>
           <div className={styles.method}>
-            {orderHelper.translatePaymentMethod(order.paymentMethod)}:
+            {OrderHelper.translatePaymentMethod(order.paymentMethod)}:
           </div>
           <div className={styles.total}>
             {order.total}₽

@@ -53,6 +53,12 @@
     background: $purple4;
     color: $white;
   }
+  &.white {
+    color: black;
+    background-color: $white;
+    border-radius: 16px;
+    border: 1px $grey5 solid;
+  }
 }
 
 .icon{

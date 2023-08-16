@@ -7,6 +7,8 @@ import { ModalType } from 'types/enums'
 import ComplaintTypes from './ComplaintTypes'
 import { useEffect, useState } from 'react'
 import Complaint from './Complaint'
+import ComplaintRepository from 'data/repositories/ComplaintRepository'
+import { IComplaintType } from 'data/interfaces/IComplaint'
 
 interface Props {
   onBackClick?: ()=> void
@@ -17,26 +19,24 @@ export enum ComplaintNavigation {
   Complaint = 'complaint'
 }
 
-export interface ComplaintsTypes {
-  delay: string
-  confuse: string
-  dish: string
-  complaint: string
-}
-
 export default function ComplaintModal(props: Props) {
 
-  const complaints:ComplaintsTypes = {
-    delay : 'Задержали заказ', 
-    confuse: 'Перепутали заказ', 
-    dish:'Жалоба на блюдо', 
-    complaint: 'Жалоба на заказ'
+  const [complaintTypes, setComplaintTypes] = useState<IComplaintType[]>([])
+
+  const getComplaintTypes = () => {
+    ComplaintRepository.getComplaintTypes().then(complaint =>{
+      setComplaintTypes(complaint)
+    })
   }
+
+  useEffect(()=>{
+    getComplaintTypes()  
+  }, [])
 
   const orderContext = useOrderContext()
   const appContext = useAppContext()
   const [navigate, setNavigate] = useState<ComplaintNavigation>(ComplaintNavigation.Types)
-  const [type, setType] = useState<keyof ComplaintsTypes>()
+  const [type, setType] = useState<IComplaintType>()
   
   const backButtonHandler = () => {
     appContext.hideModal()
@@ -56,8 +56,8 @@ export default function ComplaintModal(props: Props) {
     <ModalLayout className={styles.modalLayout}>
       <ModalBody>
         {navigate === ComplaintNavigation.Types
-          ? <ComplaintTypes onClick={setType} complaints={complaints} onBack={backButtonHandler}/>
-          : <Complaint complaints={complaints} type={type} item={orderContext.activeDetails} onBack={()=> setNavigate(ComplaintNavigation.Types)}/>
+          ? <ComplaintTypes onClick={setType} complaints={complaintTypes} onBack={backButtonHandler}/>
+          : <Complaint type={type} item={orderContext.activeDetails} onBack={()=> setNavigate(ComplaintNavigation.Types)}/>
         }
       </ModalBody>
     </ModalLayout>
