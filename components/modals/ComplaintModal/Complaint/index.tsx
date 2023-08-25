@@ -50,7 +50,7 @@ export default function Complaint(props: Props) {
   const [previewImages, setPreviewImages] = useState<PreviewImage[]>([])
 
   const removeImage = (index: number) => {
-    debugger
+    
     const image = previewImages.filter((el, ind) => ind === index)
     if(image[0].loaded) {
       FileRepository.deleteMyFile(image[0].id)
@@ -84,7 +84,7 @@ export default function Complaint(props: Props) {
       setPreviewImages(state=> [...state, {image: file, loaded: false, id, }])
 
       try{
-        debugger
+        
         (abortController as IAbortControllerWithId).id = id
 
         FileRepository.uploadFile(file, {signal: abortController.signal})
@@ -98,7 +98,7 @@ export default function Complaint(props: Props) {
         })
       }
       catch(e) {
-        debugger
+        
         if(abortController.signal.aborted) {
           setPreviewImages(state=> {
             return [...state.filter(el => el.id !== id)]

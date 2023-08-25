@@ -31,7 +31,7 @@ export default class UserAddressRepository {
       url: '/api/user-address/sync',
       data: {
         currentAddressId,
-        addresses: addresses.map(i => ({...i, localId: i.id}))
+        addresses: addresses.map(i => ({...i, localId: i?.id}))
       },
     })
     return res

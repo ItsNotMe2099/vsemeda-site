@@ -7,7 +7,7 @@ import queryString from 'query-string'
 
 export default class CartRepository {
 
-  static async fetch(location: ILocation): Promise<ICart> {
+  static async fetchCurrentCart(location: ILocation): Promise<ICart> {
     const res = await request<ICart>({
       method: 'get',
       url: '/api/cart/current',

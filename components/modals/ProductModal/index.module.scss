@@ -48,6 +48,7 @@
   padding-left: 15px;
   // width: 50%;
   width: 100%;
+  margin-top: 24px;
 }
 
 .imageSmall {
@@ -61,8 +62,8 @@
 
 .productData {
   display: flex;
-  width: 100%;
-  margin-bottom: 12px;
+  // width: 100%;
+  // margin-bottom: 12px;
   align-items: center;
 }
 
@@ -131,4 +132,11 @@
     width: 30%;
     height: 48px !important;
   }
+}
+
+
+.modificationsWrapper {
+  max-height: 30vh;
+  overflow-y: scroll;
+  padding: 20px 16px;
 }

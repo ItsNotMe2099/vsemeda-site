@@ -20,6 +20,10 @@ html{
   text-rendering: geometricPrecision;
 }
 
+button {
+  user-select: none !important;
+}
+
 body{
   font-family: 'Montserrat', sans-serif;
   height: 100%;

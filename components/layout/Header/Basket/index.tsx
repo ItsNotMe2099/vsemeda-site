@@ -42,7 +42,7 @@ export default function Basket(props: Props) {
     e.preventDefault()
     e.stopPropagation()
     setShowDropDown(!showDropDown)
-    cartContext.fetch()
+    cartContext.fetchCart()
     if (showDropDown) {
       appContext.hideOverlay()
     } else {

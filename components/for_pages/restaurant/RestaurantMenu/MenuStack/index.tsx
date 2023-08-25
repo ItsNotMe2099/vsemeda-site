@@ -16,24 +16,44 @@ interface Props {
 
 
 export default function MenuStack (props: Props) {
+  
+  const unitContext = useUnitContext()
+  const appContext = useAppContext()
+  const cartContext = useCartContext()
 
   const {isPhoneWidth} = useResize()
-
-  const unitContext = useUnitContext()
+  
   const unit = unitContext.unit
-    
-  const cartContext = useCartContext()
+  
   const refStack = useRef<HTMLDivElement>(null!)
-
-  const appContext = useAppContext()
-
   const options: IntersectionObserverInit = {
     root: null,
     threshold: 0,
     rootMargin: '0px 0px -70% 0px'
   }
-
   const isOnScreen = useOnScreen(refStack, options)
+
+
+
+
+  const handleAddClick = (product: IProduct) => {
+    
+    if (cartContext.productQuantityMap[product.id] > 1) {
+      cartContext.updateProductQuantity(product, true)
+    } else {
+      cartContext.addProduct(product, unit.id)
+    }
+  }
+
+  const handleMinusClick = (product: IProduct) => {
+    cartContext.updateProductQuantity(product, false)
+  }
+
+  const handleClick = (product: IProduct) => {
+    isPhoneWidth
+    ? appContext.showBottomSheet(ModalType.ProductModal, {product: product, unitId: unit.id})
+    : appContext.showModal(ModalType.ProductModal, {product: product, unitId: unit.id})
+  }
 
   useEffect(()=> {    
     if(!unitContext.scrollToCategoryFired) {
@@ -41,33 +61,20 @@ export default function MenuStack (props: Props) {
     }
   }, [isOnScreen, unitContext.scrollToCategoryFired])
 
-  const handleAddClick = (product: IProduct) => {
-      if (cartContext.productQuantityMap[product.id] > 1) {
-        cartContext.updateProductQuantity(product, true)
-      } else {
-        cartContext.addProduct(product, unit.id)
-      }
-    }
-  const handleMinusClick = (product: IProduct) => {
-    cartContext.updateProductQuantity(product, false)
-  }
-  const handleClick = (product: IProduct) => {
-    isPhoneWidth? 
-    appContext.showBottomSheet(ModalType.ProductModal, {product: product, unitId: unit.id}):
-      appContext.showModal(ModalType.ProductModal, {product: product, unitId: unit.id})
-  }
-
 
   return (<>
   <div key={props.item.id} className={styles.stack}  ref={refStack}>
         <div className={styles.category} id={`category-${props.item.id}`}>{props.item.name}</div>
         <div className={styles.products}>
-          {props.item.products.map((product, index) => <div key={index} className={styles.productCard}><MenuProductCard
-            product={product}
-            onMinusClick={() => handleMinusClick(product)}
-            onAddClick={() => handleAddClick(product)}
-            onClick={() => handleClick(product)}
-            quantity={cartContext.productQuantityMap[product.id]} /></div>
+          {props.item.products.map((product, index) => 
+            <div key={index} className={styles.productCard}>
+              <MenuProductCard
+              product={product}
+              onMinusClick={() => handleMinusClick(product)}
+              onAddClick={() => handleAddClick(product)}
+              onClick={() => handleClick(product)}
+              quantity={cartContext.productQuantityMap[product.id]} />
+            </div>
           )}
         </div>
       </div>

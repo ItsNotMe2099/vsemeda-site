@@ -39,7 +39,7 @@ export default function LeaveFeedbackModal(props: Props) {
   const [formData, setFormData] = useState<IReviewCreateRequest>()
 
   const onSubmit = (data: IReviewCreateRequest, nextPage: FeedbackPageNavigation) => {
-    debugger
+    
     setFormData(data)   
     
     OrderRepository.createFeedBack(orderContext.activeDetails.id, data)
@@ -53,7 +53,7 @@ export default function LeaveFeedbackModal(props: Props) {
   }
 
   const navHandler = () => {
-    debugger
+    
     switch (pageState) {
       case FeedbackPageNavigation.Stars:
         appContext.hideModal()

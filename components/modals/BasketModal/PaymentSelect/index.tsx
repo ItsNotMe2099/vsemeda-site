@@ -67,6 +67,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
 
   const createNewOrder = () => {
     
+    
     /* TODO: добавить количество персон 
     добавить правильное отображение предзаказа и его времени,
     правильная работа свитчера бесконтактная оплата,
@@ -91,7 +92,12 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     OrderRepository.create(orderData)
     .then(res => {      
       if(res.paymentMethod === PaymentMethod.CardOnline) {
-        window.location.href = res.paymentData.payUrl
+        //window.open может быть блокировано блаузелом.
+        // window.open(res.paymentData.payUrl, '_blank')
+        let link = document.createElement('a')
+        link.href = res.paymentData.payUrl
+        link.target = '_blank'
+        link.click()
       } else {
         isPhoneWidth 
         ? appContext.showBottomSheet(ModalType.ActiveOrder, res)

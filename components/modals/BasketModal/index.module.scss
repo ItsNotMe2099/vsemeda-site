@@ -40,7 +40,9 @@
 }
 
 .content {
-  margin-top: 32px;
+  @include mq($PhoneWidth, max) {
+    margin-top: 32px;
+  }
 }
 
 .title {
@@ -58,7 +60,7 @@
   border-radius: 16px;
   width: 100%;
   padding: 16px 0;
-  min-height: 200px;
+  // min-height: 200px;
   position: relative;
   height: 100%;
   // overflow: auto;

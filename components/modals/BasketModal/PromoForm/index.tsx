@@ -24,8 +24,7 @@ export default function PromoForm(props: Props) {
   const submit = async (data: { code: string }) => {
     setLoading(true)
     try {
-
-      await cartContext.updatePromoCode(data)
+      cartContext.updatePromoCode(data)
       formik.resetForm()
     } catch (err: any) {
       if (err instanceof RequestError) {

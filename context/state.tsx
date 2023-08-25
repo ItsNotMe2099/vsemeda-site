@@ -142,13 +142,16 @@ export function AppWrapper(props: Props) {
   useEffect(() => {
     userRef.current = user
   }, [user])
+
   useEffect(() => {
     if (props.token) {
       setIsLogged(true)
-    } else {
-      setIsLogged(false)
-    }
+    } 
+    // else {
+    //   setIsLogged(false)
+    // }
   }, [props.token])
+
   useEffect(() => {
     const promises = []
 
@@ -264,12 +267,12 @@ export function AppWrapper(props: Props) {
       setToken(newToken)
       if (!oldToken && newToken) {
         loginState$.next(true)
-        const syncAddressRes = await UserAddressRepository.sync(currentAddress.id, [addressLocal])
+        const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id, [addressLocal])
         const newUser = await updateUser()
         const newCurrentAddress = newUser.addresses.find(i => i.id === syncAddressRes.newCurrentAddressId) ?? user.addresses[0]
         setCurrentAddress(newCurrentAddress)
         if(newCurrentAddress) {
-          const cart = await CartRepository.fetch(newCurrentAddress.location)
+          const cart = await CartRepository.fetchCurrentCart(newCurrentAddress.location)
           cartState$.next(cart)
           currentAddressState$.next(newCurrentAddress)
         }

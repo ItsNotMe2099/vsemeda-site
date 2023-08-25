@@ -24,11 +24,11 @@ interface IState {
   unit: IUnit | null;
   initialLoaded: boolean;
   updating: boolean;
-  fetch: () => Promise<ICart | null>;
+  fetchCart: () => Promise<ICart | null>;
   update: (data: ICartUpdateRequestData) => Promise<ICart | null>;
   clear: () => void;
   createLine: (data: ICartLineCreateRequestData) => Promise<ICart | null>;
-  addProduct: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => void,
+  addProduct: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => Promise<boolean>,
   updateLineQuantity: (line: ICartLine, isAdd?: boolean) => void,
   updateProductQuantity: (product: IProduct, isAdd?: boolean) => void,
   updatePromoCode: (data: { code: string }) => void
@@ -48,7 +48,7 @@ const defaultValue: IState = {
   unit: null,
   initialLoaded: false,
   updating: false,
-  fetch: () => null,
+  fetchCart: () => null,
   update: () => null,
   clear: () => null,
   createLine: () => null,
@@ -99,10 +99,7 @@ export function CartWrapper(props: Props) {
     setProductQuantityMap({})
     quantityChangeDebounceRef.current = {}
   }
-  const init = async () => {
-    await fetch()
-    setInitialLoaded(true)
-  }
+  
   const updateLoading = () => {
     setUpdating(Object.keys(productIsSyncingMapRef.current).length === 0)
   }
@@ -114,8 +111,8 @@ export function CartWrapper(props: Props) {
     setGroupingIdQuantityMapState({ ...groupingIdQuantityMapRef.current, [key]: value })
     groupingIdQuantityMapRef.current[key] = value
   }
-  const fetch = async (): Promise<ICart> => {
-    const cart = await CartRepository.fetch(appContext.currentLocation)
+  const fetchCart = async (): Promise<ICart> => {
+    const cart = await CartRepository.fetchCurrentCart(appContext.currentLocation)
     setCart(cart)
     if (cart != null) {
       _updateQuantity()
@@ -124,6 +121,12 @@ export function CartWrapper(props: Props) {
     }
     return cart
   }
+
+  const init = async () => {
+    await fetchCart()
+    setInitialLoaded(true)
+  }
+
   const createCartLineReq = async (data: ICartLineCreateRequestData): Promise<ICart> => {
     const cart = await CartLineRepository.create(data, appContext.currentLocation)
     setCart(cart)
@@ -261,14 +264,46 @@ export function CartWrapper(props: Props) {
     clearQuantity()
   }
 
+  const addProduct = async(product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null): Promise<boolean> => {
+    
+    if(!appContext.currentAddress){
+      appContext.showModal(ModalType.AddressForm, {firstAddress: true} as AddressModalArguments)
+      return false
+    }
+    if (cart && unitId !== cart?.unitId) {
+      //TODO show alert clear
+      appContext.showModal(ModalType.Confirm, {
+        text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
+        onConfirm: async () => {
+          await clear()
+
+          //VSMA-531
+          addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
+          appContext.hideModal()
+        },
+
+      } as ConfirmModalArguments)
+      return false
+    } 
+    else if (product.modificationGroups?.length > 0 && (!modifications || modifications.length === 0)) {
+      appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
+    } 
+    else {
+      await addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
+      return true
+    }
+  }
+
   useEffect(() => {
     cartRef.current = cart
   }, [cart])
 
 
-  useEffect(() => {
-    init()
-  }, [])
+  useEffect(() => {    
+    if(appContext.currentLocation) {
+      init()
+    }
+  }, [appContext.currentLocation])
 
   useEffect(() => {
     if (!windowFocusInit.current) {
@@ -288,34 +323,13 @@ export function CartWrapper(props: Props) {
     groupingIdQuantityMap,
     productQuantityMap,
     isEmpty: cart === null || cart?.lines.length === 0,
-    fetch,
+    fetchCart,
     update: (data: ICartUpdateRequestData) => {
       return updateCartReq(data)
     },
     clear,
+    addProduct,
 
-    addProduct: async (product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null) => {
-      if(!appContext.currentAddress){
-        appContext.showModal(ModalType.AddressForm, {firstAddress: true} as AddressModalArguments)
-        return
-      }
-      if (cart && unitId !== cart?.unitId) {
-        //TODO show alert clear
-        appContext.showModal(ModalType.Confirm, {
-          text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
-          onConfirm: async () => {
-            await  clear()
-            appContext.hideModal()
-          },
-
-        } as ConfirmModalArguments)
-        return
-      } else if (product.modificationGroups?.length > 0 && (!modifications || modifications.length === 0)) {
-        appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
-      } else {
-        await addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
-      }
-    },
     updateLineQuantity: (line: ICartLine, isAdd?: boolean) => {
       changeCartLineQuantity(line, isAdd)
     },

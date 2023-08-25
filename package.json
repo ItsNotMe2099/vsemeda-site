@@ -31,7 +31,7 @@
     "date-fns": "^2.29.3",
     "formik": "^2.2.9",
     "google-libphonenumber": "^3.2.32",
-    "js-cookie": "^3.0.1",
+    "js-cookie": "^3.0.5",
     "jsonp": "^0.2.1",
     "libphonenumber-js": "^1.10.19",
     "lodash": "^4.17.21",

@@ -1,6 +1,7 @@
 import { IField } from 'types/types'
 import { useField } from 'formik'
 import ProductQuantityButton from 'components/ui/ProductQuantityButton'
+import { useState } from 'react'
 
 interface Props extends IField<number> {
   min?: number,
@@ -11,13 +12,16 @@ export default function QuantityField(props: Props) {
   const { label, type, ...rest } = props
   const [field, meta, helpers] = useField(props as any)
   const { value } = field
+  const [isMinusDisabled, setIsMinusDisabled] = useState<boolean>(false)
 
 
   const handleAddClick = () => {
     helpers.setValue(field.value + 1)
+    setIsMinusDisabled(false)
   }
   const handleMinusClick = () => {
-    if((props.min > 0 && props.value <= props.min) || props.value === 0){
+    if((props.min > 0 && value <= props.min) || value === 0){
+      setIsMinusDisabled(true)
       return
     }
     helpers.setValue(field.value - 1)
@@ -25,8 +29,7 @@ export default function QuantityField(props: Props) {
 
 
   return (
-    <ProductQuantityButton quantity={value} theme={'grey'} className={props.className} onAddClick={handleAddClick} onMinusClick={handleMinusClick}/>
-
+    <ProductQuantityButton quantity={value} theme={'grey'} minusDisabled={isMinusDisabled} className={props.className} onAddClick={handleAddClick} onMinusClick={handleMinusClick}/>
   )
 }
 

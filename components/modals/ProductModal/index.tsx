@@ -38,12 +38,23 @@ const ProductModalInner = (props: Props) => {
   const {isPhoneWidth} = useResize()
 
   const handleSubmit =async (data: any) => {
-    const oneToMany = args.product.modificationGroups.filter(i => i.type === ModificationGroupType.OneOfMany).filter(i => !!data[`group_${i.id}`])
+    const oneToMany = args.product.modificationGroups
+      .filter(i => i.type === ModificationGroupType.OneOfMany)
+      .filter(i => !!data[`group_${i.id}`])
       .map(i => ({modificationId: data[`group_${i.id}`].id, quantity: 1}))
-    const manyToMany = args.product.modificationGroups.filter(i => i.type === ModificationGroupType.ManyOfMany)
-      .map(group =>  data[`group_${group.id}`].map((i: any) => ({modificationId: i.id, quantity: 1}))).flat()
-   await cartContext.addProduct(args.product, args.unitId, data.quantity, [...oneToMany, ...manyToMany])
-    appContext.hideModal()
+    const manyToMany = args.product.modificationGroups
+      .filter(i => i.type === ModificationGroupType.ManyOfMany)
+      .map(group =>  data[`group_${group.id}`]
+      .map((i: any) => ({modificationId: i.id, quantity: 1})))
+      .flat()
+    cartContext.addProduct(args.product, args.unitId, data.quantity, [...oneToMany, ...manyToMany])
+    .then(res => {
+      if(res === true) {
+        appContext.hideModal()
+      }
+    })
+
+    
   }
 
   const initialValues = useMemo(() => {
@@ -78,14 +89,17 @@ const ProductModalInner = (props: Props) => {
 
       <FormikProvider value={formik}>
         <Form className={styles.form}>
-          {args.product.modificationGroups?.map((i) => {
-                switch (i.type){
-                  case ModificationGroupType.OneOfMany:
-                    return <ModificationRadioListField name={`group_${i.id}`} label={i.name} options={i.modifications} />
+          <div className={styles.modificationsWrapper}>
+            
+            {args.product.modificationGroups?.map((i) => {
+              switch (i.type){
+                case ModificationGroupType.OneOfMany:
+                  return <ModificationRadioListField name={`group_${i.id}`} label={i.name} options={i.modifications} />
                   case ModificationGroupType.ManyOfMany:
                     return <ModificationCheckboxListField name={`group_${i.id}`} options={i.modifications} />
-                }
-          })}
+                  }
+            })}
+          </div>
           <div className={styles.toolbar}>
             <div className={styles.productData}>
               {args.product.image && isPhoneWidth && <img src={`${args.product.image?.link}?w=100`} className={styles.imageSmall} alt={args.product.name}/>}

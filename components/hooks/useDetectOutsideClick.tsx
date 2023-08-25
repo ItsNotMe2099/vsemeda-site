@@ -6,7 +6,7 @@ export const useDetectOutsideClick: (el: MutableRefObject<any>, initialState: bo
   useEffect(() => {
     const pageClickEvent = (e: any) => {
       // If the active element exists and is clicked outside of
-      if (el.current.contains(e.target)) {
+      if (el?.current && el.current?.contains(e.target)) {
         return
       }
       else if (el.current !== null && !el.current.contains(e.target)) {
