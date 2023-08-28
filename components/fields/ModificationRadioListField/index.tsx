@@ -39,7 +39,7 @@ export default function ModificationRadioListField<T>(props: Props) {
         {options.map(item => (
           <div className={classNames(styles.item, {[styles.selected]: item.id === value?.id})} onClick={() => handleCheckboxChanged(item)}>
             <div className={styles.name}>{item.name}</div>
-            <div className={styles.price}>{Formatter.formatPrice(item.price)}</div>
+            <div className={styles.price}>{item.price !== 0&& ('+' + Formatter.formatPrice(item.price))}</div>
               <Radio isActive={item.id === value?.id}/>
           </div>
         ))}

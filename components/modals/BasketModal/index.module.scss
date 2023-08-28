@@ -67,12 +67,6 @@
   max-height: calc(100vh - 30%);
 }
 
-// .bodyWrapper {
-
-//   @include mq($PhoneWidth, max) {
-//     padding: 0 24px;
-//   }
-// }
 
 .close {
   background: #FFFFFF;
@@ -153,5 +147,5 @@
 
 .promo{
   padding: 0;
-  margin-bottom: 0;
+  margin-bottom: 24px;
 }

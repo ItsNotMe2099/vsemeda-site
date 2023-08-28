@@ -89,8 +89,8 @@ const ProductModalInner = (props: Props) => {
 
       <FormikProvider value={formik}>
         <Form className={styles.form}>
+          {args.product.modificationGroups.length > 0 && 
           <div className={styles.modificationsWrapper}>
-            
             {args.product.modificationGroups?.map((i) => {
               switch (i.type){
                 case ModificationGroupType.OneOfMany:
@@ -98,8 +98,9 @@ const ProductModalInner = (props: Props) => {
                   case ModificationGroupType.ManyOfMany:
                     return <ModificationCheckboxListField name={`group_${i.id}`} options={i.modifications} />
                   }
-            })}
+                })}
           </div>
+              }
           <div className={styles.toolbar}>
             <div className={styles.productData}>
               {args.product.image && isPhoneWidth && <img src={`${args.product.image?.link}?w=100`} className={styles.imageSmall} alt={args.product.name}/>}

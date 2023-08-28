@@ -47,6 +47,8 @@ export function UnitWrapper(props: Props) {
   const [isAvailable, setIsAvailable] = useState(false)
   const [scrollToCategoryFired, setScrollFired] = useState<boolean>(false)
 
+
+
   /*
     Получаем unit
     Не получили unit находим ближайший чтобы получить меню
@@ -104,13 +106,14 @@ export function UnitWrapper(props: Props) {
     setUnit(unit)
     setMenu(menu)
   }
-  useEffect(() => {
-     init()
+
+  useEffect(() => {   
+      init()   
   }, [props.brandSlug, router.query.place, appContext.currentLocation])
 
   const value: IState = {
     ...defaultValue,
-    unit,
+    unit,   
     menu,
     activeCategoryId,
     setActiveCategory,

@@ -54,7 +54,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     switch (i) {
       case PaymentMethod.Cash:
         return {
-          label: `Наличные${paymentMethod ? cartContext.cart?.moneyChange ? ` Сдача ${cartContext.cart?.moneyChange - cartContext.cart?.total} руб.` : ' Без сдачи' : ''}`,
+          label: `Наличные${paymentMethod === PaymentMethod.Cash ? cartContext.cart?.moneyChange ? `. Сдача  ${cartContext.cart?.moneyChange - cartContext.cart?.total} руб.` : ' Без сдачи' : ''}`,
           icon: <CardCourierSvg color='#61D56E'/>,
           value: i
         }
@@ -92,8 +92,6 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     OrderRepository.create(orderData)
     .then(res => {      
       if(res.paymentMethod === PaymentMethod.CardOnline) {
-        //window.open может быть блокировано блаузелом.
-        // window.open(res.paymentData.payUrl, '_blank')
         let link = document.createElement('a')
         link.href = res.paymentData.payUrl
         link.target = '_blank'
@@ -154,7 +152,8 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     <div className={classNames(styles.root, props.className)} ref={ref}
          style={props.style} {...(props.restProps ?? {})}>
 
-      {[State.Closed, State.Opened].includes(state) && <PaymentSelectTitle onClick={handleTitleClick} title={state === State.Closed && paymentMethod ? null : 'Выберите способ оплаты:'} arrow={true}>
+      {[State.Closed, State.Opened].includes(state) && 
+        <PaymentSelectTitle onClick={handleTitleClick} title={state === State.Closed && paymentMethod ? null : 'Выберите способ оплаты:'} arrow={true}>
           {state === State.Closed && currentPaymentItem}
         </PaymentSelectTitle>}
       {[State.Cash].includes(state) &&
@@ -164,10 +163,18 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
 
       {state !== State.Closed && <div className={styles.center}>
         {state === State.Opened &&
-          <PaymentMethodList paymentOptions={paymentOptions} onSelect={handleSelectPaymentMethod}
-                             selected={paymentMethod}/>}
-        {state === State.Cash &&  <CashForm onSubmit={handleSubmit}/>}
-        {state === State.Email &&  <EmailForm onSubmit={handleSubmit}/>}
+          <PaymentMethodList 
+          paymentOptions={paymentOptions} 
+          onSelect={handleSelectPaymentMethod}
+          selected={paymentMethod}
+          />
+        }
+        {state === State.Cash &&  
+          <CashForm onSubmit={handleSubmit}/>
+        }
+        {state === State.Email &&  
+          <EmailForm onSubmit={handleSubmit}/>
+        }
       </div>}
 
       {[State.Opened, State.Closed].includes(state) &&  <div className={styles.bottom}>

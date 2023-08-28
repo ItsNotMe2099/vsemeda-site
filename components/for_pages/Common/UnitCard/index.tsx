@@ -9,6 +9,7 @@ import CardImgLayoutPos from 'components/for_pages/Common/UnitCard/CardImgLayout
 import CardBodyLayoutPos from 'components/for_pages/Common/UnitCard/CardBodyLayoutPos'
 import {colors} from 'styles/variables'
 import {Routes} from 'types/routes'
+import { useUnitContext } from 'context/unit_state'
 
 interface Props {
   unit: IUnit
@@ -19,6 +20,8 @@ interface Props {
 export default function UnitCard({unit, className, wrapperClassName}: Props) {
 
   const appContext = useAppContext()
+
+  const unitContext= useUnitContext()
 
 
   return (

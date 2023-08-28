@@ -79,7 +79,7 @@
   border-radius: 16px;
   column-gap: 10px;
   margin-top: 10px;
-  user-select: none;
+  @include noSelectable;
   
   @include mq($PhoneWidth, max) {
     width: unset;

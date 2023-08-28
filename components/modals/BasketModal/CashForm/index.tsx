@@ -8,7 +8,7 @@ import SwitchField from 'components/fields/SwitchField'
 import Spacer from 'components/ui/Spacer'
 import Validator from 'utils/Validator'
 import PaymentButton from 'components/modals/BasketModal/PaymentSelect/PaymentButton'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {RequestError} from 'types/types'
 
 interface IFormData {
@@ -47,11 +47,15 @@ export default function CashForm(props: Props) {
 
   const formik = useFormik<IFormData>({
     initialValues: {
-      moneyChange: null,
+      moneyChange: cartContext.cart?.moneyChange||null,
       needMoneyChange: true,
     },
     onSubmit: submit
   })
+
+  useEffect(()=>{
+    cartContext.cart.moneyChange = formik.values.moneyChange
+  }, [formik.values.moneyChange])
 
   //TODO: неправильно высчитывает сумму сдачи, не учитывает доставку и сервисный сбор почему-то (на формирование корзины не влияет, только визуал)
   return (
@@ -70,7 +74,7 @@ export default function CashForm(props: Props) {
             color='darkPurple'
             placeholder='Введите сумму'
             isNumbersOnly
-          validate={Validator.combine([Validator.required, minMoneyChange])}/>
+            validate={Validator.combine([Validator.required, minMoneyChange])}/>
         </div>
         <Spacer basis={20}/>
         <div className={styles.bottom}>

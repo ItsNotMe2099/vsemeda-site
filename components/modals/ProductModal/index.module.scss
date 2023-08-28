@@ -7,6 +7,7 @@
 
 .modalLayout {
   // padding: 16px 16px 82px 16px;
+  max-height: unset;
   width: 592px;
   padding: 16px 16px 16px 16px;
   @include mq($PhoneWidth, max) {
@@ -115,6 +116,7 @@
     color: $white;
     font-size: Clamp(16px, 3vw, 24px);
     font-weight: 500;
+    @include noSelectable;
     @include mq($PhoneWidth, max) {
       width: 100%;
       font-weight: 600;
@@ -136,7 +138,11 @@
 
 
 .modificationsWrapper {
-  max-height: 30vh;
+  max-height: 27vh;
+  min-height: 215px;
   overflow-y: scroll;
-  padding: 20px 16px;
+  padding: 20px 0px;
+  border-top: 2px $grey3 dotted;
+  margin-top: 24px;
+  margin-inline: 16px;
 }

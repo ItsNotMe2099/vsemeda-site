@@ -48,11 +48,13 @@
 
 .quantity{
   flex: 1;
-    font-weight: 600;
+  font-weight: 600;
   font-size: 16px;
   color: $dark2;
   text-align: center;
-
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none !important;
 }
 .emptyText{
   font-weight: 600;

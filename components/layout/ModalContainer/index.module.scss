@@ -24,6 +24,9 @@
   @include mq($PhoneWidth, max) {
     padding: 0px;
   } 
+  @media (max-height: 800px) {
+    justify-content: flex-start;
+  }
 
   &.menu,
   &.menuOwner {
