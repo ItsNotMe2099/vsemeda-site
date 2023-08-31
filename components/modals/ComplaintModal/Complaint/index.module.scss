@@ -5,8 +5,11 @@
  display: flex;
  flex-direction: column;
  align-items: stretch;
- height: 80vh;
- height: 80dvh;
+
+ @include mq($TabletWidth, max) {
+   height: calc(100vh - 80px);
+   height: calc(100dvh - 80px);
+  }
 
 }
 
@@ -52,12 +55,38 @@
   }
 
   .status {
-    background-color: $grey1;
+    // background-color: $grey1;
     padding: 6px 10px 6px;
     color: white;
     border-radius: 16px;
+    overflow: hidden;
     font-size: 14px;
     font-weight: 600;
+    position: relative;
+    display: flex;
+    align-items: center;
+    column-gap: 6px;
+
+    p, svg {
+      position: relative;
+      z-index: 2;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    
+
+    .statusBackground {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .3;
+    }
   }
 
   .orderBottom {
@@ -102,14 +131,19 @@
     flex-wrap: wrap;
     column-gap: 1%;
     row-gap: 10px;
+    margin-top: 16px;
     
   }
 
   .imageRoot {
     position: relative;
-    width: 19%;
+    width: 70px;
+    height: 70px;
     max-width: 170px;
-    height: Clamp(70px, 20vw,170px);
+    @include mq($TabletWidth, max) {
+      width: 19vw;
+      height: Clamp(70px, 19vw,170px);
+    }
   }
 
   .imageWrapper {
@@ -141,11 +175,27 @@
     justify-content: center;
     background-color: $purple3;
     border-radius: 50%;
+    cursor: pointer;
+    transition: .3s linear;
+    @media (hover : hover ){
+      &:hover {
+        background-color: $purple;
+        svg{
+          path{
+            fill: $white;
+          }
+        }
+      }
+    }
   }
 
   .removeSvg {
-    width: Clamp(8px, 3vw, 16px);
-    height: Clamp(8px, 3vw, 16px);
+    width: 10px;
+    height: 10px;
+    @include mq($TabletWidth, max) {
+      width: Clamp(8px, 3vw, 16px);
+      height: Clamp(8px, 3vw, 16px);
+    }
     display: block;
   }
 
@@ -157,12 +207,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 19%;
     max-width: 170px;
     background-color: $purple3;
     border-radius: 16px;
-    height: Clamp(70px, 20vw,170px);
     cursor: pointer;
+    width: 70px;
+    height: 70px;
+    @include mq($TabletWidth, max) {
+      width: 19vw;
+      height: Clamp(70px, 19vw,170px);
+    }
+
+    svg {
+      height: Clamp(24px, 30%, 40px);
+      width: Clamp(24px, 30%, 40px);
+    }
   }
 }
 
@@ -171,6 +230,7 @@
   padding: 16px;
   border-radius: 16px;
   margin-top: 8px;
+  margin-bottom: 8px;
 
   .messageTitle {
     font-weight: 600;
@@ -178,12 +238,8 @@
   }
 
   .textarea {
-    // border: 1px $grey4 solid;
-    // border-radius: 16px;
-    // width: 100%;
-    // margin-top: 8px;
-    // padding: 8px;
     min-height: 100px;
+    margin-top: 16px;
   }
 }
 

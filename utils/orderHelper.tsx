@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Rive from '@rive-app/react-canvas'
 import { PaymentMethod } from 'data/enum/PaymentMethod'
 import ComplaintButton, { CancelButton, FeedbackButton, PayButton, RepeatButton } from 'components/ui/OrderButtons'
+import CrossSvg from 'components/svg/CrossSvg'
+import CheckSvg from 'components/svg/CheckSvg'
 
 
 interface IOrderIconType {
@@ -26,7 +28,7 @@ export default class OrderHelper extends Component {
     initIcon: OrderStateIcon
     initColor: OrderStateColor
     icon: IOrderIconType
-    background: [style: CSS.Properties, color: string]
+    background: [style: CSS.Properties, color: string, textColor?: string]
 
     constructor(props?: Props) {
         super(props.props)
@@ -34,12 +36,13 @@ export default class OrderHelper extends Component {
             this.initIcon = props.icon
             this.icon = this.orderIcon(props.icon)
         }
-        if(props.color) {this.background = this.orderColor(props.color)}
+        if(props.color) {this.background = OrderHelper.orderColor(props.color)}
     }
     
 
-    public orderColor(color: OrderStateColor):[style: CSS.Properties, color: string] {
+    public static orderColor(color: OrderStateColor):[style: CSS.Properties, color: string, textcolor?: string] {
       let currentColor: string
+      let textColor: string
       switch (color) {
           case OrderStateColor.Red :
               currentColor = colors.red
@@ -49,6 +52,7 @@ export default class OrderHelper extends Component {
               break
           case OrderStateColor.Light : 
               currentColor = colors.purple3
+              textColor = colors.black
               break
           case OrderStateColor.Orange : 
               currentColor = colors.orange
@@ -57,7 +61,16 @@ export default class OrderHelper extends Component {
       const style: CSS.Properties  = {
           backgroundColor: currentColor
       }
-      return [style, currentColor]
+      return [style, currentColor, textColor]
+    }
+
+    public static smallOrderIcon(icon: OrderStateIcon): JSX.Element {
+      switch (icon) {
+        case OrderStateIcon.Cancelled: 
+        return <CrossSvg color={colors.red}/>
+        case OrderStateIcon.Delivered:
+        return <CheckSvg color={colors.green}/>
+      }
     }
 
     public orderIcon(icon: OrderStateIcon): IOrderIconType {

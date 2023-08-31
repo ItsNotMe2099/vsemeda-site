@@ -6,15 +6,15 @@ import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 import { useOrderContext } from 'context/order_state'
 import { useAppContext } from 'context/state'
 import { IReviewCreateRequest } from 'data/interfaces/IReviewCreateRequest'
-import OrderRepository from 'data/repositories/OrderRepository'
 import Image from 'next/image'
-import { useState } from 'react'
-import { SnackbarType } from 'types/enums'
+import { useCallback,  useEffect, useRef, useState } from 'react'
+import { ModalType, SnackbarType} from 'types/enums'
 import BackButton from './BackButton'
 import CompletePage from './CompletePage'
 import ErrorPage from './ErrorPage'
 import RateOrder from './Rate'
 import ReviewForm from './ReviewForm'
+import OrderRepository from 'data/repositories/OrderRepository'
 
 interface Props {
   onBackClick?: ()=>void
@@ -37,14 +37,19 @@ export default function LeaveFeedbackModal(props: Props) {
   const [choosenStar, chooseStar] = useState<number>(-1)
   const [pageState, setPageState] = useState<FeedbackPageNavigation>(FeedbackPageNavigation.Stars)
   const [formData, setFormData] = useState<IReviewCreateRequest>()
+  const formDataRef = useRef<IReviewCreateRequest>()
+  const reviewLeaved = useRef<boolean>()
+ 
+  const onSubmit = (data: IReviewCreateRequest) => {
+    if(!data?.userName) {
+      data.userName = appContext.user.name
+    }
 
-  const onSubmit = (data: IReviewCreateRequest, nextPage: FeedbackPageNavigation) => {
     
-    setFormData(data)   
+    reviewLeaved.current = true
     
     OrderRepository.createFeedBack(orderContext.activeDetails.id, data)
     .then(r=> {
-      setPageState(nextPage)
     })
     .catch(e => {
       appContext.showSnackbar(e.toString(), SnackbarType.error)
@@ -52,31 +57,49 @@ export default function LeaveFeedbackModal(props: Props) {
     })     
   }
 
-  const navHandler = () => {
+  const navHandler = useCallback(() => {
     
     switch (pageState) {
       case FeedbackPageNavigation.Stars:
-        appContext.hideModal()
+        if(formData) {        
+          appContext.hideModal()
+        }
+        else {
+          appContext.showModal(ModalType.Profile, 'orders')
+        }
         break
       case FeedbackPageNavigation.Form:
         setPageState(FeedbackPageNavigation.Stars)
         break
       case FeedbackPageNavigation.Error:
-        setPageState(FeedbackPageNavigation.Form)
+        appContext.hideModal()
         break
       case FeedbackPageNavigation.Complete:
-        setPageState(FeedbackPageNavigation.Form)
+        appContext.hideModal()
         break
     }
-  }
+  }, [formData, pageState])
+
+  //чтобы отправлялись отзывы когда компонент закрывается при клике вне модалки
+  useEffect(()=>{
+    formDataRef.current = formData
+  }, [formData])
+  useEffect(()=>{
+    return () => {
+      if(formDataRef.current && !reviewLeaved.current) {
+        onSubmit(formDataRef.current)
+        orderContext.setActiveDetails(null)
+      }
+    }
+  }, [])
 
   const body = () => {
     switch (pageState) {
       case FeedbackPageNavigation.Stars:
-        return <RateOrder rate={choosenStar} onSubmit={onSubmit} chooseRate={chooseStar} changePage={setPageState}/>
+        return <RateOrder rate={choosenStar} onSubmit={(d)=> {setFormData(d)}} chooseRate={chooseStar} changePage={setPageState}/>
 
       case FeedbackPageNavigation.Form:
-        return <ReviewForm onSubmit={onSubmit} rate={choosenStar} setData={setFormData} data={formData} changePage={setPageState} item={orderContext.activeDetails}/>
+        return <ReviewForm onSubmit={onSubmit} rate={choosenStar} data={formData} changePage={setPageState} item={orderContext.activeDetails}/>
 
       case FeedbackPageNavigation.Complete:
         return <CompletePage onClick={()=>{
@@ -85,7 +108,7 @@ export default function LeaveFeedbackModal(props: Props) {
         }}/>
       
       case FeedbackPageNavigation.Error: 
-        return <ErrorPage onClick={()=>onSubmit(formData, FeedbackPageNavigation.Complete)}/>
+        return <ErrorPage onClick={()=>onSubmit(formData)}/>
     }
   }
  

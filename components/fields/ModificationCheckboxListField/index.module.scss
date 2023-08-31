@@ -18,6 +18,12 @@
   background: $white;
   color: $grey2;
   font-size: 14px;
+  cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      background-color: $purple3;
+    }
+  }
 
   @include list(8px, true);
   border-radius: 16px;

@@ -33,7 +33,7 @@ export default function ReviewCard(props: Props) {
                         <UserSvg color="black" className={styles.userSvg}/>
                         
                     </div>
-                    <div>
+                    <div className={styles.userData}>
                         {props.item.userName && 
                             <div className={styles.userName}>{props.item.userName}</div>
                         }

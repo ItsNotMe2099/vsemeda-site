@@ -14,7 +14,7 @@ interface Props {
   chooseRate: (n: number) => void
   rate: number
   changePage: (n: FeedbackPageNavigation) => void
-  onSubmit: (d: IReviewCreateRequest, np: FeedbackPageNavigation) => void
+  onSubmit: (d: IReviewCreateRequest) => void
 }
 
 export default function RateOrder(props: Props) {
@@ -60,9 +60,11 @@ export default function RateOrder(props: Props) {
     setColors(items)
   }, [props.rate])
 
-  const rateHandler = () => {
-    let data: IReviewCreateRequest = {mark: props.rate, userName: appContext.user.name}
-    props.onSubmit(data, FeedbackPageNavigation.Form)
+  const submitRate = (index: number) => {
+    
+    let data: IReviewCreateRequest = {mark: index + 1, userName: appContext.user.name}
+    props.chooseRate(index)
+    props.onSubmit(data)
   }
 
   return ( 
@@ -78,7 +80,7 @@ export default function RateOrder(props: Props) {
         <div className={styles.starWrapper} onMouseLeave={()=>{mouseEnterHandler(0)}}>
           {colors.map((color, index) => 
             <div className={styles.svgStarWrapper}  
-            onClick={()=> props.chooseRate(index)} 
+            onClick={()=> submitRate(index)} 
             onMouseEnter={()=>{mouseEnterHandler(index)}}
             >
               <StartFilledSvg color={color} className={styles.starSvg}/>
@@ -88,7 +90,7 @@ export default function RateOrder(props: Props) {
         {isPhoneWidth&& 
           <button className={classNames(styles.reviewButton, props.rate>=0&&styles.reviewButton_active)} 
           type="button" 
-          onClick={rateHandler} >Оценить</button>
+          onClick={()=>props.changePage(FeedbackPageNavigation.Form)} >Оценить</button>
         }
         {props.rate >= 0 && !isPhoneWidth &&
           <div className={styles.rateReview}>
@@ -97,7 +99,7 @@ export default function RateOrder(props: Props) {
             </p>
             <button className={styles.reviewButton} 
             type='button' 
-            onClick={rateHandler}> 
+            onClick={()=>props.changePage(FeedbackPageNavigation.Form)}> 
               <CommentSvg/>
               Оставить отзыв
             </button>

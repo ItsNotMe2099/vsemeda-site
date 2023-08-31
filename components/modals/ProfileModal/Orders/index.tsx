@@ -85,7 +85,7 @@ export default function Orders() {
             hasMore={total > orders.length}
             loader={loading ? <Spinner size={50} color="#fff" secondaryColor="rgba(255,255,255,0.4)" /> : null}
             scrollableTarget='scrollableDiv'
-          >
+            >
             {orders.map((i, index) =>
               <OrderCard order={i} key={index} onClickProps={orderDetailsHandler}/>
             )}

@@ -89,6 +89,7 @@ function FeedbacksModalInner (props: Props) {
     
 
     const body = (<>
+
         <div className={styles.feedbacks} ref={feedBackContainer}>              
             <InfiniteScroll
             dataLength={feedBacksState.length}
@@ -101,8 +102,7 @@ function FeedbacksModalInner (props: Props) {
                 {feedBacksState.map((i, index) =>
                     <ReviewCard item={i} key={index} />
                 )}
-             </InfiniteScroll>
-            
+            </InfiniteScroll>
         </div>
     </>)
 

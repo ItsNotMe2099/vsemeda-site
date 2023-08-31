@@ -32,21 +32,20 @@ export default function MenuStack (props: Props) {
     rootMargin: '0px 0px -70% 0px'
   }
   const isOnScreen = useOnScreen(refStack, options)
-
-
-
+  
 
   const handleAddClick = (product: IProduct) => {
+    debugger
     
     if (cartContext.productQuantityMap[product.id] > 1) {
-      cartContext.updateProductQuantity(product, true)
+      cartContext.updateProductQuantityFromCard(product, true)
     } else {
       cartContext.addProduct(product, unit.id)
     }
   }
 
   const handleMinusClick = (product: IProduct) => {
-    cartContext.updateProductQuantity(product, false)
+    cartContext.updateProductQuantityFromCard(product, false)
   }
 
   const handleClick = (product: IProduct) => {

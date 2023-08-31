@@ -7,7 +7,6 @@ import ContentLoader from 'components/ui/ContentLoader'
 import { useOrderContext } from 'context/order_state'
 import { useAppContext } from 'context/state'
 import { IComplaint, IComplaintType } from 'data/interfaces/IComplaint'
-import { IFileDownload } from 'data/interfaces/IFile'
 import { IOrder } from 'data/interfaces/IOrder'
 import ComplaintRepository from 'data/repositories/ComplaintRepository'
 import FileRepository from 'data/repositories/FileRepository'
@@ -29,10 +28,6 @@ interface Props {
 
 interface IAbortControllerWithId extends AbortController {
   id?: string
-}
-
-interface IFormData {
-  photos?: IFileDownload[],
 }
 
 interface PreviewImage {
@@ -124,6 +119,13 @@ export default function Complaint(props: Props) {
     </div>
   )
 
+  console.log(props.item.stateDetails);
+
+  const smallIcon = OrderHelper.smallOrderIcon(props.item.stateDetails.icon)
+  
+
+  const [style, color] = OrderHelper.orderColor(props.item.stateDetails.color)
+
   const body = (
     <FormikProvider value={formik}>
       <Form className={styles.complaintLayout}>
@@ -134,7 +136,13 @@ export default function Complaint(props: Props) {
         <div className={styles.order} >
           <div className={styles.orderTop}>
             <p className={styles.unitName}>{props.item.brand.name}</p>
-            <div className={styles.status}>{props.item.stateDetails.name}</div>
+            <div className={styles.status}>
+              <div className={styles.statusBackground} style={style}></div>
+              {smallIcon}
+              <p className={styles.statusText} style={{color: color}}>
+                {props.item.stateDetails.shortName}
+              </p>
+            </div>
           </div>
           <div className={styles.orderBottom}>
             <p className={styles.time}>{Formatter.formatDateRelative(props.item.createdAt)}</p>
@@ -169,7 +177,7 @@ export default function Complaint(props: Props) {
         </div>
         <div className={styles.message}>
           <p className={styles.messageTitle}>Сообщение</p>
-          <TextAreaField name='text' color='white' autoSize={true} areaClassname={styles.textarea}/>
+          <TextAreaField name='text' color='white' autoSize={true} areaClassname={styles.textarea}  />
           {/* <textarea className={styles.textarea} name="text" id="" cols={30} rows={6}></textarea> */}
         </div>
           

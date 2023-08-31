@@ -57,25 +57,25 @@
   position: relative;
   margin-top: 16px;
   width: 100%;
+  &:active, :focus {
+    &::placeholder {
+      opacity: 0;
+    }
+  }
 }
 
 .textarea {
   background-color: white;
   padding: 16px;
+  padding-left: 36px;
   width: 100%;
   min-height: 124px;
   resize: none;
   border-radius: 16px;
-  padding: 16px;
   font-weight: 500;
   font-size: 14px;
   color: $dark1;
   display: block;
-  
-  &::placeholder {
-    padding-left: 24px;
-  }
-
 }
 
 .textAreaIcon {

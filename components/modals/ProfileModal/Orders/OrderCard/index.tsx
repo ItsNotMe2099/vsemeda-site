@@ -70,7 +70,7 @@ export default function OrderCard({ order, onClickProps}: Props) {
   }, [orderContext.activeDetails?.id])
 
   const orderHelper = new OrderHelper({color: order.stateDetails?.color})
-  const [background, color] = orderHelper.background
+  const [background, color, textColor] = orderHelper.background
 
   return (
     <div className={styles.root} onClick={clickHandler}>
@@ -90,7 +90,7 @@ export default function OrderCard({ order, onClickProps}: Props) {
           <p className={styles.brand}>{order.brand.name}</p>
           <div className={styles.orderStatus}>   
             <div className={styles.statusBackground} style={background}></div> 
-            <span style={{color: color}}>{order.stateDetails.name}</span>
+            <span style={{color: textColor?textColor:color}}>{order.stateDetails.name}</span>
           </div>
         </div>
         {!isPhoneWidth&&

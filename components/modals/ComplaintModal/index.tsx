@@ -38,9 +38,8 @@ export default function ComplaintModal(props: Props) {
   const [navigate, setNavigate] = useState<ComplaintNavigation>(ComplaintNavigation.Types)
   const [type, setType] = useState<IComplaintType>()
   
-  const backButtonHandler = () => {
-    appContext.hideModal()
-    appContext.showModal(ModalType.ProfileMenu, 'orders')
+  const backButtonHandler = () => {   
+    appContext.showModal(ModalType.Profile, 'orders')
   }
 
   useEffect(()=>{

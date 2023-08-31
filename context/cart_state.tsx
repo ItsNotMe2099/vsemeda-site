@@ -30,7 +30,8 @@ interface IState {
   createLine: (data: ICartLineCreateRequestData) => Promise<ICart | null>;
   addProduct: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => Promise<boolean>,
   updateLineQuantity: (line: ICartLine, isAdd?: boolean) => void,
-  updateProductQuantity: (product: IProduct, isAdd?: boolean) => void,
+  updateProductQuantity: (product: ICartLine, isAdd?: boolean) => void,
+  updateProductQuantityFromCard: (product: IProduct, isAdd?: boolean) => void,
   updatePromoCode: (data: { code: string }) => void
   deleteLine: (lineId: number) => ICart | null;
   groupingIdQuantityMap: QuantityMap
@@ -55,6 +56,7 @@ const defaultValue: IState = {
   addProduct: () => null,
   updateLineQuantity: () => null,
   updateProductQuantity: () => null,
+  updateProductQuantityFromCard: () => null,
   updatePromoCode: () => null,
   deleteLine: () => null,
   groupingIdQuantityMap: {},
@@ -285,7 +287,7 @@ export function CartWrapper(props: Props) {
       } as ConfirmModalArguments)
       return false
     } 
-    else if (product.modificationGroups?.length > 0 && (!modifications || modifications.length === 0)) {
+    else if (product.modificationGroups?.length > 0 ) {
       appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
     } 
     else {
@@ -333,10 +335,25 @@ export function CartWrapper(props: Props) {
     updateLineQuantity: (line: ICartLine, isAdd?: boolean) => {
       changeCartLineQuantity(line, isAdd)
     },
-    updateProductQuantity: async (product: IProduct, isAdd?: boolean) => {
+    updateProductQuantity: async (product: ICartLine, isAdd?: boolean) => {
+
+      if (product.product.modificationGroups?.length > 0 && isAdd) {
+        // Todo Show Product Modal
+      } else {
+        
+        const line = cartRef.current.lines.find(i => i.id === product.id)
+        if (line != null) {
+          await changeCartLineQuantity(line, isAdd)
+        }
+      }
+    },
+
+    //todo зарефакторить
+    updateProductQuantityFromCard: async (product: IProduct, isAdd?: boolean) => {
       if (product.modificationGroups?.length > 0 && isAdd) {
         // Todo Show Product Modal
       } else {
+        
         const line = cartRef.current.lines.find(i => i.productId === product.id)
         if (line != null) {
           await changeCartLineQuantity(line, isAdd)

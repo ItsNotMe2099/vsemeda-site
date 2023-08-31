@@ -37,7 +37,7 @@ export default function ActiveOrderItem({item, imageSizes, rootClassName}: Props
         }
         <div className={styles.descWrapper}>
             <p className={styles.primaryText}>{item.stateDetails.name}</p>
-            <p className={styles.secondaryText}>{item.stateDetails.desc}</p>
+            {/* <p className={styles.secondaryText}>{item.stateDetails.desc}</p> */}
         </div>
     </div>)
 }

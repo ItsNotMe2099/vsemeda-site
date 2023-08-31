@@ -19,7 +19,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: none;
-  padding: 10px;
+  // padding: 10px;
   z-index: $zIndexTop;
   @include mq($PhoneWidth, max) {
     padding: 0px;

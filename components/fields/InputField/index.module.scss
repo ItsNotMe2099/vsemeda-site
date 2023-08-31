@@ -25,6 +25,12 @@ $fieldHeightDefaultExSmall: 38px;
   order: 2;
   color: $dark1;
   width: 100%;
+  &:active, :focus {
+    &::placeholder {
+      color: transparent !important;
+      opacity: 0;
+    }
+  }
 
   &.success {
     border-color: $green;
@@ -189,6 +195,7 @@ $fieldHeightDefaultExSmall: 38px;
     color: #333333;
     padding: 0 15px;
     padding-left: 40px;
+    font-weight: 500;
   }
 }
 

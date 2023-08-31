@@ -1,5 +1,5 @@
 import styles from './index.module.scss'
-import { colors } from 'styles/variables'
+import { breakpoints, colors } from 'styles/variables'
 import BottomSheetLayout from 'components/layout/BottomSheet/BottomSheetLayout'
 import ModalLayout from 'components/layout/Modal/ModalLayout'
 import BottomSheetBody from 'components/layout/BottomSheet/BottomSheetBody'
@@ -15,6 +15,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 // import { useRef } from 'react'
 import { useOrderContext } from 'context/order_state'
+import VisibleOnSize from 'components/visibility/VisibleOnSize'
 
 
 
@@ -60,14 +61,14 @@ const ProfileModalInner = (props: Props) => {
       </div>
       <div className={styles.content}>
         <CirclesBgSvg className={styles.circle} />       
-        <VisibleXs>
+        <VisibleOnSize  width={breakpoints.PhoneWidth} >
           <div className={styles.head}>
             <BackBtn className={styles.back} bgColor='white' onClick={handleCloseClick} />
             <div className={styles.title}>
               <Option item={item} key={item.value} className={styles.option} />
             </div>
           </div>
-        </VisibleXs>     
+        </VisibleOnSize>     
         {appContext.modalArguments === 'profile' ? <ProfileForm /> : null}
         {appContext.modalArguments === 'orders' ? <Orders /> : null}
         <VisibleXs>

@@ -1,4 +1,4 @@
-import styles from 'components/modals/BasketModal/CartLine/index.module.scss'
+import styles from './index.module.scss'
 import * as React from 'react'
 import classNames from 'classnames'
 import { ICartLine } from 'data/interfaces/ICartLine'
@@ -19,7 +19,8 @@ export default function CartLine({ item, onClick, className, quantity }: Props) 
   const cartContext = useCartContext()
 
   const handleUpdateQuantity = (isAdd: boolean) => {
-      cartContext.updateProductQuantity(item.product, isAdd)
+    
+      cartContext.updateProductQuantity(item, isAdd)
   }
 
   return (
@@ -42,6 +43,13 @@ export default function CartLine({ item, onClick, className, quantity }: Props) 
           <PlusSvg className={styles.symbol} color='#000' onClick={() => handleUpdateQuantity(true)}/>
         </div>
       </div>
+      {item.modificationLines.length > 0 &&
+        <div className={styles.modifications}>
+          {item.modificationLines.map(m=> {
+            return <p>{m.modification.name}</p>
+          })}
+        </div>
+      }
     </div>
   )
 }

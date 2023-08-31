@@ -10,6 +10,8 @@
     border-radius: 16px;
     @include list(8px, true);
     padding: 0px 15px;
+    min-width: 224px;
+    flex-shrink: 0;
   }
 }
 .details{

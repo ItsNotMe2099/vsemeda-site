@@ -83,7 +83,7 @@ export default function InputField(props: Props) {
             [styles.purple]: props.color === 'purple',
             [styles.darkPurple]: props.color === 'darkPurple',
           }, styles[props.styleType])}
-          placeholder={props.placeholder}
+          placeholder={!focused&&props.placeholder}
         />
         {props.success && <img src="/images/icons/field_success.svg" alt="" className={styles.successIcon} />}
         {props.suffix && getSuffix()}

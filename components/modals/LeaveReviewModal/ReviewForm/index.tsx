@@ -15,10 +15,9 @@ import { useResize } from 'components/hooks/useResize'
 interface Props {
   rate: number
   item: IOrder
-  setData: (d: IReviewCreateRequest)=>void
   data?: IReviewCreateRequest,
   changePage?: (p: FeedbackPageNavigation)=>void 
-  onSubmit: (data: IReviewCreateRequest, np: FeedbackPageNavigation) => void
+  onSubmit: (data: IReviewCreateRequest) => void
 }
 
 export default function ReviewForm (props: Props) {
@@ -33,7 +32,10 @@ export default function ReviewForm (props: Props) {
       userName: appContext.user.name,
       text: ''
     },
-    onSubmit: (data)=> {props.onSubmit(data, FeedbackPageNavigation.Complete)}
+    onSubmit: (data)=> {
+      props.onSubmit(data)
+      props.changePage(FeedbackPageNavigation.Complete)
+    }
   })
 
   const textAreaHandler = (e: { target: HTMLTextAreaElement }) => {
@@ -59,12 +61,11 @@ export default function ReviewForm (props: Props) {
         styleType='feedback' 
         color='white'
         name={'userName'} 
-        value={appContext.user.name}
         className={styles.nameField}
         />
         <div className={styles.textAreaWrapper}>
           <textarea name='text' placeholder='Ваш отзыв' className={styles.textarea} onChange={textAreaHandler} value={textAreaValue}/>
-          {textAreaValue.length === 0 &&<PencilSvg color={colors.dark1} className={styles.textAreaIcon}/>}
+          <PencilSvg color={colors.dark1} className={styles.textAreaIcon}/>
         </div>
         <button className={styles.submitButton} type='submit'> 
           <CommentSvg/>

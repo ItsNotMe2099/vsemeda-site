@@ -59,12 +59,7 @@ export function PayButton(props: commonProps) {
       OrderRepository.payById(activeDetails?.id??appContext.modalArguments.id)
       .then(res => {
         appContext.hideBottomSheet()
-        //window.open может быть блокиловано блаузелом
-        // window.open(res.payUrl, '_blank')
-        let link = document.createElement('a')
-        link.href = res.payUrl
-        link.target = '_blank'
-        link.click()
+        appContext.showModal(ModalType.IFrame, res.payUrl)
       })
       .catch((error) => {
         appContext.showSnackbar(error.toString(), SnackbarType.error)

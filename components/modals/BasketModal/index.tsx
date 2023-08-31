@@ -15,6 +15,8 @@ import ModalFooter from 'components/layout/Modal/ModalFooter'
 import BasketAddressDetails from 'components/modals/BasketModal/BasketAddressDetails'
 import BasketReceipt from 'components/modals/BasketModal/BasketReceipt'
 import BasketEmpty from 'components/modals/BasketModal/BasketEmpty'
+import { useEffect, useState } from 'react'
+import { ModalType } from 'types/enums'
 
 
 interface Props {
@@ -31,14 +33,27 @@ export default function BasketModal(props: Props) {
   const cartContext = useCartContext()
   const appContext = useAppContext()
 
+  const [iframeSrc, setIframeSrc] = useState<string>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const header = (
   <div className={styles.close}>
     <BackBtn bgColor='white' onClick={handleCloseClick} />
   </div>
   )
 
+  useEffect(()=>{
+    
+    if(iframeSrc) {
+      appContext.showModal(ModalType.IFrame, iframeSrc)
+    }
+  }, [iframeSrc])
+
+  cartContext.cart
+  
+
   const body = ( cartContext.isEmpty 
-    ? <BasketEmpty/> 
+    ? <BasketEmpty/>
     : (<>
         <div className={styles.content}>
           <div className={styles.title}>Ваш заказ 🤝</div>
@@ -54,8 +69,8 @@ export default function BasketModal(props: Props) {
         {cartContext.cart?.lines.length ? <PromoForm className={styles.promo} /> : null}
       </>)
   )
-  
-  const footer = !cartContext.isEmpty && (<PaymentSelect/>)
+
+  const footer = !cartContext.isEmpty && (<PaymentSelect setSrc={(s: string) => setIframeSrc(s)} setLoading={(b: boolean)=>{setIsLoading(b)}}/>)
 
   if (props.isBottomSheet) {
     return (
@@ -67,11 +82,15 @@ export default function BasketModal(props: Props) {
 
 
   return (
-    <ModalLayout fixed className={styles.modalLayout} >
-      {appContext.isMobile && <ModalHeader>{header}</ModalHeader>}
-      <ModalBody fixed>{body}</ModalBody>
-      <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>
-    </ModalLayout>
+  <>
+    {!isLoading &&
+      <ModalLayout fixed className={styles.modalLayout}>
+        {appContext.isMobile && <ModalHeader>{header}</ModalHeader>}
+        <ModalBody fixed>{body}</ModalBody>
+        <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>
+      </ModalLayout>
+    }
+  </>
   )
 }
 

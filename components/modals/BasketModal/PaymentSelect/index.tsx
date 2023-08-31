@@ -30,6 +30,8 @@ interface Props {
   isSticky?: boolean
   restProps?: any
   className?: string
+  setSrc?: (s: string) => void
+  setLoading?: (b: boolean) => void
 }
 
 const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number, className?: string }>((props, ref) => {
@@ -42,6 +44,8 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   const [loading, setLoading] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState(cartContext.cart?.paymentMethod)
   const currentEmail = useRef<string|undefined>('')
+
+  
 
   useEffect(() => {
     if (cartContext.cart?.paymentMethod) {
@@ -66,6 +70,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   })
 
   const createNewOrder = () => {
+    props.setLoading(true)
     
     
     /* TODO: добавить количество персон 
@@ -92,10 +97,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     OrderRepository.create(orderData)
     .then(res => {      
       if(res.paymentMethod === PaymentMethod.CardOnline) {
-        let link = document.createElement('a')
-        link.href = res.paymentData.payUrl
-        link.target = '_blank'
-        link.click()
+        props.setSrc(res.paymentData.payUrl)
       } else {
         isPhoneWidth 
         ? appContext.showBottomSheet(ModalType.ActiveOrder, res)
@@ -105,7 +107,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   }
 
   const handleSubmit = (mail?: string) => {  
-    
+
     currentEmail.current = mail
     
     if(!appContext.isLogged){
@@ -118,8 +120,9 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }else if(paymentMethod === PaymentMethod.CardOnline && !appContext.user?.email && !currentEmail.current){
       setState(State.Email)
     }else{
+      
       createNewOrder()    
-      cartContext.clear()
+      cartContext.clear()     
     }
   }
 
