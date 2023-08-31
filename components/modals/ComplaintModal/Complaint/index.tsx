@@ -119,7 +119,7 @@ export default function Complaint(props: Props) {
     </div>
   )
 
-  console.log(props.item.stateDetails);
+
 
   const smallIcon = OrderHelper.smallOrderIcon(props.item.stateDetails.icon)
   
