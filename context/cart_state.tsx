@@ -29,9 +29,10 @@ interface IState {
   clear: () => void;
   createLine: (data: ICartLineCreateRequestData) => Promise<ICart | null>;
   addProduct: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => Promise<boolean>,
+  addProductFromModal: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => Promise<boolean>,
   updateLineQuantity: (line: ICartLine, isAdd?: boolean) => void,
-  updateProductQuantity: (product: ICartLine, isAdd?: boolean) => void,
-  updateProductQuantityFromCard: (product: IProduct, isAdd?: boolean) => void,
+  updateProductQuantity: (product: IProduct, isAdd?: boolean, unitId?: number) => void,
+  updateProductQuantityFromCart: (product: ICartLine, isAdd?: boolean, unitId?: number) => void,
   updatePromoCode: (data: { code: string }) => void
   deleteLine: (lineId: number) => ICart | null;
   groupingIdQuantityMap: QuantityMap
@@ -54,9 +55,10 @@ const defaultValue: IState = {
   clear: () => null,
   createLine: () => null,
   addProduct: () => null,
+  addProductFromModal: () => null,
   updateLineQuantity: () => null,
   updateProductQuantity: () => null,
-  updateProductQuantityFromCard: () => null,
+  updateProductQuantityFromCart: () => null,
   updatePromoCode: () => null,
   deleteLine: () => null,
   groupingIdQuantityMap: {},
@@ -267,11 +269,41 @@ export function CartWrapper(props: Props) {
   }
 
   const addProduct = async(product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null): Promise<boolean> => {
-    
+    debugger
     if(!appContext.currentAddress){
       appContext.showModal(ModalType.AddressForm, {firstAddress: true} as AddressModalArguments)
       return false
     }
+    if (cart && unitId !== cart?.unitId) {
+      //TODO show alert clear
+      appContext.showModal(ModalType.Confirm, {
+        text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
+        onConfirm: async () => {
+          debugger
+          await clear()
+          if(product.modificationGroups?.length > 0) {
+            appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
+            return
+          }
+
+          //VSMA-531
+          addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
+          appContext.hideModal()
+        },
+
+      } as ConfirmModalArguments)
+      return false
+    } 
+    else if (product.modificationGroups?.length > 0 ) {
+        appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
+    } 
+    else {
+      await addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
+      return true
+    }
+  }
+
+  const addProductFromModal = async (product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null) : Promise<boolean> => {
     if (cart && unitId !== cart?.unitId) {
       //TODO show alert clear
       appContext.showModal(ModalType.Confirm, {
@@ -287,13 +319,8 @@ export function CartWrapper(props: Props) {
       } as ConfirmModalArguments)
       return false
     } 
-    else if (product.modificationGroups?.length > 0 ) {
-      appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
-    } 
-    else {
-      await addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
-      return true
-    }
+    await addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
+    return true
   }
 
   useEffect(() => {
@@ -331,35 +358,37 @@ export function CartWrapper(props: Props) {
     },
     clear,
     addProduct,
+    addProductFromModal,
 
     updateLineQuantity: (line: ICartLine, isAdd?: boolean) => {
       changeCartLineQuantity(line, isAdd)
     },
-    updateProductQuantity: async (product: ICartLine, isAdd?: boolean) => {
+    updateProductQuantity: async (product: IProduct, isAdd?: boolean, unitId?: number) => {
+      debugger
 
-      if (product.product.modificationGroups?.length > 0 && isAdd) {
-        // Todo Show Product Modal
+      if (product.modificationGroups?.length > 0 && isAdd) {
+        appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
       } else {
+        
+        const line = cartRef.current.lines.find(i => (i.productId === product.id)||(i.id === product.id))
+        if (line != null) {
+          await changeCartLineQuantity(line, isAdd)
+        }
+      }
+    },
+
+    updateProductQuantityFromCart: async(product: ICartLine, isAdd: boolean, unitId: number) => {
         
         const line = cartRef.current.lines.find(i => i.id === product.id)
         if (line != null) {
           await changeCartLineQuantity(line, isAdd)
-        }
       }
     },
 
-    //todo зарефакторить
-    updateProductQuantityFromCard: async (product: IProduct, isAdd?: boolean) => {
-      if (product.modificationGroups?.length > 0 && isAdd) {
-        // Todo Show Product Modal
-      } else {
-        
-        const line = cartRef.current.lines.find(i => i.productId === product.id)
-        if (line != null) {
-          await changeCartLineQuantity(line, isAdd)
-        }
-      }
-    },
+
+    
+
+  
     updatePromoCode: async (data: { code: string }) => {
       const cart = await CartRepository.applyPromoСode(data, appContext.currentAddress?.location)
       setCart(cart)

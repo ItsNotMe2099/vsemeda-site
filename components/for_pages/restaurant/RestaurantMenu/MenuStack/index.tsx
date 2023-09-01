@@ -38,14 +38,14 @@ export default function MenuStack (props: Props) {
     debugger
     
     if (cartContext.productQuantityMap[product.id] > 1) {
-      cartContext.updateProductQuantityFromCard(product, true)
+      cartContext.updateProductQuantity(product, true, unit.id)
     } else {
       cartContext.addProduct(product, unit.id)
     }
   }
 
   const handleMinusClick = (product: IProduct) => {
-    cartContext.updateProductQuantityFromCard(product, false)
+    cartContext.updateProductQuantity(product, false)
   }
 
   const handleClick = (product: IProduct) => {

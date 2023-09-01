@@ -57,7 +57,7 @@ const ProductModalInner = (props: Props) => {
     catch(err){
       
     }
-    cartContext.addProduct(args.product, args.unitId, data.quantity, [...oneToMany, ...manyToMany])
+    cartContext.addProductFromModal(args.product, args.unitId, data.quantity, [...oneToMany, ...manyToMany])
     .then(res => {
       if(res === true) {
         appContext.hideModal()
