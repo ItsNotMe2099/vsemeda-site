@@ -14,6 +14,7 @@
   @include mq($PhoneWidth, max) {
     width: 100%;
     border-radius: 16px 16px 0px 0px;
+    margin-top: -15px;
   }
 
 }
@@ -69,14 +70,14 @@
   }
 }
 
-.header {}
-
 .body {
   flex: 1;
   overflow-y: auto;
 }
 
 .footer {
+  display: flex;
+  column-gap: 8px;
   @include mq($PhoneWidth, max) {
     margin-top: 24px;
     button{
@@ -84,6 +85,42 @@
     }
   }
 }
+
+.trash {
+  border-radius: 20px !important;
+  border: 2px white solid !important;
+  // padding: 8px;
+  background-color: rgba(255, 255, 255, 0.192);
+  width: 30px;
+  transition: .3s linear;
+  // height: 30px;
+  @media (hover : hover ){
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.486);
+    }
+  }
+  
+  svg {
+    flex-shrink: 0;
+    path {
+      fill: $white
+    }
+  }
+
+  @include mq ($TabletWidth, max) {
+    border-radius: 10px !important;
+    padding:11px 25px !important;
+    flex-shrink: 0;
+  }
+}
+
+.button {
+  border-radius: 20px !important;
+  @include mq($TabletWidth, max) {
+    border-radius: 10px !important;
+    padding: 11px 35px;
+  }
+} 
 
 .addressDetails {
   margin-top: 16px;
@@ -106,5 +143,20 @@
 .addressDetails {
   >*+* {
     margin-top: 16px;
+    margin-bottom: 16px;
   }
+}
+
+.input {
+  input {
+    &::placeholder {
+      font-size: 12px !important;
+      text-align: center;
+      // transform: translateY(-12px);
+    }
+  }
+}
+
+.textarea {
+  padding: 15px 15px 0px !important;
 }

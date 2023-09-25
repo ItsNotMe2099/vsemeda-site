@@ -19,7 +19,7 @@ export default function CartLine({ item, onClick, className, quantity }: Props) 
   const cartContext = useCartContext()
 
   const handleUpdateQuantity = (isAdd: boolean) => {
-    debugger
+    
     
       cartContext.updateProductQuantityFromCart(item, isAdd)
   }

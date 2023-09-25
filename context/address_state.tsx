@@ -4,7 +4,7 @@ import {ICart} from 'data/interfaces/ICart'
 import {IUserAddress} from 'data/interfaces/IUserAddress'
 import {DeepPartial} from 'types/types'
 import UserAddressRepository from 'data/repositories/UserAddressRepository'
-import {CookiesType, LocalStorageKey} from 'types/enums'
+import {CookiesType, LocalStorageKey, SnackbarType} from 'types/enums'
 import {writeStorage} from '@rehooks/local-storage'
 import {v4 as uuidv4} from 'uuid'
 import {useCookies} from 'react-cookie'
@@ -13,6 +13,7 @@ import CookiesUtils from 'utils/CookiesUtils'
 interface IState {
   initialLoaded: boolean;
   create: (data: DeepPartial<IUserAddress>) => void
+  refreshAddresses: ()=> void
   update: (id: string, data: DeepPartial<IUserAddress>)  => void
   delete: (id: string) => Promise<IUserAddress>
   setCurrentAddress: (address: IUserAddress) => void,
@@ -22,6 +23,7 @@ interface IState {
 const defaultValue: IState = {
   initialLoaded: false,
   create: (data: DeepPartial<IUserAddress>) => null,
+  refreshAddresses: ()=>null,
   update: (id: string, data: DeepPartial<IUserAddress>) => null,
   delete: (id: string)  => null,
   setCurrentAddress: (address: IUserAddress) => null,
@@ -38,6 +40,11 @@ export function AddressWrapper(props: Props) {
   const [cookies, setCookie, removeCookie] = useCookies([CookiesType.address])
   const createReq = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
     return UserAddressRepository.create(data)
+  }
+  const refreshAddresses = () => {
+    UserAddressRepository.getUserAddresses().then(
+      res=> appContext.setUserAddresses(res)
+    )
   }
   const updateReq = async (id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
     return UserAddressRepository.update(id, data)
@@ -60,6 +67,8 @@ export function AddressWrapper(props: Props) {
 
   }
 
+  
+
   useEffect( () => {
     const subscription = appContext.loginState$.subscribe((logged) => {
       if (!logged && appContext.currentAddress) {
@@ -73,6 +82,7 @@ export function AddressWrapper(props: Props) {
 
   const value: IState = {
     ...defaultValue,
+    refreshAddresses,
     create: async (data: DeepPartial<IUserAddress>) => {
       if(appContext.isLogged){
         const address = await createReq(data)
@@ -97,7 +107,11 @@ export function AddressWrapper(props: Props) {
     },
     delete: (id: string)  => {
       if(appContext.isLogged){
-        return deleteReq(id)
+        deleteReq(id).then(res=> {
+          appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
+          appContext.hideModal()
+          refreshAddresses()
+        })
       }else{
         return deleteLoc(id)
       }

@@ -14,6 +14,7 @@ import AddressCard from 'components/for_pages/Common/AddressCard'
 import Button from 'components/ui/Button'
 import { ModalType } from 'types/enums'
 
+
 const YandexMap = dynamic(() => import('components/ui/YandexMap'), {
   ssr: false
 })
@@ -38,14 +39,31 @@ const AddressListModalInner = (props: Props) => {
     <>
       {props.isBottomSheet ? <div className={styles.title}>Адрес доставки</div> : null}
       <div className={styles.bodyWrapper}>
-        <div className={styles.list}>{appContext.addresses.map(i => <AddressCard item={i} isSelected={appContext.currentAddress?.id === i.id} onClick={() => handleClick(i)} />)}</div>
+        <div 
+        className={styles.list}>
+          {appContext.addresses.map(i => {
+            return (<>            
+                <AddressCard 
+                item={i} 
+                isSelected={appContext.currentAddress?.id === i.id} 
+                onClick={() => handleClick(i)} />
+                </>
+          )})
+          }
+          </div>
       </div>
     </>
   )
 
   const footer = (<div className={styles.actions}>
-    <Button className={classNames({ [styles.btn]: props.isBottomSheet })} styleType={'filledGreen'} fluid type={'submit'} onClick={() => appContext.showModal(ModalType.AddressForm)}>Добавить адрес</Button>
-
+    <Button 
+    className={classNames({ [styles.btn]: props.isBottomSheet })} 
+    styleType={'filledGreen'} 
+    fluid 
+    type={'submit'} 
+    onClick={() => appContext.showModal(ModalType.AddressForm)}>
+      Добавить адрес
+    </Button>
   </div>
   )
   if (props.isBottomSheet) {

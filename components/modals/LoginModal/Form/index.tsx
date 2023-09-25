@@ -33,8 +33,7 @@ export default function LoginForm(props: Props) {
   const appContext = useAppContext()
 
   const submit = async (data: { phone: string, code: string }) => {
-    authContext.confirmCode(data.code).then(res=>{
-      
+    authContext.confirmCode(data.code).then(res=>{      
       if(res && !cartContext.isEmpty) {
         appContext.showModal(ModalType.Basket)
       }
@@ -54,6 +53,11 @@ export default function LoginForm(props: Props) {
   }, [props.step, seconds])
 
   const handleSendCode = async (data: LoginFormData, step: number) => {
+    debugger
+    if(!data.phone||data.phone.length < 12) {
+      formik.setErrors({phone: 'Введите номер телефона полностью'})
+      return
+    }
     await authContext.signUp(data)
     setSeconds(authContext.remainSec)
     step === 1 ? props.onStepNext() : null

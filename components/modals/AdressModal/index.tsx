@@ -41,33 +41,36 @@ const AddressFormModalInner = (props: Props) => {
   const header = (<div/>)
   const [geoObject, setGeoObject] = useState<GeoObject>()
   const args = appContext.modalArguments as AddressFormModalArguments
+
+
   useEffect(() => {    
+    debugger
     if(args?.address){
       setAddressFormShown(true)
-      setAddressSearchShown(false)
+      // setAddressSearchShown(false)
       setAddressStr(args.address.address)
       setLocation({center: [args.address.location.lat, args.address.location.lng], zoom: 10})
     }
   }, [args])
+  
   const handleEditAddressClick = () => {
     setAddressFormShown(false)
   }
+
   const handleSetNewAddress = (geocoded: YandexResponseGeocoder) => {
     const geoObject = geocoded.response.GeoObjectCollection.featureMember[0].GeoObject
     const point = geoObject.Point
     const bounds = [
       geoObject.boundedBy.Envelope.lowerCorner.split(' ').map(i => parseFloat(i)),
       geoObject.boundedBy.Envelope.upperCorner.split(' ').map(i => parseFloat(i)),
-
     ]
-
-
     const center = point.pos.split(' ').map(i => parseFloat(i)) as [lon: number, lat: number, alt?: number]
     setLocation({bounds: bounds as any, center})
     setGeoObject(geocoded.response.GeoObjectCollection.featureMember[0].GeoObject)
     setConfirmShown(true)
     setAddressStr(Converter.convertGeoObjectToString(geocoded.response.GeoObjectCollection.featureMember[0].GeoObject))
   }
+
   const handleConfirm = () => {
     setConfirmShown(false)
     setAddressFormShown(true)
@@ -83,16 +86,20 @@ const AddressFormModalInner = (props: Props) => {
     }
   }
 
+  const onSubmitHandler = ({}) => {
+    debugger
+  }
+
 
   const body = (
     <div className={styles.bodyWrapper}>
       <BackBtn className={styles.btn} onClick={handleBack} bgColor={'white'} />
-      {addressFormShown && <AddressForm initialAddress={args?.address ? args.address  : Converter.convertGeoObjectToUserAddress(geoObject)} />}
+      {addressFormShown && <AddressForm editedAddressString={addressStr} initialAddress={args?.address ? args.address  : Converter.convertGeoObjectToUserAddress(geoObject)} />}
       <div className={styles.mapWrapper}>
         <YandexMap className={styles.map} center={location}/>
         {addressStr && <div className={styles.address}>{addressStr}</div>}
         {addressSearchShown && <div  className={styles.addressField}>
-          <Formik initialValues={{}} onSubmit={null}>
+          <Formik initialValues={{}} onSubmit={(values)=>onSubmitHandler(values)}>
             <AddressField  hasAddress={!!geoObject} name={'address'} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
           </Formik>
         </div>}

@@ -35,7 +35,7 @@ export default function MenuStack (props: Props) {
   
 
   const handleAddClick = (product: IProduct) => {
-    debugger
+    
     
     if (cartContext.productQuantityMap[product.id] > 1) {
       cartContext.updateProductQuantity(product, true, unit.id)

@@ -19,6 +19,7 @@ interface Props extends IField<string> {
   autoSize?: boolean
   color: 'white' | 'purple'
   areaClassname? : string
+  maxlength?: number
 }
 
 export default function TextAreaField(props: Props) {
@@ -41,6 +42,7 @@ export default function TextAreaField(props: Props) {
             setFocused(false)
           }
         }}
+        maxLength={props.maxlength}
         className={classNames({
           [styles.input]: true,
           [styles.hover]: hover,

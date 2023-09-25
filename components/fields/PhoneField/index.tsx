@@ -1,9 +1,9 @@
-import { FieldConfig, FieldHookConfig, useField } from 'formik'
+import { FieldConfig, FieldHookConfig, useField,  } from 'formik'
 import styles from './index.module.scss'
 import { CountryCode } from 'libphonenumber-js/core'
 import classNames from 'classnames'
 import PhoneInputWithCountrySelect from 'react-phone-number-input'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FieldValidator } from 'formik/dist/types'
 import { IField, InputStyleType } from 'types/types'
 import FieldError from 'components/ui/FieldError'
@@ -22,12 +22,18 @@ interface Props extends IField<string> {
 
 export default function PhoneField(props: Props & FieldConfig) {
   const [field, meta, helpers] = useField(props as FieldHookConfig<any>)
-  const { value } = field
   const [focused, setFocus] = useState(false)
-  const showError = meta.touched && !!meta.error && !focused
+  const showError = !!meta.error && !focused
   const handleChange = (value: string) => {
     helpers.setValue(value)
   }
+
+  useEffect(()=>{
+    if(focused === true) {
+      helpers.setTouched(true)
+    }
+  }, [focused])
+
   return (
     <div className={classNames(styles.root, props.className)}>
       <div className={styles.wrapper}>
@@ -39,24 +45,25 @@ export default function PhoneField(props: Props & FieldConfig) {
             [styles.input]: true,
             [styles.inputError]: showError,
             [styles.inputFocused]: focused,
+            [styles.inputTouched]: meta.touched
           })}
           placeholder={props.placeholder}
           onFocus={(e) => {
             setFocus(true)
           }}
-          value={field.value}
+          value={'+7 9'}
           onBlur={(e) => {
             setFocus(false)
             field.onBlur(e)
-
           }}
-          international
+          limitMaxLength={true}
+          maxlength={16}
+          minlength={16}
           withCountryCallingCode
           useNationalFormatForDefaultCountryValue
           countrySelectProps={{
             className: props.countrySelectClassName,
           }}
-
           onChange={handleChange}
         />
         {props.iconName && (

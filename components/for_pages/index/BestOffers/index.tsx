@@ -23,14 +23,12 @@ export default function BestOffers(props: Props) {
   const fetchData = async () => {
     await MenuRepository.fetchCategories().then(i => setItems(i))
   }
-  
-
-
 
   const throt = useThrottleFn((e, top)=> {    
     if(!offersRef.current) {return}
     const topPos = offersRef.current.getBoundingClientRect().top
-    offersRef.current.style.cssText = `transform: translate(${(top - topPos)*1.5}px) ;`        
+    const topPixels = (top - topPos)*1.5
+    offersRef.current.style.cssText = `transform: translate(${topPixels>0?topPixels:0}px) ;`        
   }, 50)
 
     //TODO: как будто не  убирается eventListener при размонтировании... 

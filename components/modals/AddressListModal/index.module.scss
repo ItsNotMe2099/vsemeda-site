@@ -2,7 +2,7 @@
 
 .modalLayout {
   position: relative;
-  width: 444px;
+  width: Min(100%, 444px);
   max-height: 90vh;
   background: $purple3;
   min-height: 400px;
@@ -53,4 +53,12 @@
   font-size: 23.8824px;
   line-height: 29px;
   color: #4C4958;
+}
+
+.slide {
+  width: 100%;
+}
+
+.footer {
+  margin-top: auto;
 }

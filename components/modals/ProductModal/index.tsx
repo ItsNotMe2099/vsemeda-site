@@ -39,7 +39,7 @@ const ProductModalInner = (props: Props) => {
   const {isPhoneWidth} = useResize()
 
   const handleSubmit =async (data: any) => {
-    debugger
+    
 
     let oneToMany: {modificationId: any;quantity: number;}[] = []
     let manyToMany: {modificationId: any;quantity: number;}[] = []

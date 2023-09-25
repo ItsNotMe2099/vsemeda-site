@@ -21,12 +21,17 @@
   border-radius: 8px;
 }
 
+.inputTouched {
+  color: black !important;
+}
+
 .input {
 
   border: 0;
   width: 100%;
   flex: 1;
   font-weight: 500;
+  color: transparent;
 
   input {
     background: #FFFFFF;

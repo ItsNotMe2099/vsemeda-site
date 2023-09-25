@@ -82,12 +82,12 @@
 
 .addressField {
   position: absolute;
-  top: 30%;
+  top: calc(30% + 40px);
   left: 50%;
-  margin-top: 30px;
+  // margin-top: 30px;
   transform: translate(-50%, -50%);
   z-index: 3;
-  width: 500px;
+  width: Clamp(300px, 50%, 500px);
   display: flex;
   justify-content: center;
 }

@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useRef, useState} from 'react'
+import {createContext, Dispatch, SetStateAction, useContext, useEffect, useRef, useState} from 'react'
 import { SnackbarData } from 'types/types'
 import { useRouter } from 'next/router'
 import {CookiesLifeTime} from 'types/constants'
@@ -36,6 +36,7 @@ interface IState {
   user: IUser | null
   currentAddress: IUserAddress | null,
   addresses: IUserAddress[],
+  setUserAddresses: Dispatch<SetStateAction<IUserAddress[]>>
   currentLocation: ILocation | null,
   initialLoaded: boolean
   setCurrentAddress: (address: IUserAddress) => void,
@@ -71,6 +72,7 @@ const defaultValue: IState = {
   currentAddress: null,
   currentLocation: null,
   addresses: [],
+  setUserAddresses: null,
   modalNonSkippable: false,
   modal: null,
   modalArguments: null,
@@ -121,12 +123,13 @@ export function AppWrapper(props: Props) {
   const [currentAddress, setCurrentAddress] = useState<IUserAddress>(null)
   const [modalNonSkippable, setModalNonSkippable] = useState<boolean>(false)
   const [isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
-
+  
   const [cookies, setCookie, removeCookie] = useCookies([CookiesType.address])
   const addressLocal = CookiesUtils.decodeJson<IUserAddress>(cookies.address)
   const [isLogged, setIsLogged] = useState<boolean>(false)
   const userRef = useRef<IUser | null>(null)
   const regions: IRegion[] = []
+  const [addresses, setUserAddresses] = useState<IUserAddress[]>([])
 
   const [isMobile, setIsMobile] = useState<boolean>(props.isMobile)
   const [region, setRegion] = useState<IRegion | null>(regions[0])
@@ -141,6 +144,9 @@ export function AppWrapper(props: Props) {
 
   useEffect(() => {
     userRef.current = user
+    if(user) {
+      setUserAddresses(user.addresses)
+    }
   }, [user])
 
   useEffect(() => {
@@ -227,6 +233,8 @@ export function AppWrapper(props: Props) {
     setBottomSheet(null)
   }
 
+
+
   const value: IState = {
     ...defaultValue,
     isMobile: isMobile,
@@ -241,7 +249,8 @@ export function AppWrapper(props: Props) {
     token,
     currentAddress,
     currentLocation: currentAddress?.location ?? currentLocation,
-    addresses: user?.addresses ?? (addressLocal ? [addressLocal] : []),
+    addresses,
+    setUserAddresses,
     initialLoaded: userLoaded,
     isLogged,
     showModal,
@@ -262,15 +271,17 @@ export function AppWrapper(props: Props) {
       Cookies.set(CookiesType.accessToken, token, {
         expires: CookiesLifeTime.accessToken,
       })
+      debugger
 
 
       setToken(newToken)
       if (!oldToken && newToken) {
         loginState$.next(true)
-        const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id, [addressLocal])
         const newUser = await updateUser()
+        const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [addressLocal||newUser?.addresses[0]])
         const newCurrentAddress = newUser.addresses.find(i => i.id === syncAddressRes.newCurrentAddressId) ?? user.addresses[0]
         setCurrentAddress(newCurrentAddress)
+        setUserAddresses(user.addresses)
         if(newCurrentAddress) {
           const cart = await CartRepository.fetchCurrentCart(newCurrentAddress.location)
           cartState$.next(cart)

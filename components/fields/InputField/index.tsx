@@ -27,6 +27,7 @@ interface Props extends IField<string> {
   onClick?: MouseEventHandler<HTMLInputElement>
   labelType?: 'floating' | 'top'
   isNumbersOnly?: boolean
+  maxLength?: number
 }
 
 export default function InputField(props: Props) {
@@ -71,6 +72,7 @@ export default function InputField(props: Props) {
           onBlur={() => {
             setFocused(false)
           }}
+          maxLength={props.maxLength}
           onClick={props.onClick}
           className={classNames({
             [styles.input]: true,

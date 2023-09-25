@@ -73,6 +73,10 @@
   .message{
     padding: 6px 18px;
   }
+  @include mq($TabletWidth, max) {
+    transform: translateY(0) !important;
+    top:  50px !important;
+  }
 }
 
 

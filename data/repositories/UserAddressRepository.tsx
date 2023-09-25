@@ -12,6 +12,17 @@ export default class UserAddressRepository {
     return res
   }
 
+  static async getUserAddresses(): Promise<IUserAddress[]|null> {
+    const res = await request({
+      method: 'get',
+      url: '/api/user-address',
+    })
+    if(res.err) {
+      return null
+    }
+    return res
+  }
+
   static async update(id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> {
     const res = await request<IUserAddress>({
       method: 'patch',
@@ -22,10 +33,14 @@ export default class UserAddressRepository {
   }
 
   static async delete(id: string): Promise<any> {
-    return request({url: `/api/user-address/${id}`})
+    return request({
+      method: 'delete',
+      url: `/api/user-address/${id}`
+    })
   }
 
   static async sync(currentAddressId: string, addresses: IUserAddress[]): Promise<{newCurrentAddressId: string}> {
+    debugger
     const res = await request<{newCurrentAddressId: string}>({
       method: 'post',
       url: '/api/user-address/sync',

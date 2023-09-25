@@ -43,12 +43,14 @@ export default function AddressField(props: Props) {
 
   const ymapRef = useRef<YMap | null>(null)
   const [isEditMode, setIsEditMode] = useState(false)
+
   useEffect(() => {
     if (typeof ymaps3 === 'undefined') return
     ymaps3.ready.then(i => {
       ymapRef.current = ymaps3 as any as YMap
     })
   }, [])
+
   const {styles: popperStyles, attributes, forceUpdate, update} = usePopper(referenceElement, popperElement, {
     strategy: props.popperStrategy ?? 'absolute',
     placement: 'bottom-end',
@@ -67,14 +69,13 @@ export default function AddressField(props: Props) {
 
     ]
   })
-  const showError = meta.touched && !!meta.error
-  const querySuggestions = async (query: string) => {
 
+  const showError = meta.touched && !!meta.error
+
+  const querySuggestions = async (query: string) => {
     if (!query) {
       return
     }
-
-
     const res = await GeocodingRepository.suggestYandex({
       text: query,
       //center?: LngLat;
@@ -88,7 +89,9 @@ export default function AddressField(props: Props) {
     })
     setSuggestions(res)
   }
+
   const {callback, cancel, callPending} = useThrottleFn(querySuggestions, 300)
+
   const geocode = async (suggestion: string) => {
     setIsEditMode(false)
     setIsExpanded(false)
@@ -119,7 +122,6 @@ export default function AddressField(props: Props) {
         error = 'Неточный адрес, требуется уточнение'
         hint = 'Уточните адрес'
     }
-
    if (error) {
       setMessage(error)
       setMessageIsError(true)
@@ -129,9 +131,9 @@ export default function AddressField(props: Props) {
       setIsActive(false)
     }
   }
+
   const setSuggestionOnExit = () => {
     const suggestion = suggestions.length > 0 ? suggestions.find(i => i.tags.includes('house')) : null
-
     if(props.hasAddress){
       setTimeout(() => {
         setFieldTouched(props.name, true)
@@ -147,18 +149,18 @@ export default function AddressField(props: Props) {
     if(!suggestion){
 
     }
-
-
   }
+
   const handleBlur = () => {
     setSuggestionOnExit()
   }
+
   const handleKeyDown: KeyboardEventHandler = (e) => {
      if (e.key === 'Enter') {
       setSuggestionOnExit()
     }
-
   }
+
   const {callback: callbackBlur, cancel: cancelBlur} = useThrottleFn(handleBlur, 300)
 
   const handleChangeInputValue: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -171,11 +173,10 @@ export default function AddressField(props: Props) {
     helpers.setValue(value)
     callback(value)
   }
+
   const handleSuggestionClick = async (suggestion: IYandexSuggestItem) => {
     cancelBlur()
-
     refIsFromClick.current = true
-
     if (suggestion.tags.includes('house')) {
       helpers.setValue(suggestion.title.text)
       geocode(suggestion.text)
@@ -184,18 +185,14 @@ export default function AddressField(props: Props) {
       querySuggestions(suggestion.title.text)
       setIsActive(true)
     }
-
-
   }
+
   const handleEdit = () => {
-
     setIsEditMode(true)
-
     if(field.value){
       setTimeout(( ) => {
         setIsActive(true)
       }, 450)
-
     }
     setTimeout(( ) => {
       setIsExpanded(true)
@@ -203,7 +200,9 @@ export default function AddressField(props: Props) {
     }, 400)
     props.onEditClick()
   }
+
   const hasError = !!meta.error && meta.touched
+
   return (
     <div className={cx(styles.root, {
       [styles.hasError]: !!meta.error && meta.touched,

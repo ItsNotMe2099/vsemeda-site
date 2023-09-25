@@ -269,7 +269,7 @@ export function CartWrapper(props: Props) {
   }
 
   const addProduct = async(product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null): Promise<boolean> => {
-    debugger
+    
     if(!appContext.currentAddress){
       appContext.showModal(ModalType.AddressForm, {firstAddress: true} as AddressModalArguments)
       return false
@@ -279,7 +279,7 @@ export function CartWrapper(props: Props) {
       appContext.showModal(ModalType.Confirm, {
         text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
         onConfirm: async () => {
-          debugger
+          
           await clear()
           if(product.modificationGroups?.length > 0) {
             appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
@@ -364,7 +364,7 @@ export function CartWrapper(props: Props) {
       changeCartLineQuantity(line, isAdd)
     },
     updateProductQuantity: async (product: IProduct, isAdd?: boolean, unitId?: number) => {
-      debugger
+      
 
       if (product.modificationGroups?.length > 0 && isAdd) {
         appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
