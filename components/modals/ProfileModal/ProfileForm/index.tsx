@@ -23,7 +23,7 @@ export default function ProfileForm(props: Props) {
 
 
 
-  const submit = async (data: { name: string, gender: Gender, birthday: Date }) => {
+  const submit = async (data: { name: string, gender: Gender, birthday: string }) => {
     setLoading(true)
     try {
       await UserRepository.updateUserById(+appContext.user.id, data)
@@ -43,7 +43,7 @@ export default function ProfileForm(props: Props) {
     initialValues: {
       name: appContext.user.name ?? '',
       gender: appContext.user.gender ?? null,
-      birthday: appContext.user.birthday ?? null
+      birthday: appContext.user.birthday ?? ''
     },
     onSubmit: submit
   })
@@ -77,6 +77,7 @@ export default function ProfileForm(props: Props) {
           <DateField
             name='birthday'
             label='Дата рождения'
+            visibleYearSelector={true}
             styleType='profile'
             iconName='field_date'
             className={styles.date}

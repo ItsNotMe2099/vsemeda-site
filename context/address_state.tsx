@@ -70,6 +70,8 @@ export function AddressWrapper(props: Props) {
   
 
   useEffect( () => {
+    
+    
     const subscription = appContext.loginState$.subscribe((logged) => {
       if (!logged && appContext.currentAddress) {
         createLoc(appContext.currentAddress)
@@ -84,6 +86,7 @@ export function AddressWrapper(props: Props) {
     ...defaultValue,
     refreshAddresses,
     create: async (data: DeepPartial<IUserAddress>) => {
+      
       if(appContext.isLogged){
         const address = await createReq(data)
         appContext.setCurrentAddress(address)

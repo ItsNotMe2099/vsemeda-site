@@ -53,7 +53,7 @@ export default function LoginForm(props: Props) {
   }, [props.step, seconds])
 
   const handleSendCode = async (data: LoginFormData, step: number) => {
-    debugger
+    
     if(!data.phone||data.phone.length < 12) {
       formik.setErrors({phone: 'Введите номер телефона полностью'})
       return

@@ -9,6 +9,7 @@ interface Props {
   onClick: () => void
   disabled?: boolean
   loading?: boolean
+  isAuth?: boolean
 }
 
 const PaymentButton = (props: Props) => {
@@ -19,7 +20,7 @@ const PaymentButton = (props: Props) => {
     <div className={styles.root} onClick={props.disabled || props.loading ? null: props.onClick} >
        <div className={styles.details}>
           <div className={styles.title}>
-            Перейти к оплате
+            {props.isAuth ? 'Перейти к оплате': 'Далее'}
           </div>
           <div className={styles.delivery}>
             {Formatter.formatDeliveryTime({minDeliveryTime: cartContext.unit?.deliveryTime})}

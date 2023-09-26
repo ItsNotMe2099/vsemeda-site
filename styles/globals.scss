@@ -12,6 +12,7 @@ html{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  line-height: 124%;
 
   color: inherit;
   letter-spacing: inherit;
@@ -122,9 +123,6 @@ ol {
   margin-bottom: 0;
 }
 
-.slick-slider{
-
-}
 
 form{
   display: block;
@@ -138,7 +136,6 @@ img {
 }
 
 // React Modal
-.ReactModal__Body--open{}
 
 .ReactModal__Overlay {
   opacity: 0;
@@ -166,4 +163,8 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset;
   transition: background-color 5000s ease-in-out 0s;
   background: none;
+}
+
+.react-datepicker-popper {
+  z-index: 30;
 }

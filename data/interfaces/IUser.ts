@@ -7,7 +7,7 @@ export interface IUser {
   phone: string
   name: string
   email: string
-  birthday: Date
+  birthday: string
   gender: Gender
   addresses: IUserAddress[]
   currentAddress?: IUserAddress

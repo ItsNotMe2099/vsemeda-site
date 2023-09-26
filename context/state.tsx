@@ -271,7 +271,7 @@ export function AppWrapper(props: Props) {
       Cookies.set(CookiesType.accessToken, token, {
         expires: CookiesLifeTime.accessToken,
       })
-      debugger
+      
 
 
       setToken(newToken)
@@ -279,9 +279,11 @@ export function AppWrapper(props: Props) {
         loginState$.next(true)
         const newUser = await updateUser()
         const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [addressLocal||newUser?.addresses[0]])
-        const newCurrentAddress = newUser.addresses.find(i => i.id === syncAddressRes.newCurrentAddressId) ?? user.addresses[0]
+        const newCurrentAddress = newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId) ?? user.addresses[0]
         setCurrentAddress(newCurrentAddress)
-        setUserAddresses(user.addresses)
+        if(user?.addresses) {
+          setUserAddresses(user.addresses)
+        }
         if(newCurrentAddress) {
           const cart = await CartRepository.fetchCurrentCart(newCurrentAddress.location)
           cartState$.next(cart)

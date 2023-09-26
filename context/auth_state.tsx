@@ -103,7 +103,19 @@ export function AuthWrapper(props: Props) {
       accessToken = await UserRepository.phoneConfirmation(LoginFormData!.phone, code)
     } catch (err) {
       if (err instanceof RequestError) {
-        showOtpError(true, err.message)
+        let errName: string = ''
+        
+        switch(err.message) {
+          case 'Wrong code':
+            errName = 'Код введен неверно'
+            break
+          case 'Limit of attempts is exceeded':
+            errName = 'Лимит попыток превышен'
+            break
+          default :
+            errName = 'Срок действия кода истек'
+        }
+        showOtpError(true, errName)
       }
       setConfirmSpinner(false)
       return false

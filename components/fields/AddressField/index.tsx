@@ -174,6 +174,10 @@ export default function AddressField(props: Props) {
     callback(value)
   }
 
+  useEffect(()=>{
+    helpers.setValue(props.value)
+  }, [props.value])
+
   const handleSuggestionClick = async (suggestion: IYandexSuggestItem) => {
     cancelBlur()
     refIsFromClick.current = true
@@ -238,9 +242,6 @@ export default function AddressField(props: Props) {
           <div className={styles.optionSubTitle}>
             {Formatter.formatAddressSuggestionSubTitle(item.subtitle.text)}
           </div>
-
-
-
         </div>)}
       </div>}
       <FieldError showError={showError}>{meta.error}</FieldError>

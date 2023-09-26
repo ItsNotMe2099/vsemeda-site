@@ -49,9 +49,14 @@ export default function MenuStack (props: Props) {
   }
 
   const handleClick = (product: IProduct) => {
-    isPhoneWidth
-    ? appContext.showBottomSheet(ModalType.ProductModal, {product: product, unitId: unit.id})
-    : appContext.showModal(ModalType.ProductModal, {product: product, unitId: unit.id})
+    if(appContext.currentAddress) {
+      isPhoneWidth 
+      ? appContext.showBottomSheet(ModalType.ProductModal, {product: product, unitId: unit.id})
+      : appContext.showModal(ModalType.ProductModal, {product: product, unitId: unit.id})
+    }
+    else {
+      appContext.showModal(ModalType.AddressForm)
+    }
   }
 
   useEffect(()=> {    

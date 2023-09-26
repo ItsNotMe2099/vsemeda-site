@@ -20,6 +20,7 @@ import AddressFormConfirm from 'components/modals/AdressModal/Confirm'
 import {YMapLocationRequest} from '@yandex/ymaps3-types'
 import BackBtn from 'components/ui/BackBtn'
 import { ModalType } from 'types/enums'
+import { useResize } from 'components/hooks/useResize'
 const YandexMap = dynamic(() => import('components/ui/YandexMap'), {
   ssr: false
 })
@@ -32,19 +33,19 @@ interface Props {
 }
 
 const AddressFormModalInner = (props: Props) => {
+  const {isTabletWidth} = useResize()
   const appContext = useAppContext()
   const [addressSearchShown, setAddressSearchShown] = useState(true)
   const [addressFormShown, setAddressFormShown] = useState(false)
   const [confirmShown, setConfirmShown] = useState(false)
-  const [addressStr, setAddressStr] = useState(null)
-  const [location, setLocation] = useState<YMapLocationRequest | null>({center: [55.76, 37.64], zoom: 10})
+  const [addressStr, setAddressStr] = useState<string>(null)
+  const [location, setLocation] = useState<YMapLocationRequest | null>({center: [(appContext?.currentAddress?.location?.lng||55.7522200) , (appContext?.currentAddress?.location?.lat||37.6155600) ], zoom: 10})
   const header = (<div/>)
   const [geoObject, setGeoObject] = useState<GeoObject>()
   const args = appContext.modalArguments as AddressFormModalArguments
 
 
-  useEffect(() => {    
-    debugger
+  useEffect(() => {   
     if(args?.address){
       setAddressFormShown(true)
       // setAddressSearchShown(false)
@@ -67,9 +68,15 @@ const AddressFormModalInner = (props: Props) => {
     const center = point.pos.split(' ').map(i => parseFloat(i)) as [lon: number, lat: number, alt?: number]
     setLocation({bounds: bounds as any, center})
     setGeoObject(geocoded.response.GeoObjectCollection.featureMember[0].GeoObject)
-    setConfirmShown(true)
+    // setConfirmShown(true)
     setAddressStr(Converter.convertGeoObjectToString(geocoded.response.GeoObjectCollection.featureMember[0].GeoObject))
   }
+
+  useEffect(()=>{
+    if(location && addressStr){
+      setConfirmShown(true)
+    }
+  }, [location, addressStr])
 
   const handleConfirm = () => {
     setConfirmShown(false)
@@ -77,45 +84,44 @@ const AddressFormModalInner = (props: Props) => {
   }
 
   const handleBack = () => {
-    if(args?.address){
       appContext.hideModal()
-      appContext.showBottomSheet(ModalType.AddressList)
-    }else {
-      appContext.hideModal()
-      appContext.showBottomSheet(ModalType.AddressList)
-    }
+      isTabletWidth? appContext.showBottomSheet(ModalType.AddressList):  appContext.showModal(ModalType.AddressList)
   }
 
   const onSubmitHandler = ({}) => {
-    debugger
+    
   }
 
 
   const body = (
     <div className={styles.bodyWrapper}>
       <BackBtn className={styles.btn} onClick={handleBack} bgColor={'white'} />
-      {addressFormShown && <AddressForm editedAddressString={addressStr} initialAddress={args?.address ? args.address  : Converter.convertGeoObjectToUserAddress(geoObject)} />}
+      {addressFormShown && 
+        <AddressForm 
+        isMobile={isTabletWidth} 
+        editedAddressString={addressStr} 
+        initialAddress={args?.address ? args.address  : geoObject&&Converter.convertGeoObjectToUserAddress(geoObject)} 
+        />
+      }
       <div className={styles.mapWrapper}>
-        <YandexMap className={styles.map} center={location}/>
+        <YandexMap className={styles.map} setGeoObject={(o) => {setGeoObject(o)}} setLocation={(r: YMapLocationRequest) => setLocation(r)} setAddressStr={(s: string)=>setAddressStr(s)} center={location}/>
         {addressStr && <div className={styles.address}>{addressStr}</div>}
         {addressSearchShown && <div  className={styles.addressField}>
           <Formik initialValues={{}} onSubmit={(values)=>onSubmitHandler(values)}>
-            <AddressField  hasAddress={!!geoObject} name={'address'} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
+            <AddressField  hasAddress={!!geoObject} name={'address'} value={addressStr} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
           </Formik>
         </div>}
         <div className={styles.placemark}><MarkerSvg/></div>
         {confirmShown && <AddressFormConfirm address={addressStr} onConfirm={handleConfirm}/>}
       </div>
-
-
-    </div>
-
-
-  )
-  const footer = (<div className={styles.actions}>
-
     </div>
   )
+
+  const footer = (
+    <div className={styles.actions}>
+    </div>
+  )
+
   if (props.isBottomSheet) {
     return (
       <BottomSheetLayout closeIconColor={colors.grey2}>

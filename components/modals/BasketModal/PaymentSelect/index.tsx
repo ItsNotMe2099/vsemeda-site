@@ -1,5 +1,5 @@
 import {forwardRef, useEffect, useRef, useState} from 'react'
-import styles from 'components/modals/BasketModal/PaymentSelect/index.module.scss'
+import styles from './index.module.scss'
 import CardCourierSvg from 'components/svg/CardCourierSvg'
 import CashSvg from 'components/svg/CashSvg'
 import {PaymentMethod} from 'data/enum/PaymentMethod'
@@ -156,13 +156,13 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     <div className={classNames(styles.root, props.className)} ref={ref}
          style={props.style} {...(props.restProps ?? {})}>
 
-      {[State.Closed, State.Opened].includes(state) && 
+      {[State.Closed, State.Opened].includes(state) && appContext.isLogged &&
         <PaymentSelectTitle onClick={handleTitleClick} title={state === State.Closed && paymentMethod ? null : 'Выберите способ оплаты:'} arrow={true}>
           {state === State.Closed && currentPaymentItem}
         </PaymentSelectTitle>}
-      {[State.Cash].includes(state) &&
+      {[State.Cash].includes(state) && appContext.isLogged &&
         <PaymentSelectTitle onClick={() => setState(State.Opened)} title={'Назад'} back={true}/>}
-      {[State.Email].includes(state) &&
+      {[State.Email].includes(state) && appContext.isLogged &&
         <PaymentSelectTitle onClick={() => setState(State.Opened)} title={'Электронный чек'} back={true}/>}
 
       {state !== State.Closed && <div className={styles.center}>
@@ -181,9 +181,11 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
         }
       </div>}
 
-      {[State.Opened, State.Closed].includes(state) &&  <div className={styles.bottom}>
-        <PaymentButton onClick={()=> {handleSubmit()}} loading={loading}/>
-      </div>}
+      {[State.Opened, State.Closed].includes(state) &&
+        <div className={styles.bottom}>
+          <PaymentButton onClick={()=> {appContext.isLogged?handleSubmit(): appContext.showModal(ModalType.Login)}} isAuth={appContext.isLogged} loading={loading}/>
+        </div>
+      }
     </div>
   )
 })

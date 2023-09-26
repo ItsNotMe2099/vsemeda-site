@@ -9,6 +9,7 @@ import { useState } from 'react'
 import LoginForm from './Form'
 import BackBtn from 'components/ui/BackBtn'
 import classNames from 'classnames'
+import { useAuthContext } from 'context/auth_state'
 
 
 interface Props {
@@ -18,8 +19,10 @@ interface Props {
 
 const LoginFormModalInner = (props: Props) => {
 
+  const authContext = useAuthContext()
   const [step, setStep] = useState<number>(1)
   const handleCloseClick = () => {
+    authContext.showOtpError(false)
     step === 1 ? props.onRequestClose() : setStep(1)
   }
 

@@ -19,6 +19,7 @@ export interface AddressFormModalArguments {
 interface Props {
   initialAddress?: IUserAddress
   editedAddressString?: string
+  isMobile?: boolean
 }
 
 export default function AddressForm(props: Props) {
@@ -28,7 +29,8 @@ export default function AddressForm(props: Props) {
   const args = appContext.modalArguments as AddressFormModalArguments
 
   const submit = async (data: DeepPartial<IUserAddress>) => {
-    debugger
+    
+    
     setLoading(true)
     try {
       const submitData: DeepPartial<IUserAddress> = {
@@ -39,11 +41,14 @@ export default function AddressForm(props: Props) {
       }
       if (props.initialAddress?.id) {
         addressContext.update(props.initialAddress.id, submitData)
-        appContext.showModal(ModalType.AddressList)
+        appContext.hideModal()
+        props.isMobile?appContext.showBottomSheet(ModalType.AddressList):appContext.showModal(ModalType.AddressList)
       } else {
         addressContext.create(submitData)
-        appContext.showModal(ModalType.AddressList)
+        appContext.hideModal()
+        // props.isMobile?appContext.showBottomSheet(ModalType.AddressList):appContext.showModal(ModalType.AddressList)
       }
+      addressContext.refreshAddresses()
     } catch (e) {
       appContext.showSnackbar(e.toString(), SnackbarType.error)
     }
@@ -52,7 +57,7 @@ export default function AddressForm(props: Props) {
 
   useEffect(()=>{
     props.editedAddressString
-    debugger
+    
   }, [props.editedAddressString])
 
   const handleBack = () => {
@@ -119,7 +124,7 @@ export default function AddressForm(props: Props) {
         </div>
 
         <div className={styles.footer}>
-          <Button className={styles.button} styleType={'filledGreen'} fluid type={'submit'} spinner={loading}>Сохранить</Button>
+          <Button className={styles.button} styleType={'filledGreen'} fluid type='button' onClick={formik.submitForm} spinner={loading}>Сохранить</Button>
           {props.initialAddress?.id &&
             <Button className={styles.trash} onClick={()=>addressContext.delete(props.initialAddress?.id)} type='button' styleType={'icon'}><><TrashBasketSvg/></></Button>
           }

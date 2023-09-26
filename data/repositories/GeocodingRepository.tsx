@@ -2,10 +2,11 @@ import axios from 'axios'
 import queryString from 'query-string'
 import {YandexResponseGeocoder} from 'data/interfaces/IYandexGeocoder'
 import {IYandexSuggestItem} from 'data/interfaces/IYandexSuggest'
+import { LngLat} from '@yandex/ymaps3-types'
 
 interface IYandexGeocodeRequest{
-  geocode: string
-  kind: 'house'
+  geocode: string|LngLat
+  kind?: 'house'
   rspn?: boolean,
   ll?: number[]
   spn?: number[]
@@ -29,13 +30,14 @@ const jsonp = require('jsonp')
 export default class GeocodingRepository {
   static async geocodeYandex(params: IYandexGeocodeRequest): Promise<YandexResponseGeocoder> {
     const query = {...params,
-      apikey: '7cd75a8b-037e-4152-b0c5-3755e6914531',
+      // apikey: '7cd75a8b-037e-4152-b0c5-3755e6914531',
+      apikey: '78a1f2d1-073f-4feb-804d-8aebe3deb14b',
       format: 'json',
       results: params.results ?? 10,
       rspn: params.rspn ? '1' : '0',
       ll: params.ll?.length > 1 ? `${params.ll[0]},${params.ll[1]}` : undefined,
       spn: params.spn?.length > 1 ? `${params.spn[0]},${params.spn[1]}` : undefined,
-      bbox: `${params.bbox[0][0]}, ${params.bbox[0][1]}~${params.bbox[1][0]}, ${params.bbox[1][1]}`
+      bbox: params.bbox&&`${params.bbox[0][0]}, ${params.bbox[0][1]}~${params.bbox[1][0]}, ${params.bbox[1][1]}`
     }
 
     const res = await axios.request({

@@ -13,16 +13,16 @@
 }
 
 .btn {
-  @include mq($PhoneWidth, min) {
-    display: none !important;
-  }
+  // @include mq($PhoneWidth, min) {
+  //   display: none !important;
+  // }
 
-  @include mq($PhoneWidth, max) {
+  // @include mq($PhoneWidth, max) {
     position: absolute;
-    top: 33px;
-    left: 23px;
+    top: 16px;
+    left: 16px;
     z-index: 111;
-  }
+  // }
 }
 
 .modalBody {

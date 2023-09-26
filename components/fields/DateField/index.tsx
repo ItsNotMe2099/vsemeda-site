@@ -1,17 +1,19 @@
 import styles from './index.module.scss'
 import { IField, InputStyleType } from 'types/types'
 import { useField } from 'formik'
-import DatePicker from 'react-datepicker'
+import DatePicker, {registerLocale} from 'react-datepicker'
 import ru from 'date-fns/locale/ru'
 import classNames from 'classnames'
 import usePressAndHover from 'hooks/usePressAndHover'
 import FieldIconSvg from 'components/svg/FieldIconSvg'
 import FieldError from 'components/ui/FieldError'
 import { format } from 'date-fns'
+
 import 'react-datepicker/dist/react-datepicker.css'
 import { useState } from 'react'
-import parse from 'date-fns/parse'
+// import parse from 'date-fns/parse'
 import FieldLabel from 'components/ui/FieldLabel'
+registerLocale('ru', ru)
 
 interface Props extends IField<string> {
   styleType: InputStyleType
@@ -34,7 +36,8 @@ export default function DateField(props: Props) {
       <div className={styles.wrapper} ref={wrapperRef}>
         <DatePicker
           name={props.name}
-          selected={field.value ? parse(field.value, 'yyyy-MM-dd', new Date()) : null}
+          //trows an error
+          // selected={field.value ? parse(field.value.toString(), 'yyyy-MM-dd', new Date()) : null}
           className={classNames({
             [styles.input]: true,
             [styles.error]: showError,
@@ -53,8 +56,10 @@ export default function DateField(props: Props) {
           minDate={props.minDate}
           excludeDates={props.excludeDates}
           onChange={(date) => {
+            
             if (date) {
              helpers.setValue(format(date, 'dd.MM.yyyy'))
+            //  helpers.setValue(date.toString())
             } else {
               helpers.setValue('')
             }

@@ -27,7 +27,14 @@
   font-weight: 500;
   flex: 1;
   padding-right: 20px;
+  align-items: center;
+  svg {
+    flex-shrink: 0;
+  }
+  
   > * + * {
     margin-left: 8px;
   }
 }
+
+

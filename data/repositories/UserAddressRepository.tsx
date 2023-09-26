@@ -40,7 +40,7 @@ export default class UserAddressRepository {
   }
 
   static async sync(currentAddressId: string, addresses: IUserAddress[]): Promise<{newCurrentAddressId: string}> {
-    debugger
+    
     const res = await request<{newCurrentAddressId: string}>({
       method: 'post',
       url: '/api/user-address/sync',

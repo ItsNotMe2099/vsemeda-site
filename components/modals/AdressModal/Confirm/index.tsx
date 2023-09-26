@@ -13,7 +13,7 @@ export default function AddressFormConfirm(props: Props) {
     <div className={styles.wrapper}>
       <div className={styles.address}>
         <PlaceCheckSvg color={colors.grey2}/>
-        <div>{props.address}</div>
+        <div className={styles.addressText}>{props.address}</div>
       </div>
       <div className={styles.buttons}><Button styleType={'filledGreen'} onClick={props.onConfirm}>Принять</Button></div>
     </div>

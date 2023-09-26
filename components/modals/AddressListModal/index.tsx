@@ -43,11 +43,11 @@ const AddressListModalInner = (props: Props) => {
         className={styles.list}>
           {appContext.addresses.map(i => {
             return (<>            
-                <AddressCard 
-                item={i} 
-                isSelected={appContext.currentAddress?.id === i.id} 
-                onClick={() => handleClick(i)} />
-                </>
+              <AddressCard 
+              item={i} 
+              isSelected={appContext.currentAddress?.id === i.id} 
+              onClick={() => handleClick(i)} />
+              </>
           )})
           }
           </div>
