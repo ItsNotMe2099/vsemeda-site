@@ -17,7 +17,7 @@ import AddressForm from 'components/modals/AdressModal/Form'
 import classNames from 'classnames'
 import Converter from 'utils/converter'
 import AddressFormConfirm from 'components/modals/AdressModal/Confirm'
-import {YMapLocationRequest} from '@yandex/ymaps3-types'
+import {YMapCenterLocation, YMapLocationRequest} from '@yandex/ymaps3-types'
 import BackBtn from 'components/ui/BackBtn'
 import { ModalType } from 'types/enums'
 import { useResize } from 'components/hooks/useResize'
@@ -39,10 +39,10 @@ const AddressFormModalInner = (props: Props) => {
   const [addressFormShown, setAddressFormShown] = useState(false)
   const [confirmShown, setConfirmShown] = useState(false)
   const [addressStr, setAddressStr] = useState<string>(null)
-  const [location, setLocation] = useState<YMapLocationRequest | null>({center: [(appContext?.currentAddress?.location?.lng||55.7522200) , (appContext?.currentAddress?.location?.lat||37.6155600) ], zoom: 10})
   const header = (<div/>)
   const [geoObject, setGeoObject] = useState<GeoObject>()
   const args = appContext.modalArguments as AddressFormModalArguments
+  const [location, setLocation] = useState<YMapLocationRequest | null>({center: [(appContext?.currentAddress?.location?.lng||args?.address?.location?.lng||undefined) , (appContext?.currentAddress?.location?.lat||args?.address?.location?.lat||undefined) ], zoom: 10})
 
 
   useEffect(() => {   
@@ -50,7 +50,7 @@ const AddressFormModalInner = (props: Props) => {
       setAddressFormShown(true)
       // setAddressSearchShown(false)
       setAddressStr(args.address.address)
-      setLocation({center: [args.address.location.lat, args.address.location.lng], zoom: 10})
+      setLocation({center: [args.address.location.lng, args.address.location.lat], zoom: 10})
     }
   }, [args])
   
@@ -104,7 +104,7 @@ const AddressFormModalInner = (props: Props) => {
         />
       }
       <div className={styles.mapWrapper}>
-        <YandexMap className={styles.map} setGeoObject={(o) => {setGeoObject(o)}} setLocation={(r: YMapLocationRequest) => setLocation(r)} setAddressStr={(s: string)=>setAddressStr(s)} center={location}/>
+        <YandexMap className={styles.map} setGeoObject={(o) => {setGeoObject(o)}} setLocation={(r: YMapLocationRequest) => setLocation(r)} setAddressStr={(s: string)=>setAddressStr(s)} center={location as YMapCenterLocation}/>
         {addressStr && <div className={styles.address}>{addressStr}</div>}
         {addressSearchShown && <div  className={styles.addressField}>
           <Formik initialValues={{}} onSubmit={(values)=>onSubmitHandler(values)}>

@@ -26,11 +26,13 @@ export default function AddressCard({ item, isSelected, onClick, className }: Pr
   }
   return (
    <div ref={wrapperRef} className={classNames(styles.root, {[styles.selected]: isSelected, [styles.hover]: hover, [className]: isSelected})} >
-     <div onClick={onClick} className={styles.icon}>{isSelected ? <CheckSvg color={colors.black}/> : <PlaceMarkSvg color={hover ? colors.black : colors.grey2}/>}</div>
-     <div className={styles.info}>
-     <div className={styles.subTitle}>{item.address}</div>
-     </div>
-     <div className={styles.edit} onClick={handleEdit}><PencilSvg color={'#BDBDBD'}/></div>
+    <div className={styles.clickWrapper} onClick={onClick} >
+      <div  className={styles.icon}>{isSelected ? <CheckSvg color={colors.black}/> : <PlaceMarkSvg color={hover ? colors.black : colors.grey2}/>}</div>
+      <div className={styles.info}>
+        <div className={styles.subTitle}>{item.address}</div>
+      </div>
+    </div>
+    <div className={styles.edit} onClick={handleEdit}><PencilSvg color={'#BDBDBD'}/></div>
    </div>
   )
 }

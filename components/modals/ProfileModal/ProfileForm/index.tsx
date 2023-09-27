@@ -26,7 +26,8 @@ export default function ProfileForm(props: Props) {
   const submit = async (data: { name: string, gender: Gender, birthday: string }) => {
     setLoading(true)
     try {
-      await UserRepository.updateUserById(+appContext.user.id, data)
+      await UserRepository.updateUser(data)
+      appContext.showSnackbar('Изменения сохранены', SnackbarType.success)
     }
     catch (error: any) {
       let errorMessage = error.toString()
@@ -43,7 +44,7 @@ export default function ProfileForm(props: Props) {
     initialValues: {
       name: appContext.user.name ?? '',
       gender: appContext.user.gender ?? null,
-      birthday: appContext.user.birthday ?? ''
+      birthday: appContext.user.birthday ?? null
     },
     onSubmit: submit
   })

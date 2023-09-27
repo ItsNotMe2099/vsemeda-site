@@ -11,6 +11,7 @@ export interface IOrderCreateRequest {
   deliveryMethod: DeliveryMethod;
   platform: Platform
   email?: string
+  phone?: string
   personsCount: number
   clientName?: string
   isPreOrder: boolean;

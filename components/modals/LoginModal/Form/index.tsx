@@ -1,7 +1,6 @@
 import styles from './index.module.scss'
 import { Form, FormikProvider, useFormik } from 'formik'
 import { useState, useEffect } from 'react'
-import PhoneField from 'components/fields/PhoneField'
 import Button from 'components/ui/Button'
 import Validator from 'utils/Validator'
 import OtpCodeField from 'components/fields/OtpCodeField'
@@ -14,6 +13,7 @@ import CirclesBgSvg from 'components/svg/CirclesBgSvg'
 import { useCartContext } from 'context/cart_state'
 import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
+import InputPhoneField from 'components/fields/InputPhoneField'
 
 
 interface Props {
@@ -36,6 +36,9 @@ export default function LoginForm(props: Props) {
     authContext.confirmCode(data.code).then(res=>{      
       if(res && !cartContext.isEmpty) {
         appContext.showModal(ModalType.Basket)
+      }
+      else {
+        appContext.hideModal()
       }
     })
   }
@@ -90,13 +93,19 @@ export default function LoginForm(props: Props) {
           </div>
           {step === 1 ?
             <>
-              <PhoneField
+            <InputPhoneField 
+            name={'phone'} 
+            placeholder={'Введите номер телефона'}
+            validate={Validator.combine([Validator.required, Validator.phone])}
+            />
+            
+              {/* <PhoneField
                 name='phone'
                 placeholder='Введите номер телефона'
                 iconName='field_phone'
                 styleType='default'
                 validate={Validator.combine([Validator.required, Validator.phone])}
-              />
+              /> */}
               <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values, step)} styleType='filledGreen' font='semibold16'>
                 Вход
               </Button>

@@ -65,15 +65,15 @@ export default function UserMenu(props: Props) {
 
 
   return (
-    <div className=
-      {classNames(styles.root, { [styles.opened]: showDropDown, [styles.hover]: hover && !showDropDown })}
-      onClick={handleClick}
-      ref={(ref) => {
-        (refAction as any).current = ref
-        dropdownRef.current = ref
-        setReferenceElement(ref)
-      }}>
-      <div className={styles.name}>{appContext.user ? appContext.user.name : null}</div>
+    <div 
+    className={classNames(styles.root, { [styles.opened]: showDropDown, [styles.hover]: hover && !showDropDown })}
+    onClick={handleClick}
+    ref={(ref) => {
+      (refAction as any).current = ref
+      dropdownRef.current = ref
+      setReferenceElement(ref)
+    }}>
+      <div className={styles.name}>{appContext.user ? appContext.user.name.split(' ')[0] : null}</div>
       <ChevronSvg className={styles.chevron} color={colors.white} />
       <div className={styles.icon}>
         <img src='/images/UserMenu/profile.svg' alt='' />
@@ -85,6 +85,6 @@ export default function UserMenu(props: Props) {
           attributes={attributes.popper}
           style={popperStyles.popper} />
       </div>
-    </div >
+    </div>
   )
 }

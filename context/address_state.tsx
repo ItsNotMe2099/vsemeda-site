@@ -13,8 +13,8 @@ import CookiesUtils from 'utils/CookiesUtils'
 interface IState {
   initialLoaded: boolean;
   create: (data: DeepPartial<IUserAddress>) => void
-  refreshAddresses: ()=> void
-  update: (id: string, data: DeepPartial<IUserAddress>)  => void
+  refreshAddresses: ()=> Promise<boolean>
+  update: (id: string, data: DeepPartial<IUserAddress>)  => Promise<boolean>
   delete: (id: string) => Promise<IUserAddress>
   setCurrentAddress: (address: IUserAddress) => void,
 }
@@ -41,10 +41,10 @@ export function AddressWrapper(props: Props) {
   const createReq = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
     return UserAddressRepository.create(data)
   }
-  const refreshAddresses = () => {
-    UserAddressRepository.getUserAddresses().then(
-      res=> appContext.setUserAddresses(res)
-    )
+  const refreshAddresses = async ():Promise<boolean> => {
+    const res = await UserAddressRepository.getUserAddresses()
+    appContext.setUserAddresses(res)
+    return true
   }
   const updateReq = async (id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
     return UserAddressRepository.update(id, data)
@@ -95,17 +95,19 @@ export function AddressWrapper(props: Props) {
         appContext.setCurrentAddress(address)
       }
     },
-    update: async (id: string, data: DeepPartial<IUserAddress>) => {
+    update: async (id: string, data: DeepPartial<IUserAddress>): Promise<boolean> => {
       if(appContext.isLogged){
         const address = await updateReq(id, data)
         if(id === appContext.currentAddress?.id){
           appContext.setCurrentAddress(address)
         }
+        return true
       }else{
         const address = await  updateLoc(id, data)
         if(id === appContext.currentAddress?.id){
           appContext.setCurrentAddress(address)
         }
+        return true
       }
     },
     delete: (id: string)  => {

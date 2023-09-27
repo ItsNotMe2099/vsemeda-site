@@ -18,7 +18,12 @@ export default function HeaderAddress(props: Props) {
   const addressContext = useAddressContext()
 
   const handleClick = () => {
-    props.isMobile ? appContext.showBottomSheet(ModalType.AddressList) : appContext.showModal(ModalType.AddressList)
+    if(!appContext.isLogged) {
+      props.isMobile ? appContext.showBottomSheet(ModalType.AddressForm, {address: appContext.currentAddress}) : appContext.showModal(ModalType.AddressForm, {address: appContext.currentAddress})
+    }
+    else {
+      props.isMobile ? appContext.showBottomSheet(ModalType.AddressList) : appContext.showModal(ModalType.AddressList)
+    }
   }
 
   const handleClose = () => {

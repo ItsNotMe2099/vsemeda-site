@@ -38,6 +38,7 @@ export default function DateField(props: Props) {
           name={props.name}
           //trows an error
           // selected={field.value ? parse(field.value.toString(), 'yyyy-MM-dd', new Date()) : null}
+          selected={new Date(field.value)}
           className={classNames({
             [styles.input]: true,
             [styles.error]: showError,
@@ -58,7 +59,8 @@ export default function DateField(props: Props) {
           onChange={(date) => {
             
             if (date) {
-             helpers.setValue(format(date, 'dd.MM.yyyy'))
+            //  helpers.setValue(format(date, 'dd-MM-yyyy'))
+             helpers.setValue(format(date, 'yyyy-MM-dd'))
             //  helpers.setValue(date.toString())
             } else {
               helpers.setValue('')
