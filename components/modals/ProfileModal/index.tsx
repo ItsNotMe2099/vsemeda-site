@@ -69,8 +69,12 @@ const ProfileModalInner = (props: Props) => {
             </div>
           </div>
         </VisibleOnSize>     
-        {appContext.modalArguments === 'profile' ? <ProfileForm /> : null}
-        {appContext.modalArguments === 'orders' ? <Orders /> : null}
+        {appContext.modalArguments === 'profile' && 
+          <ProfileForm /> 
+        }
+        {appContext.modalArguments === 'orders' && 
+          <Orders />
+        }
         <VisibleXs>
           <div className={styles.footer}>
             {appContext.modalArguments === 'profile' ?

@@ -1,4 +1,4 @@
-import {createContext, ReactElement, useContext, useEffect, useRef, useState} from 'react'
+import {createContext, Dispatch, ReactElement, SetStateAction, useContext, useEffect, useRef, useState} from 'react'
 import {debounce} from 'lodash'
 import {useAppContext} from 'context/state'
 import {ICart} from 'data/interfaces/ICart'
@@ -41,7 +41,10 @@ interface IState {
   total: number
   totalWithDelivery: number
   totalBaseWithDelivery: number
-  promos: IPromo[]
+  promos: IPromo[],
+
+  setNeedMoneyChange: Dispatch<SetStateAction<boolean>>,
+  needMoneyChange: boolean
 }
 
 
@@ -68,6 +71,9 @@ const defaultValue: IState = {
   totalWithDelivery: 0,
   totalBaseWithDelivery: 0,
   promos: [],
+
+  setNeedMoneyChange: ()=>null,
+  needMoneyChange: null
 }
 
 const CartContext = createContext<IState>(defaultValue)
@@ -81,6 +87,7 @@ type DebounceMap = { [key: string]: () => void }
 export function CartWrapper(props: Props) {
   const appContext = useAppContext()
   const [cart, setCartState] = useState<ICart | null>(null)
+  const [needMoneyChange, setNeedMoneyChange] = useState<boolean>(true)
   const [updating, setUpdating] = useState(true)
   const [initialLoaded, setInitialLoaded] = useState(true)
   const [groupingIdQuantityMap, setGroupingIdQuantityMapState] = useState<QuantityMap>({})
@@ -351,6 +358,8 @@ export function CartWrapper(props: Props) {
     updating,
     groupingIdQuantityMap,
     productQuantityMap,
+    needMoneyChange,
+    setNeedMoneyChange,
     isEmpty: cart === null || cart?.lines.length === 0,
     fetchCart,
     update: (data: ICartUpdateRequestData) => {

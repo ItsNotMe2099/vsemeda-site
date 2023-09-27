@@ -279,7 +279,7 @@ export function AppWrapper(props: Props) {
         loginState$.next(true)
         const newUser = await updateUser()
         const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [addressLocal||newUser?.addresses[0]])
-        const newCurrentAddress = newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId) ?? user.addresses[0]
+        const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]) || null
         setCurrentAddress(newCurrentAddress)
         if(user?.addresses) {
           setUserAddresses(user.addresses)

@@ -56,8 +56,9 @@ $radius: 24px;
   border-top-left-radius: $radius;
   border-top-right-radius: $radius;
   padding-bottom: 58%;
-
+  
   >img {
+    object-fit: cover;
     border-top-left-radius: $radius;
     border-top-right-radius: $radius;
   }

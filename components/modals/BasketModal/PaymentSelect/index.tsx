@@ -58,7 +58,11 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     switch (i) {
       case PaymentMethod.Cash:
         return {
-          label: `Наличные${paymentMethod === PaymentMethod.Cash ? cartContext.cart?.moneyChange ? `. Сдача  ${cartContext.cart?.moneyChange - cartContext.cart?.total} руб.` : ' Без сдачи' : ''}`,
+          label: `Наличные${paymentMethod === PaymentMethod.Cash 
+            ? cartContext.needMoneyChange &&  cartContext.cart?.moneyChange > (cartContext.cart?.total + cartContext.unit?.deliveryPrice)
+            ? `. Сдача  ${cartContext.cart?.moneyChange - (cartContext.cart?.total + cartContext.unit?.deliveryPrice)} руб.` 
+            : ' Без сдачи' 
+            : ''}`,
           icon: <CardCourierSvg color='#61D56E'/>,
           value: i
         }
@@ -86,14 +90,14 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       deliveryMethod: cartContext.cart.deliveryMethod,
       platform: Platform.Site,
       email: appContext.user.email ?  appContext.user.email: currentEmail.current,
+      phone: appContext.user.phone,
       personsCount: cartContext.cart.personsCount,
       clientName: appContext.user.name,
       isPreOrder: cartContext.cart.isPreOrder,
       preOrderAt: cartContext.cart.preOrderAt,
-      moneyChange: cartContext.cart.moneyChange,
+      moneyChange: cartContext.needMoneyChange?Number(cartContext.cart.moneyChange):null,
       isContactLessDelivery: cartContext.cart.isContactLessDelivery
     }
-    
 
     OrderRepository.create(orderData)
     .then(res => {      
@@ -108,9 +112,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   }
 
   const handleSubmit = (mail?: string) => {  
-
     currentEmail.current = mail
-    
     if(!appContext.isLogged){
       appContext.showModal(ModalType.Login)
       return

@@ -3,7 +3,7 @@
 .root {
     @include mq($PhoneWidth, min) {
         display: flex;
-        max-width: 30%;
+        max-width: 59%;
         border-radius: 16px;
         overflow: hidden;
         margin-left: 10px;

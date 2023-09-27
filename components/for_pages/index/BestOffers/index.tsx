@@ -62,7 +62,7 @@ export default function BestOffers(props: Props) {
             Выберите тип заведения
           </div>
           <div className={styles.drop}>
-            {items ? <DropdownMenu options={items} className={styles.dropDown} /> : null}
+            {items ? <DropdownMenu options={items} activeTriggerClassName={styles.activeTrigger} optionClassName={styles.option} navClassName={styles.dropDownNav} className={styles.dropDown} /> : null}
             <img src={'/images/icons/best-offers-arrow.svg'}/>
           </div>
         </div>

@@ -34,7 +34,7 @@ export default function InputField(props: Props) {
   const [wrapperRef, press, hover] = usePressAndHover()
   const [field, meta, helpers] = useField(props as any)
   const showError = meta.touched && !!meta.error
-  const { ref: phoneRef } = useIMask({ mask: '+7 000 000 0000' })
+  const { ref: phoneRef, setValue, value} = useIMask({ mask: '+7 900 000 0000' })
   const [focused, setFocused] = useState(false)
   useEffect(() => {
     if (props.format === 'phone' && phoneRef.current && phoneRef.current.value) {
@@ -58,10 +58,14 @@ export default function InputField(props: Props) {
       <div className={styles.wrapper} ref={wrapperRef}>
         {props.labelType === 'floating' ? <FloatingFieldLabel active={focused || !!field.value}>{props.label}</FloatingFieldLabel> : null}
         {props.labelType === 'top' ? <FieldLabel>{props.label}</FieldLabel> : null}
+        {/* <IMaskInput
+        mask={'+7 900 000 0000'}
+        
+        /> */}
         <input
           {...field}
           {...(typeof props.value !== 'undefined' ? { value: props.value } : {})}
-          ref={props.format === 'phone' ? phoneRef as any : null}
+          // ref={props.format === 'phone' ? phoneRef as any : null}
           type={props.type ?? 'text'}
           disabled={props.disabled}
           onInput=

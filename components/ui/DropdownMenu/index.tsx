@@ -4,6 +4,7 @@ import styles from './index.module.scss'
 import classNames from 'classnames'
 import { ICategory } from 'data/interfaces/ICategory'
 import ArrowDownSvg from 'components/svg/ArrowDown'
+import Scrollbars from 'react-custom-scrollbars-2'
 
 interface Props {
   options?: ICategory[]
@@ -12,6 +13,9 @@ interface Props {
   allOption?: boolean
   dots?: boolean
   className?: string
+  activeTriggerClassName?: string
+  navClassName?: string
+  optionClassName?: string
   optionClick?: (option: ICategory) => void
   style?: 'more'
 }
@@ -24,7 +28,7 @@ export default function DropdownMenu(props: Props) {
 
 
   //TODO: клик неправильно отрабатывает, поэтому надо еще посмотреть
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent> ) => {    
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent> ) => {    
   
     if (options.length === 0) {
       onTriggerClick()
@@ -43,19 +47,25 @@ export default function DropdownMenu(props: Props) {
 
   return (
     <div className={classNames(styles.root, props.className, {[styles.more]: props.style === 'more'})}>
-      <a href="#" onClick={handleClick} className={classNames(styles.dropDownTrigger)}>
+      <div onClick={handleClick} className={classNames(styles.dropDownTrigger, isActive&&props.activeTriggerClassName)}>
         <div className={styles.label}>
           <span>{props.style === 'more' ? <>Еще</> : currentLabel}</span>
         </div>
         <div className={styles.arrow}>
           <ArrowDownSvg/>
         </div>
-      </a>
-      <nav ref={dropdownRef} className={classNames(styles.dropDown, { [styles.dropDownActive]: isActive })}>
-        {(props.style === 'more' ? options : filtered).map((item, index) => <div key={index}
-        className={classNames(styles.option, {[styles.optionCurrent]: props.style === 'more' && item.name === currentLabel})}
-          onClick={() => handleOptionClick(item)}>
-          <a>{item.name}</a></div>)}
+      </div>
+      <nav ref={dropdownRef} className={classNames(styles.dropDown, { [styles.dropDownActive]: isActive }, props.navClassName)}>
+
+        <Scrollbars autoHide height={'100%'}  width={'100%'} >
+          {(props.style === 'more' ? options : filtered).map((item, index) => 
+            <div key={index}
+            className={classNames(styles.option, props.optionClassName, {[styles.optionCurrent]: props.style === 'more' && item.name === currentLabel})}
+            onClick={() => handleOptionClick(item)}>
+              <p>{item.name}</p>
+            </div>
+          )}
+          </Scrollbars>
       </nav>
     </div>
   )

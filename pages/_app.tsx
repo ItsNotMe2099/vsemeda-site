@@ -18,6 +18,7 @@ import {CartWrapper} from 'context/cart_state'
 import 'swiper/css'
 import {CookiesProvider} from 'react-cookie'
 import { ActiveOrderWrapper } from 'context/order_state'
+import { IndexPageWrapper } from 'context/index_page_state'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
@@ -43,6 +44,7 @@ function MyApp({Component, pageProps}: AppProps) {
     <CookiesProvider cookies={(Component as any).universalCookies}>
       <AppWrapper isMobile={pageProps.isMobile} token={pageProps.token} regionSlug={pageProps.region}>
         <AddressWrapper>
+          <IndexPageWrapper>
           <ActiveOrderWrapper>
             <CartWrapper>
               <AuthWrapper>
@@ -60,6 +62,7 @@ function MyApp({Component, pageProps}: AppProps) {
               </AuthWrapper>
             </CartWrapper>
           </ActiveOrderWrapper>
+          </IndexPageWrapper>
         </AddressWrapper>
       </AppWrapper>
     </CookiesProvider>

@@ -37,7 +37,7 @@ export function IndexPageWrapper(props: Props) {
   const appContext = useAppContext()
   const [categories, setCategories] = useState<ICategory[]>([])
   const [unitIndex, setUnitIndex] = useState<IUnitIndex>()
-  const [filter, setFilter] = useState<IndexFilterFormData>({})
+  const [filter, setFilterState] = useState<IndexFilterFormData>({})
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const filterRef = useRef<IndexFilterFormData>({})
@@ -53,16 +53,19 @@ export function IndexPageWrapper(props: Props) {
   }
   const setFilterCategories = async (categories: number[]) => {
     filterRef.current = {...filterRef.current, categories}
-    setFilter(filterRef.current)
+    // setFilterState(filterRef.current)
 
     setIsLoading(true)
     await fetchUnitIndex()
     setIsLoading(false)
   }
+
   useEffect(() => {
     init()
   }, [appContext.currentLocation])
+
   useEffect(() => {
+    console.log(filter)
     filterRef.current = filter
   }, [filter])
 
@@ -74,9 +77,8 @@ export function IndexPageWrapper(props: Props) {
     isLoaded,
     isLoading,
     setFilter: async (filter: IndexFilterFormData) => {
-
       filterRef.current = filter
-      setFilter(filterRef.current)
+      setFilterState(filter)
       setIsLoading(true)
       await fetchUnitIndex()
       setIsLoading(false)

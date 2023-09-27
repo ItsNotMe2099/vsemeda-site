@@ -15,14 +15,14 @@
   }
 
   .dropDown {
-    a {
+    p {
       &:hover {
         background-color: #f3f3f3;
       }
     }
 
     .optionCurrent {
-      a{
+      p{
         &:hover {
           background-color: #812292;
         }
@@ -52,7 +52,7 @@
       background: #812292;
     }
 
-    a {
+    p {
       color: #fff;
 
       &:hover {
@@ -68,6 +68,7 @@
   opacity: 0;
   visibility: hidden;
   max-height: 200px;
+  height: 200px;
   overflow-y: auto;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   z-index: 5;
@@ -75,7 +76,7 @@
   flex-direction: column;
   margin-top: 10px;
 
-  a {
+  p {
     padding: 17px 21px;
     font-weight: 600;
     font-size: 14px;
@@ -96,6 +97,7 @@
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
   background: #fff;
   border-radius: 8px;
+  min-width: 100%;
 }
 
 .dropDownTrigger {
@@ -112,6 +114,7 @@
   width: 100%;
   margin: 0px;
   font-size: 13px;
+  cursor: pointer;
 
   @media screen and (max-width: $xs-max) {
     height: 35px;

@@ -55,7 +55,16 @@ export default function CashForm(props: Props) {
 
   useEffect(()=>{
     cartContext.cart.moneyChange = formik.values.moneyChange
+    
+    if(cartContext.cart.moneyChange > (cartContext.cart.total + cartContext.unit.deliveryPrice)) {
+      cartContext.update({moneyChange: Number(formik.values.moneyChange)})
+    }
   }, [formik.values.moneyChange])
+
+  useEffect(()=>{
+    let data = formik.values.needMoneyChange
+    cartContext.setNeedMoneyChange(data)
+  }, [formik.values.needMoneyChange])
 
   //TODO: неправильно высчитывает сумму сдачи, не учитывает доставку и сервисный сбор почему-то (на формирование корзины не влияет, только визуал)
   return (
@@ -65,7 +74,8 @@ export default function CashForm(props: Props) {
         <Spacer basis={20}/>
         <SwitchField label={formik.values.needMoneyChange ? 'Нужна сдача из:' : 'Нужна сдача?'} name={'needMoneyChange'}
                      fluid={true} className={styles.switchLabel}/>
-        {formik.values.needMoneyChange && <><Spacer basis={15}/>
+        {/* {formik.values.needMoneyChange && <><Spacer basis={15}/> */}
+        {cartContext.needMoneyChange && <><Spacer basis={15}/>
         <div className={styles.moneyChangeForm}>
           <InputField
             className={styles.input}
@@ -82,7 +92,7 @@ export default function CashForm(props: Props) {
             Сдача:
           </div>
           <div className={styles.value}>
-            {formik.values.moneyChange > cartContext.cart?.total ? formik.values.moneyChange - cartContext.cart?.total : 0} руб.
+            {formik.values.moneyChange > (cartContext.cart?.total+cartContext.unit?.deliveryPrice) ? formik.values.moneyChange - (cartContext.cart?.total+cartContext.unit?.deliveryPrice) : 0} руб.
           </div>
         </div></>}
         <Spacer basis={16}/>

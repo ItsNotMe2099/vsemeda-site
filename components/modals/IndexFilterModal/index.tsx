@@ -5,7 +5,7 @@ import ModalLayout from 'components/layout/Modal/ModalLayout'
 import BottomSheetBody from 'components/layout/BottomSheet/BottomSheetBody'
 import BackBtn from 'components/ui/BackBtn'
 import {useAppContext} from 'context/state'
-import ModalHeader from 'components/layout/Modal/ModalHeader'
+// import ModalHeader from 'components/layout/Modal/ModalHeader'
 import ModalBody from 'components/layout/Modal/ModalBody'
 import ModalFooter from 'components/layout/Modal/ModalFooter'
 import {FormikProvider, Form, useFormik} from 'formik'
@@ -23,6 +23,9 @@ import BottomSheetFooter from 'components/layout/BottomSheet/BottomSheetFooter'
 import { useResize } from 'components/hooks/useResize'
 import BottomSheetHeader from 'components/layout/BottomSheet/BottomSheetHeader'
 import classNames from 'classnames'
+import CloseCircleSvg from 'components/svg/CloseCircle'
+import IconButton from 'components/ui/IconButton'
+import { useIndexPageContext } from 'context/index_page_state'
 
 export interface IFormData {
 
@@ -35,12 +38,15 @@ interface Props {
 
 export default function IndexFilterModal(props: Props) {
   const appContext = useAppContext()
+  const indexPageContext = useIndexPageContext()
   const [loading, setLoading] = useState(false)
   const args = appContext.modalArguments as IndexFilterModalArguments
   const {isPhoneWidth} = useResize()
   const handleCloseClick = () => {
     props.onRequestClose()
   }
+
+  debugger
 
 
   const submit = async (data: IndexFilterFormData) => {
@@ -60,28 +66,30 @@ export default function IndexFilterModal(props: Props) {
   }
   const formik = useFormik<IndexFilterFormData>({
     initialValues: {
-      priceRatings: [],
-      paymentMethods: [],
-      categories: []
+      priceRatings: indexPageContext.filter.priceRatings||[],
+      paymentMethods: indexPageContext.filter.paymentMethods||[],
+      categories: indexPageContext.filter.categories||[]
     },
     onSubmit: submit
   })
   const header = (
     <div className={styles.header}>
       <div className={styles.title}>
-        {isPhoneWidth? 'Фильтрация заведений' : 'Фильтр'}
+        Фильтрация
       </div>
-      {!isPhoneWidth && 
-        <div className={styles.close}>
-          <BackBtn bgColor='white' onClick={handleCloseClick}/>
-        </div>
-      }
+        {/* <div className={styles.close}> */}
+        {!isPhoneWidth && 
+        <IconButton onClick={handleCloseClick} className={styles.closeButton} bgColor={'transparent'} ><CloseCircleSvg/></IconButton>
+        ||
+        <BackBtn bgColor='white' onClick={handleCloseClick}/>
+        }
+        {/* </div> */}
     </div>
   )
 
-  //TODO: было бы круто рендерить фильтры откуда-то с бэка :)
   const body = (
     <div className={styles.bodyWrapper}>
+      
       <RadioListField<number> 
         wrapperClassName={styles.radioWrapper}
         itemClassName={styles.radioItem}
@@ -141,8 +149,7 @@ export default function IndexFilterModal(props: Props) {
   )
 
   const footer = (<>
-    <Button className={styles.footerButton} type={'button'} onClick={() => handleClear()} font='semibold16' styleType='filledGreen'>Очистить
-      фильтр</Button>
+    <Button className={styles.footerButton} type={'button'} onClick={() => handleClear()} font='semibold16' styleType='filledGreen'>Очистить</Button>
     <Button className={styles.footerButton} type={'submit'}  spinner={loading} font='semibold16' styleType='filledGreen'>Сохранить</Button>
   </>
   )
@@ -166,7 +173,7 @@ export default function IndexFilterModal(props: Props) {
     <FormikProvider value={formik}>
       <Form className={styles.root}>
         <ModalLayout fixed className={styles.modalLayout}>
-          {appContext.isMobile && <ModalHeader>{header}</ModalHeader>}
+          {header}
           <ModalBody fixed>{body}</ModalBody>
           <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>
         </ModalLayout>

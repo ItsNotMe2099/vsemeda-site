@@ -43,7 +43,7 @@ export default function Search(props: Props) {
             <Sticky >
                 {({style, isSticky, distanceFromTop}) => <div style={style} className={styles.sticky}><SearchHeader onChange={searchUnits} isSticky={isSticky} distanceFromTop={distanceFromTop}/></div>} 
             </Sticky>
-            <SearchPage results={searchResults}/>
+            <SearchPage isLoading={isLoading} results={searchResults}/>
         </StickyContainer>
         </div>
     )

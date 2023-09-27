@@ -38,4 +38,16 @@ export default class UserRepository {
     })
   }
 
+  static async updateUser( data: DeepPartial<IUser>): Promise<IUser|null> {
+    const res = await request({
+      method: 'put',
+      url: '/api/user',
+      data
+    })
+    if(res.err) {
+      return null
+    }
+    return res
+  }
+
 }

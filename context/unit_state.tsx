@@ -95,18 +95,27 @@ export function UnitWrapper(props: Props) {
     }, 2000)
   }
 
-  const init = async () => {
-    const [unit, menu] = router.query.place ? await Promise.all([
+  const init = async () => {    
+    try{
+      const [unit, menu] = router.query.place 
+      ? await Promise.all([
         UnitRepository.fetchBySlug(router.query.place as string, appContext.currentLocation),
         UnitRepository.fetchMenuBySlug(router.query.place as string, appContext.currentLocation)
-      ]) : await Promise.all([
+      ]) 
+      : await Promise.all([
         UnitRepository.fetchByBrandSlug(props.brandSlug, {...(appContext.currentLocation ?? {}),  regionId: 7}),
-        UnitRepository.fetchMenuByBrandSlug(props.brandSlug, {...(appContext.currentLocation ?? {})})])
+        UnitRepository.fetchMenuByBrandSlug(props.brandSlug, {...(appContext.currentLocation ?? {})})
+      ])
+      setUnit(unit)
+      setMenu(menu)
+    }
+    catch(err) {
+      router.replace('/')
+      
 
-    setUnit(unit)
-    setMenu(menu)
+    }
   }
-
+  
   useEffect(() => {   
       init()   
   }, [props.brandSlug, router.query.place, appContext.currentLocation])

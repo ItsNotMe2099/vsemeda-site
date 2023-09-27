@@ -36,7 +36,7 @@ const IndexPageInner = (props: Props) => {
         indexPageContext.setFilter(data)
         appContext.hideModal()
       },
-      onClear: () => indexPageContext.setFilter({})
+      // onClear: () => indexPageContext.setFilter({})
     }
 
     isPhoneWidth?

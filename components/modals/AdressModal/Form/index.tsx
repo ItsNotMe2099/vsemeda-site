@@ -29,26 +29,23 @@ export default function AddressForm(props: Props) {
   const args = appContext.modalArguments as AddressFormModalArguments
 
   const submit = async (data: DeepPartial<IUserAddress>) => {
-    
-    
     setLoading(true)
     try {
       const submitData: DeepPartial<IUserAddress> = {
         ...props.initialAddress,
         ...data,
         address: props.editedAddressString||data.address||props.initialAddress.address
-
       }
       if (props.initialAddress?.id) {
-        addressContext.update(props.initialAddress.id, submitData)
+        await addressContext.update(props.initialAddress.id, submitData)
+        appContext.isLogged&& await addressContext.refreshAddresses()
         appContext.hideModal()
-        props.isMobile?appContext.showBottomSheet(ModalType.AddressList):appContext.showModal(ModalType.AddressList)
+        props.isMobile ? appContext.isLogged&&appContext.showBottomSheet(ModalType.AddressList) : appContext.isLogged&&appContext.showModal(ModalType.AddressList)
       } else {
         addressContext.create(submitData)
         appContext.hideModal()
         // props.isMobile?appContext.showBottomSheet(ModalType.AddressList):appContext.showModal(ModalType.AddressList)
       }
-      addressContext.refreshAddresses()
     } catch (e) {
       appContext.showSnackbar(e.toString(), SnackbarType.error)
     }
@@ -125,7 +122,8 @@ export default function AddressForm(props: Props) {
 
         <div className={styles.footer}>
           <Button className={styles.button} styleType={'filledGreen'} fluid type='button' onClick={formik.submitForm} spinner={loading}>Сохранить</Button>
-          {props.initialAddress?.id &&
+          {props.initialAddress?.id && 
+          // appContext.addresses.length > 1 &&
             <Button className={styles.trash} onClick={()=>addressContext.delete(props.initialAddress?.id)} type='button' styleType={'icon'}><><TrashBasketSvg/></></Button>
           }
         </div>

@@ -5,12 +5,13 @@ import { forwardRef, useState, ChangeEvent } from 'react'
 import { useAppContext } from 'context/state'
 import LogoEdaSvg from 'components/svg/LogoEdaSvg'
 import LoginButton from 'components/layout/Header/LoginButton'
-import { colors } from 'styles/variables'
+import { breakpoints, colors } from 'styles/variables'
 import classNames from 'classnames'
 import UserMenu from 'components/layout/Header/UserMenu'
 import FieldSearch from 'components/ui/FieldSearch'
 import DividerDotsSvg from 'components/svg/DividerDotsSvg'
 import { useThrottleFn } from '@react-cmpt/use-throttle'
+import { useResize } from 'components/hooks/useResize'
 
 interface Props {
   isSticky?: boolean
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFromTop?: number }>((props, ref) => {
+  const {isPhoneWidth, isSmDesktopWidth, width} = useResize()
 
   const appContext = useAppContext()
 
@@ -57,9 +59,17 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             <form className={styles.form} action="/search" onSubmit={handleSubmit}>
               <FieldSearch onChange={handleInputChange} />
             </form>
-            <DividerDotsSvg color='#AF81BD' />
-            {!appContext.token ? <LoginButton /> :
-              <UserMenu />}
+            {width > breakpoints.PhoneWidth && width < breakpoints.SmDesktopWidth &&
+              <DividerDotsSvg color='#AF81BD' />
+            }
+           
+           
+            {!appContext.token && (width > breakpoints.PhoneWidth && width < breakpoints.SmDesktopWidth) && 
+            <LoginButton /> 
+            ||
+            (width > breakpoints.PhoneWidth && width < breakpoints.SmDesktopWidth) &&
+             <UserMenu/>
+            }
           </div>
         </div>
       </div>

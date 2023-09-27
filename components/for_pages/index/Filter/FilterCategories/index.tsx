@@ -139,7 +139,7 @@ export default function FilterCategories(props: Props) {
             <div ref={lastLinkRef}>
               <VisibleOnSize width={breakpoints.PhoneWidth} minSize> 
                   {(!sliceInited || slice > 0) && 
-                    <DropdownMenu  optionClick={(category) => handleOptionClick(category)} style='more' options={props.categories ?? []} />
+                    <DropdownMenu navClassName={styles.dropDownNav}  optionClick={(category) => handleOptionClick(category)} style='more' options={props.categories ?? []} />
                    }
               </VisibleOnSize>
             </div>
