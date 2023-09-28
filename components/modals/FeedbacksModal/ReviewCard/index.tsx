@@ -51,16 +51,18 @@ export default function ReviewCard(props: Props) {
                     <p className={styles.pointsNumber}>{props.item.mark}.0</p>
                 </div>
             </div>
-            <p className={styles.body}>
-               {props.item.text}
-            </p>
-            {props.item.answer&&
-            <div className={styles.answerWrapper}>
-                <ArrowAnswerSvg className={styles.answerSvg}/>
-                <p className={styles.answerTitle}>ответ:</p>
-                <p className={styles.answer}>{props.item.answer}</p>
+            <div className={styles.bottom}>
+                <p className={styles.body}>
+                    {props.item.text}
+                </p>
+                {props.item.answer&&
+                <div className={styles.answerWrapper}>
+                    <ArrowAnswerSvg className={styles.answerSvg}/>
+                    <p className={styles.answerTitle}>ответ:</p>
+                    <p className={styles.answer}>{props.item.answer}</p>
+                </div>
+                }
             </div>
-            }
         </div>
     )
 }

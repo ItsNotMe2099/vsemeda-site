@@ -11,6 +11,10 @@
   }
 }
 
+.disabled {
+  opacity: 0;
+}
+
 .item {
   padding: 10px 19px;
   background: $grey6;

@@ -34,11 +34,10 @@ export default function LoginForm(props: Props) {
 
   const submit = async (data: { phone: string, code: string }) => {
     authContext.confirmCode(data.code).then(res=>{      
-      if(res && !cartContext.isEmpty) {
-        appContext.showModal(ModalType.Basket)
-      }
-      else {
-        appContext.hideModal()
+      if(res) {
+        !cartContext.isEmpty
+        ?appContext.showModal(ModalType.Basket)
+        :appContext.hideModal()
       }
     })
   }

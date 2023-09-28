@@ -271,18 +271,19 @@ export function AppWrapper(props: Props) {
       Cookies.set(CookiesType.accessToken, token, {
         expires: CookiesLifeTime.accessToken,
       })
-      
-
 
       setToken(newToken)
+      debugger
       if (!oldToken && newToken) {
         loginState$.next(true)
         const newUser = await updateUser()
-        const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [addressLocal||newUser?.addresses[0]])
-        const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]) || null
+        const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [...addresses, ...newUser?.addresses])
+        const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]) || newUser.addresses[0]
         setCurrentAddress(newCurrentAddress)
-        if(user?.addresses) {
-          setUserAddresses(user.addresses)
+        if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
+          setUserAddresses(a=> {
+            return [...a, ...newUser?.addresses]
+          })
         }
         if(newCurrentAddress) {
           const cart = await CartRepository.fetchCurrentCart(newCurrentAddress.location)

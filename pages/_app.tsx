@@ -44,10 +44,10 @@ function MyApp({Component, pageProps}: AppProps) {
     <CookiesProvider cookies={(Component as any).universalCookies}>
       <AppWrapper isMobile={pageProps.isMobile} token={pageProps.token} regionSlug={pageProps.region}>
         <AddressWrapper>
-          <IndexPageWrapper>
           <ActiveOrderWrapper>
             <CartWrapper>
               <AuthWrapper>
+          <IndexPageWrapper>
                 <Head>
                   <meta
                     name="viewport"
@@ -59,10 +59,10 @@ function MyApp({Component, pageProps}: AppProps) {
                 {clientVisible && <BottomSheetContainer/>}
                 {clientVisible && <Snackbar/>}
                 <AppOverlay/>
+          </IndexPageWrapper>
               </AuthWrapper>
             </CartWrapper>
           </ActiveOrderWrapper>
-          </IndexPageWrapper>
         </AddressWrapper>
       </AppWrapper>
     </CookiesProvider>

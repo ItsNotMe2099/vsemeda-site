@@ -46,13 +46,11 @@ export default function IndexFilterModal(props: Props) {
     props.onRequestClose()
   }
 
-  debugger
-
-
   const submit = async (data: IndexFilterFormData) => {
     try {
       setLoading(true)
-      await args.onSubmit(data)
+      indexPageContext.setFilter(data)
+      appContext.hideModal()
       setLoading(false)
     } catch (err: any) {
       if (err instanceof RequestError) {
@@ -61,29 +59,39 @@ export default function IndexFilterModal(props: Props) {
     }
     setLoading(false)
   }
-  const handleClear = () => {
-    args.onClear()
-  }
+  
   const formik = useFormik<IndexFilterFormData>({
     initialValues: {
-      priceRatings: indexPageContext.filter.priceRatings||[],
-      paymentMethods: indexPageContext.filter.paymentMethods||[],
-      categories: indexPageContext.filter.categories||[]
+      maxDeliveryTime: indexPageContext.filter?.maxDeliveryTime,
+      priceRatings: indexPageContext.filter?.priceRatings||[],
+      paymentMethods: indexPageContext.filter?.paymentMethods||[],
+      categories: indexPageContext.filter?.categories||[]
     },
     onSubmit: submit
   })
+
+  const handleClear = async () => {
+    await indexPageContext.setFilter({})
+    formik.resetForm({values: {
+      maxDeliveryTime: null,
+      priceRatings: [],
+      paymentMethods: [],
+      categories: []
+    }})
+  }
+
+
+
   const header = (
     <div className={styles.header}>
       <div className={styles.title}>
         Фильтрация
       </div>
-        {/* <div className={styles.close}> */}
         {!isPhoneWidth && 
         <IconButton onClick={handleCloseClick} className={styles.closeButton} bgColor={'transparent'} ><CloseCircleSvg/></IconButton>
         ||
         <BackBtn bgColor='white' onClick={handleCloseClick}/>
         }
-        {/* </div> */}
     </div>
   )
 
@@ -98,7 +106,7 @@ export default function IndexFilterModal(props: Props) {
         itemLabelClassName={styles.radioLabel}
         labelClassName={styles.radioLabel}
         label={'Время доставки'} 
-        name={'deliveryTime'}
+        name={'maxDeliveryTime'}
         options={[
           {label: '15', value: 15}, 
           {label: '30', value: 30}, 

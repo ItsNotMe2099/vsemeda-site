@@ -87,7 +87,7 @@ type DebounceMap = { [key: string]: () => void }
 export function CartWrapper(props: Props) {
   const appContext = useAppContext()
   const [cart, setCartState] = useState<ICart | null>(null)
-  const [needMoneyChange, setNeedMoneyChange] = useState<boolean>(true)
+  const [needMoneyChange, setNeedMoneyChange] = useState<boolean>(false)
   const [updating, setUpdating] = useState(true)
   const [initialLoaded, setInitialLoaded] = useState(true)
   const [groupingIdQuantityMap, setGroupingIdQuantityMapState] = useState<QuantityMap>({})

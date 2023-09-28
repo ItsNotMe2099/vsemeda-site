@@ -27,6 +27,7 @@ export default function FilterCategories(props: Props) {
 
 
   useEffect(()=> {
+    
     itemsRef.current = props.categories ?? []
   }, [props.categories])
 
@@ -53,8 +54,8 @@ export default function FilterCategories(props: Props) {
     checkingToShowLinks()
     window.addEventListener('resize', checkingToShowLinks)
     return () =>   window.removeEventListener('resize', checkingToShowLinks)
-
   }, [])
+
  const checkingToShowLinks = () => {
     if(!listRef.current || !lastLinkRef.current){
       return
@@ -96,6 +97,7 @@ export default function FilterCategories(props: Props) {
     }
   }
   const handleClickCategory = (category: ICategory) => {
+    
     if(indexPageContext.filter.categories?.includes(category.id)){
       indexPageContext.setFilterCategories(indexPageContext.filter?.categories?.filter(i => i !== category.id) ?? [])
     }else{
@@ -120,29 +122,31 @@ export default function FilterCategories(props: Props) {
             && !indexPageContext.filter.maxDeliveryTime})}>
           Все
         </div>
-          {props.categories?.slice(0, slice > 0 ?slice :  props.categories.length  ).map((i, index) =>
-            <div
-              key={i.id}
-              ref={el => {
-                if(!linksRef.current[index + 1]) {
-                  linksRef.current[index + 1] = el
-                }
 
-              }}
-              className={classNames(styles.item, { [styles.active]: indexPageContext.filter.categories?.includes(i.id) })}
-              onClick={() => handleClickCategory(i)}
-            >
-              {i.name}
-            </div>
-          )}
-
-            <div ref={lastLinkRef}>
-              <VisibleOnSize width={breakpoints.PhoneWidth} minSize> 
-                  {(!sliceInited || slice > 0) && 
-                    <DropdownMenu navClassName={styles.dropDownNav}  optionClick={(category) => handleOptionClick(category)} style='more' options={props.categories ?? []} />
-                   }
-              </VisibleOnSize>
-            </div>
+        {props.categories?.slice(0, slice > 0 ?slice :  props.categories.length).map((i, index) =>
+          <div
+          key={i.id}
+          ref={el => {
+            if(!linksRef.current[index + 1]) {
+            linksRef.current[index + 1] = el
+          }
+          }}
+          className={classNames(styles.item, { [styles.active]: indexPageContext.filter.categories?.includes(i.id) })}
+          onClick={() => handleClickCategory(i)}
+          >
+          {i.name}
+          </div>
+        )}
+        <div ref={lastLinkRef}>
+          <VisibleOnSize width={breakpoints.PhoneWidth} minSize> 
+              {(slice > 0 || !sliceInited ) &&
+              <div className={slice===0&&styles.disabled}>
+                {/* // <DropdownMenu navClassName={styles.dropDownNav}  optionClick={(category) => handleOptionClick(category)} style='more' options={props.categories ?? []} /> */}
+                <DropdownMenu navClassName={styles.dropDownNav}  optionClick={(category) => handleOptionClick(category)} style='more' options={props.categories?.slice(slice > 0 ? slice :  props.categories.length) ?? []} />
+              </div>
+               }
+          </VisibleOnSize>
+        </div>
 
       </div>
   )

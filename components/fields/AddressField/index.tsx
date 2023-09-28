@@ -15,6 +15,9 @@ import {IYandexSuggestItem} from 'data/interfaces/IYandexSuggest'
 import LoupeSvg from 'components/svg/LoupeSvg'
 import Formatter from 'utils/formatter'
 import {YandexResponseGeocoder} from 'data/interfaces/IYandexGeocoder'
+import IconButton from 'components/ui/IconButton'
+import CloseCircleSvg from 'components/svg/CloseCircle'
+import { colors } from 'styles/variables'
 
 interface Props extends IField<string> {
   query?: any
@@ -205,27 +208,39 @@ export default function AddressField(props: Props) {
     props.onEditClick()
   }
 
+  const removeString = () => {
+    helpers.setValue('')
+  }
+
   const hasError = !!meta.error && meta.touched
 
   return (
     <div className={cx(styles.root, {
       [styles.hasError]: !!meta.error && meta.touched,
-    }, props.className)}>
-      <div className={classNames(styles.field, {[styles.opened]: isActive, [styles.disabled]: !isEditMode})}  ref={(ref) => {
+    }, props.className)}>    {}
+      <div className={classNames(styles.field, {[styles.opened]: isActive, [styles.disabled]: !isEditMode}, suggestions.length > 0&&styles.suggestions)}  ref={(ref) => {
         dropdownRef.current = ref
         setReferenceElement(ref)
       }} >
         <LoupeSvg color={isEditMode ? '#4F4F4F' : '#BDBDBD'}/>
-        {isEditMode && <input  ref={inputRef} disabled={props.disabled} data-field={props.name} name={props.name}
-               className={classNames({[styles.input]: true, [styles.error]: showError})} value={field.value}
-               onBlur={callbackBlur}
-               onChange={handleChangeInputValue}
-               placeholder={placeholder}
-               onKeyDown={handleKeyDown}/>}
-        {!isEditMode && <div className={styles.editLabel} onClick={handleEdit}>Изменить адрес</div>}
+        {isEditMode && 
+          <input  
+          ref={inputRef} 
+          name={props.name}
+          onBlur={callbackBlur}
+          data-field={props.name} 
+          disabled={props.disabled} 
+          placeholder={placeholder}
+          onKeyDown={handleKeyDown}
+          onChange={handleChangeInputValue}
+          className={classNames({[styles.input]: true, [styles.error]: showError})} value={field.value}
+          />
+        }
+        {!isEditMode && <div className={styles.editLabel} onClick={handleEdit}>{field.value||'Изменить адрес'}</div>}
+        <IconButton className={styles.removeString} onClick={()=>removeString()} bgColor={'transparent'}><CloseCircleSvg color={colors.grey3}/></IconButton>
       </div>
 
-      {isExpanded && <div className={classNames(styles.dropDown, {[styles.opened]: isActive})} ref={setPopperElement}
+      {isExpanded &&  suggestions.length > 0 && <div className={classNames(styles.dropDown, {[styles.opened]: isActive})} ref={setPopperElement}
            style={popperStyles.popper}  {...attributes.popper} >
         {message && <div className={cx(styles.message, {[styles.messageError]: messageIsError})}>{message}</div>}
         {suggestions.map((item, key) => <div key={key}

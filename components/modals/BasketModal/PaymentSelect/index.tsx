@@ -180,7 +180,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
         }
         {state === State.Email &&  
           <EmailForm onSubmit={handleSubmit}/>
-        }
+        } 
       </div>}
 
       {[State.Opened, State.Closed].includes(state) &&

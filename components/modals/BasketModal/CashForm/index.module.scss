@@ -3,10 +3,13 @@
 .root {
     display: flex;
   flex-direction: column;
+  margin-top: -16px;
+  row-gap: 8px;
 
 }
 .switchLabel{
   color: $white;
+  margin-top: 8px;
 }
 .moneyChangeForm{
   display: flex;
@@ -25,11 +28,17 @@
     }
   }
 }
+
+.label {
+  font-size: 14px;
+}
+
 .bottom{
   display: flex;
   flex-direction: row;
   align-items: center;
   opacity: 0.76;
+  margin-top: 14px;
   .label{
     font-weight: 500;
     font-size: 14px;

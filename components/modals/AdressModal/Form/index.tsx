@@ -123,7 +123,7 @@ export default function AddressForm(props: Props) {
         <div className={styles.footer}>
           <Button className={styles.button} styleType={'filledGreen'} fluid type='button' onClick={formik.submitForm} spinner={loading}>Сохранить</Button>
           {props.initialAddress?.id && 
-          // appContext.addresses.length > 1 &&
+          appContext.addresses.length > 1 &&
             <Button className={styles.trash} onClick={()=>addressContext.delete(props.initialAddress?.id)} type='button' styleType={'icon'}><><TrashBasketSvg/></></Button>
           }
         </div>

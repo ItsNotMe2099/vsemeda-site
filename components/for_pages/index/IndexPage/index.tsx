@@ -1,7 +1,7 @@
 import styles from './index.module.scss'
 import {ViewTemplateItemType} from 'data/enum/ViewTemplateItemType'
 import Layout from 'components/layout/Layout'
-import {IndexPageWrapper, useIndexPageContext} from 'context/index_page_state'
+import {useIndexPageContext} from 'context/index_page_state'
 import IndexHeader from 'components/for_pages/index/IndexHeader'
 import BestOffers from 'components/for_pages/index/BestOffers'
 import FilterBtn from 'components/for_pages/index/FilterBtn'
@@ -14,7 +14,6 @@ import { useAppContext } from 'context/state'
 import { breakpoints } from 'styles/variables'
 import VisibleOnSize from 'components/visibility/VisibleOnSize'
 import { ModalType } from 'types/enums'
-import { IndexFilterFormData } from 'types/form_data/IndexFilterFormData'
 import { useResize } from 'components/hooks/useResize'
 import ActiveOrder from '../ActiveOrder'
 
@@ -23,28 +22,26 @@ interface Props{
 const IndexPageInner = (props: Props) => {
   const appContext = useAppContext()
   const indexPageContext = useIndexPageContext()
-  const layoutItemBestOffers = indexPageContext.unitIndex?.layout?.items?.find(i => i.type === ViewTemplateItemType.SliderBrands)
-  const layoutItems = layoutItemBestOffers?  indexPageContext.unitIndex?.layout?.items.filter(i => i.type !== layoutItemBestOffers.type && i.name !== layoutItemBestOffers.name) : indexPageContext.unitIndex?.layout?.items
+  const layoutItemBestOffers = indexPageContext.unitInitialIndex?.layout?.items?.find(i => i.type === ViewTemplateItemType.SliderBrands)
+  const layoutItems = layoutItemBestOffers?  indexPageContext.unitInitialIndex?.layout?.items.filter(i => i.type !== layoutItemBestOffers.type && i.name !== layoutItemBestOffers.name) : indexPageContext.unitIndex?.layout?.items
 
   const {isPhoneWidth} = useResize()
-
 
   const onFilterButtonClick = () => {
     const filterOptions  = {
       categories: indexPageContext.categories,
-      onSubmit: (data: IndexFilterFormData) =>{
-        indexPageContext.setFilter(data)
-        appContext.hideModal()
-      },
+      // onSubmit: (data: IndexFilterFormData) =>{
+      //   indexPageContext.setFilter(data)
+      //   appContext.hideModal()
+      // },
       // onClear: () => indexPageContext.setFilter({})
     }
-
     isPhoneWidth?
     appContext.showBottomSheet(ModalType.IndexFilter, filterOptions):
     appContext.showModal(ModalType.IndexFilter, filterOptions)
   }
 
- 
+
 
   return (
     <Layout>
@@ -66,23 +63,22 @@ const IndexPageInner = (props: Props) => {
               <UnitSlider units={layoutItemBestOffers.units} isMobile />
             </VisibleOnSize>
 
-
             {indexPageContext.isLoading && <div className={styles.loading}>Загружается</div>}
             {(layoutItems ?? []).map(item => <LayoutItem item={item}/>)}
             
-            {!indexPageContext.isLoading && <UnitList
-              units={[...indexPageContext.unitIndex.units,]} />}
+            {!indexPageContext.isLoading && indexPageContext.unitIndex?.units.length > 0 && <UnitList
+              units={indexPageContext.unitIndex.units} />
+            }
           </div>
+            {indexPageContext.unitIndex?.units.length === 0 &&
+              <p className={styles.empty}>По вашему запросу ничего не найдено</p>
+            }
         </>}
     </Layout>
   )
 }
 export default function IndexPage(props: Props) {
   return (
-
-      <IndexPageWrapper>
-        <IndexPageInner/>
-      </IndexPageWrapper>
-
+    <IndexPageInner/>
   )
 }

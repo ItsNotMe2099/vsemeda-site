@@ -105,12 +105,18 @@ const AddressFormModalInner = (props: Props) => {
       }
       <div className={styles.mapWrapper}>
         <YandexMap className={styles.map} setGeoObject={(o) => {setGeoObject(o)}} setLocation={(r: YMapLocationRequest) => setLocation(r)} setAddressStr={(s: string)=>setAddressStr(s)} center={location as YMapCenterLocation}/>
-        {addressStr && <div className={styles.address}>{addressStr}</div>}
-        {addressSearchShown && <div  className={styles.addressField}>
-          <Formik initialValues={{}} onSubmit={(values)=>onSubmitHandler(values)}>
-            <AddressField  hasAddress={!!geoObject} name={'address'} value={addressStr} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
-          </Formik>
-        </div>}
+
+        {addressStr && !args?.address &&
+          <div className={styles.address}>{addressStr}</div>
+        }
+
+        {addressSearchShown && 
+          <div  className={styles.addressField}>
+            <Formik initialValues={{}} onSubmit={(values)=>onSubmitHandler(values)}>
+              <AddressField  hasAddress={!!geoObject} name={'address'} value={addressStr} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
+            </Formik>
+          </div>
+        }
         <div className={styles.placemark}><MarkerSvg/></div>
         {confirmShown && <AddressFormConfirm address={addressStr} onConfirm={handleConfirm}/>}
       </div>

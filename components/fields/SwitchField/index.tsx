@@ -4,10 +4,12 @@ import React from 'react'
 import Switch from 'components/ui/Switch'
 import classNames from 'classnames'
 import {IField} from 'types/types'
+import classnames from 'classnames'
 
 interface Props extends IField<boolean>{
   onChange?: () => void
   label?: string
+  labelClassName?: string
   className?: string
   offColor?: string
   onColor?: string
@@ -26,7 +28,7 @@ export default function SwitchField(props: Props) {
     props.onChange && props.onChange()
     setFieldValue(field.name, val)
   }
-  const label = ( <div className={styles.label}>
+  const label = ( <div className={classnames(styles.label, props.labelClassName)}>
     {props.label}
   </div> )
   return (

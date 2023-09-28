@@ -10,6 +10,8 @@ import Validator from 'utils/Validator'
 import PaymentButton from 'components/modals/BasketModal/PaymentSelect/PaymentButton'
 import {useEffect, useState} from 'react'
 import {RequestError} from 'types/types'
+import CashSvg from 'components/svg/CashSvg'
+import PaymentMethodItem from '../PaymentMethodItem'
 
 interface IFormData {
   moneyChange: number,
@@ -48,7 +50,7 @@ export default function CashForm(props: Props) {
   const formik = useFormik<IFormData>({
     initialValues: {
       moneyChange: cartContext.cart?.moneyChange||null,
-      needMoneyChange: true,
+      needMoneyChange: cartContext.needMoneyChange||false,
     },
     onSubmit: submit
   })
@@ -63,19 +65,25 @@ export default function CashForm(props: Props) {
 
   useEffect(()=>{
     let data = formik.values.needMoneyChange
+    debugger
     cartContext.setNeedMoneyChange(data)
   }, [formik.values.needMoneyChange])
 
-  //TODO: неправильно высчитывает сумму сдачи, не учитывает доставку и сервисный сбор почему-то (на формирование корзины не влияет, только визуал)
   return (
-
     <FormikProvider value={formik}>
       <Form className={styles.root}>
-        <Spacer basis={20}/>
-        <SwitchField label={formik.values.needMoneyChange ? 'Нужна сдача из:' : 'Нужна сдача?'} name={'needMoneyChange'}
-                     fluid={true} className={styles.switchLabel}/>
+        {/* <Spacer basis={20}/> */}
+        <PaymentMethodItem item={{label: 'Наличными', icon: <CashSvg color='#61D56E'/>}} ></PaymentMethodItem>
+        <SwitchField 
+        label={formik.values.needMoneyChange ? 'Нужна сдача из:' : 'Нужна сдача?'} 
+        name={'needMoneyChange'}
+        fluid={true}  
+        className={styles.switchLabel}
+        labelClassName={styles.label}
+        />
         {/* {formik.values.needMoneyChange && <><Spacer basis={15}/> */}
-        {cartContext.needMoneyChange && <><Spacer basis={15}/>
+        {cartContext.needMoneyChange && <>
+        {/* <Spacer basis={15}/> */}
         <div className={styles.moneyChangeForm}>
           <InputField
             className={styles.input}
@@ -86,7 +94,7 @@ export default function CashForm(props: Props) {
             isNumbersOnly
             validate={Validator.combine([Validator.required, minMoneyChange])}/>
         </div>
-        <Spacer basis={20}/>
+        {/* <Spacer basis={20}/> */}
         <div className={styles.bottom}>
           <div className={styles.label}>
             Сдача:
@@ -95,7 +103,7 @@ export default function CashForm(props: Props) {
             {formik.values.moneyChange > (cartContext.cart?.total+cartContext.unit?.deliveryPrice) ? formik.values.moneyChange - (cartContext.cart?.total+cartContext.unit?.deliveryPrice) : 0} руб.
           </div>
         </div></>}
-        <Spacer basis={16}/>
+        <Spacer basis={8}/>
         <PaymentButton onClick={() => formik.submitForm()} loading={loading}/>
       </Form>
 

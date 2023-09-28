@@ -57,7 +57,7 @@ export default function EmailForm(props: Props) {
 
     <FormikProvider value={formik}>
       <Form className={styles.root}>
-        <Spacer basis={20}/>
+        {/* <Spacer basis={20}/> */}
 
           <InputField
             name='email'
