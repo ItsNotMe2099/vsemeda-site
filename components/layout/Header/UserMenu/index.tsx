@@ -73,7 +73,7 @@ export default function UserMenu(props: Props) {
       dropdownRef.current = ref
       setReferenceElement(ref)
     }}>
-      <div className={styles.name}>{appContext.user ? appContext.user.name.split(' ')[0] : ''}</div>  
+      <div className={styles.name}>{appContext.user?.name ? appContext.user?.name?.split(' ')[0] : appContext.user?.name}</div>  
       {/* <div className={styles.name}>{appContext.user ? appContext.user.name: ''}</div>   */}
       <ChevronSvg className={styles.chevron} color={colors.white} />
       <div className={styles.icon}>
