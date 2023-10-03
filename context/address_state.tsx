@@ -57,12 +57,15 @@ export function AddressWrapper(props: Props) {
   }
 
   const createLoc = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
+    debugger
+    
      data.id = uuidv4()
     setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
     return data as IUserAddress
   }
 
   const updateLoc = async (id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
+    debugger    
     setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
     return data as IUserAddress
   }
@@ -71,16 +74,19 @@ export function AddressWrapper(props: Props) {
     removeCookie(CookiesType.address)
   }
 
-  useEffect( () => {
-    const subscription = appContext.loginState$.subscribe((logged) => {
-      if (!logged && appContext.currentAddress) {
-        createLoc(appContext.currentAddress)
-      }
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [appContext.currentAddress])
+  // useEffect( () => {
+  //   const subscription = appContext.loginState$.subscribe((logged) => {
+  //     if (!logged && appContext.currentAddress) {
+  //       createLoc(appContext.currentAddress)
+  //     }
+  //     else {
+  //       removeCookie(CookiesType.address)
+  //     }
+  //   })
+  //   return () => {
+  //     subscription.unsubscribe()
+  //   }
+  // }, [appContext.currentAddress])
 
   const value: IState = {
     ...defaultValue,
@@ -114,7 +120,7 @@ export function AddressWrapper(props: Props) {
     },
 
     delete: (id: string)  => {
-      debugger
+      
       if(appContext.isLogged){
         deleteReq(id).then(res=> {
           appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)

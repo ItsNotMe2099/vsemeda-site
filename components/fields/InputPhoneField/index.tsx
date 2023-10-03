@@ -31,7 +31,6 @@ export default function InputPhoneField(props: Props) {
   }, [focused])
 
   useEffect(()=>{
-    debugger
     setValue('+7 9')
   }, [])
 

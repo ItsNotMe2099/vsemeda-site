@@ -17,6 +17,7 @@ import { writeStorage} from '@rehooks/local-storage'
 import {useCookies} from 'react-cookie'
 import CookiesUtils from 'utils/CookiesUtils'
 import {IRegion} from 'data/interfaces/IRegion'
+import deleteAllCookies from 'utils/deleteCookie'
 
 interface IState {
   isMobile: boolean
@@ -273,7 +274,7 @@ export function AppWrapper(props: Props) {
       })
 
       setToken(newToken)
-      debugger
+      
       if (!oldToken && newToken) {
         loginState$.next(true)
         const newUser = await updateUser()
@@ -282,7 +283,7 @@ export function AppWrapper(props: Props) {
         setCurrentAddress(newCurrentAddress)
         if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
           setUserAddresses(a=> {
-            return [...a, ...newUser?.addresses]
+            return [...newUser?.addresses]
           })
         }
         if(newCurrentAddress) {
@@ -302,7 +303,15 @@ export function AppWrapper(props: Props) {
     },
 
     logout: () => {
+      //адрес в куках никак не хочет удаляться.... 
       Cookies.remove(CookiesType.accessToken)
+      Cookies.set('address', '')
+      Cookies.remove('address')
+      removeCookie(CookiesType.address)
+      setCookie(CookiesType.address, "")
+      deleteAllCookies()
+      setCurrentAddress(null)
+      setUserAddresses([])
       setIsLogged(false)
       setUser(null)
 

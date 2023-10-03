@@ -28,7 +28,7 @@ export default function CashForm(props: Props) {
   const appContext = useAppContext()
   const [loading, setLoading] = useState(false)
   const  minMoneyChange = (value: string | number): string | undefined => {
-    return isNaN(+value) || value  < cartContext.cart.total ? 'Введенное число должно быть больше суммы заказа' : undefined
+    return isNaN(+value) || +value  < cartContext.cart.total ? 'Введенное число должно быть больше суммы заказа' : undefined
   }
   const submit = (data: IFormData) => {
     
@@ -65,7 +65,7 @@ export default function CashForm(props: Props) {
 
   useEffect(()=>{
     let data = formik.values.needMoneyChange
-    debugger
+    
     cartContext.setNeedMoneyChange(data)
   }, [formik.values.needMoneyChange])
 
