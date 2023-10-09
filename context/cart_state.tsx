@@ -42,7 +42,6 @@ interface IState {
   totalWithDelivery: number
   totalBaseWithDelivery: number
   promos: IPromo[],
-
   setNeedMoneyChange: Dispatch<SetStateAction<boolean>>,
   needMoneyChange: boolean
 }
@@ -317,7 +316,6 @@ export function CartWrapper(props: Props) {
         text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
         onConfirm: async () => {
           await clear()
-
           //VSMA-531
           addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
           appContext.hideModal()
@@ -335,9 +333,14 @@ export function CartWrapper(props: Props) {
   }, [cart])
 
 
-  useEffect(() => {    
+  useEffect(() => {   
+     
     if(appContext.currentLocation) {
       init()
+    }
+    else {
+      setCart(null)
+      clearQuantity()
     }
   }, [appContext.currentLocation])
 
@@ -373,12 +376,9 @@ export function CartWrapper(props: Props) {
       changeCartLineQuantity(line, isAdd)
     },
     updateProductQuantity: async (product: IProduct, isAdd?: boolean, unitId?: number) => {
-      
-
       if (product.modificationGroups?.length > 0 && isAdd) {
         appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
       } else {
-        
         const line = cartRef.current.lines.find(i => (i.productId === product.id)||(i.id === product.id))
         if (line != null) {
           await changeCartLineQuantity(line, isAdd)
@@ -387,17 +387,11 @@ export function CartWrapper(props: Props) {
     },
 
     updateProductQuantityFromCart: async(product: ICartLine, isAdd: boolean, unitId: number) => {
-        
         const line = cartRef.current.lines.find(i => i.id === product.id)
         if (line != null) {
           await changeCartLineQuantity(line, isAdd)
       }
     },
-
-
-    
-
-  
     updatePromoCode: async (data: { code: string }) => {
       const cart = await CartRepository.applyPromoСode(data, appContext.currentAddress?.location)
       setCart(cart)

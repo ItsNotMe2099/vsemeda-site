@@ -13,7 +13,6 @@ interface Props {
 }
 
 const PaymentButton = (props: Props) => {
-  //почему-то не приходит контекст
   const cartContext = useCartContext()
 
   return (

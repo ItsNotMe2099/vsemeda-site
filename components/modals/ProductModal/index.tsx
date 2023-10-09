@@ -35,12 +35,12 @@ const ProductModalInner = (props: Props) => {
   const appContext = useAppContext()
   const cartContext = useCartContext()
   const args = appContext.modalArguments as ProductModalArguments
+  debugger
 
   const {isPhoneWidth} = useResize()
 
   const handleSubmit =async (data: any) => {
-    
-
+    debugger
     let oneToMany: {modificationId: any;quantity: number;}[] = []
     let manyToMany: {modificationId: any;quantity: number;}[] = []
     
@@ -60,7 +60,7 @@ const ProductModalInner = (props: Props) => {
     cartContext.addProductFromModal(args.product, args.unitId, data.quantity, [...oneToMany, ...manyToMany])
     .then(res => {
       if(res === true) {
-        appContext.hideModal()
+        isPhoneWidth?appContext.hideBottomSheet():appContext.hideModal()
       }
     })
 
@@ -68,6 +68,7 @@ const ProductModalInner = (props: Props) => {
   }
 
   const initialValues = useMemo(() => {
+    debugger
     const obj: any = {}
     for(const item of args.product.modificationGroups){
       obj[`group_${item.id}`] = null

@@ -15,15 +15,8 @@ interface Props {
 }
 
 const  BasketButton = forwardRef<HTMLDivElement, Props>((props, ref) => {
-  
-  
   const appContext = useAppContext()
   const cartContext = useCartContext()
-  if (cartContext.isEmpty) {
-
-  } else {
-
-  }
 
   const handleClick = () => {
     appContext.showModal(ModalType.Basket)

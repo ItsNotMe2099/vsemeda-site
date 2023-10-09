@@ -16,7 +16,6 @@ interface Props {
   onAddClick: () => void
   onMinusClick: () => void
   onClick: () => void
-
 }
 
 export default function MenuProductCard(props: Props) {

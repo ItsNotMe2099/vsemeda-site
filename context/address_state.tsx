@@ -57,7 +57,7 @@ export function AddressWrapper(props: Props) {
   }
 
   const createLoc = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
-    debugger
+    
     
      data.id = uuidv4()
     setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
@@ -65,7 +65,7 @@ export function AddressWrapper(props: Props) {
   }
 
   const updateLoc = async (id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
-    debugger    
+        
     setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
     return data as IUserAddress
   }

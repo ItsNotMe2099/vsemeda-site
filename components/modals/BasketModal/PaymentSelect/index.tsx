@@ -151,6 +151,18 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }
   }
 
+  const submitButtonClickHandler = () => {
+    if((paymentMethod || cartContext.cart.paymentMethod) && appContext.isLogged) {
+      handleSubmit()
+    }
+    else if(!appContext.isLogged) {
+      appContext.showModal(ModalType.Login)
+    }
+    else {
+      setState(state=> state === State.Opened?State.Closed:State.Opened)
+    }
+  }
+
   const currentPaymentItem = paymentMethod ?
     <PaymentMethodItem heading={'Оплата'} item={paymentOptions.find(i => i.value === paymentMethod)}/> : null
 
@@ -185,7 +197,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
 
       {[State.Opened, State.Closed].includes(state) &&
         <div className={styles.bottom}>
-          <PaymentButton onClick={()=> {appContext.isLogged?handleSubmit(): appContext.showModal(ModalType.Login)}} isAuth={appContext.isLogged} loading={loading}/>
+          <PaymentButton onClick={()=> {submitButtonClickHandler()}} isAuth={appContext.isLogged} loading={loading}/>
         </div>
       }
     </div>

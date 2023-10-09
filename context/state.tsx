@@ -303,12 +303,8 @@ export function AppWrapper(props: Props) {
     },
 
     logout: () => {
-      //адрес в куках никак не хочет удаляться.... 
       Cookies.remove(CookiesType.accessToken)
-      Cookies.set('address', '')
-      Cookies.remove('address')
-      removeCookie(CookiesType.address)
-      setCookie(CookiesType.address, "")
+      Cookies.remove(CookiesType.accessToken)
       deleteAllCookies()
       setCurrentAddress(null)
       setUserAddresses([])
