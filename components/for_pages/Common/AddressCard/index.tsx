@@ -7,7 +7,7 @@ import PlaceMarkSvg from 'components/svg/PlaceMarkSvg'
 import {colors} from 'styles/variables'
 import PencilSvg from 'components/svg/PencilSvg'
 import {ModalType} from 'types/enums'
-import {AddressFormModalArguments} from 'components/modals/AdressModal'
+import {AddressFormModalArguments} from 'components/modals/AddressModal'
 import usePressAndHover from 'hooks/usePressAndHover'
 
 interface Props {
@@ -22,7 +22,6 @@ export default function AddressCard({ item, isSelected, onClick, className }: Pr
   const [wrapperRef, press, hover] = usePressAndHover()
   const handleEdit = () => {
     appContext.showModal(ModalType.AddressForm, {address: item} as AddressFormModalArguments)
-    // appContext.showModal(ModalType.AddressForm)
   }
   return (
    <div ref={wrapperRef} className={classNames(styles.root, {[styles.selected]: isSelected, [styles.hover]: hover, [className]: isSelected})} >

@@ -17,7 +17,8 @@ import { writeStorage} from '@rehooks/local-storage'
 import {useCookies} from 'react-cookie'
 import CookiesUtils from 'utils/CookiesUtils'
 import {IRegion} from 'data/interfaces/IRegion'
-import deleteAllCookies from 'utils/deleteCookie'
+import { useCartContext } from './cart_state'
+// import deleteAllCookies from 'utils/deleteCookie'
 
 interface IState {
   isMobile: boolean
@@ -113,15 +114,16 @@ interface Props {
 }
 
 export function AppWrapper(props: Props) {
+  const cartContext = useCartContext()
   const [modal, setModal] = useState<ModalType | null>(null)
   const [modalArguments, setModalArguments] = useState<any>(null)
   const [bottomSheet, setBottomSheet] = useState<ModalType | null>(null)
   const [snackbar, setSnackbar] = useState<SnackbarData | null>(null)
-  const [token, setToken] = useState<string | null>(props.token ?? null)
+  const [token, setTokenState] = useState<string | null>(props.token ?? null)
   const [user, setUser] = useState<IUser | null>(null)
   const [userLoaded, setUserLoaded] = useState<boolean>(false)
   const [currentLocation, setCurrentLocation] = useState<ILocation | null>( null)
-  const [currentAddress, setCurrentAddress] = useState<IUserAddress>(null)
+  const [currentAddress, setCurrentAddressState] = useState<IUserAddress>(null)
   const [modalNonSkippable, setModalNonSkippable] = useState<boolean>(false)
   const [isOverlayShown, setIsOverlayShown] = useState<boolean>(false)
   
@@ -135,13 +137,145 @@ export function AppWrapper(props: Props) {
   const [isMobile, setIsMobile] = useState<boolean>(props.isMobile)
   const [region, setRegion] = useState<IRegion | null>(regions[0])
   const router = useRouter()
+
+
+  const setCurrentAddress = (address: IUserAddress) => {
+    if(!address) {
+      console.error('address not provided')
+      return
+    }
+
+    if(addresses.length === 0) {
+      setUserAddresses([address])
+    }
+    setCurrentAddressState(address)
+    writeStorage<string>(LocalStorageKey.currentAddressId, address?.id)
+    currentAddressState$.next(address)
+  }
+
   const setInitialAddressFromLocal = () => {
     setCurrentAddress(addressLocal)
-
   }
+
   const setInitialAddressFromUser = (user: IUser) => {
     setCurrentAddress( user.currentAddressId  && user.currentAddressId === addressLocal?.id ? user.addresses.find(i => i.id === user.currentAddressId) ?? addressLocal ?? user.addresses[0] : addressLocal ?? user.addresses[0])
   }
+
+  const updateRegion = (slug: string) => {
+    const region = regions.find(i => i.slug === slug)
+    if (region) {
+      setRegion(region)
+    }
+    router.push(`/${region?.slug}`)
+  }
+  
+
+  const updateUser = async (newUser?: IUser): Promise<IUser> => {
+    if (newUser) {
+      setUser(newUser)
+      setInitialAddressFromUser(newUser)
+      return newUser
+    } else {
+      const data = await UserRepository.fetchCurrent()
+      if (data) {
+        setUser(data)
+      }
+      setUserLoaded(true)
+      return data
+    }
+  }
+
+  const setToken = async (token: string) => {
+
+    const newToken = token
+    const oldToken = Cookies.get(CookiesType.accessToken) ?? null
+    Cookies.set(CookiesType.accessToken, token, {
+      expires: CookiesLifeTime.accessToken,
+    })
+
+    setTokenState(newToken)
+    
+    if (!oldToken && newToken) {
+      loginState$.next(true)
+      const newUser = await updateUser()
+      const savedAddresses = addresses.length>0?addresses:[currentAddress]
+      const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [...savedAddresses, ...newUser?.addresses])
+      const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]||currentAddress) || newUser.addresses[0]
+      setCurrentAddress(newCurrentAddress)
+      if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
+        setUserAddresses(a=> {
+          return [...newUser?.addresses]
+        })
+      }
+      if(newCurrentAddress) {
+        const cart = await CartRepository.fetchCurrentCart(newCurrentAddress.location)
+        cartState$.next(cart)
+        currentAddressState$.next(newCurrentAddress)
+      }
+      loginUserState$.next(user)
+
+    }
+    if (oldToken && !newToken) {
+      loginState$.next(false)
+      loginUserState$.next(null)
+    }
+
+    setIsLogged(true)
+  }
+
+  const logout = () => {
+    Cookies.remove(CookiesType.accessToken)
+    // Cookies.remove(CookiesType.accessToken)
+    // deleteAllCookies()
+    // setCurrentAddress(null)
+    setUserAddresses([])
+    setIsLogged(false)
+    setUser(null)
+    loginState$.next(false)
+  }
+  
+  
+
+  const showBottomSheet = (type: ModalType, props?: any) => {
+    ReactModal.setAppElement('body')
+    setModalArguments(props)
+    setBottomSheet(type)
+  }
+
+  const hideBottomSheet = () => {
+    setBottomSheet(null)
+  }
+
+  const hideModal = () => {
+    if (bottomSheet) {
+      hideBottomSheet()
+    }
+    setModal(null)
+    setModalArguments(null)
+  }
+
+  const showModal = (type: ModalType, args?: any) => {    
+    if (props.isMobile && ModalsBottomSheet.includes(type)) {
+      showBottomSheet(type, args)
+      return
+    }
+
+    ReactModal.setAppElement('body')
+    setModalArguments(args)
+    setModal(type)
+    if (bottomSheet) {
+      hideBottomSheet()
+    }
+  }
+
+  const showSnackbar = (text: string, type: SnackbarType) => {
+    setSnackbar({ text, type })
+    setTimeout(() => {
+      setSnackbar(null)
+    }, 2000)
+  }
+
+
 
   useEffect(() => {
     userRef.current = user
@@ -161,7 +295,6 @@ export function AppWrapper(props: Props) {
 
   useEffect(() => {
     const promises = []
-
     if (props.token) {
       promises.push(
         updateUser().then((user) => {
@@ -174,66 +307,8 @@ export function AppWrapper(props: Props) {
       setInitialAddressFromLocal()
       setUserLoaded(true)
     }
-
     Promise.all(promises).then((i) => setTimeout(() => { }, 1))
   }, [])
-
-  const updateRegion = (slug: string) => {
-    const region = regions.find(i => i.slug === slug)
-    if (region) {
-      setRegion(region)
-    }
-    router.push(`/${region?.slug}`)
-  }
-
-  const updateUser = async (newUser?: IUser): Promise<IUser> => {
-    if (newUser) {
-      setUser(newUser)
-      setInitialAddressFromUser(newUser)
-      return newUser
-    } else {
-      const data = await UserRepository.fetchCurrent()
-      if (data) {
-        setUser(data)
-      }
-      setUserLoaded(true)
-      return data
-    }
-  }
-
-  const showModal = (type: ModalType, args?: any) => {    
-    if (props.isMobile && ModalsBottomSheet.includes(type)) {
-      showBottomSheet(type, args)
-      return
-    }
-
-    ReactModal.setAppElement('body')
-    setModalArguments(args)
-    setModal(type)
-    if (bottomSheet) {
-      hideBottomSheet()
-    }
-  }
-
-  const hideModal = () => {
-    if (bottomSheet) {
-      hideBottomSheet()
-      // return
-    }
-    setModal(null)
-    setModalArguments(null)
-  }
-
-  const showBottomSheet = (type: ModalType, props?: any) => {
-    ReactModal.setAppElement('body')
-    setModalArguments(props)
-    setBottomSheet(type)
-  }
-
-  const hideBottomSheet = () => {
-    setBottomSheet(null)
-  }
-
 
 
   const value: IState = {
@@ -256,68 +331,13 @@ export function AppWrapper(props: Props) {
     isLogged,
     showModal,
     showBottomSheet,
-    showSnackbar: (text, type: SnackbarType) => {
-      setSnackbar({ text, type })
-      setTimeout(() => {
-        setSnackbar(null)
-      }, 2000)
-    },
+    showSnackbar,
     hideModal,
     hideBottomSheet,
     updateUser,
-    setToken: async (token: string) => {
-
-      const newToken = token
-      const oldToken = Cookies.get(CookiesType.accessToken) ?? null
-      Cookies.set(CookiesType.accessToken, token, {
-        expires: CookiesLifeTime.accessToken,
-      })
-
-      setToken(newToken)
-      
-      if (!oldToken && newToken) {
-        loginState$.next(true)
-        const newUser = await updateUser()
-        const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [...addresses, ...newUser?.addresses])
-        const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]) || newUser.addresses[0]
-        setCurrentAddress(newCurrentAddress)
-        if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
-          setUserAddresses(a=> {
-            return [...newUser?.addresses]
-          })
-        }
-        if(newCurrentAddress) {
-          const cart = await CartRepository.fetchCurrentCart(newCurrentAddress.location)
-          cartState$.next(cart)
-          currentAddressState$.next(newCurrentAddress)
-        }
-        loginUserState$.next(user)
-
-      }
-      if (oldToken && !newToken) {
-        loginState$.next(false)
-        loginUserState$.next(null)
-      }
-
-      setIsLogged(true)
-    },
-
-    logout: () => {
-      Cookies.remove(CookiesType.accessToken)
-      Cookies.remove(CookiesType.accessToken)
-      deleteAllCookies()
-      setCurrentAddress(null)
-      setUserAddresses([])
-      setIsLogged(false)
-      setUser(null)
-
-      loginState$.next(false)
-    },
-    setCurrentAddress: (address: IUserAddress) => {
-      setCurrentAddress(address)
-      writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
-      currentAddressState$.next(address)
-    },
+    setToken,
+    logout,
+    setCurrentAddress,
     isOverlayShown,
     showOverlay: () => {
       setIsOverlayShown(true)

@@ -26,7 +26,6 @@ const LoginFormModalInner = (props: Props) => {
     step === 1 ? props.onRequestClose() : setStep(1)
   }
 
-
   const body = (
     <div className={styles.bodyWrapper}>
       <LoginForm step={step} onStepNext={() => setStep(2)} />

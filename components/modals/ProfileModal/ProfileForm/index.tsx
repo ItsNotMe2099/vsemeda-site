@@ -9,6 +9,7 @@ import DateField from 'components/fields/DateField'
 import Button from 'components/ui/Button'
 import UserRepository from 'data/repositories/UserRepository'
 import { Gender } from 'data/enum/Gender'
+import Validator from 'utils/Validator'
 
 
 interface Props {
@@ -20,8 +21,6 @@ export default function ProfileForm(props: Props) {
   const appContext = useAppContext()
 
   const [loading, setLoading] = useState<boolean>(false)
-
-
 
   const submit = async (data: { name: string, gender: Gender, birthday: string }) => {
     setLoading(true)
@@ -44,7 +43,8 @@ export default function ProfileForm(props: Props) {
     initialValues: {
       name: appContext.user.name ?? '',
       gender: appContext.user.gender ?? null,
-      birthday: appContext.user.birthday ?? null
+      birthday: appContext.user.birthday ?? null,
+      email: appContext.user.email?? null
     },
     onSubmit: submit
   })
@@ -70,11 +70,20 @@ export default function ProfileForm(props: Props) {
             color='white'
             labelType='top'
           />
+          <InputField
+            label='E-mail'
+            name='email'
+            styleType='profile'
+            color='white'
+            labelType='top'
+            validate={Validator.email}
+          />
           <RadioListField
             rootClass={styles.radio}
             name='gender'
             label='Ваш пол'
-            options={[{ label: 'Мужчина', value: 'male' }, { label: 'Женщина', value: 'female' }]} flex />
+            options={[{ label: 'Мужчина', value: 'male' }, { label: 'Женщина', value: 'female' }]} flex 
+          />
           <DateField
             name='birthday'
             label='Дата рождения'
@@ -83,6 +92,7 @@ export default function ProfileForm(props: Props) {
             iconName='field_date'
             className={styles.date}
           />
+          
         </div>
         <Button type='submit' className={styles.btn} styleType='filledGreen' font='semibold16'>
           Сохранить

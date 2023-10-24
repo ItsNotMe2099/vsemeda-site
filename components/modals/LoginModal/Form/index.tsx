@@ -22,22 +22,18 @@ interface Props {
 }
 
 export default function LoginForm(props: Props) {
+  const cartContext = useCartContext()
+  const authContext = useAuthContext()
+  const appContext = useAppContext()
 
   const [step, setStep] = useState<number>(props.step)
-
-  const authContext = useAuthContext()
-
   const [seconds, setSeconds] = useState<number>(0)
 
-  const cartContext = useCartContext()
-  const appContext = useAppContext()
 
   const submit = async (data: { phone: string, code: string }) => {
     authContext.confirmCode(data.code).then(res=>{      
       if(res) {
-        !cartContext.isEmpty
-        ?appContext.showModal(ModalType.Basket)
-        :appContext.hideModal()
+        !cartContext.isEmpty && appContext.showModal(ModalType.Basket)
       }
     })
   }
@@ -49,10 +45,6 @@ export default function LoginForm(props: Props) {
     },
     onSubmit: submit
   })
-
-  useEffect(() => {
-    setStep(props.step)
-  }, [props.step, seconds])
 
   const handleSendCode = async (data: LoginFormData, step: number) => {
     
@@ -69,6 +61,11 @@ export default function LoginForm(props: Props) {
     await authContext.sendCodeAgain()
     setSeconds(authContext.remainSec)
   }
+
+
+  useEffect(() => {
+    setStep(props.step)
+  }, [props.step, seconds])
 
   useEffect(() => {
     if (seconds > 0) {
@@ -97,14 +94,6 @@ export default function LoginForm(props: Props) {
             placeholder={'Введите номер телефона'}
             validate={Validator.combine([Validator.required, Validator.phone])}
             />
-            
-              {/* <PhoneField
-                name='phone'
-                placeholder='Введите номер телефона'
-                iconName='field_phone'
-                styleType='default'
-                validate={Validator.combine([Validator.required, Validator.phone])}
-              /> */}
               <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values, step)} styleType='filledGreen' font='semibold16'>
                 Вход
               </Button>

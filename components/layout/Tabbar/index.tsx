@@ -10,6 +10,8 @@ import ProfileSvg from 'components/svg/TabBar/ProfileSvg'
 import { useRouter } from 'next/router'
 import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
+import { useCartContext } from 'context/cart_state'
+import BasketButton from '../Header/BasketButton'
 
 interface Props {
   isSticky?: boolean
@@ -17,19 +19,14 @@ interface Props {
 }
 
 const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, ref) => {
-
   const router = useRouter()
-
   const appContext = useAppContext()
-
-  // const region = appContext.region
+  const cartContext = useCartContext()
 
   const isOnMainPage = router.asPath === `/${appContext.regionSlug}`
-
   const mainPagePath = '/moskva'
 
-  return (
-    <div className={classNames(styles.root, {[styles.none]: appContext.modal})} ref={ref} style={props.style} {...(props.restProps ?? {})}>
+  const body = (<>
       <div onClick={()=> {router.push(mainPagePath)}} className={classNames(styles.item, { [styles.active]: !isOnMainPage && !appContext.modal })}>
         <HomeSvg />
         <div className={styles.title}>
@@ -60,6 +57,15 @@ const TabBarInner = forwardRef<HTMLDivElement, Props & { style?: any }>((props, 
           Профиль
         </div>
       </div>
+  </>)
+
+  return (
+    <div className={classNames(styles.root, {[styles.none]: appContext.modal})} ref={ref} style={props.style} {...(props.restProps ?? {})}>
+      {!cartContext.isEmpty && !isOnMainPage &&
+        <BasketButton/>
+        ||
+        body
+      }
     </div>
   )
 })

@@ -12,15 +12,11 @@ import ChevronSvg from 'components/svg/ChevronSvg'
 import {ModalType} from 'types/enums'
 import { useResize } from 'components/hooks/useResize'
 
-interface Props {
 
-}
-
-export default function BasketAddressDetails(props: Props) {
+export default function BasketAddressDetails() {
   const appContext = useAppContext()
   const cartContext = useCartContext()
   const {isPhoneWidth} = useResize()
-
 
   const deliveryTimeStr = useMemo(() => {
     if(cartContext.cart.isPreOrder){
@@ -28,10 +24,7 @@ export default function BasketAddressDetails(props: Props) {
     }else{
       return Formatter.formatDeliveryTime({minDeliveryTime: cartContext.unit?.deliveryTime})
     }
-
   }, [cartContext?.cart?.preOrderAt, cartContext.cart?.unit?.deliveryTime, cartContext.cart?.isPreOrder])
-
-
 
   const openDeliveryTimeModal = () => {
     isPhoneWidth ? 
@@ -45,7 +38,7 @@ export default function BasketAddressDetails(props: Props) {
         Адрес доставки:
       </div>
       <div className={styles.current}>
-        <div>{appContext.currentAddress.address}</div><LocationSvg color='#828282' />
+        <div>{appContext?.currentAddress?.address}</div><LocationSvg color='#828282' />
       </div>
       <div className={styles.separator}/>
       <Formik initialValues={{}} onSubmit={() => null}>

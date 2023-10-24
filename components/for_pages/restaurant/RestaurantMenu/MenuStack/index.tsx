@@ -11,32 +11,27 @@ import { ModalType } from 'types/enums'
 import styles from './index.module.scss'
 
 interface Props {
-    item: IMenuCategory
+  item: IMenuCategory
 }
 
 
 export default function MenuStack (props: Props) {
-  
   const unitContext = useUnitContext()
   const appContext = useAppContext()
   const cartContext = useCartContext()
 
   const {isPhoneWidth} = useResize()
-  
   const unit = unitContext.unit
-  
   const refStack = useRef<HTMLDivElement>(null!)
+
   const options: IntersectionObserverInit = {
     root: null,
     threshold: 0,
     rootMargin: '0px 0px -70% 0px'
   }
   const isOnScreen = useOnScreen(refStack, options)
-  
 
   const handleAddClick = (product: IProduct) => {
-    
-    
     if (cartContext.productQuantityMap[product.id] > 1) {
       cartContext.updateProductQuantity(product, true, unit.id)
     } else {
@@ -49,7 +44,6 @@ export default function MenuStack (props: Props) {
   }
 
   const handleClick = (product: IProduct) => {
-    
     if(appContext.currentAddress) {
       isPhoneWidth 
       ? appContext.showBottomSheet(ModalType.ProductModal, {product: product, unitId: unit.id})
@@ -65,7 +59,6 @@ export default function MenuStack (props: Props) {
       isOnScreen && unitContext.setActiveCategory(props.item.parentId||props.item.id)
     }
   }, [isOnScreen, unitContext.scrollToCategoryFired])
-
 
   return (<>
   <div key={props.item.id} className={styles.stack}  ref={refStack}>

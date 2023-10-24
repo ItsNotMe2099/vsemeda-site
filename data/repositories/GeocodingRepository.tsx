@@ -30,8 +30,8 @@ const jsonp = require('jsonp')
 export default class GeocodingRepository {
   static async geocodeYandex(params: IYandexGeocodeRequest): Promise<YandexResponseGeocoder> {
     const query = {...params,
-      // apikey: '7cd75a8b-037e-4152-b0c5-3755e6914531',
-      apikey: '78a1f2d1-073f-4feb-804d-8aebe3deb14b',
+      apikey: '7cd75a8b-037e-4152-b0c5-3755e6914531',
+      // apikey: '78a1f2d1-073f-4feb-804d-8aebe3deb14b',
       format: 'json',
       results: params.results ?? 10,
       rspn: params.rspn ? '1' : '0',

@@ -4,13 +4,11 @@
   display: flex;
   cursor: pointer;
   align-items: center;
-
-    background: $green;
-    height: 50px;
-    border-radius: 16px;
-    @include list(8px, true);
-    padding: 0px 15px;
-
+  background: $green;
+  height: 50px;
+  border-radius: 16px;
+  @include list(8px, true);
+  padding: 0px 15px;
 }
 .details{
   flex: 1;

@@ -56,9 +56,12 @@ const HeaderInner = forwardRef<HTMLDivElement, Props & { style?: any, distanceFr
             </Link>
           </div>
           <div className={styles.right}>
-            <form className={styles.form} action="/search" onSubmit={handleSubmit}>
+            {/* убрал, чтобы форма не сабмитилась и не перенаправляла на главную.  
+              ФОРМА НЕ РАБОТАЕТ!
+            */}
+            {/* <form className={styles.form} action="/search" onSubmit={handleSubmit}> */}
               <FieldSearch onChange={handleInputChange} />
-            </form>
+            {/* </form> */}
             {width > breakpoints.PhoneWidth && width < breakpoints.SmDesktopWidth &&
               <DividerDotsSvg color='#AF81BD' />
             }

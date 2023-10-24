@@ -5,7 +5,6 @@ import ModalLayout from 'components/layout/Modal/ModalLayout'
 import BottomSheetBody from 'components/layout/BottomSheet/BottomSheetBody'
 import BackBtn from 'components/ui/BackBtn'
 import {useAppContext} from 'context/state'
-// import ModalHeader from 'components/layout/Modal/ModalHeader'
 import ModalBody from 'components/layout/Modal/ModalBody'
 import ModalFooter from 'components/layout/Modal/ModalFooter'
 import {FormikProvider, Form, useFormik} from 'formik'
@@ -42,15 +41,21 @@ export default function IndexFilterModal(props: Props) {
   const [loading, setLoading] = useState(false)
   const args = appContext.modalArguments as IndexFilterModalArguments
   const {isPhoneWidth} = useResize()
+
   const handleCloseClick = () => {
-    props.onRequestClose()
+    isPhoneWidth
+    ? appContext.hideBottomSheet()
+    : appContext.hideModal()
+    // props.onRequestClose()
+
   }
 
   const submit = async (data: IndexFilterFormData) => {
     try {
       setLoading(true)
       indexPageContext.setFilter(data)
-      appContext.hideModal()
+      isPhoneWidth?appContext.hideBottomSheet():appContext.hideModal()
+      props.onRequestClose()
       setLoading(false)
     } catch (err: any) {
       if (err instanceof RequestError) {
@@ -80,12 +85,10 @@ export default function IndexFilterModal(props: Props) {
     }})
   }
 
-
-
   const header = (
     <div className={styles.header}>
       <div className={styles.title}>
-        Фильтрация
+        Фильтрация заведений
       </div>
         {!isPhoneWidth && 
         <IconButton onClick={handleCloseClick} className={styles.closeButton} bgColor={'transparent'} ><CloseCircleSvg/></IconButton>
@@ -151,7 +154,7 @@ export default function IndexFilterModal(props: Props) {
         label={'Кухня и типы блюд'} 
         grid={2} 
         name={'categories'}
-        options={args.categories.map(i => ({label: i.name, value: i.id}))}
+        options={args?.categories?.map(i => ({label: i.name, value: i.id}))}
       />
     </div>
   )

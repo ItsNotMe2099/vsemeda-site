@@ -28,7 +28,9 @@ export default function AddressForm(props: Props) {
   const [loading, setLoading] = useState(false)
   const args = appContext.modalArguments as AddressFormModalArguments
 
+
   const submit = async (data: DeepPartial<IUserAddress>) => {
+    
     setLoading(true)
     try {
       const submitData: DeepPartial<IUserAddress> = {
@@ -44,7 +46,6 @@ export default function AddressForm(props: Props) {
       } else {
         addressContext.create(submitData)
         appContext.hideModal()
-        // props.isMobile?appContext.showBottomSheet(ModalType.AddressList):appContext.showModal(ModalType.AddressList)
       }
     } catch (e) {
       appContext.showSnackbar(e.toString(), SnackbarType.error)
@@ -52,10 +53,7 @@ export default function AddressForm(props: Props) {
     setLoading(false)
   }
 
-  useEffect(()=>{
-    props.editedAddressString
-    
-  }, [props.editedAddressString])
+
 
   const handleBack = () => {
     if (args?.address) {
@@ -76,6 +74,12 @@ export default function AddressForm(props: Props) {
     const values = [formik.values.apartment, formik.values.floor, formik.values.entrance, formik.values.intercomCode]
     return values.map((i, key) => i ? `${labels[key]} ${i}` : null).filter(i => !!i).join(', ')
   }
+
+  useEffect(()=>{
+    if(props.editedAddressString !== props.initialAddress.address) {
+      formik.setValues({apartment: '', floor: '', entrance: '', intercomCode: '', comment: ''})
+    }
+  }, [props.editedAddressString])
 
   return (
     <FormikProvider value={formik}>
@@ -121,10 +125,25 @@ export default function AddressForm(props: Props) {
         </div>
 
         <div className={styles.footer}>
-          <Button className={styles.button} styleType={'filledGreen'} fluid type='button' onClick={formik.submitForm} spinner={loading}>Сохранить</Button>
+          <Button 
+          className={styles.button} 
+          styleType={'filledGreen'} 
+          fluid 
+          type='button' 
+          onClick={formik.submitForm} 
+          spinner={loading}>
+            Сохранить
+          </Button>
+
           {props.initialAddress?.id && 
           appContext.addresses.length > 1 &&
-            <Button className={styles.trash} onClick={()=>addressContext.delete(props.initialAddress?.id)} type='button' styleType={'icon'}><><TrashBasketSvg/></></Button>
+            <Button 
+            className={styles.trash} 
+            onClick={()=>addressContext.deleteAddress(props.initialAddress?.id)} 
+            type='button' 
+            styleType={'icon'}>
+              <TrashBasketSvg/>
+            </Button>
           }
         </div>
 

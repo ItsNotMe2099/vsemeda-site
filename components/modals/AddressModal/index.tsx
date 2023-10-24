@@ -13,10 +13,10 @@ import AddressField from 'components/fields/AddressField'
 import {Formik} from 'formik'
 import {useEffect, useState} from 'react'
 import {GeoObject, YandexResponseGeocoder} from 'data/interfaces/IYandexGeocoder'
-import AddressForm from 'components/modals/AdressModal/Form'
+import AddressForm from 'components/modals/AddressModal/Form'
 import classNames from 'classnames'
 import Converter from 'utils/converter'
-import AddressFormConfirm from 'components/modals/AdressModal/Confirm'
+import AddressFormConfirm from 'components/modals/AddressModal/Confirm'
 import {YMapCenterLocation, YMapLocationRequest} from '@yandex/ymaps3-types'
 import BackBtn from 'components/ui/BackBtn'
 import { ModalType } from 'types/enums'
@@ -45,10 +45,10 @@ const AddressFormModalInner = (props: Props) => {
   const [location, setLocation] = useState<YMapLocationRequest | null>({center: [(appContext?.currentAddress?.location?.lng||args?.address?.location?.lng||undefined) , (appContext?.currentAddress?.location?.lat||args?.address?.location?.lat||undefined) ], zoom: 10})
 
 
+
   useEffect(() => {   
     if(args?.address){
       setAddressFormShown(true)
-      // setAddressSearchShown(false)
       setAddressStr(args.address.address)
       setLocation({center: [args.address.location.lng, args.address.location.lat], zoom: 10})
     }
@@ -68,7 +68,6 @@ const AddressFormModalInner = (props: Props) => {
     const center = point.pos.split(' ').map(i => parseFloat(i)) as [lon: number, lat: number, alt?: number]
     setLocation({bounds: bounds as any, center})
     setGeoObject(geocoded.response.GeoObjectCollection.featureMember[0].GeoObject)
-    // setConfirmShown(true)
     setAddressStr(Converter.convertGeoObjectToString(geocoded.response.GeoObjectCollection.featureMember[0].GeoObject))
   }
 
@@ -84,8 +83,10 @@ const AddressFormModalInner = (props: Props) => {
   }
 
   const handleBack = () => {
-      appContext.hideModal()
-      isTabletWidth? appContext.showBottomSheet(ModalType.AddressList):  appContext.showModal(ModalType.AddressList)
+    appContext.hideModal()
+    if(appContext.addresses.length > 0) {
+      isTabletWidth? appContext.showBottomSheet(ModalType.AddressList) : appContext.showModal(ModalType.AddressList)
+    }
   }
 
   const onSubmitHandler = ({}) => {

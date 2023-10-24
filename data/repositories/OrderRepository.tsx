@@ -46,7 +46,6 @@ export default class OrderRepository {
 
 
   static async create(data: IOrderCreateRequest): Promise<IOrder> {
-    
     const res = await request<IOrder>({
       method: 'post',
       url: '/api/order',

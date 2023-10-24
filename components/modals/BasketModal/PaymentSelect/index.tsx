@@ -39,7 +39,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   const cartContext = useCartContext()
   const appContext = useAppContext()
   const [state, setState] = useState<State>(State.Closed)
-  const {isPhoneWidth} = useResize()
+  const {isPhoneWidth, isTabletWidth} = useResize()
 
   const [loading, setLoading] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState(cartContext.cart?.paymentMethod)
@@ -92,7 +92,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       email: appContext.user.email ?  appContext.user.email: currentEmail.current,
       phone: appContext.user.phone,
       personsCount: cartContext.cart.personsCount,
-      clientName: appContext.user.name,
+      clientName: appContext.user.name||'anonymous',
       isPreOrder: cartContext.cart.isPreOrder,
       preOrderAt: cartContext.cart.preOrderAt,
       moneyChange: cartContext.needMoneyChange?Number(cartContext.cart.moneyChange):null,
@@ -100,7 +100,9 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }
 
     OrderRepository.create(orderData)
-    .then(res => {      
+    .then(res => {   
+      appContext.hideModal()
+      appContext.hideBottomSheet()   
       if(res.paymentMethod === PaymentMethod.CardOnline) {
         props.setSrc(res.paymentData.payUrl)
       } else {
@@ -123,7 +125,6 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }else if(paymentMethod === PaymentMethod.CardOnline && !appContext.user?.email && !currentEmail.current){
       setState(State.Email)
     }else{
-      
       createNewOrder()    
       cartContext.clear()     
     }

@@ -217,7 +217,7 @@ export default function AddressField(props: Props) {
   return (
     <div className={cx(styles.root, {
       [styles.hasError]: !!meta.error && meta.touched,
-    }, props.className)}>    {}
+    }, props.className)}>
       <div className={classNames(styles.field, {[styles.opened]: isActive, [styles.disabled]: !isEditMode}, suggestions.length > 0&&styles.suggestions)}  ref={(ref) => {
         dropdownRef.current = ref
         setReferenceElement(ref)
@@ -240,24 +240,29 @@ export default function AddressField(props: Props) {
         <IconButton className={styles.removeString} onClick={()=>removeString()} bgColor={'transparent'}><CloseCircleSvg color={colors.grey3}/></IconButton>
       </div>
 
-      {isExpanded &&  suggestions.length > 0 && <div className={classNames(styles.dropDown, {[styles.opened]: isActive})} ref={setPopperElement}
-           style={popperStyles.popper}  {...attributes.popper} >
+      {isExpanded &&  suggestions.length > 0 && 
+      <div 
+      className={classNames(styles.dropDown, {[styles.opened]: isActive})} 
+      ref={setPopperElement}
+      style={popperStyles.popper}  
+      {...attributes.popper}>
         {message && <div className={cx(styles.message, {[styles.messageError]: messageIsError})}>{message}</div>}
-        {suggestions.map((item, key) => <div key={key}
-                                             className={styles.option}
-                                             onClick={(e) => {
-                                               e.stopPropagation()
-                                               e.preventDefault()
-                                               handleSuggestionClick(item)
-                                             }}>
-
-          <div className={styles.optionTitle}>
-            {item.title.text}
+        {suggestions.map((item, key) => 
+          <div key={key}
+          className={styles.option}
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            handleSuggestionClick(item)
+          }}>
+            <div className={styles.optionTitle}>
+              {item.title.text}
+            </div>
+            <div className={styles.optionSubTitle}>
+              {Formatter.formatAddressSuggestionSubTitle(item.subtitle.text)}
+            </div>
           </div>
-          <div className={styles.optionSubTitle}>
-            {Formatter.formatAddressSuggestionSubTitle(item.subtitle.text)}
-          </div>
-        </div>)}
+        )}
       </div>}
       <FieldError showError={showError}>{meta.error}</FieldError>
     </div>

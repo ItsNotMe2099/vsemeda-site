@@ -9,7 +9,7 @@ import CartLine from 'components/modals/BasketModal/CartLine'
 import { useAppContext } from 'context/state'
 import PaymentSelect from 'components/modals/BasketModal/PaymentSelect'
 import PromoForm from 'components/modals/BasketModal/PromoForm'
-import ModalHeader from 'components/layout/Modal/ModalHeader'
+// import ModalHeader from 'components/layout/Modal/ModalHeader'
 import ModalBody from 'components/layout/Modal/ModalBody'
 import ModalFooter from 'components/layout/Modal/ModalFooter'
 import BasketAddressDetails from 'components/modals/BasketModal/BasketAddressDetails'
@@ -17,6 +17,8 @@ import BasketReceipt from 'components/modals/BasketModal/BasketReceipt'
 import BasketEmpty from 'components/modals/BasketModal/BasketEmpty'
 import { useEffect, useState } from 'react'
 import { ModalType } from 'types/enums'
+import TrashBasketSvg from 'components/svg/TrashBasketSvg'
+import IconButton from 'components/ui/IconButton'
 
 
 interface Props {
@@ -36,21 +38,30 @@ export default function BasketModal(props: Props) {
   const [iframeSrc, setIframeSrc] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const clearBasket = () => {
+    appContext.hideModal()
+    cartContext.clear()
+  }
+
   const header = (
-  <div className={styles.close}>
-    <BackBtn bgColor='white' onClick={handleCloseClick} />
-  </div>
+    <div className={styles.header}>
+
+    <div className={styles.close}>
+      <BackBtn bgColor='white' onClick={handleCloseClick} />
+    </div>
+    <div>
+      <p className={styles.modalTitle}>Подтверждение заказа</p> 
+      <p className={styles.subTitle}>{cartContext.cart.unit.brand.name}</p> 
+    </div>
+    <IconButton className={styles.clearBasket} onClick={clearBasket}  bgColor={'white'}><TrashBasketSvg color={colors.purple}/></IconButton>
+    </div>
   )
 
   useEffect(()=>{
-    
     if(iframeSrc) {
       appContext.showModal(ModalType.IFrame, iframeSrc)
     }
   }, [iframeSrc])
-
-  cartContext.cart
-  
 
   const body = ( cartContext.isEmpty 
     ? <BasketEmpty/>
@@ -85,8 +96,11 @@ export default function BasketModal(props: Props) {
   <>
     {!isLoading &&
       <ModalLayout fixed className={styles.modalLayout}>
-        {appContext.isMobile && <ModalHeader>{header}</ModalHeader>}
-        <ModalBody fixed>{body}</ModalBody>
+        {/* {appContext.isMobile && <ModalHeader>{header}</ModalHeader>} */}
+        <ModalBody fixed>
+          {appContext.isMobile && header}
+          {body}
+          </ModalBody>
         <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>
       </ModalLayout>
     }

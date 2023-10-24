@@ -1,5 +1,5 @@
 import styles from './index.module.scss'
-import DropdownMenu from 'components/ui/DropdownMenu'
+// import DropdownMenu from 'components/ui/DropdownMenu'
 import { ICategory } from 'data/interfaces/ICategory'
 import MenuRepository from 'data/repositories/MenuRepository'
 import { useEffect, useRef, useState } from 'react'
@@ -58,13 +58,13 @@ export default function BestOffers(props: Props) {
           <div className={styles.title}>
             Лучшие<br /> рестораны
           </div>
-          <div className={styles.choose}>
+          {/* <div className={styles.choose}>
             Выберите тип заведения
           </div>
           <div className={styles.drop}>
             {items ? <DropdownMenu options={items} activeTriggerClassName={styles.activeTrigger} optionClassName={styles.option} navClassName={styles.dropDownNav} className={styles.dropDown} /> : null}
             <img src={'/images/icons/best-offers-arrow.svg'}/>
-          </div>
+          </div> */}
         </div>
         <div className={styles.mobile} >
           <div className={styles.title} >

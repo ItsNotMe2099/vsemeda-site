@@ -46,7 +46,7 @@
 
 .title {
   font-weight: 600;
-  font-size: Clamp(16px, 4.5vw, 23px);
+  font-size: Clamp(14px, 3.5vw, 20px);
   line-height: 120%;
   color: #4C4958;
   @include mq($PhoneWidth, max) {
@@ -81,6 +81,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @include mq($TabletWidth, max) {
+    flex-direction: row-reverse;
+    &:before {
+      content: '';
+      display: block;
+      width: 20px;
+    }
+  } 
 }
 
 .close {

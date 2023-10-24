@@ -5,7 +5,7 @@ import * as React from 'react'
 import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
 import Option from '../Option'
-import { useAuthContext } from 'context/auth_state'
+import { useCartContext } from 'context/cart_state'
 
 interface MenuItem {
   icon: string
@@ -22,7 +22,7 @@ interface Props {
 
 export const MenuDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const appContext = useAppContext()
-  const authContext = useAuthContext()
+  const cartContext = useCartContext()
 
   const handleClick = (value: string) => {
     appContext.hideOverlay()
@@ -30,6 +30,7 @@ export const MenuDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => {
       appContext.showModal(ModalType.Profile, value)
     }
     else{
+      cartContext.clear()
       appContext.logout()
     }
   }

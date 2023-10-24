@@ -33,7 +33,7 @@ export default function FieldIconSvg(props: Props) {
     case 'field_date':
       return (
         <svg className={props.className} width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_840_11778)">
+          <g clipPath="url(#clip0_840_11778)">
             <path d="M21.5 2H18.5V0H16.5V2H8.5V0H6.5V2H3.5C2.70435 2 1.94129 2.31607 1.37868 2.87868C0.81607 3.44129 0.5 4.20435 0.5 5L0.5 21C0.5 22.6569 1.84315 24 3.5 24H21.5C23.1569 24 24.5 22.6569 24.5 21V5C24.5 4.20435 24.1839 3.44129 23.6213 2.87868C23.0587 2.31607 22.2956 2 21.5 2ZM2.5 5C2.5 4.73478 2.60536 4.48043 2.79289 4.29289C2.98043 4.10536 3.23478 4 3.5 4H21.5C21.7652 4 22.0196 4.10536 22.2071 4.29289C22.3946 4.48043 22.5 4.73478 22.5 5V8H2.5V5ZM3.5 22C2.94772 22 2.5 21.5523 2.5 21V10H22.5V21C22.5 21.5523 22.0523 22 21.5 22H3.5Z" fill={color} />
             <path d="M17.5 13H15.5V15H17.5V13Z" fill={color} />
             <path d="M13.5 13H11.5V15H13.5V13Z" fill={color} />

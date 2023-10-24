@@ -7,7 +7,6 @@
 }
 
 .modalLayout {
-  // padding: 16px 16px 82px 16px;
   max-height: unset;
   width: 592px;
   padding: 16px 16px 16px 16px;
@@ -39,6 +38,7 @@
     border-radius: 12px;
   }
 }
+
 .name{
   font-size: Clamp(16px, 3vw, 20px);
   font-weight: 600;
@@ -46,13 +46,13 @@
     color: $white;
   }
 }
+
 .description{
   margin-top: 10px;
-
 }
+
 .info{
   padding-left: 15px;
-  // width: 50%;
   width: 100%;
   margin-top: 24px;
 }
@@ -63,16 +63,14 @@
   margin-right: 20px;
   object-fit: cover;
   border-radius: 50%;
-
 }
 
 .productData {
   display: flex;
-  // width: 100%;
-  // margin-bottom: 12px;
   align-items: center;
   @include mq($TabletWidth, max) {
     margin-bottom: 16px;
+    width: 100%;
   }
 }
 
@@ -97,8 +95,6 @@
   margin-left: 10px;
 }
 
-
-
 .toolbar{
   margin-top: 20px;
   display: flex;
@@ -119,7 +115,6 @@
     padding-bottom: Clamp(24px, 6vw, 38px);
   }
 
-
   .price{
     color: $white;
     font-size: Clamp(16px, 3vw, 24px);
@@ -129,7 +124,6 @@
       width: 100%;
       font-weight: 600;
     }
-
   }
 }
 
@@ -144,11 +138,8 @@
   }
 }
 
-
 .modificationsWrapper {
-  // max-height: 27vh;
   min-height: 125px;
-  // overflow-y: scroll;
   padding: 20px 0px;
   border-top: 2px $grey3 dotted;
   margin-top: 24px;

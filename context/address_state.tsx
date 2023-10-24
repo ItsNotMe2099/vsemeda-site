@@ -15,7 +15,7 @@ interface IState {
   create: (data: DeepPartial<IUserAddress>) => void
   refreshAddresses: ()=> Promise<boolean>
   update: (id: string, data: DeepPartial<IUserAddress>)  => Promise<boolean>
-  delete: (id: string) => Promise<IUserAddress>
+  deleteAddress: (id: string) => Promise<IUserAddress>
   setCurrentAddress: (address: IUserAddress) => void,
 }
 
@@ -25,7 +25,7 @@ const defaultValue: IState = {
   create: (data: DeepPartial<IUserAddress>) => null,
   refreshAddresses: ()=>null,
   update: (id: string, data: DeepPartial<IUserAddress>) => null,
-  delete: (id: string)  => null,
+  deleteAddress: (id: string)  => null,
   setCurrentAddress: (address: IUserAddress) => null,
 }
 
@@ -57,15 +57,12 @@ export function AddressWrapper(props: Props) {
   }
 
   const createLoc = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
-    
-    
-     data.id = uuidv4()
+    data.id = uuidv4()
     setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
     return data as IUserAddress
   }
 
   const updateLoc = async (id: string, data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
-        
     setCookie(CookiesType.address, CookiesUtils.encodeJson(data))
     return data as IUserAddress
   }
@@ -74,71 +71,82 @@ export function AddressWrapper(props: Props) {
     removeCookie(CookiesType.address)
   }
 
-  // useEffect( () => {
-  //   const subscription = appContext.loginState$.subscribe((logged) => {
-  //     if (!logged && appContext.currentAddress) {
-  //       createLoc(appContext.currentAddress)
-  //     }
-  //     else {
-  //       removeCookie(CookiesType.address)
-  //     }
-  //   })
-  //   return () => {
-  //     subscription.unsubscribe()
-  //   }
-  // }, [appContext.currentAddress])
+  const create = async (data: DeepPartial<IUserAddress>) => {
+    if(appContext.isLogged){
+      const address = await createReq(data)
+      appContext.setCurrentAddress(address)
+    }else{
+      const address = await createLoc(data)
+      appContext.setUserAddresses(state=> {return [...state, address]})
+      appContext.setCurrentAddress(address)
+    }
+  }
+
+  const update = async (id: string, data: DeepPartial<IUserAddress>): Promise<boolean> => {
+    
+    if(appContext.isLogged){
+      const address = await updateReq(id, data)
+      if(id === appContext.currentAddress?.id){
+        appContext.setCurrentAddress(address)
+      }
+      return true
+    }else{
+      const address = await updateLoc(id, data)
+      appContext.setUserAddresses(state=> {
+        const withoutEditedAddress = state.filter(el=> el.id !== id)||[]
+        return [address, ...withoutEditedAddress]
+      })
+      
+      if(id === appContext.currentAddress?.id){
+        appContext.setCurrentAddress(address)
+      }
+      return true
+    }
+  }
+
+  const deleteAddress = (id: string)  => {
+    if(appContext.isLogged){
+      deleteReq(id).then(res=> {
+        appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
+        appContext.hideModal()
+        refreshAddresses()
+      })
+    }else{
+      appContext.addresses.length>0&&appContext.setUserAddresses(a=> {return a.filter(f=> f.id !== id)})
+      appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
+      appContext.hideModal()
+      return deleteLoc(id)
+    }
+  }
+
+  const setCurrentAddress = (address: IUserAddress) => {
+    appContext.setCurrentAddress(address)
+    writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
+  }
+
+
+  useEffect( () => {
+    const subscription = appContext.loginState$.subscribe((logged) => {
+      if (!logged && appContext.currentAddress) {
+        createLoc(appContext.currentAddress)
+      }
+      else {
+        removeCookie(CookiesType.address)
+      }
+    })
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [appContext.currentAddress])
+  
 
   const value: IState = {
     ...defaultValue,
     refreshAddresses,
-
-    create: async (data: DeepPartial<IUserAddress>) => {
-      if(appContext.isLogged){
-        const address = await createReq(data)
-        appContext.setCurrentAddress(address)
-      }else{
-        const address = await createLoc(data)
-        appContext.setUserAddresses(state=> {return [...state, address]})
-        appContext.setCurrentAddress(address)
-      }
-    },
-
-    update: async (id: string, data: DeepPartial<IUserAddress>): Promise<boolean> => {
-      if(appContext.isLogged){
-        const address = await updateReq(id, data)
-        if(id === appContext.currentAddress?.id){
-          appContext.setCurrentAddress(address)
-        }
-        return true
-      }else{
-        const address = await  updateLoc(id, data)
-        if(id === appContext.currentAddress?.id){
-          appContext.setCurrentAddress(address)
-        }
-        return true
-      }
-    },
-
-    delete: (id: string)  => {
-      
-      if(appContext.isLogged){
-        deleteReq(id).then(res=> {
-          appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
-          appContext.hideModal()
-          refreshAddresses()
-        })
-      }else{
-        appContext.addresses.length>0&&appContext.setUserAddresses(a=> {return a.filter(f=> f.id !== id)})
-        appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
-        appContext.hideModal()
-        return deleteLoc(id)
-      }
-    },
-
-    setCurrentAddress: (address: IUserAddress) => {
-      appContext.setCurrentAddress(address)
-      writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
-    },
+    create,
+    update,
+    deleteAddress,
+    setCurrentAddress,
   }
 
   return (

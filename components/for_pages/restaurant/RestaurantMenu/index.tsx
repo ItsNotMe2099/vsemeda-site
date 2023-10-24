@@ -10,8 +10,8 @@ export default function RestaurantMenu() {
 
   return (
     <div className={classNames(styles.root, { [styles.closed]: unit.isAvailable })} >
-      {unitContext.menu.filter(item => !item.parentId).map((i) => {
-        return (<MenuStack item={i}/>)
+      {unitContext.menu.filter(item => item.products.length > 0).map((i, index) => {
+        return (<MenuStack item={i} key={index}/>)
       })}
     </div>
   )

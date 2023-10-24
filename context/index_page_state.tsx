@@ -48,6 +48,7 @@ export function IndexPageWrapper(props: Props) {
   const filterRef = useRef<IndexFilterFormData>({})
 
   const fetchUnitIndex = async (refreshInit: boolean = false) => {
+    
     await UnitRepository.fetchUnitIndex({ location: appContext.currentLocation, ...filterRef.current, ...filter, regionId: 7 })
     .then(i => {
       if(!unitInitialIndex ||refreshInit) {
@@ -56,6 +57,7 @@ export function IndexPageWrapper(props: Props) {
       setUnitIndex(i)
     })
   }
+
   const fetchCategories = async () => {
     await MenuRepository.fetchCategories().then(i => setCategories(i))
   }
@@ -69,18 +71,19 @@ export function IndexPageWrapper(props: Props) {
     filterRef.current = {...filterRef.current, categories}
     setFilterState(state=> {return {...state, categories: [...categories]}})
     setIsLoading(true)
-    // await fetchUnitIndex()
     setIsLoading(false)
   }
 
   useEffect(() => {
-    init()
-  }, [appContext.currentLocation])
+    if(appContext.initialLoaded) {
+      init()
+    }
+  }, [appContext.initialLoaded, appContext.currentLocation])
 
   useEffect(() => {
-    // console.log(filter)
-    // filterRef.current = filter
-    fetchUnitIndex()
+    if(appContext.currentLocation) {
+      fetchUnitIndex()
+    }
   }, [filter])
 
   const value: IState = {

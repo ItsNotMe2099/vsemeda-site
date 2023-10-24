@@ -269,6 +269,7 @@ export function CartWrapper(props: Props) {
   }
 
   const clear = async () => {
+    
     await CartRepository.clear()
     setCart(null)
     clearQuantity()
@@ -311,6 +312,7 @@ export function CartWrapper(props: Props) {
 
   const addProductFromModal = async (product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null) : Promise<boolean> => {
     if (cart && unitId !== cart?.unitId) {
+      
       //TODO show alert clear
       appContext.showModal(ModalType.Confirm, {
         text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',

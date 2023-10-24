@@ -95,7 +95,6 @@ export function AuthWrapper(props: Props) {
 
   // Sign up step 2
   const confirmCode = async (code: string): Promise<boolean> => {
-    
     setConfirmSpinner(true)
     let accessToken: string = ''
 
@@ -127,8 +126,7 @@ export function AuthWrapper(props: Props) {
       return false
     }
 
-
-    await  appContext.setToken(accessToken)
+    await appContext.setToken(accessToken)
     appContext.setModalNonSkippable(false)
     appContext.hideModal()
     appContext.hideBottomSheet()
