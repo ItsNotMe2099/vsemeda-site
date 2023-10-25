@@ -30,7 +30,7 @@ export const MenuDropdown = forwardRef<HTMLDivElement, Props>((props, ref) => {
       appContext.showModal(ModalType.Profile, value)
     }
     else{
-      cartContext.clear()
+      cartContext.clearCartState()
       appContext.logout()
     }
   }

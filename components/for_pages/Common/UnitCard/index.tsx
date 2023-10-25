@@ -9,7 +9,6 @@ import CardImgLayoutPos from 'components/for_pages/Common/UnitCard/CardImgLayout
 import CardBodyLayoutPos from 'components/for_pages/Common/UnitCard/CardBodyLayoutPos'
 import {colors} from 'styles/variables'
 import {Routes} from 'types/routes'
-import { useUnitContext } from 'context/unit_state'
 
 interface Props {
   unit: IUnit
@@ -18,30 +17,25 @@ interface Props {
 }
 
 export default function UnitCard({unit, className, wrapperClassName}: Props) {
-
   const appContext = useAppContext()
-
-  const unitContext= useUnitContext()
-
 
   return (
     <Link href={Routes.restaurant(appContext.regionSlug, unit.brand.slug, unit.slug)} className={classNames(styles.root, 'swiper-carousel-animate-opacity', className)}>
       <div className={classNames(styles.cardWrapper, wrapperClassName)}>
-      
         <div className={styles.imgContainer}>
           <Image src={unit.brand?.image.link} alt={unit.brand.name} fill/>
-          {unit?.cardLayout && unit?.cardLayout [UnitCardLayoutPosType.ImgTl] &&
+          {unit?.cardLayout && unit?.cardLayout[UnitCardLayoutPosType.ImgTl] &&
             <CardImgLayoutPos bgColor={colors.purple} color={colors.white} margin={'normal'} size={'large'}
-                              position={'tl'} layout={unit.cardLayout [UnitCardLayoutPosType.ImgTl]} unit={unit}/>}
+                              position={'tl'} layout={unit.cardLayout[UnitCardLayoutPosType.ImgTl]} unit={unit}/>}
           {unit?.cardLayout && unit?.cardLayout[UnitCardLayoutPosType.ImgTr] &&
             <CardImgLayoutPos bgColor={colors.purple} color={colors.white} margin={'normal'} size={'large'}
-                              position={'tr'} layout={unit.cardLayout [UnitCardLayoutPosType.ImgTr]} unit={unit}/>}
+                              position={'tr'} layout={unit.cardLayout[UnitCardLayoutPosType.ImgTr]} unit={unit}/>}
           {unit?.cardLayout && unit?.cardLayout[UnitCardLayoutPosType.ImgBl] &&
             <CardImgLayoutPos bgColor={colors.purple} color={colors.white} margin={'normal'} size={'large'}
-                              position={'bl'} layout={unit.cardLayout [UnitCardLayoutPosType.ImgBl]} unit={unit}/>}
+                              position={'bl'} layout={unit.cardLayout[UnitCardLayoutPosType.ImgBl]} unit={unit}/>}
           {unit?.cardLayout && unit?.cardLayout[UnitCardLayoutPosType.ImgBr] &&
             <CardImgLayoutPos bgColor={colors.purple} color={colors.white} margin={'normal'} size={'large'}
-                              position={'br'} layout={unit.cardLayout [UnitCardLayoutPosType.ImgBr]} unit={unit}/>}
+                              position={'br'} layout={unit.cardLayout[UnitCardLayoutPosType.ImgBr]} unit={unit}/>}
         </div>
 
         <div className={styles.body}>

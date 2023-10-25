@@ -15,10 +15,9 @@ export default function InputPhoneField(props: Props) {
   const showError = !!meta.error && !focused
   const { ref: phoneRef, maskRef, setValue, value} = useIMask({ mask: '{+7 9}`00 000 00 00'})
 
-
   const phoneHandler = (p: FormEvent<HTMLInputElement>) => {
     const v = p.currentTarget.value
-    if(v.length < 3) {
+    if(v.length <= 3) {
       setValue('+7 9')
     }
     helpers.setValue(v)
@@ -31,12 +30,17 @@ export default function InputPhoneField(props: Props) {
   }, [focused])
 
   useEffect(()=>{
-    setValue('+7 9')
-  }, [])
-
-  useEffect(()=>{
     maskRef.current.updateCursor(value.length)
   }, [value])
+
+  useEffect(()=>{
+    if(!field.value || field.value.length <=3) {
+      setValue('+7 9')
+    }
+    else {
+      setValue(field.value)
+    }
+  }, [])
 
 
   return (<div className={classNames(styles.root, showError&&styles.inputError)}> 

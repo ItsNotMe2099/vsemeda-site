@@ -45,19 +45,19 @@ export default function BasketModal(props: Props) {
 
   const header = (
     <div className={styles.header}>
-
-    <div className={styles.close}>
-      <BackBtn bgColor='white' onClick={handleCloseClick} />
-    </div>
-    <div>
-      <p className={styles.modalTitle}>Подтверждение заказа</p> 
-      <p className={styles.subTitle}>{cartContext.cart.unit.brand.name}</p> 
-    </div>
-    <IconButton className={styles.clearBasket} onClick={clearBasket}  bgColor={'white'}><TrashBasketSvg color={colors.purple}/></IconButton>
+      <div className={styles.close}>
+        <BackBtn bgColor='white' onClick={handleCloseClick} />
+      </div>
+      <div>
+        <p className={styles.modalTitle}>Подтверждение заказа</p> 
+        <p className={styles.subTitle}>{cartContext.cart?.unit.brand.name}</p> 
+      </div>
+      <IconButton className={styles.clearBasket} onClick={clearBasket}  bgColor={'white'}><TrashBasketSvg color={colors.purple}/></IconButton>
     </div>
   )
 
   useEffect(()=>{
+    
     if(iframeSrc) {
       appContext.showModal(ModalType.IFrame, iframeSrc)
     }
@@ -69,7 +69,7 @@ export default function BasketModal(props: Props) {
         <div className={styles.content}>
           <div className={styles.title}>Ваш заказ 🤝</div>
           <BasketAddressDetails/>
-          <BasketReceipt  />
+          <BasketReceipt/>
         </div>
         <div className={styles.list}>
           {!cartContext.cart?.lines.length ? <div className={styles.empty}>Корзина пуста</div> : null}

@@ -105,7 +105,7 @@ const AddressFormModalInner = (props: Props) => {
         />
       }
       <div className={styles.mapWrapper}>
-        <YandexMap className={styles.map} setGeoObject={(o) => {setGeoObject(o)}} setLocation={(r: YMapLocationRequest) => setLocation(r)} setAddressStr={(s: string)=>setAddressStr(s)} center={location as YMapCenterLocation}/>
+        <YandexMap  newAddress={!!!args?.address} className={styles.map} setGeoObject={(o) => {setGeoObject(o)}} setLocation={(r: YMapLocationRequest) => setLocation(r)} setAddressStr={(s: string)=>setAddressStr(s)} center={location as YMapCenterLocation}/>
 
         {addressStr && !args?.address &&
           <div className={styles.address}>{addressStr}</div>
@@ -119,7 +119,7 @@ const AddressFormModalInner = (props: Props) => {
           </div>
         }
         <div className={styles.placemark}><MarkerSvg/></div>
-        {confirmShown && <AddressFormConfirm address={addressStr} onConfirm={handleConfirm}/>}
+        {confirmShown && !!!args?.address &&  <AddressFormConfirm address={addressStr} onConfirm={handleConfirm}/>}
       </div>
     </div>
   )

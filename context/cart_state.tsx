@@ -19,6 +19,15 @@ import {ModalType} from 'types/enums'
 import {AddressModalArguments, ConfirmModalArguments, ProductModalArguments} from 'types/modal_arguments'
 import {IPromo} from 'data/interfaces/IPromo'
 
+
+interface Props {
+  children: ReactElement | ReactElement[]
+}
+
+type QuantityMap = { [key: string]: number }
+type BoolMap = { [key: string]: boolean }
+type DebounceMap = { [key: string]: () => void }
+
 interface IState {
   cart: ICart | null;
   unit: IUnit | null;
@@ -27,14 +36,14 @@ interface IState {
   fetchCart: () => Promise<ICart | null>;
   update: (data: ICartUpdateRequestData) => Promise<ICart | null>;
   clear: () => void;
-  createLine: (data: ICartLineCreateRequestData) => Promise<ICart | null>;
+  // createLine: (data: ICartLineCreateRequestData) => Promise<ICart | null>;
   addProduct: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => Promise<boolean>,
   addProductFromModal: (product: IProduct, unitId: number, quantity?: number, modifications?: ICartLineModificationRequestData[]) => Promise<boolean>,
   updateLineQuantity: (line: ICartLine, isAdd?: boolean) => void,
   updateProductQuantity: (product: IProduct, isAdd?: boolean, unitId?: number) => void,
   updateProductQuantityFromCart: (product: ICartLine, isAdd?: boolean, unitId?: number) => void,
   updatePromoCode: (data: { code: string }) => void
-  deleteLine: (lineId: number) => ICart | null;
+  // deleteLine: (lineId: number) => ICart | null;
   groupingIdQuantityMap: QuantityMap
   productQuantityMap: QuantityMap
   isEmpty: boolean
@@ -44,64 +53,31 @@ interface IState {
   promos: IPromo[],
   setNeedMoneyChange: Dispatch<SetStateAction<boolean>>,
   needMoneyChange: boolean
+  clearCartState: () => void
 }
 
+const CartContext = createContext<Partial<IState>>({})
 
-const defaultValue: IState = {
-  cart: null,
-  unit: null,
-  initialLoaded: false,
-  updating: false,
-  fetchCart: () => null,
-  update: () => null,
-  clear: () => null,
-  createLine: () => null,
-  addProduct: () => null,
-  addProductFromModal: () => null,
-  updateLineQuantity: () => null,
-  updateProductQuantity: () => null,
-  updateProductQuantityFromCart: () => null,
-  updatePromoCode: () => null,
-  deleteLine: () => null,
-  groupingIdQuantityMap: {},
-  productQuantityMap: {},
-  isEmpty: false,
-  total: 0,
-  totalWithDelivery: 0,
-  totalBaseWithDelivery: 0,
-  promos: [],
 
-  setNeedMoneyChange: ()=>null,
-  needMoneyChange: null
-}
-
-const CartContext = createContext<IState>(defaultValue)
-
-interface Props {
-  children: ReactElement | ReactElement[]
-}
-type QuantityMap = { [key: string]: number }
-type BoolMap = { [key: string]: boolean }
-type DebounceMap = { [key: string]: () => void }
 export function CartWrapper(props: Props) {
   const appContext = useAppContext()
+  const windowFocused = useWindowFocus()
+
   const [cart, setCartState] = useState<ICart | null>(null)
-  const [needMoneyChange, setNeedMoneyChange] = useState<boolean>(false)
   const [updating, setUpdating] = useState(true)
+  const [needMoneyChange, setNeedMoneyChange] = useState<boolean>(false)
   const [initialLoaded, setInitialLoaded] = useState(true)
   const [groupingIdQuantityMap, setGroupingIdQuantityMapState] = useState<QuantityMap>({})
   const [productQuantityMap, setProductQuantityMap] = useState<QuantityMap>({})
-  const productIsSyncingMapRef = useRef<BoolMap>({})
   
-
-  const unit = cart?.unit
-
+  const productIsSyncingMapRef = useRef<BoolMap>({})
   const quantityChangeDebounceRef = useRef<DebounceMap>({})
   const groupingIdQuantityMapRef = useRef<QuantityMap>({})
-
-  const cartRef = useRef<ICart | null>(null)
-  const windowFocused = useWindowFocus()
   const windowFocusInit = useRef<boolean>(false)
+  const cartRef = useRef<ICart | null>(null)
+  const [isEmpty, setIsEmpty] = useState<boolean>(cart === null || cart?.lines.length === 0)
+  
+  const unit = cart?.unit
 
   const clearQuantity = () => {
     setGroupingIdQuantityMapState({})
@@ -113,14 +89,24 @@ export function CartWrapper(props: Props) {
   const updateLoading = () => {
     setUpdating(Object.keys(productIsSyncingMapRef.current).length === 0)
   }
+
   const setCart = (cart: ICart) => {
     cartRef.current = cart
     setCartState(cart)
+    
+    if(cart) {
+      setNeedMoneyChange(cart.paymentMethod==='cash'&&cart.moneyChange > 0)
+    }
+    else {
+      setIsEmpty(true)
+    }
   }
+
   const setGroupingIdQuantityMap = (key: string, value: number) => {
     setGroupingIdQuantityMapState({ ...groupingIdQuantityMapRef.current, [key]: value })
     groupingIdQuantityMapRef.current[key] = value
   }
+
   const fetchCart = async (): Promise<ICart> => {
     const cart = await CartRepository.fetchCurrentCart(appContext.currentLocation)
     setCart(cart)
@@ -142,16 +128,19 @@ export function CartWrapper(props: Props) {
     setCart(cart)
     return cart
   }
+
   const updateCartReq = async (data: ICartUpdateRequestData): Promise<ICart> => {
     const cart = await CartRepository.update(data, appContext.currentLocation)
     setCart(cart)
     return cart
   }
+
   const updateCartLineReq = async (lineId: string, data: ICartLineUpdateRequestData): Promise<ICart> => {
     const cart = await CartLineRepository.update(lineId, data, appContext.currentLocation)
     setCart(cart)
     return cart
   }
+
   const deleteCartLineReq = async (lineId: string): Promise<ICart> => {
     const cart = await CartLineRepository.delete(lineId, appContext.currentLocation)
     setCart(cart)
@@ -163,6 +152,7 @@ export function CartWrapper(props: Props) {
       .filter((e) => e.startsWith(`${productId}:`))
       .reduce((t, e) => t + groupingIdQuantityMap[e]!, 0)
   }
+
   const _updateQuantity = () => {
     const groupingIdQuantityMap: QuantityMap = {}
     for (let line of cartRef.current.lines) {
@@ -179,6 +169,7 @@ export function CartWrapper(props: Props) {
     productIsSyncingMapRef.current = {}
 
   }
+
   const updateProductQuantityMap = (productId: string) => {
     const quantity = Object.keys(groupingIdQuantityMapRef.current)
       .filter((e) => e.startsWith(`${productId}:`))
@@ -186,6 +177,7 @@ export function CartWrapper(props: Props) {
     setProductQuantityMap({ ...productQuantityMap, [productId]: quantity })
 
   }
+
   const syncOrderProductQuantity = async (groupingId: string) => {
     const line = cartRef.current!.lines.find((i) => i.groupingId == groupingId)
     const userQuantity = groupingIdQuantityMapRef.current[groupingId] ?? 0
@@ -212,7 +204,6 @@ export function CartWrapper(props: Props) {
     }
     updateLoading()
   }
-
 
   const changeCartLineQuantity = (line: ICartLine, isAdd: boolean) => {
     if (line == null) {
@@ -251,10 +242,10 @@ export function CartWrapper(props: Props) {
       return
     }
     setGroupingIdQuantityMap(groupingId, data.quantity ?? 1)
-
     productIsSyncingMapRef.current[groupingId] = true
     updateLoading()
     updateProductQuantityMap(data.productId)
+    
     await createCartLineReq(data)
 
     const updatedLine = cartRef.current!.lines.find((i) => i.groupingId == groupingId)
@@ -268,21 +259,24 @@ export function CartWrapper(props: Props) {
     updateLoading()
   }
 
+  const clearCartState = () => {
+    setCart(null)
+    clearQuantity()
+    setIsEmpty(true)
+  }
+
   const clear = async () => {
     
     await CartRepository.clear()
-    setCart(null)
-    clearQuantity()
+    clearCartState()
   }
 
   const addProduct = async(product: IProduct, unitId: number, quantity: number = null, modifications: ICartLineModificationRequestData[] = null): Promise<boolean> => {
-    
     if(!appContext.currentAddress){
       appContext.showModal(ModalType.AddressForm, {firstAddress: true} as AddressModalArguments)
       return false
     }
     if (cart && unitId !== cart?.unitId) {
-      //TODO show alert clear
       appContext.showModal(ModalType.Confirm, {
         text: 'Очистить корзину для нового заказа? В вашей корзине товары из другого заведения',
         onConfirm: async () => {
@@ -292,8 +286,6 @@ export function CartWrapper(props: Props) {
             appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
             return
           }
-
-          //VSMA-531
           addToCart({ productId: product.id, unitId, quantity: quantity ?? 1, modificationLines: modifications ?? null })
           appContext.hideModal()
         },
@@ -330,13 +322,52 @@ export function CartWrapper(props: Props) {
     return true
   }
 
+  const updateLineQuantity = (line: ICartLine, isAdd?: boolean) => {
+    changeCartLineQuantity(line, isAdd)
+  }
+
+  const update = (data: ICartUpdateRequestData) => {
+    return updateCartReq(data)
+  }
+
+  const updateProductQuantity = async (product: IProduct, isAdd?: boolean, unitId?: number) => {
+    if (product.modificationGroups?.length > 0 && isAdd) {
+      appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
+    } else {
+      const line = cartRef.current.lines.find(i => (i.productId === product.id)||(i.id === product.id))
+      if (line != null) {
+        await changeCartLineQuantity(line, isAdd)
+      }
+    }
+  }
+
+  const updateProductQuantityFromCart = async(product: ICartLine, isAdd: boolean, unitId: number) => {
+    const line = cartRef.current.lines.find(i => i.id === product.id)
+    if (line != null) {
+      await changeCartLineQuantity(line, isAdd)
+    }
+  } 
+
+  const updatePromoCode = async (data: { code: string }) => {
+    const cart = await CartRepository.applyPromoСode(data, appContext.currentAddress?.location)
+    setCart(cart)
+    return cart
+  }
+
+
   useEffect(() => {
     cartRef.current = cart
+    if(cart === null || cart?.lines.length === 0) {
+      setIsEmpty(true)
+    }
+    else {
+      setIsEmpty(false)
+    }
+
   }, [cart])
 
 
   useEffect(() => {   
-     
     if(appContext.currentLocation) {
       init()
     }
@@ -357,7 +388,6 @@ export function CartWrapper(props: Props) {
   }, [windowFocused])
 
   const value: IState = {
-    ...defaultValue,
     cart,
     initialLoaded,
     updating,
@@ -365,41 +395,18 @@ export function CartWrapper(props: Props) {
     productQuantityMap,
     needMoneyChange,
     setNeedMoneyChange,
-    isEmpty: cart === null || cart?.lines.length === 0,
+    isEmpty,
     fetchCart,
-    update: (data: ICartUpdateRequestData) => {
-      return updateCartReq(data)
-    },
+    update,
+    clearCartState,
     clear,
     addProduct,
     addProductFromModal,
-
-    updateLineQuantity: (line: ICartLine, isAdd?: boolean) => {
-      changeCartLineQuantity(line, isAdd)
-    },
-    updateProductQuantity: async (product: IProduct, isAdd?: boolean, unitId?: number) => {
-      if (product.modificationGroups?.length > 0 && isAdd) {
-        appContext.showModal(ModalType.ProductModal, { product: product, unitId } as ProductModalArguments)
-      } else {
-        const line = cartRef.current.lines.find(i => (i.productId === product.id)||(i.id === product.id))
-        if (line != null) {
-          await changeCartLineQuantity(line, isAdd)
-        }
-      }
-    },
-
-    updateProductQuantityFromCart: async(product: ICartLine, isAdd: boolean, unitId: number) => {
-        const line = cartRef.current.lines.find(i => i.id === product.id)
-        if (line != null) {
-          await changeCartLineQuantity(line, isAdd)
-      }
-    },
-    updatePromoCode: async (data: { code: string }) => {
-      const cart = await CartRepository.applyPromoСode(data, appContext.currentAddress?.location)
-      setCart(cart)
-      return cart
-    },
-    deleteLine: (lineId: number) => null,
+    updateLineQuantity,
+    updateProductQuantity,
+    updateProductQuantityFromCart,
+    updatePromoCode,
+    // deleteLine: (lineId: number) => null,
     unit,
     total: (cart?.total ?? 0) ,
     totalWithDelivery: (cart?.total ?? 0) + (unit?.deliveryPrice ?? 0),

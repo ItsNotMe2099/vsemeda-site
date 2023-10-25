@@ -12,7 +12,7 @@ import PaymentMethodList from 'components/modals/BasketModal/PaymentSelect/Payme
 import PaymentButton from 'components/modals/BasketModal/PaymentSelect/PaymentButton'
 import PaymentSelectTitle from 'components/modals/BasketModal/PaymentSelect/PaymentSelectTitle'
 import {useAppContext} from 'context/state'
-import {ModalType} from 'types/enums'
+import {ModalType, SnackbarType} from 'types/enums'
 import EmailForm from 'components/modals/BasketModal/EmailForm'
 import { IOrderCreateRequest } from 'data/interfaces/IOrderCreateRequest'
 import { Platform } from 'data/enum/Plaform'
@@ -45,13 +45,18 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   const [paymentMethod, setPaymentMethod] = useState(cartContext.cart?.paymentMethod)
   const currentEmail = useRef<string|undefined>('')
 
+  // useEffect(() => {
+  //   if (cartContext.cart?.paymentMethod) {
+  //     setPaymentMethod(cartContext.cart?.paymentMethod)
+  //   }
+  // }, [cartContext.cart?.paymentMethod])
   
-
-  useEffect(() => {
-    if (cartContext.cart?.paymentMethod) {
-      setPaymentMethod(cartContext.cart?.paymentMethod)
+  useEffect(()=>{
+    if(paymentMethod !== cartContext.cart.paymentMethod) {
+      const cartToUpdate = {paymentMethod: paymentMethod}
+      cartContext.update(cartToUpdate)
     }
-  }, [cartContext.cart?.paymentMethod])
+  }, [paymentMethod])
 
 
   const paymentOptions = cartContext.unit.paymentMethods.map(i => {
@@ -59,7 +64,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       case PaymentMethod.Cash:
         return {
           label: `Наличные${paymentMethod === PaymentMethod.Cash 
-            ? cartContext.needMoneyChange &&  cartContext.cart?.moneyChange > (cartContext.cart?.total + cartContext.unit?.deliveryPrice)
+            ? cartContext.needMoneyChange && cartContext.cart?.moneyChange > (cartContext.cart?.total + cartContext.unit?.deliveryPrice)
             ? `. Сдача  ${cartContext.cart?.moneyChange - (cartContext.cart?.total + cartContext.unit?.deliveryPrice)} руб.` 
             : ' Без сдачи' 
             : ''}`,
@@ -73,16 +78,13 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }
   })
 
-  const createNewOrder = () => {
+  const createNewOrder = async () => {
     props.setLoading(true)
-    
-    
     /* TODO: добавить количество персон 
     добавить правильное отображение предзаказа и его времени,
     правильная работа свитчера бесконтактная оплата,
     имя клиента    
     */   
-   
     const orderData: IOrderCreateRequest = {
       address: appContext.currentAddress,
       location: appContext.currentLocation,
@@ -99,10 +101,11 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       isContactLessDelivery: cartContext.cart.isContactLessDelivery
     }
 
-    OrderRepository.create(orderData)
-    .then(res => {   
-      appContext.hideModal()
-      appContext.hideBottomSheet()   
+    await OrderRepository.create(orderData)
+    .then(res => {  
+      cartContext.clear() 
+      // appContext.hideModal()
+      // appContext.hideBottomSheet()   
       if(res.paymentMethod === PaymentMethod.CardOnline) {
         props.setSrc(res.paymentData.payUrl)
       } else {
@@ -110,6 +113,10 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
         ? appContext.showBottomSheet(ModalType.ActiveOrder, res)
         : appContext.showModal(ModalType.ActiveOrder, res)
       }
+    })
+    .catch(err=> {
+      appContext.showSnackbar(err.message, SnackbarType.error)
+      appContext.hideModal()
     })
   }
 
@@ -125,8 +132,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
     }else if(paymentMethod === PaymentMethod.CardOnline && !appContext.user?.email && !currentEmail.current){
       setState(State.Email)
     }else{
-      createNewOrder()    
-      cartContext.clear()     
+      createNewOrder() 
     }
   }
 
@@ -174,27 +180,34 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       {[State.Closed, State.Opened].includes(state) && appContext.isLogged &&
         <PaymentSelectTitle onClick={handleTitleClick} title={state === State.Closed && paymentMethod ? null : 'Выберите способ оплаты:'} arrow={true}>
           {state === State.Closed && currentPaymentItem}
-        </PaymentSelectTitle>}
-      {[State.Cash].includes(state) && appContext.isLogged &&
-        <PaymentSelectTitle onClick={() => setState(State.Opened)} title={'Назад'} back={true}/>}
-      {[State.Email].includes(state) && appContext.isLogged &&
-        <PaymentSelectTitle onClick={() => setState(State.Opened)} title={'Электронный чек'} back={true}/>}
+        </PaymentSelectTitle>
+      }
 
-      {state !== State.Closed && <div className={styles.center}>
-        {state === State.Opened &&
-          <PaymentMethodList 
-          paymentOptions={paymentOptions} 
-          onSelect={handleSelectPaymentMethod}
-          selected={paymentMethod}
-          />
-        }
-        {state === State.Cash &&  
-          <CashForm onSubmit={handleSubmit}/>
-        }
-        {state === State.Email &&  
-          <EmailForm onSubmit={handleSubmit}/>
-        } 
-      </div>}
+      {[State.Cash].includes(state) && appContext.isLogged &&
+        <PaymentSelectTitle onClick={() => setState(State.Opened)} title={'Назад'} back={true}/>
+      }
+
+      {[State.Email].includes(state) && appContext.isLogged &&
+        <PaymentSelectTitle onClick={() => setState(State.Opened)} title={'Электронный чек'} back={true}/>
+      }
+
+      {state !== State.Closed && 
+        <div className={styles.center}>
+          {state === State.Opened &&
+            <PaymentMethodList 
+            paymentOptions={paymentOptions} 
+            onSelect={handleSelectPaymentMethod}
+            selected={paymentMethod}
+            />
+          }
+          {state === State.Cash &&  
+            <CashForm onSubmit={handleSubmit}/>
+          }
+          {state === State.Email &&  
+            <EmailForm onSubmit={handleSubmit}/>
+          } 
+        </div>
+      }
 
       {[State.Opened, State.Closed].includes(state) &&
         <div className={styles.bottom}>
@@ -209,10 +222,15 @@ PaymentSelectInner.displayName = 'PaymentSelectInner'
 export default function PaymentSelect(props: Props) {
 
   if (props.isSticky) {
-    return <Sticky>{({style, isSticky, distanceFromTop, ...rest}) => <PaymentSelectInner className={props.className}
-                                                                                         distanceFromTop={distanceFromTop} {...props}
-                                                                                         restProps={rest}
-                                                                                         style={style}/>}</Sticky>
+    return <Sticky>
+      {({style, isSticky, distanceFromTop, ...rest}) => 
+        <PaymentSelectInner 
+        className={props.className}
+        distanceFromTop={distanceFromTop} {...props}
+        restProps={rest}
+        style={style}/>
+      }
+    </Sticky>
   } else {
     return <PaymentSelectInner {...props} />
   }

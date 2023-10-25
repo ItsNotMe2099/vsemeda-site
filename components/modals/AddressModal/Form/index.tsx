@@ -30,7 +30,6 @@ export default function AddressForm(props: Props) {
 
 
   const submit = async (data: DeepPartial<IUserAddress>) => {
-    
     setLoading(true)
     try {
       const submitData: DeepPartial<IUserAddress> = {
@@ -136,7 +135,7 @@ export default function AddressForm(props: Props) {
           </Button>
 
           {props.initialAddress?.id && 
-          appContext.addresses.length > 1 &&
+          appContext.addresses.length > 1 && appContext.currentAddress.id !== props.initialAddress.id &&
             <Button 
             className={styles.trash} 
             onClick={()=>addressContext.deleteAddress(props.initialAddress?.id)} 

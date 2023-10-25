@@ -45,7 +45,7 @@ export default function ModificationCheckboxListField<T>(props: Props) {
       }}>
 
         {options.map(item => (<>
-          <div className={styles.item} onClick={() => handleCheckboxChanged(item)}>
+          <div className={classNames(styles.item, props.itemClassName)} onClick={() => handleCheckboxChanged(item)}>
             <div className={styles.name}>{item.name}</div>
             <div className={styles.price}>{Formatter.formatPrice(item.price)}</div>
               <Radio isActive={item === field.value}/>

@@ -29,7 +29,8 @@ export enum CookiesType {
   accessToken = 'accessToken',
   sessionId = 'x-session',
   uuid = 'uuid',
-  address = 'address'
+  address = 'address',
+  paymentMethod = 'payment-method'
 }
 
 export enum LocalStorageKey {

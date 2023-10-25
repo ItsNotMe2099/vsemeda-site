@@ -24,29 +24,29 @@ type YMapModules = typeof ymaps3 & {
   YMapHintContext?: typeof YMapHintContext;
   YMapGeolocationControl?: typeof YMapGeolocationControl;
   YMapControlButton?: typeof YMapControlButton
-};
+}
 
 
 
 
 interface IMapProps {
+  newAddress?: boolean
   center: YMapCenterLocation;
   className?: string
   setLocation: (r: YMapLocationRequest)=>void
   setAddressStr:(s: string)=>void
   setGeoObject: (o: GeoObject)=>void
-};
+}
 
 interface IMapContext {
   yMapMutable: YMap | null;
   yMapModules: YMapModules | null;
-};
+}
 
 let yMapModules: IMapContext['yMapModules'] = null
 
 
-const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, center, children, setLocation, setAddressStr, setGeoObject }) => {  
-  
+const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, newAddress, center, children, setLocation, setAddressStr, setGeoObject }) => {  
   const [azimut, setAzimut] = useState<number>(0)
   const mapRootNode = useRef<HTMLDivElement>(null)
   const isMapCreated = useRef<boolean>(false)
@@ -131,6 +131,12 @@ const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, ce
         })
       }
     })
+
+    if(newAddress) {
+      geolocation.getPosition().then(res=> {
+        yMap.current.setLocation({center: res.coords})
+      })
+    }
 
     yMap.current.addChild(new YMapDefaultSchemeLayer({theme: 'dark'}))
       .addChild(new YMapFeatureDataSource({id: 'my-source'}))

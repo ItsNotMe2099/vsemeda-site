@@ -11,6 +11,6 @@ export interface IUser {
   gender: Gender
   addresses: IUserAddress[]
   currentAddress?: IUserAddress
-  currentAddressId: string
+  currentAddressId: number
   paymentMethod: PaymentMethod
 }

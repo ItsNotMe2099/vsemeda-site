@@ -11,16 +11,16 @@ interface Props {
 }
 
 export default function SearchPage(props: Props) {
-    const body = (
-    <div className={styles.root}>
-        {props.results&&props.results.map(item => {
-                return <ResultItem key={item.id} unit={item}/>
-        })}
-
-        {props.isLoading &&
-            <Spinner size={40} color={colors.purple}/>
-        }
-    </div>)
+  const body = (
+  	<div className={styles.root}>
+  	  {props.results&&props.results.map(item => {
+  	    return <ResultItem key={item.id} unit={item}/>
+  	  })}
+  	  {props.isLoading &&
+  	    <Spinner size={40} color={colors.purple}/>
+  	  }
+  	</div>
+	)
 
     return (<>
         {body}

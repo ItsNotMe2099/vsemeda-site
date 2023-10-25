@@ -19,7 +19,6 @@ interface Props {
 }
 
 export default function OrderCard({ order, onClickProps}: Props) {
-
   const orderContext = useOrderContext()
   const {isPhoneWidth} = useResize()
   const [isDetailsActive, setActive] = useState<boolean>(false)
@@ -90,7 +89,7 @@ export default function OrderCard({ order, onClickProps}: Props) {
           <p className={styles.brand}>{order.brand.name}</p>
           <div className={styles.orderStatus}>   
             <div className={styles.statusBackground} style={background}></div> 
-            <span style={{color: textColor?textColor:color}}>{order.stateDetails.name}</span>
+            <span style={{color: textColor?textColor:color}}>{isPhoneWidth?order.stateDetails.shortName:order.stateDetails.name}</span>
           </div>
         </div>
         {!isPhoneWidth&&

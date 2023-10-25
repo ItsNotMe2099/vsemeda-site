@@ -141,7 +141,7 @@ export function AppWrapper(props: Props) {
 
   const setCurrentAddress = (address: IUserAddress) => {
     if(!address) {
-      console.error('address not provided')
+      console.error('address is not provided')
       return
     }
 
@@ -149,7 +149,12 @@ export function AppWrapper(props: Props) {
       setUserAddresses([address])
     }
     setCurrentAddressState(address)
+    if(userLoaded) {
+      UserRepository.updateUser({currentAddressId: Number(address.id)})
+    }
+    
     writeStorage<string>(LocalStorageKey.currentAddressId, address?.id)
+    Cookies.set(CookiesType.address, CookiesUtils.encodeJson(address))
     currentAddressState$.next(address)
   }
 
@@ -158,7 +163,7 @@ export function AppWrapper(props: Props) {
   }
 
   const setInitialAddressFromUser = (user: IUser) => {
-    setCurrentAddress( user.currentAddressId  && user.currentAddressId === addressLocal?.id ? user.addresses.find(i => i.id === user.currentAddressId) ?? addressLocal ?? user.addresses[0] : addressLocal ?? user.addresses[0])
+    setCurrentAddress( user.currentAddressId  && user.currentAddressId === Number(addressLocal?.id) ? user.addresses.find(i => Number(i.id) === user.currentAddressId) ?? addressLocal ?? user.addresses[0] : addressLocal ?? user.addresses[0])
   }
 
   const updateRegion = (slug: string) => {
@@ -186,25 +191,23 @@ export function AppWrapper(props: Props) {
   }
 
   const setToken = async (token: string) => {
-
     const newToken = token
     const oldToken = Cookies.get(CookiesType.accessToken) ?? null
     Cookies.set(CookiesType.accessToken, token, {
       expires: CookiesLifeTime.accessToken,
     })
-
     setTokenState(newToken)
-    
     if (!oldToken && newToken) {
       loginState$.next(true)
       const newUser = await updateUser()
-      const savedAddresses = addresses.length>0?addresses:[currentAddress]
+      const savedAddresses = addresses.length>0?addresses:currentAddress?[currentAddress]:[]
       const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [...savedAddresses, ...newUser?.addresses])
       const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]||currentAddress) || newUser.addresses[0]
-      setCurrentAddress(newCurrentAddress)
+      const currentAddressToSave = savedAddresses.length === 0?newUser.addresses.find(a=> +a.id === +newUser.currentAddressId):newCurrentAddress
+      setCurrentAddress(currentAddressToSave)
       if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
         setUserAddresses(a=> {
-          return [...newUser?.addresses]
+          return [...newUser?.addresses, ...savedAddresses]
         })
       }
       if(newCurrentAddress) {

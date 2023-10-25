@@ -89,11 +89,11 @@ export default function LoginForm(props: Props) {
           </div>
           {step === 1 ?
             <>
-            <InputPhoneField 
-            name={'phone'} 
-            placeholder={'Введите номер телефона'}
-            validate={Validator.combine([Validator.required, Validator.phone])}
-            />
+              <InputPhoneField 
+              name={'phone'} 
+              placeholder={'Введите номер телефона'}
+              validate={Validator.combine([Validator.required, Validator.phone])}
+              />
               <Button type='button' className={styles.btn} onClick={() => handleSendCode(formik.values, step)} styleType='filledGreen' font='semibold16'>
                 Вход
               </Button>

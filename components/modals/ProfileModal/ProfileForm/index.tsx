@@ -12,11 +12,7 @@ import { Gender } from 'data/enum/Gender'
 import Validator from 'utils/Validator'
 
 
-interface Props {
-
-}
-
-export default function ProfileForm(props: Props) {
+export default function ProfileForm() {
 
   const appContext = useAppContext()
 
@@ -26,11 +22,11 @@ export default function ProfileForm(props: Props) {
     setLoading(true)
     try {
       await UserRepository.updateUser(data)
+      appContext.updateUser()
       appContext.showSnackbar('Изменения сохранены', SnackbarType.success)
     }
     catch (error: any) {
       let errorMessage = error.toString()
-      // extract the error message from the error object
       if (error.response && error.response.data && error.response.data.message) {
         errorMessage = error.response.data.message
       }

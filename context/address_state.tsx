@@ -38,8 +38,14 @@ export function AddressWrapper(props: Props) {
   const appContext = useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies([CookiesType.address])
 
+  const setCurrentAddress = (address: IUserAddress) => {
+    appContext.setCurrentAddress(address)
+    writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
+  }
+
   const createReq = async (data: DeepPartial<IUserAddress>): Promise<IUserAddress> => {
-    return UserAddressRepository.create(data)
+    const address = await UserAddressRepository.create(data)
+    return address
   }
 
   const refreshAddresses = async ():Promise<boolean> => {
@@ -74,8 +80,10 @@ export function AddressWrapper(props: Props) {
   const create = async (data: DeepPartial<IUserAddress>) => {
     if(appContext.isLogged){
       const address = await createReq(data)
+      appContext.setUserAddresses(state=> [address, ...state])
       appContext.setCurrentAddress(address)
-    }else{
+    }
+    else{
       const address = await createLoc(data)
       appContext.setUserAddresses(state=> {return [...state, address]})
       appContext.setCurrentAddress(address)
@@ -117,11 +125,6 @@ export function AddressWrapper(props: Props) {
       appContext.hideModal()
       return deleteLoc(id)
     }
-  }
-
-  const setCurrentAddress = (address: IUserAddress) => {
-    appContext.setCurrentAddress(address)
-    writeStorage<string>(LocalStorageKey.currentAddressId, address.id)
   }
 
 

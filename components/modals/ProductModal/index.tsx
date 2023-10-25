@@ -87,7 +87,7 @@ const ProductModalInner = (props: Props) => {
       <div className={styles.top}>
         <div className={styles.imgContainer} >
           {args.product?.image && <img src={`${args.product?.image?.link}?w=600`} className={styles.image} alt={args.product.name}/>}
-          {args.product?.layout && args.product?.layout[ProductCardLayoutPosType.ImgT] &&
+          {args.product?.layout && args.product?.layout[ProductCardLayoutPosType.ImgT] && !isPhoneWidth &&
             <CardImgLayoutPos items={args.product.layout[ProductCardLayoutPosType.ImgT]}/>}
         </div>
         <div className={styles.info}>
@@ -107,9 +107,9 @@ const ProductModalInner = (props: Props) => {
             {args.product?.modificationGroups?.map((i) => {
               switch (i.type){
                 case ModificationGroupType.OneOfMany:
-                  return <ModificationRadioListField name={`group_${i.id}`} label={i.name} options={i.modifications} />
+                  return <ModificationRadioListField itemClassName={styles.modItem} name={`group_${i.id}`} label={i.name} options={i.modifications} />
                   case ModificationGroupType.ManyOfMany:
-                    return <ModificationCheckboxListField name={`group_${i.id}`} options={i.modifications} />
+                    return <ModificationCheckboxListField itemClassName={styles.modItem} name={`group_${i.id}`} options={i.modifications} />
                   }
                 })}
             </CustomScrollbar>
@@ -138,7 +138,7 @@ const ProductModalInner = (props: Props) => {
 
   if (props.isBottomSheet) { 
     return (
-      <BottomSheetLayout closeIconColor={colors.grey2}>
+      <BottomSheetLayout backgroundColor={colors.purple3} closeIconColor={colors.grey2}>
         <BottomSheetBody>{body}</BottomSheetBody>
       </BottomSheetLayout>
     )

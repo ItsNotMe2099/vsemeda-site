@@ -19,9 +19,7 @@ interface Props {
 }
 
 export default function MenuProductCard(props: Props) {
-  
   const {product} = props
-
   const appContext = useAppContext()
   const formattedPrice = Formatter.formatPrice(product.price)
 
