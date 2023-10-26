@@ -6,8 +6,8 @@ import ResultItem from './ResultItem'
 
 
 interface Props {
-    results: ISearchUnit[]
-    isLoading?: boolean
+  results: ISearchUnit[]
+  isLoading?: boolean
 }
 
 export default function SearchPage(props: Props) {

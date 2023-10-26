@@ -95,7 +95,7 @@ export default function OrderCard({ order, onClickProps}: Props) {
         {!isPhoneWidth&&
           <div className={styles.discount}>
             <Image src={'/images/icons/discount.svg'} alt=''  width={24} height={24}/>
-            <div className={styles.percent}>Скидка {order.totalDiscount}%</div>
+            <div className={styles.percent}>Скидка {order.totalDiscount} &#8381;</div>
           </div>
         }
       </div>

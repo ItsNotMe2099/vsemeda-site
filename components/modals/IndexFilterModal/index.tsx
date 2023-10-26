@@ -46,8 +46,6 @@ export default function IndexFilterModal(props: Props) {
     isPhoneWidth
     ? appContext.hideBottomSheet()
     : appContext.hideModal()
-    // props.onRequestClose()
-
   }
 
   const submit = async (data: IndexFilterFormData) => {
@@ -56,6 +54,8 @@ export default function IndexFilterModal(props: Props) {
       indexPageContext.setFilter(data)
       isPhoneWidth?appContext.hideBottomSheet():appContext.hideModal()
       props.onRequestClose()
+      indexPageContext.unitsSectionRef.current.scrollIntoView()
+      
       setLoading(false)
     } catch (err: any) {
       if (err instanceof RequestError) {
@@ -185,7 +185,9 @@ export default function IndexFilterModal(props: Props) {
       <Form className={styles.root}>
         <ModalLayout fixed className={styles.modalLayout}>
           {header}
-          <ModalBody fixed>{body}</ModalBody>
+          <ModalBody className={styles.modalBody} fixed>
+            {body}
+            </ModalBody>
           <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>
         </ModalLayout>
       </Form>

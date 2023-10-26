@@ -6,13 +6,18 @@ import {UnitWrapper} from 'context/unit_state'
 import {useRouter} from 'next/router'
 import RestaurantPage from 'components/for_pages/restaurant/RestaurantPage'
 import styles from 'pages/[region]/rest/index.module.scss'
+import { IUserAddress } from 'data/interfaces/IUserAddress'
+import { IUnitDetails } from 'data/interfaces/IUnitDetails'
 
 interface Props {
   initialUnit: IUnit
+  unitDetails?: IUnitDetails,
+  location?: IUserAddress
 }
 
 export default function Restaurant(props: Props) {
   const router = useRouter()
+
 
   return (
     <Layout classRoot={styles.restaurant} className={styles.restaurant}>
@@ -23,7 +28,7 @@ export default function Restaurant(props: Props) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context: { query: {place?: string, slug?: string}, req: {cookies: { [x: string]: any }} }) => {
   const res = await Promise.all([
     context.query.place ? UnitRepository.fetchBySlug(context.query.place as string, {}) :
       UnitRepository.fetchByBrandSlug(context.query.slug as string, {})
@@ -31,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      initialUnit: res[0]
+      initialUnit: res[0],
     } as Props
   }
 }

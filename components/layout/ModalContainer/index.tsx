@@ -21,6 +21,7 @@ import OrderDetails from 'components/modals/OrderDetailsModal'
 import LeaveFeedbackModal from 'components/modals/LeaveReviewModal'
 import ComplaintModal from 'components/modals/ComplaintModal'
 import IFrameModal from 'components/modals/IFrameModal'
+import ComplaintEndModal from 'components/modals/ComplaintEndModal'
 
 
 interface Props { }
@@ -92,6 +93,9 @@ export default function ModalContainer(props: Props) {
         </Modal> 
         <Modal isOpen={appContext.modal === ModalType.IFrame} {...commonSettings}>
           {appContext.modal === ModalType.IFrame && <IFrameModal onBackClick={appContext.hideModal} />}
+        </Modal> 
+        <Modal isOpen={appContext.modal === ModalType.ComplaintEndModal} {...commonSettings}>
+          {appContext.modal === ModalType.ComplaintEndModal && <ComplaintEndModal onBackClick={appContext.hideModal} />}
         </Modal> 
       </div>
     </RemoveScroll>

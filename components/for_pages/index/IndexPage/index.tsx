@@ -46,33 +46,42 @@ const IndexPageInner = (props: Props) => {
   return (
     <Layout>
         {indexPageContext.unitIndex && <><IndexHeader>
-          {layoutItemBestOffers && <BestOffers item={layoutItemBestOffers} />}
+          {layoutItemBestOffers && layoutItemBestOffers.units.length > 0 &&
+          <BestOffers item={layoutItemBestOffers} />}
           { isPhoneWidth && <ActiveOrder />}
         </IndexHeader>
 
           <div className={styles.body}>
-            <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
-              <Filter onFilterButtonClick={onFilterButtonClick} />
-            </VisibleOnSize>
+            {indexPageContext.unitIndex?.units.length > 0 && 
+            <>
+              <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
+                <Filter onFilterButtonClick={onFilterButtonClick} />
+              </VisibleOnSize>
 
-            <VisibleOnSize width={breakpoints.PhoneWidth}>
-            <FilterBtn  onFilterButtonClick={onFilterButtonClick}/>
-            </VisibleOnSize>
+              <VisibleOnSize width={breakpoints.PhoneWidth}>
+              <FilterBtn  onFilterButtonClick={onFilterButtonClick}/>
+              </VisibleOnSize>
 
-            <VisibleOnSize width={breakpoints.PhoneWidth}>
-              <UnitSlider units={layoutItemBestOffers.units} isMobile />
-            </VisibleOnSize>
+              <VisibleOnSize width={breakpoints.PhoneWidth}>
+                <UnitSlider units={layoutItemBestOffers.units} isMobile />
+              </VisibleOnSize>
+            </>
+            }
 
             {indexPageContext.isLoading && <div className={styles.loading}>Загружается</div>}
-            {(layoutItems ?? []).map(item => <LayoutItem item={item}/>)}
+            {indexPageContext.unitIndex?.units.length > 0 && (layoutItems ?? []).map(item => <LayoutItem item={item}/>)}
             
             {!indexPageContext.isLoading && indexPageContext.unitIndex?.units.length > 0 && <UnitList
               units={indexPageContext.unitIndex.units} />
             }
-          </div>
-            {indexPageContext.unitIndex?.units.length === 0 &&
+            {indexPageContext.unitIndex?.units.length === 0 && Object.keys(indexPageContext.filter).length > 0 &&
               <p className={styles.empty}>По вашему запросу ничего не найдено</p>
+              ||
+              indexPageContext.unitIndex?.units.length === 0 && Object.keys(indexPageContext.filter).length == 0 &&
+              <p className={styles.empty}>Адрес не обслуживается</p>
             }
+          </div>
+            
         </>}
     </Layout>
   )

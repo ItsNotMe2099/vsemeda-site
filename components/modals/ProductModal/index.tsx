@@ -40,6 +40,7 @@ const ProductModalInner = (props: Props) => {
   const {isPhoneWidth} = useResize()
 
   const handleSubmit =async (data: any) => {
+    
     let oneToMany: {modificationId: any;quantity: number;}[] = []
     let manyToMany: {modificationId: any;quantity: number;}[] = []
     
@@ -57,10 +58,9 @@ const ProductModalInner = (props: Props) => {
     }
     cartContext.addProductFromModal(args.product, args.unitId, data.quantity, [...oneToMany, ...manyToMany])
     .then(res => {
-      
-      // if(res === true) {
+      if(res === true) {
         isPhoneWidth?appContext.hideBottomSheet():appContext.hideModal()
-      // }
+      }
     })
   }
 

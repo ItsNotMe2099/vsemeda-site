@@ -37,7 +37,7 @@ const AddressListModalInner = (props: Props) => {
 
   const body = (
     <>
-      {props.isBottomSheet ? <div className={styles.title}>Адрес доставки</div> : null}
+      <div className={styles.title}>Адрес доставки</div>
       <div className={styles.bodyWrapper}>
         <div 
         className={styles.list}>
@@ -57,7 +57,7 @@ const AddressListModalInner = (props: Props) => {
 
   const footer = (<div className={styles.actions}>
     <Button 
-    className={classNames({ [styles.btn]: props.isBottomSheet })} 
+    className={styles.btn} 
     styleType={'filledGreen'} 
     fluid 
     type={'submit'} 

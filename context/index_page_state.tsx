@@ -1,4 +1,4 @@
-import {createContext, ReactElement, useContext, useEffect, useRef, useState} from 'react'
+import {createContext, MutableRefObject, ReactElement, useContext, useEffect, useRef, useState} from 'react'
 import {useAppContext} from 'context/state'
 import UnitRepository from 'data/repositories/UnitRepository'
 import {IUnitIndex} from 'data/interfaces/IUnitIndex'
@@ -17,21 +17,12 @@ interface IState {
   filter: IndexFilterFormData
   setFilter: (filter: IndexFilterFormData) => Promise<boolean>
   setFilterCategories: (categories: number[]) => void
+  unitsSectionRef: MutableRefObject<HTMLDivElement>
+
 }
 
 
-const defaultValue: IState = {
-  unitIndex: null,
-  unitInitialIndex: null,
-  categories: [],
-  isLoaded: false,
-  isLoading: false,
-  filter: {},
-  setFilter: () => null,
-  setFilterCategories: () => null
-}
-
-const IndexPageContext = createContext<IState>(defaultValue)
+const IndexPageContext = createContext<Partial<IState>>({})
 
 interface Props {
   children: ReactElement | ReactElement[]
@@ -46,9 +37,9 @@ export function IndexPageWrapper(props: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const filterRef = useRef<IndexFilterFormData>({})
+  const unitsSectionRef = useRef<HTMLDivElement>(null!)
 
   const fetchUnitIndex = async (refreshInit: boolean = false) => {
-    
     await UnitRepository.fetchUnitIndex({ location: appContext.currentLocation, ...filterRef.current, ...filter, regionId: 7 })
     .then(i => {
       if(!unitInitialIndex ||refreshInit) {
@@ -74,6 +65,15 @@ export function IndexPageWrapper(props: Props) {
     setIsLoading(false)
   }
 
+  const setFilter = async (filter: IndexFilterFormData): Promise<boolean> => {
+    filterRef.current = filter
+    setFilterState(filter)
+    setIsLoading(true)
+    await fetchUnitIndex()
+    setIsLoading(false)
+    return true
+  }
+
   useEffect(() => {
     if(appContext.initialLoaded) {
       init()
@@ -87,22 +87,16 @@ export function IndexPageWrapper(props: Props) {
   }, [filter])
 
   const value: IState = {
-    ...defaultValue,
     categories,
     unitIndex,
     unitInitialIndex,
     filter,
     isLoaded,
     isLoading,
-    setFilter: async (filter: IndexFilterFormData): Promise<boolean> => {
-      filterRef.current = filter
-      setFilterState(filter)
-      setIsLoading(true)
-      await fetchUnitIndex()
-      setIsLoading(false)
-      return true
-    },
-    setFilterCategories
+    setFilter,
+    setFilterCategories,
+    unitsSectionRef
+
   }
 
   return (

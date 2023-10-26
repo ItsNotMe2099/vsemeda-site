@@ -240,18 +240,21 @@
   .textarea {
     min-height: 100px;
     margin-top: 16px;
+    max-height: 300px;
   }
 }
 
 .submitButton {
   margin-top: auto;
   width: 100%;
-  max-width: 400px;
+  // max-width: 400px;
   padding: 16px;
   align-self: center;
   background-color: $green;
   border-radius: 16px;
   font-weight: 600;
+  cursor: pointer;
+  width: 100%;
 }
 
 .loader {
@@ -261,3 +264,4 @@
   transform: translate(-50%, -50%);
   z-index: 4;
 }
+

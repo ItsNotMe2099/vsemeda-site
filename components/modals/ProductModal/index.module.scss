@@ -163,6 +163,7 @@
   margin-top: 24px;
   margin-inline: 16px;
   max-height: clamp(125px, 30vh, 260px);
+  min-height: 120px;
   @include mq($PhoneWidth, max) {
     max-height: unset;
     height: unset !important;

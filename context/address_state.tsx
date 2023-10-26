@@ -85,7 +85,7 @@ export function AddressWrapper(props: Props) {
     }
     else{
       const address = await createLoc(data)
-      appContext.setUserAddresses(state=> {return [...state, address]})
+      appContext.setUserAddresses(state=> [...state, address])
       appContext.setCurrentAddress(address)
     }
   }

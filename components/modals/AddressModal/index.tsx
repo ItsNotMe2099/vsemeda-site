@@ -42,7 +42,7 @@ const AddressFormModalInner = (props: Props) => {
   const header = (<div/>)
   const [geoObject, setGeoObject] = useState<GeoObject>()
   const args = appContext.modalArguments as AddressFormModalArguments
-  const [location, setLocation] = useState<YMapLocationRequest | null>({center: [(appContext?.currentAddress?.location?.lng||args?.address?.location?.lng||undefined) , (appContext?.currentAddress?.location?.lat||args?.address?.location?.lat||undefined) ], zoom: 10})
+  const [location, setLocation] = useState<YMapLocationRequest | null>({center: [(appContext?.currentAddress?.location?.lng||args?.address?.location?.lng||undefined) , (appContext?.currentAddress?.location?.lat||args?.address?.location?.lat||undefined) ], zoom: 14})
 
 
 
@@ -50,7 +50,7 @@ const AddressFormModalInner = (props: Props) => {
     if(args?.address){
       setAddressFormShown(true)
       setAddressStr(args.address.address)
-      setLocation({center: [args.address.location.lng, args.address.location.lat], zoom: 10})
+      setLocation({center: [args.address.location.lng, args.address.location.lat], zoom: 19})
     }
   }, [args])
   
@@ -101,6 +101,7 @@ const AddressFormModalInner = (props: Props) => {
         <AddressForm 
         isMobile={isTabletWidth} 
         editedAddressString={addressStr} 
+        editedAddress={geoObject}
         initialAddress={args?.address ? args.address  : geoObject&&Converter.convertGeoObjectToUserAddress(geoObject)} 
         />
       }
@@ -119,7 +120,7 @@ const AddressFormModalInner = (props: Props) => {
           </div>
         }
         <div className={styles.placemark}><MarkerSvg/></div>
-        {confirmShown && !!!args?.address &&  <AddressFormConfirm address={addressStr} onConfirm={handleConfirm}/>}
+        {confirmShown && !addressFormShown && args?.address?.address !== addressStr &&  <AddressFormConfirm address={addressStr} onConfirm={handleConfirm}/>}
       </div>
     </div>
   )

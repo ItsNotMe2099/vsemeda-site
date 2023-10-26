@@ -203,13 +203,14 @@ export default function AddressField(props: Props) {
     }
     setTimeout(( ) => {
       setIsExpanded(true)
-      inputRef.current.focus()
+      inputRef.current?.focus()
     }, 400)
     props.onEditClick()
   }
 
   const removeString = () => {
     helpers.setValue('')
+    handleEdit()
   }
 
   const hasError = !!meta.error && meta.touched

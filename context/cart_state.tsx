@@ -266,7 +266,6 @@ export function CartWrapper(props: Props) {
   }
 
   const clear = async () => {
-    
     await CartRepository.clear()
     clearCartState()
   }

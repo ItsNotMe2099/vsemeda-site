@@ -11,6 +11,7 @@ import { useAddressContext } from 'context/address_state'
 import { useEffect, useState } from 'react'
 import { ModalType, SnackbarType } from 'types/enums'
 import TrashBasketSvg from 'components/svg/TrashBasketSvg'
+import { GeoObject } from 'data/interfaces/IYandexGeocoder'
 
 export interface AddressFormModalArguments {
   address: IUserAddress
@@ -20,6 +21,7 @@ interface Props {
   initialAddress?: IUserAddress
   editedAddressString?: string
   isMobile?: boolean
+  editedAddress?: GeoObject
 }
 
 export default function AddressForm(props: Props) {
@@ -114,7 +116,7 @@ export default function AddressForm(props: Props) {
           <div className={styles.addressDetails}>
             {props.initialAddress && <div className={styles.address}>
               <div className={styles.addressLabel}>Адрес Доставки:</div>
-              <div className={styles.addressValue}>{props.editedAddressString||props.initialAddress?.address}</div>
+              <div className={styles.addressValue}>{props.editedAddress?props.editedAddress.description + ', ' + props.editedAddress.name :props.initialAddress?.city + ', ' + (props.editedAddressString||props.initialAddress?.address)}</div>
             </div>}
             <div className={styles.address}>
               <div className={styles.addressLabel}>Уточнения:</div>

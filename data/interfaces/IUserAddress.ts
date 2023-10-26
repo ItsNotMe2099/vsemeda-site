@@ -12,5 +12,4 @@ export interface IUserAddress {
   intercomCode?: string
   comment?: string
   location?: ILocation
-
 }

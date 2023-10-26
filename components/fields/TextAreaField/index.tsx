@@ -18,7 +18,8 @@ const TextAreaInner = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement> 
 interface Props extends IField<string> {
   autoSize?: boolean
   color: 'white' | 'purple'
-  areaClassname? : string
+  areaClassname?: string
+  className?: string
   maxlength?: number
 }
 
@@ -29,7 +30,7 @@ export default function TextAreaField(props: Props) {
   const showError = meta.touched && !!meta.error
 
   return (
-    <div className={styles.root} ref={ref} data-field={props.name}>
+    <div className={classNames(styles.root, props.className)} ref={ref} data-field={props.name}>
       <TextAreaInner
         {...field}
         autoSize={props.autoSize}

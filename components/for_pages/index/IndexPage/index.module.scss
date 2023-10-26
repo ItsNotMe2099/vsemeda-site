@@ -10,6 +10,7 @@
   border-top-left-radius: 30px;
   position: relative;
   margin-top: -100px;
+  min-height: 500px;
   @include mq($TabletWidth, max) {
     padding: 48px 24px 90px 24px;
   }

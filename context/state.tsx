@@ -13,11 +13,11 @@ import {ILocation} from 'data/interfaces/ILocation'
 import {ICart} from 'data/interfaces/ICart'
 import CartRepository from 'data/repositories/CartRepository'
 import UserAddressRepository from 'data/repositories/UserAddressRepository'
-import { writeStorage} from '@rehooks/local-storage'
+import { writeStorage, deleteFromStorage, useLocalStorage } from '@rehooks/local-storage'
 import {useCookies} from 'react-cookie'
 import CookiesUtils from 'utils/CookiesUtils'
 import {IRegion} from 'data/interfaces/IRegion'
-import { useCartContext } from './cart_state'
+
 // import deleteAllCookies from 'utils/deleteCookie'
 
 interface IState {
@@ -114,7 +114,6 @@ interface Props {
 }
 
 export function AppWrapper(props: Props) {
-  const cartContext = useCartContext()
   const [modal, setModal] = useState<ModalType | null>(null)
   const [modalArguments, setModalArguments] = useState<any>(null)
   const [bottomSheet, setBottomSheet] = useState<ModalType | null>(null)
@@ -132,7 +131,8 @@ export function AppWrapper(props: Props) {
   const [isLogged, setIsLogged] = useState<boolean>(false)
   const userRef = useRef<IUser | null>(null)
   const regions: IRegion[] = []
-  const [addresses, setUserAddresses] = useState<IUserAddress[]>([])
+  const addressesLocal = useLocalStorage<IUserAddress[]>(LocalStorageKey.addresses)
+  const [addresses, setUserAddresses] = useState<IUserAddress[]>(addressesLocal[0]&&addressesLocal[0].length > 0?addressesLocal[0]:[])
 
   const [isMobile, setIsMobile] = useState<boolean>(props.isMobile)
   const [region, setRegion] = useState<IRegion | null>(regions[0])
@@ -141,18 +141,19 @@ export function AppWrapper(props: Props) {
 
   const setCurrentAddress = (address: IUserAddress) => {
     if(!address) {
-      console.error('address is not provided')
+      console.error('Error trying to set current address: address is not provided')
       return
     }
 
     if(addresses.length === 0) {
       setUserAddresses([address])
+      writeStorage<string>(LocalStorageKey.addresses, JSON.stringify([address]))
     }
     setCurrentAddressState(address)
-    if(userLoaded) {
+    if(userLoaded && isLogged) {
       UserRepository.updateUser({currentAddressId: Number(address.id)})
     }
-    
+
     writeStorage<string>(LocalStorageKey.currentAddressId, address?.id)
     Cookies.set(CookiesType.address, CookiesUtils.encodeJson(address))
     currentAddressState$.next(address)
@@ -198,12 +199,13 @@ export function AppWrapper(props: Props) {
     })
     setTokenState(newToken)
     if (!oldToken && newToken) {
+      
       loginState$.next(true)
       const newUser = await updateUser()
       const savedAddresses = addresses.length>0?addresses:currentAddress?[currentAddress]:[]
       const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [...savedAddresses, ...newUser?.addresses])
       const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]||currentAddress) || newUser.addresses[0]
-      const currentAddressToSave = savedAddresses.length === 0?newUser.addresses.find(a=> +a.id === +newUser.currentAddressId):newCurrentAddress
+      const currentAddressToSave = newUser.addresses.find(a=> +a.id === +newUser.currentAddressId)||newCurrentAddress
       setCurrentAddress(currentAddressToSave)
       if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
         setUserAddresses(a=> {
@@ -228,10 +230,12 @@ export function AppWrapper(props: Props) {
 
   const logout = () => {
     Cookies.remove(CookiesType.accessToken)
+    Cookies.remove(CookiesType.sessionId)
     // Cookies.remove(CookiesType.accessToken)
     // deleteAllCookies()
     // setCurrentAddress(null)
-    setUserAddresses([])
+    // Cookies.set(CookiesType.address, CookiesUtils.encodeJson({...currentAddress, id: uuidv4()}))
+    setUserAddresses([currentAddress])
     setIsLogged(false)
     setUser(null)
     loginState$.next(false)
@@ -278,7 +282,14 @@ export function AppWrapper(props: Props) {
     }, 2000)
   }
 
-
+  useEffect(()=>{
+    if(!isLogged) {
+      writeStorage<string>(LocalStorageKey.addresses, JSON.stringify(addresses))
+    }
+    else {
+      deleteFromStorage(LocalStorageKey.addresses)
+    }
+  }, [addresses, isLogged])
 
   useEffect(() => {
     userRef.current = user

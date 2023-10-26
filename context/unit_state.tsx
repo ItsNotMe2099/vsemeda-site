@@ -106,7 +106,13 @@ export function UnitWrapper(props: Props) {
         UnitRepository.fetchByBrandSlug(props.brandSlug, {...(appContext.currentLocation ?? {}),  regionId: 7}),
         UnitRepository.fetchMenuByBrandSlug(props.brandSlug, {...(appContext.currentLocation ?? {})})
       ])
-      setUnit(unit)
+      const unitDetails =  await UnitRepository.fetchUnitDetails(unit.id, appContext.currentLocation)
+      .then(res=> {
+        return res
+      })
+      .catch(err => unit)
+
+      setUnit(unitDetails||unit)
       setMenu(menu)
     }
     catch(err) {

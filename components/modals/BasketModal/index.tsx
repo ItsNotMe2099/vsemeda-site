@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react'
 import { ModalType } from 'types/enums'
 import TrashBasketSvg from 'components/svg/TrashBasketSvg'
 import IconButton from 'components/ui/IconButton'
+import { useResize } from 'components/hooks/useResize'
 
 
 interface Props {
@@ -27,13 +28,13 @@ interface Props {
 }
 
 export default function BasketModal(props: Props) {
-
+  const cartContext = useCartContext()
+  const appContext = useAppContext()
+  const {isTabletWidth} = useResize()
+  
   const handleCloseClick = () => {
     props.onRequestClose()
   }
-
-  const cartContext = useCartContext()
-  const appContext = useAppContext()
 
   const [iframeSrc, setIframeSrc] = useState<string>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -57,7 +58,6 @@ export default function BasketModal(props: Props) {
   )
 
   useEffect(()=>{
-    
     if(iframeSrc) {
       appContext.showModal(ModalType.IFrame, iframeSrc)
     }
@@ -67,7 +67,12 @@ export default function BasketModal(props: Props) {
     ? <BasketEmpty/>
     : (<>
         <div className={styles.content}>
-          <div className={styles.title}>Ваш заказ 🤝</div>
+          <div className={styles.title}>
+            <p>Ваш заказ 🤝</p>
+            {!isTabletWidth &&
+              <IconButton className={styles.clearBasket} onClick={clearBasket}  bgColor={'white'}><TrashBasketSvg color={colors.purple}/></IconButton>
+            }
+          </div>
           <BasketAddressDetails/>
           <BasketReceipt/>
         </div>

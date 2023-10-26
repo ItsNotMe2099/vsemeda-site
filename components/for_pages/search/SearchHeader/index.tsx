@@ -1,3 +1,4 @@
+import styles from './index.module.scss'
 import useThrottleFn from '@react-cmpt/use-throttle/lib/useThrottleFn'
 import classNames from 'classnames'
 import CloseCircleSvg from 'components/svg/CloseCircle'
@@ -7,7 +8,6 @@ import { ISearchBrandsRequest } from 'data/interfaces/ISearchBrandsRequest'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { colors } from 'styles/variables'
-import styles from './index.module.scss'
 
 interface Props {
   onChange?: (data: ISearchBrandsRequest)=> void
@@ -19,9 +19,7 @@ interface Props {
 export default function SearchHeader(props: Props) {
 
   const appState = useAppContext()
-
   const router = useRouter()
-
   const [inputValue, changeInputValue] = useState<string>(props.inputValue||'')
 
   //TODO: вынести дебаунс наверх

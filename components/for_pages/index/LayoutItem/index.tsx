@@ -1,5 +1,4 @@
 import styles from './index.module.scss'
-import { useEffect } from 'react'
 import {IViewLayoutItem} from 'data/interfaces/IViewLayout'
 import {ViewTemplateItemType} from 'data/enum/ViewTemplateItemType'
 import PromoSlider from 'components/for_pages/Common/PromoSlider'
@@ -11,9 +10,6 @@ interface Props{
 export default function LayoutItem(props: Props) {
 
 
-  useEffect(() => {
-
-  }, [])
   const body = () => {
     switch (props.item.type){
       case ViewTemplateItemType.SliderPromo:

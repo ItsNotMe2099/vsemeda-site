@@ -4,13 +4,13 @@
 .searchHeader {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0px 0px ;
     background-color: transparent;
     transition: .2s linear;
     margin: 22px 12px;
     border-radius: 16px;
     max-width: 600px;
+    column-gap: 18px;
 
     &_active {
         padding: 10px 12px;

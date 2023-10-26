@@ -92,7 +92,7 @@ const YandexMap: React.FC<React.PropsWithChildren<IMapProps>> = ({ className, ne
     // lon: number, lat: number, alt?: number]
     yMap.current = new YMap(mapRootNode.current, {
       // location: {center: [center.center[1], center.center[0]], zoom: center.zoom},
-      location: center.center[0]&&center||{center: [55.7522200, 37.6155600], zoom: 4},
+      location: center.center[0]&&center||{center: [55.7522200, 37.6155600], zoom: 10},
       behaviors: ['drag', 'scrollZoom', 'mouseTilt', 'mouseRotate'],
     })
 

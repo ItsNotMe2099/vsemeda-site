@@ -13,12 +13,13 @@ import FileRepository from 'data/repositories/FileRepository'
 import { Form, FormikProvider, useFormik } from 'formik'
 import { ChangeEvent,  useRef,  useState } from 'react'
 import { colors } from 'styles/variables'
-import { SnackbarType } from 'types/enums'
+import { ModalType, SnackbarType } from 'types/enums'
 import Formatter from 'utils/formatter'
 import OrderHelper from 'utils/orderHelper'
 import {v4 as uuidv4} from 'uuid'
 
 import styles from './index.module.scss'
+import Validator from 'utils/Validator'
 
 interface Props {
   onBack: ()=> void
@@ -64,11 +65,9 @@ export default function Complaint(props: Props) {
     const assetsIds = [...previewImages.map(el=>el.id)]
     ComplaintRepository.postComplaint({...data, assetsIds})
     .then(res=>{
-      appContext.hideModal()
+      appContext.showModal(ModalType.ComplaintEndModal)
     })
   }
-
-  
 
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -79,9 +78,7 @@ export default function Complaint(props: Props) {
       setPreviewImages(state=> [...state, {image: file, loaded: false, id, }])
 
       try{
-        
         (abortController as IAbortControllerWithId).id = id
-
         FileRepository.uploadFile(file, {signal: abortController.signal})
         .then(fl => {
           setPreviewImages(state=> {
@@ -119,11 +116,7 @@ export default function Complaint(props: Props) {
     </div>
   )
 
-
-
   const smallIcon = OrderHelper.smallOrderIcon(props.item.stateDetails.icon)
-  
-
   const [style, color] = OrderHelper.orderColor(props.item.stateDetails.color)
 
   const body = (
@@ -177,10 +170,14 @@ export default function Complaint(props: Props) {
         </div>
         <div className={styles.message}>
           <p className={styles.messageTitle}>Сообщение</p>
-          <TextAreaField name='text' color='white' autoSize={true} areaClassname={styles.textarea}  />
-          {/* <textarea className={styles.textarea} name="text" id="" cols={30} rows={6}></textarea> */}
+          <TextAreaField 
+          name='text' 
+          color='white' 
+          autoSize={true} 
+          areaClassname={styles.textarea}  
+          validate={Validator.required}
+          />
         </div>
-          
       </div>
       <button className={styles.submitButton} type='submit'>Отправить</button>
       </Form>

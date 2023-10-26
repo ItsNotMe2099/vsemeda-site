@@ -6,4 +6,8 @@
   display: block;
   padding-inline: 70px;
   padding-top: 16px;
+  @include mq($TabletWidth, max) {
+    padding-inline: 10px;
+    padding-top: 50px;
+  }
 }

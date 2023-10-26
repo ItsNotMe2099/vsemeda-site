@@ -22,6 +22,10 @@ export default function Search(props: Props) {
   const abortControllerRef = useRef<AbortController | null>(null)
 
   const searchUnits = async (data: ISearchBrandsRequest) => {
+    if(data.search === '') {
+      setResults([])
+      return
+    }
     setLoading(true)
     if (abortControllerRef.current) {
       abortControllerRef.current.abort()

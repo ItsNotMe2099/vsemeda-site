@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   margin-top: 18px;
-  max-width: 181px;
+  // max-width: 181px;
 
   @include mq($PhoneWidth, max) {
     background-color: transparent;
