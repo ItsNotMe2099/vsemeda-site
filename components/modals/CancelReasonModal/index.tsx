@@ -52,7 +52,8 @@ export default function CancelReasonForm(props: Props) {
       })
     }
     catch (error: any) {
-      let errorMessage = error.toString()
+      debugger
+      let errorMessage = error.message
       if (error.response && error.response.data && error.response.data.message) {
         errorMessage = error.response.data.message
       }

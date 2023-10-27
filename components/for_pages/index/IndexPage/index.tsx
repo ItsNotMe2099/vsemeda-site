@@ -52,20 +52,21 @@ const IndexPageInner = (props: Props) => {
         </IndexHeader>
 
           <div className={styles.body}>
-            {indexPageContext.unitIndex?.units.length > 0 && 
-            <>
+            {layoutItemBestOffers.units.length > 0 && 
               <VisibleOnSize width={breakpoints.PhoneWidth} minSize>
                 <Filter onFilterButtonClick={onFilterButtonClick} />
               </VisibleOnSize>
+            }
+
 
               <VisibleOnSize width={breakpoints.PhoneWidth}>
               <FilterBtn  onFilterButtonClick={onFilterButtonClick}/>
               </VisibleOnSize>
 
+            {indexPageContext.unitIndex?.units.length > 0 && 
               <VisibleOnSize width={breakpoints.PhoneWidth}>
                 <UnitSlider units={layoutItemBestOffers.units} isMobile />
               </VisibleOnSize>
-            </>
             }
 
             {indexPageContext.isLoading && <div className={styles.loading}>Загружается</div>}

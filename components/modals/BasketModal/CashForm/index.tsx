@@ -66,10 +66,16 @@ export default function CashForm(props: Props) {
     cartContext.setNeedMoneyChange(data)
   }, [formik.values.needMoneyChange])
 
+  useEffect(()=>{
+    if(!formik.values.needMoneyChange) {
+      cartContext.update({moneyChange: 0})
+      formik.setValues({moneyChange: 0, needMoneyChange: false})
+    }
+  }, [formik.values.needMoneyChange])
+
   return (
     <FormikProvider value={formik}>
       <Form className={styles.root}>
-        {/* <Spacer basis={20}/> */}
         <PaymentMethodItem item={{label: 'Наличными', icon: <CashSvg color='#61D56E'/>}} ></PaymentMethodItem>
         <SwitchField 
         label={formik.values.needMoneyChange ? 'Нужна сдача из:' : 'Нужна сдача?'} 
@@ -80,7 +86,6 @@ export default function CashForm(props: Props) {
         />
         {/* {formik.values.needMoneyChange && <><Spacer basis={15}/> */}
         {cartContext.needMoneyChange && <>
-        {/* <Spacer basis={15}/> */}
         <div className={styles.moneyChangeForm}>
           <InputField
             className={styles.input}
@@ -91,7 +96,6 @@ export default function CashForm(props: Props) {
             isNumbersOnly
             validate={Validator.combine([Validator.required, minMoneyChange])}/>
         </div>
-        {/* <Spacer basis={20}/> */}
         <div className={styles.bottom}>
           <div className={styles.label}>
             Сдача:

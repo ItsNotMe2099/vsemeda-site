@@ -198,8 +198,8 @@ export function AppWrapper(props: Props) {
       expires: CookiesLifeTime.accessToken,
     })
     setTokenState(newToken)
+
     if (!oldToken && newToken) {
-      
       loginState$.next(true)
       const newUser = await updateUser()
       const savedAddresses = addresses.length>0?addresses:currentAddress?[currentAddress]:[]
@@ -218,8 +218,8 @@ export function AppWrapper(props: Props) {
         currentAddressState$.next(newCurrentAddress)
       }
       loginUserState$.next(user)
-
     }
+    
     if (oldToken && !newToken) {
       loginState$.next(false)
       loginUserState$.next(null)
