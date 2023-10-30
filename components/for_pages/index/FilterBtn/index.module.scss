@@ -1,4 +1,4 @@
-@import "../../../../styles/index";
+@import "styles/index";
 
 .root {
   background: #FCFBFE;
@@ -14,13 +14,22 @@
   top: -30px;
   right: 24px;
   cursor: pointer;
+    @include mq($TabletWidth, min) {
+    display: none;
+  }
 
   svg {
     width: 24px;
     height: 24px;
   }
+}
 
-  @include mq($TabletWidth, min) {
-    display: none;
-  }
+.filtersActive {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $red;
 }

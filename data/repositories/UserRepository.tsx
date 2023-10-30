@@ -50,4 +50,15 @@ export default class UserRepository {
     return res
   }
 
+  static async deleteUser(): Promise<any|null> {
+    const res = await request({
+      method: 'delete',
+      url: '/api/user',
+    })
+    if(res.err) {
+      return null
+    }
+    return res
+  }
+
 }

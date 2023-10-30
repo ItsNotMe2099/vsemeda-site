@@ -1,4 +1,5 @@
 import styles from './index.module.scss'
+
 import {colors} from 'styles/variables'
 import BottomSheetLayout from 'components/layout/BottomSheet/BottomSheetLayout'
 import ModalLayout from 'components/layout/Modal/ModalLayout'
@@ -50,11 +51,12 @@ export default function IndexFilterModal(props: Props) {
 
   const submit = async (data: IndexFilterFormData) => {
     try {
+      debugger
       setLoading(true)
       indexPageContext.setFilter(data)
       isPhoneWidth?appContext.hideBottomSheet():appContext.hideModal()
       props.onRequestClose()
-      indexPageContext.unitsSectionRef.current.scrollIntoView()
+      indexPageContext.unitsSectionRef.current.scrollIntoView({inline: 'nearest'})
       
       setLoading(false)
     } catch (err: any) {

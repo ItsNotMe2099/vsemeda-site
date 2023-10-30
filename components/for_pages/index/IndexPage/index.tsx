@@ -1,4 +1,5 @@
 import styles from './index.module.scss'
+
 import {ViewTemplateItemType} from 'data/enum/ViewTemplateItemType'
 import Layout from 'components/layout/Layout'
 import {useIndexPageContext} from 'context/index_page_state'
@@ -58,10 +59,9 @@ const IndexPageInner = (props: Props) => {
               </VisibleOnSize>
             }
 
-
-              <VisibleOnSize width={breakpoints.PhoneWidth}>
+            <VisibleOnSize width={breakpoints.PhoneWidth}>
               <FilterBtn  onFilterButtonClick={onFilterButtonClick}/>
-              </VisibleOnSize>
+            </VisibleOnSize>
 
             {indexPageContext.unitIndex?.units.length > 0 && 
               <VisibleOnSize width={breakpoints.PhoneWidth}>
@@ -69,18 +69,19 @@ const IndexPageInner = (props: Props) => {
               </VisibleOnSize>
             }
 
-            {indexPageContext.isLoading && <div className={styles.loading}>Загружается</div>}
-            {indexPageContext.unitIndex?.units.length > 0 && (layoutItems ?? []).map(item => <LayoutItem item={item}/>)}
+            {indexPageContext.isLoading && 
+              <div className={styles.loading}>Загружается</div>
+            }
+
+            {indexPageContext.unitIndex?.units.length > 0 && (layoutItems ?? []).map(item => 
+              <LayoutItem item={item}/>)
+            }
             
-            {!indexPageContext.isLoading && indexPageContext.unitIndex?.units.length > 0 && <UnitList
-              units={indexPageContext.unitIndex.units} />
-            }
-            {indexPageContext.unitIndex?.units.length === 0 && Object.keys(indexPageContext.filter).length > 0 &&
-              <p className={styles.empty}>По вашему запросу ничего не найдено</p>
-              ||
-              indexPageContext.unitIndex?.units.length === 0 && Object.keys(indexPageContext.filter).length == 0 &&
-              <p className={styles.empty}>Адрес не обслуживается</p>
-            }
+            {/* {!indexPageContext.isLoading && indexPageContext.unitIndex?.units.length > 0 &&  */}
+              <UnitList units={indexPageContext.unitIndex.units} />
+            {/* } */}
+
+        
           </div>
             
         </>}

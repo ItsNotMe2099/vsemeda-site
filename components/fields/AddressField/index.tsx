@@ -1,4 +1,5 @@
 import styles from './index.module.scss'
+
 import {useField, useFormikContext} from 'formik'
 import cx from 'classnames'
 import {ChangeEventHandler, KeyboardEventHandler, useEffect, useRef, useState} from 'react'
@@ -46,13 +47,7 @@ export default function AddressField(props: Props) {
 
   const ymapRef = useRef<YMap | null>(null)
   const [isEditMode, setIsEditMode] = useState(false)
-
-  useEffect(() => {
-    if (typeof ymaps3 === 'undefined') return
-    ymaps3.ready.then(i => {
-      ymapRef.current = ymaps3 as any as YMap
-    })
-  }, [])
+ 
 
   const {styles: popperStyles, attributes, forceUpdate, update} = usePopper(referenceElement, popperElement, {
     strategy: props.popperStrategy ?? 'absolute',
@@ -69,7 +64,6 @@ export default function AddressField(props: Props) {
         },
       },
       popperSameWidth as any
-
     ]
   })
 
@@ -177,10 +171,6 @@ export default function AddressField(props: Props) {
     callback(value)
   }
 
-  useEffect(()=>{
-    helpers.setValue(props.value)
-  }, [props.value])
-
   const handleSuggestionClick = async (suggestion: IYandexSuggestItem) => {
     cancelBlur()
     refIsFromClick.current = true
@@ -213,13 +203,24 @@ export default function AddressField(props: Props) {
     handleEdit()
   }
 
+  useEffect(()=>{
+    helpers.setValue(props.value)
+  }, [props.value])
+
+  useEffect(() => {
+    if (typeof ymaps3 === 'undefined') return
+    ymaps3.ready.then(i => {
+      ymapRef.current = ymaps3 as any as YMap
+    })
+  }, [])
+
   const hasError = !!meta.error && meta.touched
 
   return (
     <div className={cx(styles.root, {
       [styles.hasError]: !!meta.error && meta.touched,
     }, props.className)}>
-      <div className={classNames(styles.field, {[styles.opened]: isActive, [styles.disabled]: !isEditMode}, suggestions.length > 0&&styles.suggestions)}  ref={(ref) => {
+      <div className={classNames(styles.field, {[styles.opened]: isActive, [styles.disabled]: !isEditMode}, suggestions.length > 0 && field.value.length > 0 && isActive && styles.suggestions)}  ref={(ref) => {
         dropdownRef.current = ref
         setReferenceElement(ref)
       }} >
@@ -241,7 +242,7 @@ export default function AddressField(props: Props) {
         <IconButton className={styles.removeString} onClick={()=>removeString()} bgColor={'transparent'}><CloseCircleSvg color={colors.grey3}/></IconButton>
       </div>
 
-      {isExpanded &&  suggestions.length > 0 && 
+      {isExpanded && suggestions.length > 0 &&
       <div 
       className={classNames(styles.dropDown, {[styles.opened]: isActive})} 
       ref={setPopperElement}

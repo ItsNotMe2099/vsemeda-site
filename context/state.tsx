@@ -56,55 +56,20 @@ interface IState {
   showOverlay: () => void
   hideOverlay: () => void
   regionSlug: string
+  deleteUser: () => void
 }
-
 
 const ModalsBottomSheet: ModalType[] = [
 
 ]
+
 const loginState$ = new Subject<boolean>()
 const loginUserState$ = new Subject<IUser | null>()
 const cartState$ = new Subject<ICart | null>()
 const currentAddressState$ = new Subject<IUserAddress | null>()
-const defaultValue: IState = {
-  isLogged: false,
-  isMobile: false,
-  isDesktop: true,
-  region: null,
-  currentAddress: null,
-  currentLocation: null,
-  addresses: [],
-  setUserAddresses: null,
-  modalNonSkippable: false,
-  modal: null,
-  modalArguments: null,
-  bottomSheet: null,
-  snackbar: null,
-  user: null,
-  initialLoaded: false,
-  updateRegion: () => null,
-  setCurrentAddress: (address: IUserAddress) => null,
-  loginState$: loginState$,
-  loginUserState$: loginUserState$,
-  cartState$: cartState$,
-  currentAddressState$: currentAddressState$,
-  setModalNonSkippable: (val) => null,
-  showModal: (type) => null,
-  showBottomSheet: (type) => null,
-  hideModal: () => null,
-  hideBottomSheet: () => null,
-  showSnackbar: (text, type) => null,
-  setToken: async (token) => null,
-  token: null,
-  logout: () => null,
-  updateUser: () => null,
-  isOverlayShown: false,
-  showOverlay: () => null,
-  hideOverlay: () => null,
-  regionSlug: ''
-}
 
-const AppContext = createContext<IState>(defaultValue)
+
+const AppContext = createContext<Partial<IState>>({})
 
 interface Props {
   children: React.ReactNode
@@ -144,16 +109,17 @@ export function AppWrapper(props: Props) {
       console.error('Error trying to set current address: address is not provided')
       return
     }
-
     if(addresses.length === 0) {
       setUserAddresses([address])
       writeStorage<string>(LocalStorageKey.addresses, JSON.stringify([address]))
     }
+    
     setCurrentAddressState(address)
+
     if(userLoaded && isLogged) {
       UserRepository.updateUser({currentAddressId: Number(address.id)})
     }
-
+    
     writeStorage<string>(LocalStorageKey.currentAddressId, address?.id)
     Cookies.set(CookiesType.address, CookiesUtils.encodeJson(address))
     currentAddressState$.next(address)
@@ -174,7 +140,6 @@ export function AppWrapper(props: Props) {
     }
     router.push(`/${region?.slug}`)
   }
-  
 
   const updateUser = async (newUser?: IUser): Promise<IUser> => {
     if (newUser) {
@@ -200,13 +165,16 @@ export function AppWrapper(props: Props) {
     setTokenState(newToken)
 
     if (!oldToken && newToken) {
+      debugger
       loginState$.next(true)
       const newUser = await updateUser()
       const savedAddresses = addresses.length>0?addresses:currentAddress?[currentAddress]:[]
-      const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id||newUser?.addresses[0]?.id, [...savedAddresses, ...newUser?.addresses])
-      const newCurrentAddress = (newUser?.addresses&&newUser?.addresses?.find(i => i.id === syncAddressRes.newCurrentAddressId)) || (user?.addresses.length > 0 && user?.addresses[0]||currentAddress) || newUser.addresses[0]
-      const currentAddressToSave = newUser.addresses.find(a=> +a.id === +newUser.currentAddressId)||newCurrentAddress
-      setCurrentAddress(currentAddressToSave)
+
+      const syncAddressRes = await UserAddressRepository.sync(currentAddress?.id/*||newUser?.addresses[0]?.id*/, [...savedAddresses, ...newUser?.addresses])
+      const updatedUser = await updateUser()
+      const newCurrentAddress = (updatedUser?.addresses&&updatedUser?.addresses?.find(i => syncAddressRes?.newCurrentAddressId?i.id === syncAddressRes?.newCurrentAddressId:i.id===updatedUser.currentAddressId.toString())) || (user?.addresses.length > 0 && user?.addresses[0]||currentAddress) || newUser.addresses[0]
+      // const currentAddressToSave = updatedUser.addresses.find(a=> +a.id === +newUser.currentAddressId)||newCurrentAddress
+      setCurrentAddress(newCurrentAddress)
       if(user?.addresses || addresses.length > 0||newUser.addresses.length > 0) {
         setUserAddresses(a=> {
           return [...newUser?.addresses, ...savedAddresses]
@@ -219,28 +187,22 @@ export function AppWrapper(props: Props) {
       }
       loginUserState$.next(user)
     }
-    
+
     if (oldToken && !newToken) {
       loginState$.next(false)
       loginUserState$.next(null)
     }
-
     setIsLogged(true)
   }
 
   const logout = () => {
     Cookies.remove(CookiesType.accessToken)
     Cookies.remove(CookiesType.sessionId)
-    // Cookies.remove(CookiesType.accessToken)
-    // deleteAllCookies()
-    // setCurrentAddress(null)
-    // Cookies.set(CookiesType.address, CookiesUtils.encodeJson({...currentAddress, id: uuidv4()}))
     setUserAddresses([currentAddress])
     setIsLogged(false)
     setUser(null)
     loginState$.next(false)
   }
-  
   
 
   const showBottomSheet = (type: ModalType, props?: any) => {
@@ -280,6 +242,17 @@ export function AppWrapper(props: Props) {
     setTimeout(() => {
       setSnackbar(null)
     }, 2000)
+  }
+
+  const deleteUser = () => {
+    UserRepository.deleteUser()
+    .then(res=> {
+      
+      logout()
+    })
+    .catch(err=> {
+      showSnackbar('Не удалось удалить пользователя', SnackbarType.error)
+    })
   }
 
   useEffect(()=>{
@@ -326,7 +299,12 @@ export function AppWrapper(props: Props) {
 
 
   const value: IState = {
-    ...defaultValue,
+    modalNonSkippable,
+    setModalNonSkippable,
+    loginState$: loginState$,
+    loginUserState$: loginUserState$,
+    cartState$: cartState$,
+    currentAddressState$: currentAddressState$,
     isMobile: isMobile,
     isDesktop: !props.isMobile,
     region: region,
@@ -359,7 +337,8 @@ export function AppWrapper(props: Props) {
     hideOverlay: () => {
       setIsOverlayShown(false)
     },
-    regionSlug: props.regionSlug
+    regionSlug: props.regionSlug,
+    deleteUser
   }
 
 
@@ -373,3 +352,41 @@ export function AppWrapper(props: Props) {
 export function useAppContext() {
   return useContext(AppContext)
 }
+
+// const defaultValue: Partial<IState> = {
+//   isLogged: false,
+//   isMobile: false,
+//   isDesktop: true,
+//   region: null,
+//   currentAddress: null,
+//   currentLocation: null,
+//   addresses: [],
+//   setUserAddresses: null,
+//   modalNonSkippable: false,
+//   modal: null,
+//   modalArguments: null,
+//   bottomSheet: null,
+//   snackbar: null,
+//   user: null,
+//   initialLoaded: false,
+//   updateRegion: () => null,
+//   setCurrentAddress: (address: IUserAddress) => null,
+//   loginState$: loginState$,
+//   loginUserState$: loginUserState$,
+//   cartState$: cartState$,
+//   currentAddressState$: currentAddressState$,
+//   setModalNonSkippable: (val) => null,
+//   showModal: (type) => null,
+//   showBottomSheet: (type) => null,
+//   hideModal: () => null,
+//   hideBottomSheet: () => null,
+//   showSnackbar: (text, type) => null,
+//   setToken: async (token) => null,
+//   token: null,
+//   logout: () => null,
+//   updateUser: () => null,
+//   isOverlayShown: false,
+//   showOverlay: () => null,
+//   hideOverlay: () => null,
+//   regionSlug: ''
+// }

@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { useAppContext } from 'context/state'
 import { ModalType } from 'types/enums'
 import { useAddressContext } from 'context/address_state'
+import { useResize } from 'components/hooks/useResize'
 
 interface Props {
   isMobile?: boolean
@@ -16,13 +17,16 @@ export default function HeaderAddress(props: Props) {
 
   const appContext = useAppContext()
   const addressContext = useAddressContext()
+  const {isTabletWidth} = useResize()
 
   const handleClick = () => {
     if(!appContext.isLogged && appContext.addresses.length === 0) {
       appContext.showModal(ModalType.AddressForm, {address: appContext.currentAddress})
     }
     else {
-      appContext.showModal(ModalType.AddressList)
+      isTabletWidth
+      ? appContext.showBottomSheet(ModalType.AddressList)
+      : appContext.showModal(ModalType.AddressList)
     }
   }
 

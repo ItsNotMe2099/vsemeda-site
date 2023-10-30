@@ -1,3 +1,4 @@
+
 export enum ModalType {
   AddressForm = 'addressForm',
   AddressList = 'addressList',
@@ -18,7 +19,8 @@ export enum ModalType {
   LeaveReview = 'leaveReview',
   Complaint= 'complaint',
   IFrame = 'iframe',
-  ComplaintEndModal = 'complaintEndModal'
+  ComplaintEndModal = 'complaintEndModal',
+  AlertModal = 'alertModal'
 }
 
 export enum SnackbarType {
@@ -36,7 +38,8 @@ export enum CookiesType {
 
 export enum LocalStorageKey {
   addresses = 'addresses',
-  currentAddressId = 'currentAddressId'
+  currentAddressId = 'currentAddressId',
+  filter = 'filter'
 }
 
 export enum Preset {

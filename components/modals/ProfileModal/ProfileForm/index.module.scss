@@ -7,8 +7,14 @@
   height: 100%;
 
   @include mq($TabletWidth, max) {
-    margin-top: 78px;
-    height: inherit;
+    margin-top: 28px;
+    height: unset;
+    row-gap: 16px;
+    max-height: calc(100% - 40px);
+    overflow: auto;
+    padding-bottom: 40px;
+    position: relative;
+    z-index: 3;  
   }
 }
 
@@ -52,9 +58,10 @@
   border-radius: 16px;
   position: relative;
   z-index: 1;
+  margin-top: auto;
 
   @include mq($PhoneWidth, max) {
-    margin-top: 64px;
+    margin-top: unset;
   }
 }
 
@@ -62,4 +69,21 @@
   display: flex;
   flex-direction: column;
   row-gap: 22px;
+}
+
+.deleteAcc {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  color: $white;
+  column-gap: 8px;
+  font-weight: 600;  
+  position: relative;
+  z-index: 3;
+  cursor: pointer;
+
+  @include mq($PhoneWidth, max) {
+    margin-top: unset;
+    justify-content: center;
+  }
 }

@@ -1,4 +1,5 @@
 import styles from './index.module.scss'
+
 import { colors } from 'styles/variables'
 import BottomSheetLayout from 'components/layout/BottomSheet/BottomSheetLayout'
 import ModalLayout from 'components/layout/Modal/ModalLayout'
@@ -9,7 +10,6 @@ import CartLine from 'components/modals/BasketModal/CartLine'
 import { useAppContext } from 'context/state'
 import PaymentSelect from 'components/modals/BasketModal/PaymentSelect'
 import PromoForm from 'components/modals/BasketModal/PromoForm'
-// import ModalHeader from 'components/layout/Modal/ModalHeader'
 import ModalBody from 'components/layout/Modal/ModalBody'
 import ModalFooter from 'components/layout/Modal/ModalFooter'
 import BasketAddressDetails from 'components/modals/BasketModal/BasketAddressDetails'
@@ -67,12 +67,7 @@ export default function BasketModal(props: Props) {
     ? <BasketEmpty/>
     : (<>
         <div className={styles.content}>
-          <div className={styles.title}>
-            <p>Ваш заказ 🤝</p>
-            {!isTabletWidth &&
-              <IconButton className={styles.clearBasket} onClick={clearBasket}  bgColor={'white'}><TrashBasketSvg color={colors.purple}/></IconButton>
-            }
-          </div>
+          <p className={styles.title}>Ваш заказ 🤝</p>
           <BasketAddressDetails/>
           <BasketReceipt/>
         </div>
@@ -103,7 +98,7 @@ export default function BasketModal(props: Props) {
       <ModalLayout fixed className={styles.modalLayout}>
         {/* {appContext.isMobile && <ModalHeader>{header}</ModalHeader>} */}
         <ModalBody fixed>
-          {appContext.isMobile && header}
+          {header}
           {body}
           </ModalBody>
         <ModalFooter fixed className={styles.footer}>{footer}</ModalFooter>

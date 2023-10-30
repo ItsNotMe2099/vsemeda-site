@@ -15,7 +15,7 @@ interface IState {
   create: (data: DeepPartial<IUserAddress>) => void
   refreshAddresses: ()=> Promise<boolean>
   update: (id: string, data: DeepPartial<IUserAddress>)  => Promise<boolean>
-  deleteAddress: (id: string) => Promise<IUserAddress>
+  deleteAddress: (id: string) => void
   setCurrentAddress: (address: IUserAddress) => void,
 }
 
@@ -113,6 +113,15 @@ export function AddressWrapper(props: Props) {
   }
 
   const deleteAddress = (id: string)  => {
+    if(id === appContext.currentAddress.id) {
+      
+      const addressesArray = [...appContext.addresses.entries()]
+      const previousCurrentAddressIndex = addressesArray.findIndex(([k, v]) => v.id===id)
+      const newCurrentAddress: [number, IUserAddress] = previousCurrentAddressIndex > 0
+        ? addressesArray[previousCurrentAddressIndex - 1]
+        : addressesArray[previousCurrentAddressIndex + 1]
+      appContext.setCurrentAddress(newCurrentAddress[1])
+    }
     if(appContext.isLogged){
       deleteReq(id).then(res=> {
         appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
@@ -120,10 +129,10 @@ export function AddressWrapper(props: Props) {
         refreshAddresses()
       })
     }else{
-      appContext.addresses.length>0&&appContext.setUserAddresses(a=> {return a.filter(f=> f.id !== id)})
+      appContext.addresses.length > 0&&appContext.setUserAddresses(a=> {return a.filter(f=> f.id !== id)})
       appContext.showSnackbar('Адрес успешно удален', SnackbarType.success)
       appContext.hideModal()
-      return deleteLoc(id)
+      // return deleteLoc(id)
     }
   }
 

@@ -8,7 +8,6 @@
   display: flex;
   justify-content: space-between;
   max-height: 75px;
-
   @include mq($TabletWidth, max) {
     overflow-x: auto;
     background-color: transparent;
@@ -19,9 +18,9 @@
     margin-right: -24px;
   }
 }
+
 .left{
   flex: 1;
-  // overflow: hidden;
 }
 
 .right {
@@ -81,4 +80,14 @@
       }
     }
   }
+}
+
+.filtersActive {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $red;
 }

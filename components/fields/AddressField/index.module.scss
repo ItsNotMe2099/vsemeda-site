@@ -21,8 +21,9 @@
 
   &.opened{
     border-radius: 16px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    z-index: 3;
+    // border-bottom-left-radius: 0px;
+    // border-bottom-right-radius: 0px;
     &:after{
       content: " ";
       position: absolute;
@@ -31,20 +32,17 @@
       right: 10px;
       bottom: 0px;
       background-color: $grey2;
-
     }
   }
-  &.suggestions {
-  
-  }
+
   &.disabled{
-    border-radius: 32px;
+    // border-radius: 32px;
     display: inline-flex;
     height: 38px;
     flex-grow: 0.00001;
-
-  background-color: rgb(113 112 112 / 78%);
+    background-color: rgb(113 112 112 / 78%);
     color: $grey5;
+
     .editLabel{
       padding-left: 12px;
     }
@@ -55,6 +53,17 @@
   }
 
 }
+
+.suggestions {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.dropDownOpened {
+  border-radius: 16px;
+
+}
+
 
 .removeString {
   margin-left: 8px;
@@ -80,17 +89,19 @@
   background-color: rgba(255,255,255,0.9);
   max-height: 200px;
   overflow-y: auto;
+  z-index: 2;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   box-shadow: none;
   filter: none;
   padding: 10px;
-  .message{
-    padding: 6px 18px;
-  }
   @include mq($TabletWidth, max) {
     transform: translateY(0) !important;
     top:  50px !important;
+  }
+
+  .message{
+    padding: 6px 18px;
   }
 }
 

@@ -5,6 +5,9 @@ import {IUnitIndex} from 'data/interfaces/IUnitIndex'
 import {ICategory} from 'data/interfaces/ICategory'
 import MenuRepository from 'data/repositories/MenuRepository'
 import {IndexFilterFormData} from 'types/form_data/IndexFilterFormData'
+import { writeStorage, useLocalStorage } from '@rehooks/local-storage'
+import { LocalStorageKey } from 'types/enums'
+
 // import UnitSlider from 'components/for_pages/Common/UnitSlider'
 // import { IViewLayoutItem } from 'data/interfaces/IViewLayout'
 
@@ -18,7 +21,7 @@ interface IState {
   setFilter: (filter: IndexFilterFormData) => Promise<boolean>
   setFilterCategories: (categories: number[]) => void
   unitsSectionRef: MutableRefObject<HTMLDivElement>
-
+  isFilterActive: () => boolean
 }
 
 
@@ -30,23 +33,27 @@ interface Props {
 
 export function IndexPageWrapper(props: Props) {
   const appContext = useAppContext()
+  const filterStorage = useLocalStorage<IndexFilterFormData>(LocalStorageKey.filter)
   const [categories, setCategories] = useState<ICategory[]>([])
   const [unitIndex, setUnitIndex] = useState<IUnitIndex>(null)
   const [unitInitialIndex, setUnitInitialIndex] = useState<IUnitIndex>()
-  const [filter, setFilterState] = useState<IndexFilterFormData>({})
+  const [filter, setFilterState] = useState<IndexFilterFormData>(filterStorage[0]||{})
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const filterRef = useRef<IndexFilterFormData>({})
   const unitsSectionRef = useRef<HTMLDivElement>(null!)
 
   const fetchUnitIndex = async (refreshInit: boolean = false) => {
-    await UnitRepository.fetchUnitIndex({ location: appContext.currentLocation, ...filterRef.current, ...filter, regionId: 7 })
-    .then(i => {
-      if(!unitInitialIndex ||refreshInit) {
-        setUnitInitialIndex(i)
-      }
-      setUnitIndex(i)
-    })
+    const indexElements = await UnitRepository.fetchUnitIndex({ location: appContext.currentLocation, regionId: 7})
+    if(!unitInitialIndex ||refreshInit) {
+      setUnitInitialIndex(indexElements)
+    }
+    setUnitIndex(indexElements)
+  }
+
+  const fetchUnitsFiltered = async () => {
+    const filteredUnits = await UnitRepository.fetchUnitIndex({location: appContext.currentLocation, ...filterRef.current, ...filter, regionId: 7})
+    setUnitIndex(filteredUnits)
   }
 
   const fetchCategories = async () => {
@@ -65,11 +72,22 @@ export function IndexPageWrapper(props: Props) {
     setIsLoading(false)
   }
 
+  const isFilterActive = ():boolean => {
+    let isExist: boolean = false
+    Object.values(filter).forEach(el=> {
+      if((Array.isArray(el) && el.length > 0) || (Number.isInteger(el) && el)) {
+        isExist = true
+      }
+    })
+    return isExist
+  } 
+
   const setFilter = async (filter: IndexFilterFormData): Promise<boolean> => {
     filterRef.current = filter
     setFilterState(filter)
+    writeStorage<IndexFilterFormData>(LocalStorageKey.filter, filter)
     setIsLoading(true)
-    await fetchUnitIndex()
+    await fetchUnitsFiltered()
     setIsLoading(false)
     return true
   }
@@ -81,10 +99,10 @@ export function IndexPageWrapper(props: Props) {
   }, [appContext.initialLoaded, appContext.currentLocation])
 
   useEffect(() => {
-    if(appContext.currentLocation) {
-      fetchUnitIndex()
+    if(appContext.currentLocation && unitInitialIndex) {
+      fetchUnitsFiltered()
     }
-  }, [filter])
+  }, [filter, unitInitialIndex])
 
   const value: IState = {
     categories,
@@ -95,7 +113,8 @@ export function IndexPageWrapper(props: Props) {
     isLoading,
     setFilter,
     setFilterCategories,
-    unitsSectionRef
+    unitsSectionRef,
+    isFilterActive
 
   }
 

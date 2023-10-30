@@ -18,6 +18,7 @@ import { IOrderCreateRequest } from 'data/interfaces/IOrderCreateRequest'
 import { Platform } from 'data/enum/Plaform'
 import OrderRepository from 'data/repositories/OrderRepository'
 import { useResize } from 'components/hooks/useResize'
+import { AlertModalProps } from 'components/modals/AlertModal'
 
 enum State {
   Closed = 'closed',
@@ -44,12 +45,6 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   const [loading, setLoading] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState(cartContext.cart?.paymentMethod)
   const currentEmail = useRef<string|undefined>('')
-
-  // useEffect(() => {
-  //   if (cartContext.cart?.paymentMethod) {
-  //     setPaymentMethod(cartContext.cart?.paymentMethod)
-  //   }
-  // }, [cartContext.cart?.paymentMethod])
   
   useEffect(()=>{
     if(paymentMethod !== cartContext.cart.paymentMethod) {
@@ -79,12 +74,8 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   })
 
   const createNewOrder = async () => {
-    props.setLoading(true)
-    /* TODO: добавить количество персон 
-    добавить правильное отображение предзаказа и его времени,
-    правильная работа свитчера бесконтактная оплата,
-    имя клиента    
-    */   
+    setLoading(true)
+
     const orderData: IOrderCreateRequest = {
       address: appContext.currentAddress,
       location: appContext.currentLocation,
@@ -101,11 +92,10 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
       isContactLessDelivery: cartContext.cart.isContactLessDelivery
     }
 
-    await OrderRepository.create(orderData)
+    OrderRepository.create(orderData)
     .then(res => {  
       cartContext.clear() 
-      // appContext.hideModal()
-      // appContext.hideBottomSheet()   
+      isPhoneWidth && appContext.hideModal()
       if(res.paymentMethod === PaymentMethod.CardOnline) {
         props.setSrc(res.paymentData.payUrl)
       } else {
@@ -159,11 +149,18 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
   }
 
   const submitButtonClickHandler = () => {
-    if((paymentMethod || cartContext.cart.paymentMethod) && appContext.isLogged) {
+    if((paymentMethod || cartContext.cart.paymentMethod) && appContext.isLogged && !cartContext?.cart?.pLayout?.isDisabled) {
       handleSubmit()
     }
     else if(!appContext.isLogged) {
       appContext.showModal(ModalType.Login)
+    }
+    else if(cartContext?.cart?.pLayout?.isDisabled) {
+      appContext.showModal(ModalType.AlertModal, 
+        { 
+          text: cartContext.cart.pLayout.disabledText,
+          buttonText: 'Принять'
+        } as AlertModalProps)
     }
     else {
       setState(state=> state === State.Opened?State.Closed:State.Opened)
@@ -211,7 +208,7 @@ const PaymentSelectInner = forwardRef<HTMLDivElement, Props & { style?: any, dis
 
       {[State.Opened, State.Closed].includes(state) &&
         <div className={styles.bottom}>
-          <PaymentButton onClick={()=> {submitButtonClickHandler()}} isAuth={appContext.isLogged} loading={loading}/>
+          <PaymentButton disabled={loading} onClick={()=> {submitButtonClickHandler()}} isAuth={appContext.isLogged} loading={loading}/>
         </div>
       }
     </div>

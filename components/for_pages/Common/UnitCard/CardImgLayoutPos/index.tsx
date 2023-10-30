@@ -32,9 +32,23 @@ export default function CardImgLayoutPos(props: Props) {
   const style = {...(bgColor ? {backgroundColor: layout?.bg.opacity ? Converter.hexToRgbA(bgColor, layout.bg.opacity) : layout.bg.color} : {})}
   switch (layout.type){
     case UnitCardLayoutPosItemsType.ListDot:
-      return <div className={classNames(styles.list, classes)} style={style}>{layout.items.map((item, index) => <><UnitCardLayoutItem key={index} color={props.color} item={item} size={size} unit={unit}/>{(index % 2 === 0 && index !== layout.items.length - 1) && <div className={styles.dot}/>}</>)}</div>
+      return (
+        <div className={classNames(styles.list, classes)} style={style}>
+          {layout.items.map((item, index) => <><UnitCardLayoutItem key={index} color={props.color} item={item} size={size} unit={unit}/>{(index % 2 === 0 && index !== layout.items.length - 1) && <div className={styles.dot}/>}</>)}
+        </div>
+      )
     case UnitCardLayoutPosItemsType.List:
+      
     default:
-      return <div className={classNames(styles.list, classes)} style={style}>{layout.items.map((item, index) => <UnitCardLayoutItem key={index} color={props.color}  item={item} size={size} unit={unit}/>)}</div>
+      const isEmpty = !layout.items[0].icon && layout.items[0].text?.val.split(' ')[0] === '0'
+      if(!isEmpty) {
+        return (
+          <div className={classNames(styles.list, classes)} style={style}>
+            {layout.items.map((item, index) => {
+              return <UnitCardLayoutItem key={index} color={props.color} item={item} size={size} unit={unit}/>
+            })}
+          </div>
+        )
+      }
   }
 }

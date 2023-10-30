@@ -26,20 +26,18 @@ export default function DropdownMenu(props: Props) {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
   const [currentLabel, setCurrentLabel] = useState<string>(props.style === 'more' ? '' : options[0]?.name)
 
-
-  //TODO: клик неправильно отрабатывает, поэтому надо еще посмотреть
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent> ) => {    
-  
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, isActive?: boolean) => {   
     if (options.length === 0) {
       onTriggerClick()
     }
     e.preventDefault()
-    setIsActive((state) => state = state === true?false: true)
+    e.stopPropagation()
+    setIsActive(isActive)
   }
 
   const handleOptionClick = (item: ICategory) => {
     setCurrentLabel(item.name)
-    setIsActive((state) => state = false)
+    setIsActive(false)
     optionClick ? optionClick(item) : null
   }
 
@@ -47,16 +45,15 @@ export default function DropdownMenu(props: Props) {
 
   return (
     <div className={classNames(styles.root, props.className, {[styles.more]: props.style === 'more'})}>
-      <div onClick={handleClick} className={classNames(styles.dropDownTrigger, isActive&&props.activeTriggerClassName)}>
+      <div onClick={(e) => handleClick(e, !isActive)} className={classNames(styles.dropDownTrigger, isActive&&props.activeTriggerClassName)}>
         <div className={styles.label}>
-          <span>{props.style === 'more' ? <>Еще</> : currentLabel}</span>
+          <span>{props.style === 'more' ? 'Еще' : currentLabel}</span>
         </div>
         <div className={styles.arrow}>
           <ArrowDownSvg/>
         </div>
       </div>
       <nav ref={dropdownRef} className={classNames(styles.dropDown, { [styles.dropDownActive]: isActive }, props.navClassName)}>
-
         <Scrollbars autoHide height={'100%'}  width={'100%'} >
           {(props.style === 'more' ? options : filtered).map((item, index) => 
             <div key={index}

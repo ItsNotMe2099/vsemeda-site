@@ -1,0 +1,24 @@
+@import 'styles/index';
+
+.modalLayout {
+  background-color: $purple;
+  width: unset;
+  border-radius: 16px;
+}
+
+.title {
+  text-align: center;
+  color: $white;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.acceptButton {
+  border-radius: 16px;
+}

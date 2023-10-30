@@ -1,4 +1,5 @@
-import styles from 'components/for_pages/index/Filter/index.module.scss'
+import styles from './index.module.scss'
+
 import classNames from 'classnames'
 import {useEffect, useRef, useState} from 'react'
 import MenuRepository from 'data/repositories/MenuRepository'
@@ -20,31 +21,13 @@ export default function Filter(props: Props) {
   const unitIndexContext = useIndexPageContext()
   const [categories, setCategories] = useState<ICategory[]>([])
   const itemsRef = useRef<ICategory[]>([])
-  const fetchData = async () => {
-    await MenuRepository.fetchCategories().then(i => setCategories(i))
-  }
-
-  useEffect(()=> {
-    itemsRef.current = categories ?? []
-  }, [categories])
-  const deliveryOptions = [
-    { name: 'Сейчас' },
-    { name: 'Завтра' },
-  ]
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
   const dropdownRef = useRef(null)
-
   const [showDropDown, setShowDropDown] = useDetectOutsideClick(dropdownRef, false)
   const [referenceElement, setReferenceElement] = useState(null)
   const [popperElement, setPopperElement] = useState(null)
 
   const { styles: popperStyles, attributes, forceUpdate, update } = usePopper(referenceElement, popperElement, {
     strategy: 'absolute',
-
     placement: 'bottom',
     modifiers: [
       {
@@ -54,8 +37,20 @@ export default function Filter(props: Props) {
     ]
   })
 
-  
+  const isFiltersActive = unitIndexContext.isFilterActive()
 
+  const fetchData = async () => {
+    await MenuRepository.fetchCategories().then(i => setCategories(i))
+  }
+
+
+  useEffect(()=> {
+    itemsRef.current = categories ?? []
+  }, [categories])
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <div className={classNames(styles.root, props.className)}>
@@ -72,8 +67,16 @@ export default function Filter(props: Props) {
         <div className={styles.item} onClick={props.onFilterButtonClick}>
           <FilterSvg className={styles.filterSvg} color='#828282' />
           <span>Фильтр</span>
+          {isFiltersActive && 
+            <div className={styles.filtersActive}></div>
+          }
         </div>
       </div>
     </div>
   )
 }
+
+  // const deliveryOptions = [
+  //   { name: 'Сейчас' },
+  //   { name: 'Завтра' },
+  // ]

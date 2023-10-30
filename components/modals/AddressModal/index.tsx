@@ -35,8 +35,8 @@ interface Props {
 const AddressFormModalInner = (props: Props) => {
   const {isTabletWidth} = useResize()
   const appContext = useAppContext()
-  const [addressSearchShown, setAddressSearchShown] = useState(true)
-  const [addressFormShown, setAddressFormShown] = useState(false)
+  const [addressSearchShown, setAddressSearchShown] = useState<boolean>(true)
+  const [addressFormShown, setAddressFormShown] = useState<boolean>(false)
   const [confirmShown, setConfirmShown] = useState(false)
   const [addressStr, setAddressStr] = useState<string>(null)
   const header = (<div/>)
@@ -83,8 +83,12 @@ const AddressFormModalInner = (props: Props) => {
   }
 
   const handleBack = () => {
-    appContext.hideModal()
+    if(!addressFormShown && args?.address) {
+      setAddressFormShown(true)
+      return
+    }
     if(appContext.addresses.length > 0) {
+      appContext.hideModal()
       isTabletWidth? appContext.showBottomSheet(ModalType.AddressList) : appContext.showModal(ModalType.AddressList)
     }
   }

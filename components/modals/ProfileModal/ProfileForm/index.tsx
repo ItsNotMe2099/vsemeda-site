@@ -1,8 +1,9 @@
 import styles from './index.module.scss'
+
 import { Form, FormikProvider, useFormik } from 'formik'
 import { useState } from 'react'
 import { useAppContext } from 'context/state'
-import { SnackbarType } from 'types/enums'
+import { ModalType, SnackbarType } from 'types/enums'
 import InputField from 'components/fields/InputField'
 import RadioListField from 'components/fields/RadioListField'
 import DateField from 'components/fields/DateField'
@@ -10,15 +11,23 @@ import Button from 'components/ui/Button'
 import UserRepository from 'data/repositories/UserRepository'
 import { Gender } from 'data/enum/Gender'
 import Validator from 'utils/Validator'
+import TrashBasketSvg from 'components/svg/TrashBasketSvg'
+import { colors } from 'styles/variables'
+import { ConfirmModalArguments } from 'types/modal_arguments'
+import { useCartContext } from 'context/cart_state'
 
 
 export default function ProfileForm() {
 
   const appContext = useAppContext()
+  const cartContext = useCartContext()
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  const submit = async (data: { name: string, gender: Gender, birthday: string }) => {
+  const submit = async (data: { name: string, gender: Gender, birthday: string, email: string }) => {
+    if(!data.email)  {
+      delete data.email
+    }
     setLoading(true)
     try {
       await UserRepository.updateUser(data)
@@ -44,6 +53,19 @@ export default function ProfileForm() {
     },
     onSubmit: submit
   })
+
+  const removeUser = () => {
+    appContext.showModal(ModalType.Confirm, {
+      onConfirm: ()=> {
+        cartContext.clear()
+        appContext.deleteUser()
+        appContext.hideModal()
+      },
+      text: 'Вы уверены, что хотите удалить аккаунт?', 
+      confirm: 'Принять',
+      cancel: 'Отмена'
+    } as ConfirmModalArguments)
+  }
 
   return (
     <FormikProvider value={formik}>
@@ -90,9 +112,10 @@ export default function ProfileForm() {
           />
           
         </div>
-        <Button type='submit' className={styles.btn} styleType='filledGreen' font='semibold16'>
+        <Button type='submit' spinner={loading} className={styles.btn} styleType='filledGreen' font='semibold16'>
           Сохранить
         </Button>
+        <p className={styles.deleteAcc} onClick={removeUser}><TrashBasketSvg color={colors.white}/> Удалить аккаунт</p>
       </Form>
     </FormikProvider>
   )

@@ -16,6 +16,7 @@ export function ConfirmModal(props: Props) {
   const appContext = useAppContext()
   const args = appContext.modalArguments as ConfirmModalArguments
   const [loading, setLoading] = useState<boolean>(false)
+
   const handleCancel = () => {
     if(!args.onCancel){
       appContext.hideModal()
@@ -23,6 +24,7 @@ export function ConfirmModal(props: Props) {
       args.onCancel()
     }
   }
+
   const handleConfirm = async () => {
    setLoading(false)
     try {
@@ -32,16 +34,18 @@ export function ConfirmModal(props: Props) {
     }
    setLoading(false)
   }
+
   const result = (
-        <div className={classNames(styles.wrapper, {[styles.bottomSheet]: props.isBottomSheet})}>
-          <div className={styles.text}>{args.text ?? ''}</div>
-          <Spacer basis={24}/>
-          <div className={styles.buttons}>
-            <Button styleType={'filledGreen'} fluid type={'submit'} spinner={loading} onClick={handleCancel}>{args.cancel || 'Нет'}</Button>
-            <Button styleType={'filledGreen'} fluid type={'submit'} spinner={loading} onClick={handleConfirm}>{args.confirm || 'Да'}</Button>
-          </div>
-        </div>
+    <div className={classNames(styles.wrapper, {[styles.bottomSheet]: props.isBottomSheet})}>
+      <div className={styles.text}>{args.text ?? ''}</div>
+      <Spacer basis={24}/>
+      <div className={styles.buttons}>
+        <Button styleType={'filledGreen'} fluid type={'submit'} spinner={loading} onClick={handleCancel}>{args.cancel || 'Нет'}</Button>
+        <Button styleType={'filledGreen'} fluid type={'submit'} spinner={loading} onClick={handleConfirm}>{args.confirm || 'Да'}</Button>
+      </div>
+    </div>
   )
+
   if (props.isBottomSheet) {
     return (
       <BottomSheetLayout  closeIconColor={colors.grey2}>

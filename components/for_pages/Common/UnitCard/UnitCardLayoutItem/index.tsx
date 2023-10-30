@@ -42,10 +42,12 @@ export default function UnitCardLayoutItem({ item, size, color, unit }: Props) {
       }
     case UnitCardLayoutItemType.badge:
     case UnitCardLayoutItemType.custom:
-      return <div className={classNames(styles.root, classes)}>
-        {item.icon && <LayoutIconImage icon={item.icon.val} color={item.icon.color ?? color}/>}
-        {item.text?.val && <div className={styles.txt} style={{...(item.text.color ? {color: item.text.color} : {color: color})}}>{item.text?.val}</div>}
-      </div>
+      return (
+        <div className={classNames(styles.root, classes)}>
+          {item.icon && <LayoutIconImage icon={item.icon.val} color={item.icon.color ?? color}/>}
+          {item.text?.val && item.text?.val.split(' ')[0] !== '0' && <div className={styles.txt} style={{...(item.text.color ? {color: item.text.color} : {color: color})}}>{item.text?.val}</div>}
+        </div>
+      )
     default:
   }
 }

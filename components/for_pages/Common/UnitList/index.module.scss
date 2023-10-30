@@ -6,7 +6,7 @@
   flex-wrap: wrap;
   align-content: flex-start;
   flex-direction: row;
-  margin-top: 32px;
+  // margin-top: 32px;
   justify-content: center;
 
   @include mq($TabletWidth, max) {
@@ -17,10 +17,6 @@
 
 
 .card{
-  // height: calc(((((100vw - 80px - 216px + 36px) / 3) - 36px) * 0.59) + 56px);
-  // max-height: 333px;
-  // min-height: 254px;
-  // width: 33%;
   width: 25%;
   max-width: 318px;
   @include mq($MdDesktopWidth, max) {
@@ -53,6 +49,11 @@
   padding-top: 54px;
   margin-top: 30px;
   position: relative;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
   @include mq($TabletWidth, max) {
     margin-top: unset;
   }
@@ -69,5 +70,14 @@
       display: none;
     }
   } 
+}
+
+.empty {
+  color: $black;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 24px;
+  width: 100%;
+  justify-self: center;
 }
  

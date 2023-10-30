@@ -1,4 +1,5 @@
 import styles from './index.module.scss'
+
 import { useAppContext } from 'context/state'
 import { IUserAddress } from 'data/interfaces/IUserAddress'
 import InputField from 'components/fields/InputField'
@@ -32,11 +33,15 @@ export default function AddressForm(props: Props) {
 
 
   const submit = async (data: DeepPartial<IUserAddress>) => {
+    const currentCoords = props.editedAddress.Point.pos.split(' ')
     setLoading(true)
     try {
+
       const submitData: DeepPartial<IUserAddress> = {
         ...props.initialAddress,
         ...data,
+        location: {lng: Number(currentCoords[0]), lat: Number(currentCoords[1])},
+
         address: props.editedAddressString||data.address||props.initialAddress.address
       }
       if (props.initialAddress?.id) {
@@ -53,8 +58,6 @@ export default function AddressForm(props: Props) {
     }
     setLoading(false)
   }
-
-
 
   const handleBack = () => {
     if (args?.address) {
@@ -137,7 +140,7 @@ export default function AddressForm(props: Props) {
           </Button>
 
           {props.initialAddress?.id && 
-          appContext.addresses.length > 1 && appContext.currentAddress.id !== props.initialAddress.id &&
+          appContext.addresses.length > 1  && /* appContext.currentAddress.id !== props.initialAddress.id && */
             <Button 
             className={styles.trash} 
             onClick={()=>addressContext.deleteAddress(props.initialAddress?.id)} 

@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function OrderDetails ({onBackClick, isMobile}: Props) {
-  const {activeDetails} = useOrderContext()
+  const {activeDetails, setActiveDetails} = useOrderContext()
 
   const getNamedButton = (button: OrderStateButton ) => {
     let buttonName: string
@@ -42,10 +42,14 @@ export default function OrderDetails ({onBackClick, isMobile}: Props) {
     return OrderHelper.getButton(button, buttonName, styles[button + 'Button'])
   }
 
+  const onBackClickHandler = () => {
+    setActiveDetails(null)
+    onBackClick()
+  }
   
   const header = (
     <div className={styles.header}>
-      <div className={styles.buttonWrapper} onClick={onBackClick}> 
+      <div className={styles.buttonWrapper} onClick={onBackClickHandler}> 
         <IconButton bgColor='white' size='medium'>
           <ArrowLeftSvg color={colors.purple}/>
         </IconButton>

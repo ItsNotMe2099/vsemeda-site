@@ -9,6 +9,7 @@ import Validator from 'utils/Validator'
 import PaymentButton from 'components/modals/BasketModal/PaymentSelect/PaymentButton'
 import {useState} from 'react'
 import {RequestError} from 'types/types'
+import UserRepository from 'data/repositories/UserRepository'
 
 interface IFormData {
   moneyChange: number,
@@ -26,7 +27,6 @@ export default function EmailForm(props: Props) {
   const appContext = useAppContext()
   const [loading, setLoading] = useState(false)
 
-  //TODO: добавить проверку, что email является email-ом
 
   const submit = async (data: IFormData) => {    
     try {
@@ -34,8 +34,10 @@ export default function EmailForm(props: Props) {
       //bug: update не апдейтит емейл, вот никак... 
       // cartContext.update({email: data.email ? data.email : undefined})
       // .then((res) => {
-        props.onSubmit(data.email)
-        setLoading(false)
+      await UserRepository.updateUser(data)
+      appContext.updateUser()
+      props.onSubmit(data.email)
+      setLoading(false)
       // })
     } catch (err: any) {
       if (err instanceof RequestError) {
@@ -57,15 +59,13 @@ export default function EmailForm(props: Props) {
 
     <FormikProvider value={formik}>
       <Form className={styles.root}>
-        {/* <Spacer basis={20}/> */}
-
-          <InputField
-            name='email'
-            styleType={'cashForm'}
-            color='darkPurple'
-            placeholder='Введите email'
-            // isNumbersOnly
-          validate={Validator.combine([Validator.required, Validator.email])}/>
+        <InputField
+        name='email'
+        styleType={'cashForm'}
+        color='darkPurple'
+        placeholder='Введите email'
+        validate={Validator.combine([Validator.required, Validator.email])}
+        />
         <Spacer basis={20}/>
         <PaymentButton onClick={() => formik.submitForm()} loading={loading}/>
       </Form>
