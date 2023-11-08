@@ -10,6 +10,7 @@
   @include mq($PhoneWidth, max) {
     width: 100vw !important;
     height: 100vh !important;
+    height: 100dvh !important;
   }
 }
 
@@ -22,7 +23,7 @@
     position: absolute;
     top: 16px;
     left: 16px;
-    z-index: 111;
+    z-index: 222;
   // }
 }
 

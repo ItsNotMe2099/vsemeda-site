@@ -91,6 +91,9 @@ const AddressFormModalInner = (props: Props) => {
       appContext.hideModal()
       isTabletWidth? appContext.showBottomSheet(ModalType.AddressList) : appContext.showModal(ModalType.AddressList)
     }
+    else {
+      appContext.hideModal()
+    }
   }
 
   const onSubmitHandler = ({}) => {
