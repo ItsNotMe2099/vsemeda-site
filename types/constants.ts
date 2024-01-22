@@ -22,7 +22,7 @@ export const LINKS = {
   },
 
   footer: {
-    forRestaurants: '#',
+    forRestaurants: '/files/vsemeda_terms.pdf',
     forCouriers: '#',
     forCompanies: '#',
     actions: '#',
