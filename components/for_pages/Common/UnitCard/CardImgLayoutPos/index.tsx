@@ -2,7 +2,7 @@ import {IUnitCardLayoutPos, UnitCardLayoutPosItemsType} from 'data/interfaces/IU
 import styles from './index.module.scss'
 import UnitCardLayoutItem from 'components/for_pages/Common/UnitCard/UnitCardLayoutItem'
 import classNames from 'classnames'
-import Converter from 'utils/Converter'
+import Converter from 'utils/converter'
 import {IUnit} from 'data/interfaces/IUnit'
 
 interface Props {
