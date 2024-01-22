@@ -15,7 +15,7 @@ import {useEffect, useState} from 'react'
 import {GeoObject, YandexResponseGeocoder} from 'data/interfaces/IYandexGeocoder'
 import AddressForm from 'components/modals/AddressModal/Form'
 import classNames from 'classnames'
-import Converter from 'utils/converter'
+import Converter from 'utils/Converter'
 import AddressFormConfirm from 'components/modals/AddressModal/Confirm'
 import {YMapCenterLocation, YMapLocationRequest} from '@yandex/ymaps3-types'
 import BackBtn from 'components/ui/BackBtn'
@@ -46,14 +46,14 @@ const AddressFormModalInner = (props: Props) => {
 
 
 
-  useEffect(() => {   
+  useEffect(() => {
     if(args?.address){
       setAddressFormShown(true)
       setAddressStr(args.address.address)
       setLocation({center: [args.address.location.lng, args.address.location.lat], zoom: 19})
     }
   }, [args])
-  
+
   const handleEditAddressClick = () => {
     setAddressFormShown(false)
   }
@@ -97,19 +97,19 @@ const AddressFormModalInner = (props: Props) => {
   }
 
   const onSubmitHandler = ({}) => {
-    
+
   }
 
 
   const body = (
     <div className={styles.bodyWrapper}>
       <BackBtn className={styles.btn} onClick={handleBack} bgColor={'white'} />
-      {addressFormShown && 
-        <AddressForm 
-        isMobile={isTabletWidth} 
-        editedAddressString={addressStr} 
+      {addressFormShown &&
+        <AddressForm
+        isMobile={isTabletWidth}
+        editedAddressString={addressStr}
         editedAddress={geoObject}
-        initialAddress={args?.address ? args.address  : geoObject&&Converter.convertGeoObjectToUserAddress(geoObject)} 
+        initialAddress={args?.address ? args.address  : geoObject&&Converter.convertGeoObjectToUserAddress(geoObject)}
         />
       }
       <div className={styles.mapWrapper}>
@@ -119,7 +119,7 @@ const AddressFormModalInner = (props: Props) => {
           <div className={styles.address}>{addressStr}</div>
         }
 
-        {addressSearchShown && 
+        {addressSearchShown &&
           <div  className={styles.addressField}>
             <Formik initialValues={{}} onSubmit={(values)=>onSubmitHandler(values)}>
               <AddressField  hasAddress={!!geoObject} name={'address'} value={addressStr} onNewAddress={handleSetNewAddress} onEditClick={handleEditAddressClick}/>
@@ -154,7 +154,7 @@ const AddressFormModalInner = (props: Props) => {
   )
 }
 
-export default function AddressFormModal(props: Props) { 
+export default function AddressFormModal(props: Props) {
 
   return (<>
       <AddressFormModalInner {...props}/>

@@ -2,7 +2,7 @@ import {IUnitCardLayoutPos, UnitCardLayoutPosItemsType} from 'data/interfaces/IU
 import styles from './index.module.scss'
 import UnitCardLayoutItem from 'components/for_pages/Common/UnitCard/UnitCardLayoutItem'
 import classNames from 'classnames'
-import Converter from 'utils/converter'
+import Converter from 'utils/Converter'
 import {IUnit} from 'data/interfaces/IUnit'
 
 interface Props {
@@ -38,7 +38,7 @@ export default function CardImgLayoutPos(props: Props) {
         </div>
       )
     case UnitCardLayoutPosItemsType.List:
-      
+
     default:
       const isEmpty = !layout.items[0].icon && layout.items[0].text?.val.split(' ')[0] === '0'
       if(!isEmpty) {
