@@ -1,0 +1,23 @@
+@import "styles/index";
+
+.root{
+  background-color: $white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  @include list(24px, true);
+}
+.info{
+  display: flex;
+  flex-direction: column;
+  @include list(8px);
+}
+.title{
+  font-size: 16px;
+  font-weight: 600;
+}
+.address{
+  font-size: 12px;
+  font-weight: 500;
+}

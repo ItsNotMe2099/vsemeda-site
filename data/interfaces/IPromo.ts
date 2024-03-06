@@ -22,9 +22,10 @@ export interface IPromo {
   imageLarge?: IFile
   color: PromoColor
   textColor: string
-  badgeColor: string
+  badgeColor: PromoColor
   badgeTextColor: string
   categoriesIds: number[]
+  subTitle?: string
 
 
 }

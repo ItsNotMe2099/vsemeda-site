@@ -1,0 +1,54 @@
+.root{
+  font-family: 'Montserrat';
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: 16px;
+//  max-width: 380px;
+  height: 102px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.bgLogo{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  opacity: 0.05;
+}
+.image{
+  position: absolute;
+  bottom: 13px;
+  right: 16px;
+  max-height: 90%;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+
+}
+.block{
+  background: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 600;
+  margin-right: 20%;
+  z-index: 1;
+  > * + * {
+    margin-left: 10px;
+  }
+}
+.name{
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+.badge{
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 800;
+}

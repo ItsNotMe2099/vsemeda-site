@@ -1,0 +1,24 @@
+@import "styles/index";
+
+.root{
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include list(8px);
+}
+.duration{
+  border-radius: 4px;
+  background-color: #E53913;
+  padding: 4px 8px;
+  font-weight: 500;
+  font-size: 16px;
+  color: $white;
+
+}
+.pass{
+
+  font-weight: 500;
+  font-size: 14px;
+  color: $white;
+}

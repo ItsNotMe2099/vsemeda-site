@@ -18,7 +18,7 @@ interface Props extends IField<string> {
   success?: boolean
   styleType: InputStyleType
   suffix?: 'clear' | 'icon' | ReactElement
-  color: 'white' | 'purple' | 'darkPurple'
+  color: 'white' | 'purple' | 'darkPurple' | 'grey'
   suffixIcon?: ReactElement
   onSuffixClick?: () => void
   className?: string
@@ -60,7 +60,7 @@ export default function InputField(props: Props) {
         {props.labelType === 'top' ? <FieldLabel>{props.label}</FieldLabel> : null}
         {/* <IMaskInput
         mask={'+7 900 000 0000'}
-        
+
         /> */}
         <input
           {...field}
@@ -88,6 +88,7 @@ export default function InputField(props: Props) {
             [styles.white]: props.color === 'white',
             [styles.purple]: props.color === 'purple',
             [styles.darkPurple]: props.color === 'darkPurple',
+            [styles.grey]: props.color === 'grey',
           }, styles[props.styleType])}
           placeholder={!focused&&props.placeholder}
         />

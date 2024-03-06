@@ -12,7 +12,7 @@ import CheckSvg from 'components/svg/CheckSvg'
 
 
 interface IOrderIconType {
-  type: 'src'|'rive'|undefined, 
+  type: 'src'|'rive'|undefined,
   image: string
 }
 
@@ -38,7 +38,7 @@ export default class OrderHelper extends Component {
         }
         if(props.color) {this.background = OrderHelper.orderColor(props.color)}
     }
-    
+
 
     public static orderColor(color: OrderStateColor):[style: CSS.Properties, color: string, textcolor?: string] {
       let currentColor: string
@@ -50,11 +50,11 @@ export default class OrderHelper extends Component {
           case OrderStateColor.Green :
               currentColor = colors.green
               break
-          case OrderStateColor.Light : 
+          case OrderStateColor.Light :
               currentColor = colors.purple3
               textColor = colors.black
               break
-          case OrderStateColor.Orange : 
+          case OrderStateColor.Orange :
               currentColor = colors.orange
               break
       }
@@ -66,7 +66,7 @@ export default class OrderHelper extends Component {
 
     public static smallOrderIcon(icon: OrderStateIcon): JSX.Element {
       switch (icon) {
-        case OrderStateIcon.Cancelled: 
+        case OrderStateIcon.Cancelled:
         return <CrossSvg color={colors.red}/>
         case OrderStateIcon.Delivered:
         return <CheckSvg color={colors.green}/>
@@ -79,19 +79,19 @@ export default class OrderHelper extends Component {
           type: undefined
       }
       switch(icon) {
-          case OrderStateIcon.Delivered: 
+          case OrderStateIcon.Delivered:
           orderType.image = RiveArtboard.delivered
           orderType.type = 'rive'
               break
-          case OrderStateIcon.Delivering: 
+          case OrderStateIcon.Delivering:
           orderType.image = RiveArtboard.delivering
           orderType.type = 'rive'
               break
-          case OrderStateIcon.Preparing: 
+          case OrderStateIcon.Preparing:
           orderType.image = RiveArtboard.preparing
           orderType.type = 'rive'
               break
-          case OrderStateIcon.Phone: 
+          case OrderStateIcon.Phone:
           orderType.image = RiveArtboard.phone
           orderType.type = 'rive'
               break
@@ -99,11 +99,11 @@ export default class OrderHelper extends Component {
           orderType.image =  '/images/orderStatusIcon/3.0x/payment_error.png'
           orderType.type = 'src'
               break
-          case OrderStateIcon.PaymentProcessing : 
-          orderType.image = '/images/orderStatusIcon/3.0x/payment_processing.png' 
+          case OrderStateIcon.PaymentProcessing :
+          orderType.image = '/images/orderStatusIcon/3.0x/payment_processing.png'
           orderType.type = 'src'
               break
-          default: 
+          default:
           orderType.image = RiveArtboard.phone
           orderType.type = 'rive'
       }
@@ -112,7 +112,7 @@ export default class OrderHelper extends Component {
 
     public orderImage(icon: OrderStateIcon, width: number, height: number) {
       const orderIconType = this.orderIcon(icon)
-    
+
       return (<>
           {orderIconType.type === 'rive'?
               <Rive style={{width: width, height: height}} src="/images/rive/vsem_eda.riv" artboard={orderIconType.image}/>:
@@ -131,10 +131,10 @@ export default class OrderHelper extends Component {
           case PaymentMethod.Cash:
             translated = 'Наличными'
             break
-          case PaymentMethod.CardCourier: 
+          case PaymentMethod.CardCourier:
             translated = 'Картой курьеру'
             break
-          case PaymentMethod.CardOnline: 
+          case PaymentMethod.CardOnline:
             translated = 'Картой онлайн'
             break
           case PaymentMethod.ApplePay:
@@ -144,12 +144,12 @@ export default class OrderHelper extends Component {
             translated='Google Pay'
             break
         }
-      
+
         return translated
-    }    
+    }
 
     public static getButton = (button: OrderStateButton, buttonName?: string, className?: string):JSX.Element|null =>{
-        
+
         let returnButton: JSX.Element|null
         switch (button) {
           case OrderStateButton.Cancel:
@@ -164,7 +164,7 @@ export default class OrderHelper extends Component {
           case OrderStateButton.Complaint:
             returnButton = <ComplaintButton className={className} buttonName={buttonName}/>
             break
-          case OrderStateButton.Feedback: 
+          case OrderStateButton.Feedback:
             returnButton = <FeedbackButton className={className} buttonName={buttonName}/>
             break
           default:

@@ -1,0 +1,20 @@
+@import "styles/index";
+
+.root{
+  background-color: $white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  @include list(16px);
+}
+.field{
+  display: flex;
+  flex-direction: column;
+  @include list(0px);
+}
+.label{
+  color: #4C4958;
+  font-size: 15px;
+  font-weight: 500;
+}

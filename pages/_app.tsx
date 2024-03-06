@@ -18,7 +18,6 @@ import {CartWrapper} from 'context/cart_state'
 import 'swiper/css'
 import {CookiesProvider} from 'react-cookie'
 import { ActiveOrderWrapper } from 'context/order_state'
-import { IndexPageWrapper } from 'context/index_page_state'
 
 export interface AppProps extends NextAppProps {
   pageProps: {
@@ -47,8 +46,7 @@ function MyApp({Component, pageProps}: AppProps) {
           <ActiveOrderWrapper>
             <CartWrapper>
               <AuthWrapper>
-          <IndexPageWrapper>
-                <Head>
+               <Head>
                   <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover"
@@ -59,7 +57,6 @@ function MyApp({Component, pageProps}: AppProps) {
                 {clientVisible && <BottomSheetContainer/>}
                 {clientVisible && <Snackbar/>}
                 <AppOverlay/>
-          </IndexPageWrapper>
               </AuthWrapper>
             </CartWrapper>
           </ActiveOrderWrapper>
