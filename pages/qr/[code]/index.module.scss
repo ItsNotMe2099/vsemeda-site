@@ -1,10 +1,19 @@
 @import "styles/index";
 
 .root {
-  background: radial-gradient(50% 50% at 50% 50%, #812292 0%, #7722AA 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+
+}
+.bg{
+position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: radial-gradient(50% 50% at 50% 50%, #812292 0%, #7722AA 100%);
+
 }
 .center{
 
@@ -13,7 +22,7 @@
   @include list(8px);
   flex-basis: 480px;
   padding: 32px 24px;
-  min-height: 100vh;
+  z-index: 1;
 }
 .logoWrapper{
   display: flex;
@@ -33,9 +42,7 @@
   color: $white;
   font-size: 16px;
 }
-.wrapper{
-  flex: 1;
-}
+
 .success{
   position: absolute;
   top: 50%;

@@ -62,6 +62,7 @@ export default function Restaurant({promoQrCode}: Props) {
   </div>)
   if(!promoQrCode){
     return <div className={styles.root}>
+      <div className={styles.bg}/>
       <div className={styles.center}>
         {logo}
       <div className={styles.error}><QrNotFound/></div>
@@ -71,7 +72,9 @@ export default function Restaurant({promoQrCode}: Props) {
   return (
     <FormikProvider value={formik}>
       <Form className={styles.root}>
-          <div className={styles.center}>
+        <div className={styles.bg}/>
+
+        <div className={styles.center}>
             {logo}
             {success && <div className={styles.success}><QrSuccess/></div>}
               {!success && <>
