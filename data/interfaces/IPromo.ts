@@ -25,7 +25,8 @@ export interface IPromo {
   badgeColor: PromoColor
   badgeTextColor: string
   categoriesIds: number[]
-  subTitle?: string
+  bigText?: string
+  shortDesc?: string
 
 
 }

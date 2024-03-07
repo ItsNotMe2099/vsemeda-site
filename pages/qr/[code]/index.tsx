@@ -101,7 +101,8 @@ export default function Restaurant({promoQrCode}: Props) {
             <QrPromoCard icon={promoQrCode.promo.icon} color={promoQrCode.promo.color}
                          badge={promoQrCode.promo.badge}
                          badgeColor={promoQrCode.promo.badgeColor}
-                         subTitle={promoQrCode.promo.subTitle}
+                         bigText={promoQrCode.promo.bigText}
+                         shortDesc={promoQrCode.promo.shortDesc}
                          image={promoQrCode.promo.image} name={promoQrCode.promo.name}
                          template={promoQrCode.promo.template}/>
             <QrConditionsCard promoQrCode={promoQrCode}/>

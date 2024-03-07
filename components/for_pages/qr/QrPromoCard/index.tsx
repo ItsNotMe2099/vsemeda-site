@@ -20,7 +20,8 @@ interface Props {
   template: PromoTemplate,
   badge?: string
   name?: string
-  subTitle?: string
+  bigText?: string
+  shortDesc?: string
 }
 
 
@@ -40,12 +41,12 @@ export default function QrPromoCard(props: Props) {
         return <GiftSvg color={color}/>
     }
   }, [props.icon, props.color])
-
-  return (<div className={styles.root} style={{...(props.color ? {backgroundColor: props.color} : {})}}>
+  const isGradient = props.color.includes(';')
+  return (<div className={styles.root} style={{...(props.color ? {background: isGradient? `linear-gradient(125.99deg, ${props.color.split(';')[0]} -2.47%, ${props.color.split(';')[1]} 86.22%)` : props.color} : {})}}>
     <div className={styles.bgLogo}><VsemedaPromoBgSvg/></div>
-    <div className={styles.badge}>{props.badge}</div>
-    <div className={styles.name}>{props.name}</div>
-    {props.subTitle && <div className={styles.name}>{props.subTitle}</div>}
+    <div className={styles.badge}>{props.bigText}</div>
+    <div className={styles.name}>{props.badge}</div>
+    {props.shortDesc && <div className={styles.name}>{props.shortDesc}</div>}
     {props.image && <img src={props.image.link} className={styles.image}/>}
   </div>)
 }
