@@ -40,6 +40,24 @@ export default class Formatter {
     }
     return formatRelative(typeof date === 'string' ? new Date(date) : date, new Date(), {locale})
   }
+  static formatDateOnlyRelative(date: string | Date) {
+    const formatRelativeLocale: { [key: string]: string } = {
+      'yesterday': 'Вчера',
+      'today': ' Сегодня',
+      'tomorrow': 'Завтра',
+      'other': 'dd.MM.yyyy', // Difference: Add time to the date
+    }
+
+    const locale = {
+      ...ru,
+      formatRelative: (token: string) =>
+        formatRelativeLocale[token] || formatRelativeLocale['other'],
+    }
+    if (!date) {
+      return ''
+    }
+    return formatRelative(typeof date === 'string' ? new Date(date) : date, new Date(), {locale})
+  }
 
 
   static formatDistance(start: string | Date, end: string | Date) {
