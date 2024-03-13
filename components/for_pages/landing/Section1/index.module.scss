@@ -1,0 +1,66 @@
+@import 'styles/index';
+
+.section1 {
+  position: relative;
+  background: radial-gradient(circle, #B347D5 0%, #4D098C 100%);
+  min-height: 675px;
+  height: 50vw;
+  border-radius: 0px 0px 64px 64px;
+  overflow: hidden;
+
+  .bg {
+    width: 100%;
+    object-fit: contain;
+    position: absolute;
+    bottom: 0;
+    height: auto;
+  }  
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    max-width: 1360px;
+    width: 80vw;
+    margin-inline: auto;
+    padding-top: 136px;
+  }
+
+  .content {
+    position: relative;
+
+    .svg {
+      position: absolute;
+      bottom: 32px;
+      left: -28px;
+      transform: translateX(-100%);
+    }
+  }
+
+  .title {
+    font-size: 64px;
+    font-weight: 700;
+    color: $white;
+    max-width: 675px;
+  }
+  
+  .description {
+    font-weight: 500;
+    font-size: 24px;
+    color: $white;
+    margin-top: 32px;
+  }
+
+  .link {
+    color: $black;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 25px 50px;
+    border-radius: 16px;
+    background-color: $green;
+    margin-top: 48px;
+    display: inline-block;
+  }
+
+}

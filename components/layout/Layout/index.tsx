@@ -11,22 +11,28 @@ interface Props {
   children?: React.ReactNode
   className?: string
   classRoot?: string
+  hideFooter?: boolean
+  hideHeader?: boolean
 }
 
-export default function Layout({ children, className, classRoot }: Props) {
+export default function Layout({ children, className, classRoot, ...props }: Props) {
 
   const appContext = useAppContext()
 
   return (
     <div className={classNames(styles.root, classRoot)}>
       <StickyContainer>
-        <Header isSticky={!appContext.modal || !appContext.isOverlayShown} />
+        {!props.hideHeader &&
+          <Header isSticky={!appContext.modal || !appContext.isOverlayShown} />
+        }
         <div className={styles.content}>
           <div className={classNames(styles.container, className)}>
             {children}
           </div>
         </div>
-        <Footer />
+        {!props.hideFooter &&
+          <Footer />
+        }
         <VisibleXs>
           <TabBar isSticky />
         </VisibleXs>

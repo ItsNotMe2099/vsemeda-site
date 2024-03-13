@@ -1,0 +1,42 @@
+@import 'styles/index';
+
+.section {
+
+  .wrapper {
+    display: flex;
+    max-width: 1306px;
+    margin-inline: auto;
+    margin-block: 126px 0px;
+    column-gap: 7%;
+    align-items: center;
+  }
+
+  .imageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 582px;
+    height: 484px;
+  }
+
+
+  .description {
+    font-weight: 500;
+    font-size: 18px;
+    color: $grey2;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;    
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 48px;
+    span {
+      color: $pink;
+    }
+  }
+}
