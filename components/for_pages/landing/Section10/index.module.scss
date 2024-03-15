@@ -1,0 +1,147 @@
+@import 'styles/index';
+
+.section {
+  margin-top: 128px;
+  position: relative;
+
+  .texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .backImage {
+    position: absolute;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .wrapper {
+    display: flex;
+    max-width: 1306px;
+    margin-inline: auto;
+    column-gap: 16px;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+  }
+
+  .button {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    color: $black;
+    background-color: $green;
+    border-radius: 16px;
+    padding: 20px 73px;
+    cursor: pointer;
+    transition: .2s linear;
+    @include hover {
+      background-color: $pink;
+      color: $white;
+    }
+  }
+
+  .line {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;    
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 48px;
+    text-align: center;
+    color: $grey1;
+    width: 100%;
+  }
+
+  .lineTitle {
+    @extend .title;
+    width: unset;
+  }
+
+  .subTitle {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 0.03em;
+    text-align: center;
+    color: $grey3;
+    max-width: 642px;
+    margin-top: 26px;
+  }
+
+  .faqOverflow {
+    overflow: hidden;
+    max-height: 0px;
+    transition: .2s ease-in-out;
+    
+    &_active {
+      max-height: var(--height);
+    }
+  }
+
+  .faq {
+    display: flex;
+    flex-direction: column;
+    row-gap: 28px;
+    margin-top: 64px;
+  }
+
+  .faqItem {
+    background-color: $white;
+    padding: 0px 32px;
+    border-radius: 16px;
+
+
+  }
+
+  .faqTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0px;
+    cursor: pointer;
+
+    svg {
+      transition: .2s ease-in-out;
+      rotate: 0deg
+    }
+
+    .svgActive{
+      rotate: 180deg
+    }
+
+  }
+
+  .faqTitle {
+    font-weight: 600;
+    font-size: 20px;
+    color: $grey1;
+  }
+
+  .faqContent {
+    padding-bottom: 16px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 0.03em;
+    color: $grey1;
+  }
+
+}

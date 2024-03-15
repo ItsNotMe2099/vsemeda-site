@@ -1,0 +1,110 @@
+@import 'styles/index';
+
+
+
+.section {
+
+  .wrapper {
+    display: flex;
+    max-width: 1306px;
+    margin-inline: auto;
+    margin-block: 126px 0px;
+    column-gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .imageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 582px;
+    height: 484px;
+  }
+
+
+  .description {
+    font-weight: 500;
+    font-size: 18px;
+    color: $purpleLight;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;   
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 48px;
+    color: $grey1;
+    position: relative;
+    span {
+      color: $pink;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 100%;
+      right: 25%;
+    }
+  }
+
+  .checkList {
+    display: flex;
+    flex-direction: column;
+    row-gap: 36px;
+    max-width: 424px;
+    margin-top: 22px;
+
+    .checkItem {
+      display: flex;
+      align-items: center;
+      column-gap: 16px;
+      font-weight: 600;
+      font-size: 20px;
+      color: $grey1;
+
+    }
+
+    .checkSvg {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+
+  .button {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    color: $black;
+    background-color: $green;
+    border-radius: 16px;
+    height: 80px;
+    padding: 30px 112px;
+    align-self: flex-start;
+  }
+
+  .price {
+    font-weight: 700;
+    font-size: 24px;
+    color: $grey1;
+
+    span{
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+
+  .subTitle {
+    font-weight: 700;
+    font-size: 24px;
+    color: $grey1;
+    margin-top: 12px;
+    span {
+      color: $pink;
+    }
+  }
+}

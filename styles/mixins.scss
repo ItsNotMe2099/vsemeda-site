@@ -253,3 +253,16 @@
   -khtml-user-select: none;
   user-select: none !important;
 }
+
+@mixin hover () {
+  @media (hover : hover ) {
+    &:hover {
+      @content;
+    }
+  }
+  @media (hover : none ) {
+    &:active {
+      @content;
+    }
+  }
+}
