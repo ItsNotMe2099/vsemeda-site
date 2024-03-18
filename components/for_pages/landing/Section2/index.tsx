@@ -1,22 +1,35 @@
+import { SectionType } from '..'
 import styles from './index.module.scss'
 import Image from 'next/image'
 
 
 interface Props {
+  type: SectionType
 }
 
 export default function Section2(props: Props) {
 
+  const data = {
+    imageSrc: props.type === 'rest'?
+    '/images/landings/s2Cards.png':
+    '/images/landings/s2CardsDelivery.png',
+    header: props.type === 'rest'?
+    'Почему рестораны дают':
+    'Откуда',
+    description: props.type === 'rest'?
+    'В любом заведении есть часы,  когда столы пустуют. Мы помогаем ресторану превратить это время в деньги, а вам – сэкономить и хорошо провести время!':
+    'Сегодня у популярных агрегаторов комиссия для ресторанов доходит до 35% от чека. В нашем сервисе рестораны платят всего 5% комиссии, а разницу дают вам в виде выгодных акций и скидок до 50%. '
+  }
+
+
   return (  <section className={styles.section}>
     <div className={styles.wrapper}>
       <div className={styles.imageWrapper}>
-        <Image src={'/images/landings/s2card2_1.png'} className={styles.i2} width={263} height={406} alt={'card2'}/>
-        <Image src={'/images/landings/s2card1_1.png'} className={styles.i1} width={263} height={406} alt={'card1'} />
-        <Image src={'/images/landings/match.png'} className={styles.match} width={200} height={200}  alt={'match'}/>
+        <Image src={data.imageSrc} alt={'cards'} width={736} height={770}/>
       </div>
 
       <div className={styles.content}>
-        <p className={styles.title}>🤔 Почему рестораны дают <span>скидки?</span></p>
+        <p className={styles.title}>🤔 {data.header} <span>скидки?</span></p>
         <p className={styles.description}>В любом заведении есть часы, когда столы пустуют. Мы помогаем ресторану превратить это время в деньги, а вам – сэкономить и хорошо провести время!</p>
       </div>
 

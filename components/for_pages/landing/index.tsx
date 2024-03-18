@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Section1 from './Section1'
 import styles from './index.module.scss'
 import Section2 from './Section2'
@@ -10,6 +10,10 @@ import Section7 from './Section7'
 import Section8 from './Section8'
 import Section9 from './Section9'
 import Section10 from './Section10'
+import Image from 'next/image'
+import Footer from './Footer'
+import classnames from 'classnames'
+import DownloadSvg from 'components/svg/DownloadSvg'
 
 
 interface Props {
@@ -18,19 +22,55 @@ interface Props {
 export type SectionType = 'delivery'|'rest'
 
 export default function MainPageLanding(props: Props) {
-  const [type, setType] = useState('')
+  const [type, setType] = useState<SectionType>('rest')
+  const switcherItems = useRef<{[key: string]: HTMLParagraphElement}>({})
 
   return (<div className={styles.root}> 
-  <Section1 type={'rest'}/>
-  <Section2/>
-  <Section3/>
+  <div className={styles.header}>
+    <div className={styles.logoWrapper}>
+      <Image width="76" height="20" src={'/images/landings/vsemedaLogo.svg'} alt={'vsemeda logo'}/>
+    </div>
+    <div className={styles.switcher}>
+      <p 
+      ref={r => {switcherItems.current['rest'] = r}}
+      className={classnames(styles.switcherItem,  type=== 'rest'&&styles.switcherItem_active)} 
+      onClick={() => setType('rest')}
+      >
+        Рестораны
+      </p>
+      <p 
+      ref={r => {switcherItems.current['delivery'] = r}}
+      className={classnames(styles.switcherItem, type=== 'delivery'&&styles.switcherItem_active)}
+      onClick={() => setType('delivery')}
+      >
+        Доставки
+      </p>
+      <div 
+      className={styles.switcherBack} 
+      style={{
+        width: (type==='delivery'?switcherItems.current?.delivery?.offsetWidth:switcherItems.current?.rest?.offsetWidth),
+        left: (type==='delivery'?switcherItems.current?.delivery?.offsetLeft:switcherItems.current?.rest?.offsetLeft)
+      }}></div>
+    </div>
+
+    <button className={styles.button}>
+      <DownloadSvg/>
+      Скачать приложение
+    </button>
+
+  </div>
+  <Section1 type={type}/>
+  <Section2 type={type}/>
+  <Section3 type={type}/>
   <Section4/>
-  <Section5/>
-  <Section6/>
-  <Section7/>
-  <Section8/>
-  <Section9/>
+  <Section5 type={type}/>
+  <Section6 type={type}/>
+  <Section7 type={type}/>
+  <Section8 type={type}/>
+  <Section9 type={type}/>
   <Section10/>
+  <Footer/>
+
 
 
 

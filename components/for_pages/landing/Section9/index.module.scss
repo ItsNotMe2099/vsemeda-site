@@ -4,6 +4,7 @@
   margin-top: 120px;
   background: #63169b;
   position: relative;
+  overflow: hidden;
 
   .texture {
     position: absolute;
@@ -20,6 +21,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100vw;
+    min-width: 1920px;
   }
 
   .wrapper {
@@ -43,6 +46,22 @@
     border-radius: 16px;
     padding: 20px 73px;
     margin-top: 42px;
+    cursor: pointer;
+    transition: .2s linear;
+    @include hover {
+      background-color: $pink;
+      color: $white;
+    }
+    
+
+    &_pink {
+      background-color: $pink;
+      color: $white;
+      @include hover {
+        background-color: $green;
+        color: $black;
+      }
+    }
   }
 
   .content {
@@ -65,7 +84,7 @@
     line-height: 150%;
     letter-spacing: 0.03em;
     text-align: center;
-    color: $grey3;
+    color: $white;
     max-width: 642px;
     margin-top: 26px;
   }

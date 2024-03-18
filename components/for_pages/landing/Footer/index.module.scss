@@ -1,0 +1,48 @@
+@import 'styles/index';
+
+.section {
+  position: relative;
+  margin-top: 128px;
+
+  .qrcode {
+    display: flex;
+    padding: 18px;
+  }
+
+  .qrcodeWrapper {
+    background: radial-gradient(circle, #B347D5 0%, #4D098C 100%);
+    padding: 16px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    column-gap: 26px;
+    border-radius: 16px;
+
+  }
+
+  .qrcodeText {
+    font-weight: 700;
+    font-size: 17px;
+    color: $white;
+  }
+
+  .wrapper {
+    display: flex;
+    row-gap: 24px;
+    max-width: 1306px;
+    margin-inline: auto;
+    column-gap: 16px;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+  }
+
+  .text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+    color: $grey2;
+  }
+
+}

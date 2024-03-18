@@ -1,11 +1,17 @@
+import { SectionType } from '..'
 import styles from './index.module.scss'
 import Image from 'next/image'
 
 
 interface Props {
+  type: SectionType
 }
 
 export default function Section7(props: Props) {
+
+  const data = {
+    imageSrc: props.type === 'rest'?'/images/landings/s7card.png':'/images/landings/s7cardDelivery.png'
+  }
 
   return (  <section className={styles.section}>
     <div className={styles.wrapper}>
@@ -37,7 +43,7 @@ export default function Section7(props: Props) {
         <button className={styles.button}>Оформить подписку</button>
 
       </div>
-      <Image src={'/images/landings/s7card.png'} alt={'card'} width={530} height={767}/>
+      <Image className={styles.card} src={data.imageSrc} alt={'card'} width={530} height={767}/>
     </div>
   </section>)
 }

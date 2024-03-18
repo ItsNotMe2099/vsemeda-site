@@ -1,12 +1,13 @@
 @import 'styles/index';
 
-.section1 {
+.section {
   position: relative;
   background: radial-gradient(circle, #B347D5 0%, #4D098C 100%);
   min-height: 675px;
   height: 50vw;
   border-radius: 0px 0px 64px 64px;
   overflow: hidden;
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.274);
 
   .bg {
     width: 100%;
