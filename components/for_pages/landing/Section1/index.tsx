@@ -27,7 +27,7 @@ export default function Section1(props: Props) {
         <Link href={'/'} className={styles.link} >Скачать приложение</Link>
         <Image src={'/images/landings/s1Arrow.svg'}  width="83" height="245" alt={'arrow'} className={styles.svg}/>
       </div>
-      <Image src={data.imageSrc} width={634} height={634} alt={'discounts'}/>
+      <Image className={styles.image} src={data.imageSrc} width={634} height={634} alt={'discounts'}/>
     </div>
 
   </section>)

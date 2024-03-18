@@ -10,7 +10,8 @@ interface Props {
 export default function Section7(props: Props) {
 
   const data = {
-    imageSrc: props.type === 'rest'?'/images/landings/s7card.png':'/images/landings/s7cardDelivery.png'
+    imageSrc: props.type === 'rest'?'/images/landings/s7card.png':'/images/landings/s7cardDelivery.png',
+    imageSrcMid: props.type === 'rest'?'/images/landings/s7cardMid.png':'/images/landings/s7cardDeliveryMid.png'
   }
 
   return (  <section className={styles.section}>
@@ -43,7 +44,10 @@ export default function Section7(props: Props) {
         <button className={styles.button}>Оформить подписку</button>
 
       </div>
-      <Image className={styles.card} src={data.imageSrc} alt={'card'} width={530} height={767}/>
+      <picture>
+        <source srcSet={data.imageSrcMid} width={434} height={767} media='(max-width: 1350px)'/>
+        <Image className={styles.card} src={data.imageSrc} alt={'card'} width={530} height={767}/>
+      </picture>
     </div>
   </section>)
 }

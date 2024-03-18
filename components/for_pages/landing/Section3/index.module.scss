@@ -9,14 +9,23 @@
     margin-block: 126px 0px;
     column-gap: 7%;
     align-items: center;
+    max-width: 1306px;
+    width: calc(100% - 84px);
+
   }
 
   .imageWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 582px;
+    width: min(47%, 582px);
     height: 484px;
+    flex-shrink: 0;
+  }
+
+  .image {
+    width: 120%;
+    height: auto;
   }
 
 

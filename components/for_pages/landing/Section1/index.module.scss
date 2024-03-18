@@ -4,7 +4,8 @@
   position: relative;
   background: radial-gradient(circle, #B347D5 0%, #4D098C 100%);
   min-height: 675px;
-  height: 50vw;
+  height: 55vw;
+  display: flex;
   border-radius: 0px 0px 64px 64px;
   overflow: hidden;
   box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.274);
@@ -23,9 +24,17 @@
     width: 100%;
     align-items: center;
     max-width: 1360px;
-    width: 80vw;
+    width: 78vw;
     margin-inline: auto;
     padding-top: 136px;
+    @media screen and (max-width: 1200px) {
+      align-items: flex-start;
+      width: 100%;
+      padding-inline: 42px;
+      padding-left: 140px;
+      padding-top: 170px;
+      column-gap: 32px;
+    }
   }
 
   .content {
@@ -33,14 +42,14 @@
 
     .svg {
       position: absolute;
-      bottom: 32px;
+      bottom: 52px;
       left: -28px;
       transform: translateX(-100%);
     }
   }
 
   .title {
-    font-size: 64px;
+    font-size: clamp(30px, 4.2vw, 64px);
     font-weight: 700;
     color: $white;
     max-width: 675px;
@@ -48,8 +57,8 @@
   
   .description {
     font-weight: 500;
-    font-size: 24px;
-    color: $white;
+    font-size: clamp(18px, 2vw, 24px);
+    color: $purpleLight;
     margin-top: 32px;
   }
 
@@ -62,6 +71,11 @@
     background-color: $green;
     margin-top: 48px;
     display: inline-block;
+  }
+
+  .image {
+    width: clamp(280px, 37vw, 634px);
+    height: clamp(280px, 37vw, 634px);
   }
 
 }

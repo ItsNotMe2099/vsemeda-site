@@ -36,6 +36,7 @@
     flex-direction: column;
     position: relative;
     z-index: 1;
+    width: calc(100% - 84px);
   }
 
   .text {

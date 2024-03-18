@@ -31,7 +31,7 @@ export default function Section3(props: Props) {
       </div>
 
       <div className={styles.imageWrapper}>
-        <Image src={data.imageSrc} alt={''} width={750} height={690}/>
+        <Image src={data.imageSrc} alt={''} className={styles.image} width={750} height={690}/>
       </div>
     </div>
   </section>

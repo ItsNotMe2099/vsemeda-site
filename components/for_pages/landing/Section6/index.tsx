@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { SectionType } from '..'
 import styles from './index.module.scss'
 import Image from 'next/image'
@@ -23,25 +24,31 @@ export default function Section6(props: Props) {
           <div className={styles.stepImageWrapper}>
             <Image src={'/images/landings/s6calendar.svg'} alt={'calendar'} width={96} height={96} />
           </div>
-          <p className={styles.stepDescription}>{data.text1}</p>
+          <p className={classNames(styles.stepDescription, styles.stepDescription_1, props.type=='delivery'&&styles.stepDescription_1alt)}>{data.text1}</p>
         </div>
 
-        <Image src={'/images/landings/s6arrow.svg'} className={styles.arrow} alt={'arrow'} width="291" height="40"/>
+        <picture className={styles.arrowPicture}>
+          <source srcSet='/images/landings/s6arrowAlt.svg'  width="61" height="12" media={'(max-width: 1400px)'}/>
+          <Image src={'/images/landings/s6arrow.svg'} className={styles.arrow} alt={'arrow'} width="291" height="40" style={{transform: 'rotateX(180deg)'}}/>
+        </picture>
 
         <div className={styles.step}>
           <div className={styles.stepImageWrapper}>
             <Image src={'/images/landings/s6qrcode.svg'} alt={'qrcode'} width={96} height={96} />
           </div>
-          <p className={styles.stepDescription}>{data.text2}</p>
+          <p className={classNames(styles.stepDescription, styles.stepDescription_2, props.type=='delivery'&&styles.stepDescription_2alt)}>{data.text2}</p>
         </div>
 
-        <Image src={'/images/landings/s6arrow.svg'} className={styles.arrow} alt={'arrow'} width="291" height="40" style={{transform: 'rotateX(180deg)'}}/>
+        <picture className={styles.arrowPicture}>
+          <source srcSet='/images/landings/s6arrowAlt.svg'  width="61" height="12" media={'(max-width: 1400px)'}/>
+          <Image src={'/images/landings/s6arrow.svg'} className={styles.arrow} alt={'arrow'} width="291" height="40" style={{transform: 'rotateX(180deg)'}}/>
+        </picture>
 
         <div className={styles.step}>
           <div className={styles.stepImageWrapper}>
             <Image src={'/images/landings/s6fastfood.svg'} alt={'fastfood'} width={96} height={96} />
           </div>
-          <p className={styles.stepDescription}>{data.text3}</p>
+          <p className={classNames(styles.stepDescription, styles.stepDescription_3, props.type=='delivery'&&styles.stepDescription_3alt)}>{data.text3}</p>
         </div>
       </div>
       <div className={styles.bottom}>

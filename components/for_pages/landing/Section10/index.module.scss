@@ -30,6 +30,7 @@
     flex-direction: column;
     position: relative;
     z-index: 1;
+    width: calc(100% - 84px);
   }
 
   .button {
@@ -40,6 +41,7 @@
     background-color: $green;
     border-radius: 16px;
     padding: 20px 73px;
+    white-space: nowrap;
     cursor: pointer;
     transition: .2s linear;
     @include hover {
@@ -72,6 +74,7 @@
 
   .lineTitle {
     @extend .title;
+    text-align: start;
     width: unset;
   }
 
@@ -107,8 +110,6 @@
     background-color: $white;
     padding: 0px 32px;
     border-radius: 16px;
-
-
   }
 
   .faqTop {

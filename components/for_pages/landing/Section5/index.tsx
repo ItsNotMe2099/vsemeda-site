@@ -35,7 +35,7 @@ export default function Section5(props: Props) {
           </Link>
         </div>
       </div>
-      <Image src={'/images/landings/s5iphone.png'} alt={'app'} width={626} height={804}/>
+      <Image src={'/images/landings/s5iphone2.png'} alt={'app'} className={styles.image} width={424} height={699}/>
     </div>
   </section>)
 }

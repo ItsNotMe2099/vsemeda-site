@@ -12,6 +12,8 @@
     column-gap: 16px;
     align-items: center;
     justify-content: space-between;
+    width: calc(100% - 84px);
+
   }
 
   .imageWrapper {
@@ -47,7 +49,15 @@
     .arrow {
       position: absolute;
       top: 100%;
-      right: 25%;
+      left: 390px;      
+      @media screen and (max-width: 1226px) {
+        rotate: 250deg;
+        right: unset;
+        top: 69%;
+        left: 260px;
+        width: 120px;
+        height: 68px;
+      }
     }
   }
 

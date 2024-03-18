@@ -25,7 +25,7 @@ export default function Section2(props: Props) {
   return (  <section className={styles.section}>
     <div className={styles.wrapper}>
       <div className={styles.imageWrapper}>
-        <Image src={data.imageSrc} alt={'cards'} width={736} height={770}/>
+        <Image src={data.imageSrc} alt={'cards'} width={736} height={770} className={styles.image}/>
       </div>
 
       <div className={styles.content}>

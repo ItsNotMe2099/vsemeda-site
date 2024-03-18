@@ -25,9 +25,17 @@
     width: 204px;
   }
 
-  .arrow {
+  .arrowPicture {
     align-self: flex-start;
     margin-top: 86px;
+    max-width: 15%;
+    flex-shrink: 0;
+  }
+
+  .arrow {
+    width: 100%
+    // margin-top: 86px;
+    // width: 15%;
   }
 
   .stepImageWrapper {
@@ -45,6 +53,25 @@
     font-size: 24px;
     text-align: center;
     min-width: 429px;
+    @media screen and (max-width: 1600px) {
+      &_1 {
+        min-width: 232px;
+      }  
+
+
+      &_2 {
+        min-width: 212px;
+      }
+
+      &_2alt {
+        min-width: unset;
+        width: 292px;
+      }
+
+      &_3 {
+        min-width: 306px;    
+      }
+    }
   }
 
 
@@ -58,12 +85,15 @@
     align-items: center;
     position: relative;
     z-index: 1;
+    width: calc(100% - 84px);
+
   }
 
   .bottom {
     padding: 45px 60px;
     display: flex;
     align-items: center;
+    column-gap: 117px;
     justify-content: space-between;
     border-radius: 64px;
     width: 100%;
@@ -87,6 +117,7 @@
     font-size: 20px;
     line-height: 100%;
     cursor: pointer;
+    white-space: nowrap;
     transition: .2s ease-in-out;
     @include hover {
       background-color: $green;
@@ -97,8 +128,15 @@
 
   .content {
     display: flex;
-    align-items: center;
-    column-gap: 32px;    
+    align-items: flex-start;
+    column-gap: clamp(24px, 3vw, 32px);    
+    justify-content: space-between;
+    width: 100%;
+    @media screen and (max-width: 1500px) {
+      padding-inline: 55px;
+    }
+    
+
   }
 
   .title {
