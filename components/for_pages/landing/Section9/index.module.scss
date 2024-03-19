@@ -29,12 +29,14 @@
     display: flex;
     max-width: 1306px;
     margin-inline: auto;
-    padding-block: 150px 164px;
+    padding-block: clamp(105px, 19vw,150px) clamp(105px, 19vw, 164px);
     column-gap: 16px;
     align-items: center;
     flex-direction: column;
     position: relative;
     z-index: 1;
+    padding-inline: 16px;
+
     
   }
 
@@ -46,7 +48,7 @@
     background-color: $green;
     border-radius: 16px;
     padding: 20px 73px;
-    margin-top: 42px;
+    margin-top: clamp(18px, 4vw, 42px);
     cursor: pointer;
     transition: .2s linear;
     @include hover {
@@ -73,10 +75,13 @@
 
   .title {
     font-weight: 700;
-    font-size: 48px;
+    font-size: clamp(24px, 3.4vw, 48px);
     text-align: center;
     color: $white;
     width: 100%;
+    @include mq($TabletWidth, max) {
+      font-size: 30px;
+    }
   }
 
   .subTitle {

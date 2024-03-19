@@ -14,7 +14,7 @@ export default function Section1(props: Props) {
   const data = {
     imageSrc: props.type === 'rest'?'/images/landings/s1Middle.png':'/images/landings/s1MiddleDelivery.png',
     header: props.type === 'rest'?'Ходи в ресторан только со скидкой!':'Заказывай еду только со скидкой!',
-    description: props.type === 'rest'?'Всем Еда – сервис, где все рестораны, кафе и бары дают грандиозные скидки!':'Всем Еда – новый сервис доставки еды, где ты можешь заказать блюда со скидками до 50%! '
+    description: props.type === 'rest'?'Всем Еда – сервис, где все рестораны, кафе и бары дают грандиозные скидки!':'Всем Еда – новый сервис доставки еды, где ты можешь заказать блюда со скидками до 50%! '
   }
 
   return (

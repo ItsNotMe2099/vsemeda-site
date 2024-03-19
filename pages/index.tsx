@@ -9,7 +9,7 @@ export default function IndexPage() {
   // }, [])
 
   return (
-    <Layout hideHeader hideFooter>
+    <Layout hideHeader hideFooter hideTabbar>
       <MainPageLanding/>
     </Layout>
   )

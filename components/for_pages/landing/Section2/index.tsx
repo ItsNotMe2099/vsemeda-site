@@ -30,7 +30,7 @@ export default function Section2(props: Props) {
 
       <div className={styles.content}>
         <p className={styles.title}>🤔 {data.header} <span>скидки?</span></p>
-        <p className={styles.description}>В любом заведении есть часы, когда столы пустуют. Мы помогаем ресторану превратить это время в деньги, а вам – сэкономить и хорошо провести время!</p>
+        <p className={styles.description}>{data.description}</p>
       </div>
 
     </div>

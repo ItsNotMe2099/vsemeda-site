@@ -27,10 +27,10 @@ export default function Section5(props: Props) {
         <p className={styles.title}>📱Как все работает? </p>
         {data.texts.map((text, index) => <p key={index} className={styles.description}>{text}</p>)}
         <div className={styles.links}>
-          <Link href={'/'}>
+          <Link href={'/'} >
             <Image src={'/images/landings/appStore.png'} alt={'appSore link'} width={180} height={53}/>
           </Link>
-          <Link href={'/'}>
+          <Link href={'/'} >
             <Image src={'/images/landings/gPlay.png'} alt={'gPlay link'}  width={180} height={53} />
           </Link>
         </div>

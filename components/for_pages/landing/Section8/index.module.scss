@@ -15,6 +15,15 @@
     border-radius: 64px;
     position: relative;
     width: calc(100% - 84px);
+    @include mq($TabletWidth, max) {
+      justify-content: center;
+      width: 100%;
+      padding-inline: 16px;
+      border-radius: unset;  
+      flex-wrap: wrap;
+      padding-block: 54px 0px;
+    }
+    
   }
 
   .imageWrapper {
@@ -34,6 +43,12 @@
     border-radius: 16px;
     padding: 20px 73px;
     align-self: flex-start;
+    white-space: nowrap;
+    @include mq($TabletWidth, max)  {
+      align-self: center;
+      width: 100%;
+      max-width: 360px;
+    }
   }
 
 
@@ -52,7 +67,11 @@
     @media screen and (max-width: 1200px) {
       width: 50%;
     }
-  }
+    @include mq($TabletWidth, max) {
+      width: 100%;
+      padding: unset;
+    }
+   }
 
   .girlImage {
     position: absolute;
@@ -65,6 +84,9 @@
       right: 8px;
       width: 415px;      
     }
+    @include mq ($TabletWidth, max) {
+      position: static;
+    }
   }
 
   .title {
@@ -74,7 +96,10 @@
     position: relative;
     max-width: 586px;
     @media screen and (max-width: 1200px) {
-      font-size: 24px;
+      font-size: 30px;
+    }
+    @include mq($TabletWidth, max) {
+      text-align: center;
     }
 
     &:before {
@@ -88,6 +113,11 @@
       @media screen and (max-width: 1200px) {
         width: 230px;
         bottom: -4px;
+      }
+      @include mq($TabletWidth, max) {
+        width: 292px;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 
@@ -105,6 +135,9 @@
     line-height: 150%;
     color: $purpleLight;
     max-width: 640px;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
   }
 
   .tags {

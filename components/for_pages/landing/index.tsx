@@ -1,6 +1,7 @@
+import styles from './index.module.scss'
+
 import { useRef, useState } from 'react'
 import Section1 from './Section1'
-import styles from './index.module.scss'
 import Section2 from './Section2'
 import Section3 from './Section3'
 import Section4 from './Section4'
@@ -14,6 +15,7 @@ import Image from 'next/image'
 import Footer from './Footer'
 import classnames from 'classnames'
 import DownloadSvg from 'components/svg/DownloadSvg'
+import { useResize } from 'components/hooks/useResize'
 
 
 interface Props {
@@ -22,6 +24,7 @@ interface Props {
 export type SectionType = 'delivery'|'rest'
 
 export default function MainPageLanding(props: Props) {
+  const {isSmDesktopWidth} = useResize()
   const [type, setType] = useState<SectionType>('rest')
   const switcherItems = useRef<{[key: string]: HTMLParagraphElement}>({})
 
@@ -55,7 +58,9 @@ export default function MainPageLanding(props: Props) {
 
     <button className={styles.button}>
       <DownloadSvg/>
-      Скачать приложение
+      {!isSmDesktopWidth &&
+        'Скачать приложение'
+      } 
     </button>
 
   </div>
@@ -70,13 +75,5 @@ export default function MainPageLanding(props: Props) {
   <Section9 type={type}/>
   <Section10/>
   <Footer/>
-
-
-
-
-
-
-
-
   </div>)
 }

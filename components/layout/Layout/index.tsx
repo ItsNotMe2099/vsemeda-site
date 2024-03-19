@@ -13,6 +13,7 @@ interface Props {
   classRoot?: string
   hideFooter?: boolean
   hideHeader?: boolean
+  hideTabbar?: boolean
 }
 
 export default function Layout({ children, className, classRoot, ...props }: Props) {
@@ -33,9 +34,11 @@ export default function Layout({ children, className, classRoot, ...props }: Pro
         {!props.hideFooter &&
           <Footer />
         }
+        {!props.hideTabbar &&
         <VisibleXs>
           <TabBar isSticky />
         </VisibleXs>
+        }
       </StickyContainer>
     </div>
   )

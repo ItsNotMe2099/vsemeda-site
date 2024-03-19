@@ -12,15 +12,25 @@
     margin-block: 126px 0px;
     column-gap: 5%;
     align-items: center;
+    @include mq($TabletWidth, max) {
+      flex-direction: column-reverse;
+      row-gap: 32px;
+      width: 100%;
+      padding-inline: 16px;
+    }
   }
   .imageWrapper {
-    width: min(47%, 582px);
+    width: clamp(350px, 47%, 582px);
     height: 456px;
     position: relative;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    @include mq($TabletWidth, max) {
+      width: 356px;
+      height: 284px;
+    }
 
     img {
       position: absolute;
@@ -53,13 +63,16 @@
 
   .image {
     height: auto;
-    width: 120%;
+    width: 130%;
   }
 
   .title {
     font-weight: 700;
-    font-size: 48px;
-    color: $grey1;
+    font-size: clamp(30px, 6vw, 48px);
+    color: $dark1;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
     span {
       color: $pink;
     }
@@ -68,12 +81,17 @@
   .description {
     font-weight: 500;
     font-size: 18px;
+    line-height: 150%;
     color: $grey2Alt;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
+
   }
 
   .content {
     display: flex;
     flex-direction: column;
-    row-gap: 32px;    
+    row-gap: clamp(16px, 4vw, 32px);    
   }
 }

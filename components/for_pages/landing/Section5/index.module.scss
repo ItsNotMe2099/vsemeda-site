@@ -6,7 +6,7 @@
     display: flex;
     max-width: 1306px;
     margin-inline: auto;
-    margin-block: 126px 0px;
+    margin-top: 126px;
     column-gap: clamp(44px, 5vw, 94px);
     align-items: center;
     background: radial-gradient(circle, #B347D5 0%, #4D098C 100%);
@@ -14,13 +14,27 @@
     width: calc(100% - 84px);
     padding-left: clamp(80px, 7vw, 105px);
     overflow: hidden;
+    @include mq($TabletWidth, max) {
+      padding: 34px 16px 4px;
+      width: 100%;
+      border-radius: unset;
+      flex-direction: column;
+    }
   }
 
   .image {
-    width: clamp(393px, 30vw, 424px);
+    width: clamp(294px, 30vw, 424px);
     height: auto;
     margin-top: clamp(55px, 7.5vw, 102px);
     margin-right: clamp(42px, 6.5vw, 92px);
+    flex-shrink: 0;
+    @include mq($TabletWidth, max) {
+      max-width: 100%;
+      height: auto;
+      margin-top: 32px;
+      margin-right: unset;
+      
+    }
   }
 
   .description {
@@ -28,18 +42,27 @@
     font-size: 18px;
     line-height: 150%;
     color: $purpleLight;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
   }
 
   .content {
     display: flex;
     flex-direction: column;
-    row-gap: 32px;    
+    row-gap: 35px;   
+    @include mq($TabletWidth, max) {
+      align-items: center;
+    } 
   }
 
   .title {
     font-weight: 700;
-    font-size: 48px;
+    font-size: clamp(30px, 6vw, 48px);
     color: $white;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
     span {
       color: $pink;
     }
@@ -82,5 +105,15 @@
   .links {
     display: flex;
     column-gap: 16px;
+    img {
+      display: block;
+    }
+    @include mq($TabletWidth, max) {
+      justify-content: center;
+      width: 90%;
+      flex-wrap: wrap;
+      row-gap: 18px;
+    }
   }
+
 }

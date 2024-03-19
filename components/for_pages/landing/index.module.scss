@@ -16,13 +16,19 @@
   justify-content: space-between;
   align-items: center;
   z-index: 5;
+  @include mq($TabletWidth, max) {
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    border-radius: unset;
+  }
 
   .switcher {
     padding: 8px;
     border-radius: 40px;
     display: flex;
     background-color: $grey2;
-    column-gap: 16px;
+    column-gap: 8px;
     position: relative;
   }
 
@@ -50,6 +56,7 @@
     width: 50%;
     transition: .2s ease-in-out;
     left: 0px;
+
     
   }
 
@@ -58,17 +65,30 @@
     padding: 10px 16px;
     display: flex;
     align-items: center;
+    justify-content: center;
     column-gap: 8px;
     font-weight: 500;
     font-size: 14px;
     color: $black;
     border-radius: 40px;
+    @include mq($SmDesktopWidth, max) {
+      padding: unset;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
   }
 
   .logoWrapper {
     width: 224px;
+    @include mq($SmDesktopWidth, max) {
+      width: 40px;
+    }
     img {
       display: block;
+      @include mq($TabletWidth, max) {
+        width: 52px;
+      }
     }
   }
 }

@@ -11,6 +11,11 @@
     align-items: center;
     max-width: 1306px;
     width: calc(100% - 84px);
+    @include mq($TabletWidth, max) {
+      flex-direction: column;
+      width: 100%;
+      padding-inline: 16px;
+    }
 
   }
 
@@ -18,14 +23,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: min(47%, 582px);
-    height: 484px;
+    width: clamp(350px, 47%, 582px);
+    height: auto;
     flex-shrink: 0;
+    @include mq($TabletWidth, max) {
+      height: 296px;
+      margin-top: 85px;
+    }
   }
 
   .image {
-    width: 120%;
-    height: auto;
+    height: 180%;
   }
 
 
@@ -33,18 +41,25 @@
     font-weight: 500;
     font-size: 18px;
     color: $grey2;
+    line-height: 150%;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
   }
 
   .content {
     display: flex;
     flex-direction: column;
-    row-gap: 32px;    
+    row-gap: 30px;    
   }
 
   .title {
     font-weight: 700;
-    font-size: 48px;
-    color: $grey1;
+    font-size: clamp(30px, 6vw, 48px);
+    color: $dark1;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
     span {
       color: $pink;
     }

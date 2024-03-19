@@ -10,33 +10,48 @@
     column-gap: 16px;
     align-items: center;
     width: calc(100% - 84px);
+    @include mq($SmDesktopWidth, max) {
+      flex-direction: column-reverse;    
+      width: 100%;
+      padding-inline: 16px;  
+    }
   }
 
-  .imageWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 582px;
-    height: 484px;
+  .image {
+    @include mq($SmDesktopWidth, max) {
+      width: 100%;
+      height: auto;
+      margin-top: 38px;
+    }
   }
-
 
   .description {
     font-weight: 500;
     font-size: 18px;
     color: $grey2;
+    white-space: pre-line;
+    line-height: 150%;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
   }
 
   .content {
     display: flex;
     flex-direction: column;
-    row-gap: 32px;    
+    row-gap: clamp(20px, 5vw, 32px);    
+    @include mq($TabletWidth, max) {
+      width: 100%;
+    }
   }
 
   .title {
     font-weight: 700;
-    font-size: 48px;
-    color: $grey1;
+    font-size: clamp(30px, 6vw, 48px);
+    color: $dark1;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
     span {
       color: $pink;
     }
@@ -47,32 +62,45 @@
     column-gap: 16px;
     row-gap: 16px;
     flex-wrap: wrap;
-
-    .tag {
-      background-color: $pink;
-      padding: 10px 16px 8px;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-      column-gap: 8px;
-      font-weight: 500;
-      font-size: 14px;
-      color: $white;
-
-      &_grey {
-        background-color: $grey2;
-      }
-    }
-
-    .badge {
-      padding: 4px 6px 2px;
-      background-color: $black;
-      color: $white;
-      text-transform: uppercase;
-      border-radius: 40px;
-      font-weight: 800;
-      font-size: 12px;
+    @include mq($TabletWidth, max) {
+      flex-wrap: nowrap;
+      width: 100%;
+      overflow: unset;
     }
   }
+
+  .tag {
+    background-color: $pink;
+    padding: 10px 16px 8px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    column-gap: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: $white;
+    user-select: none;
+    cursor: default;
+
+
+    &_grey {
+      background-color: $grey2;
+    }
+  }
+
+  .badge {
+    padding: 4px 6px 2px;
+    background-color: $black;
+    color: $white;
+    text-transform: uppercase;
+    border-radius: 40px;
+    font-weight: 800;
+    font-size: 12px;
+  }
+  
+  .slide {
+    width: unset;
+  }
+  
 }

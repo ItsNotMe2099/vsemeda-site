@@ -31,6 +31,10 @@
     position: relative;
     z-index: 1;
     width: calc(100% - 84px);
+    @include mq($TabletWidth, max) {
+      width: 100%;
+      padding-inline: 16px;
+    }
   }
 
   .button {
@@ -56,6 +60,12 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    flex-wrap: wrap;
+    row-gap: 32px;
+    column-gap: 20px;
+    @include mq($TabletWidth, max) {
+      justify-content: center;
+    }
   }
 
   .content {
@@ -66,16 +76,23 @@
 
   .title {
     font-weight: 700;
-    font-size: 48px;
+    font-size: clamp(24px, 3.4vw, 48px);
     text-align: center;
-    color: $grey1;
+    color: $dark1;
     width: 100%;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+      font-size: 30px;
+    }
   }
 
   .lineTitle {
     @extend .title;
     text-align: start;
     width: unset;
+    @include mq($TabletWidth, max) {
+      text-align: center;
+    }
   }
 
   .subTitle {
@@ -102,13 +119,13 @@
   .faq {
     display: flex;
     flex-direction: column;
-    row-gap: 28px;
-    margin-top: 64px;
+    row-gap: clamp(16px, 3vw, 28px);
+    margin-top: clamp(32px, 9vw, 64px);
   }
 
   .faqItem {
     background-color: $white;
-    padding: 0px 32px;
+    padding: 0px clamp(16px, 3vw, 32px);
     border-radius: 16px;
   }
 
@@ -116,12 +133,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 32px 0px;
+    padding: 30px 0px;
     cursor: pointer;
+    column-gap: 20px;
 
     svg {
       transition: .2s ease-in-out;
-      rotate: 0deg
+      rotate: 0deg;
+      flex-shrink: 0;
+      @include mq($TabletWidth, max) {
+        width: 16px;
+        height: 16px;
+      }
     }
 
     .svgActive{
