@@ -1,7 +1,7 @@
 @import 'styles/index';
 
 .section {
-  margin-top: 128px;
+  margin-top: clamp(42px, 13vh, 126px);
   position: relative;
 
   .texture {

@@ -1,7 +1,7 @@
 @import 'styles/index';
 
 .section {
-  margin-top: 120px;
+  margin-top: clamp(42px, 13vh, 126px);
   background: #63169b;
   position: relative;
   overflow: hidden;

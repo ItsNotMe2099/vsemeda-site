@@ -3,7 +3,7 @@
 
 
 .section {
-  margin-top: 128px;
+  margin-top: clamp(42px, 13vh, 126px);
   background-color: $green;
   position: relative;
   overflow: hidden;

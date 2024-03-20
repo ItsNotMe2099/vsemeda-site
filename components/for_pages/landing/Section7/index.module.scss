@@ -8,7 +8,7 @@
     display: flex;
     max-width: 1306px;
     margin-inline: auto;
-    margin-block: 126px 0px;
+    margin-block: clamp(42px, 13vh, 126px) 0px;
     column-gap: 16px;
     align-items: center;
     justify-content: space-between;

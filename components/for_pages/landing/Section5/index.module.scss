@@ -6,7 +6,7 @@
     display: flex;
     max-width: 1306px;
     margin-inline: auto;
-    margin-top: 126px;
+    margin-top: clamp(42px, 13vh, 126px);
     column-gap: clamp(44px, 5vw, 94px);
     align-items: center;
     background: radial-gradient(circle, #B347D5 0%, #4D098C 100%);
